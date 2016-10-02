@@ -6,35 +6,35 @@ import seedu.address.model.tag.UniqueTagList;
 import java.util.Objects;
 
 /**
- * Represents a Person in the address book.
+ * Represents an event in the to-do list.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Event implements ReadOnlyEvent {
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private Description description;
+    private StartTime startTime;
+    private EndTime endTime;
 
-    private UniqueTagList tags;
+    private Category category;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, phone, email, address, tags);
+    public Event(Name name, Description description, StartTime startTime, EndTime endTime, Category category) {
+        assert !CollectionUtil.isAnyNull(name, description, startTime, endTime, category);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        this.description = phone;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.category = category;
     }
 
     /**
      * Copy constructor.
      */
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    public Event(ReadOnlyEvent source) {
+        this(source.getName(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategory());
     }
 
     @Override
@@ -43,43 +43,44 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() {
-        return phone;
+    public Phone getDescription() {
+        return description;
     }
 
     @Override
-    public Email getEmail() {
-        return email;
+    public Email getStartTime() {
+        return startTime;
     }
 
     @Override
-    public Address getAddress() {
-        return address;
+    public Address getendTime() {
+        return endTime;
     }
 
     @Override
-    public UniqueTagList getTags() {
-        return new UniqueTagList(tags);
+    public Category getCategory() {
+        return category;
     }
 
     /**
      * Replaces this person's tags with the tags in the argument tag list.
      */
-    public void setTags(UniqueTagList replacement) {
-        tags.setTags(replacement);
+    public void setCategory(Category replacement) {
+        category.setCategory(replacement);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+                || (other instanceof ReadOnlyEvent // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyEvent) other));
+
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, description, startTime, endTime, category);
     }
 
     @Override
