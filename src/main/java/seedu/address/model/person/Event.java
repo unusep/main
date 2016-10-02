@@ -53,7 +53,7 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
-    public Address getendTime() {
+    public Address getEndTime() {
         return endTime;
     }
 

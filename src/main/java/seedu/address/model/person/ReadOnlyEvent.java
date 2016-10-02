@@ -44,7 +44,7 @@ public interface ReadOnlyEvent {
                 .append(" EndTime: ")
                 .append(getEndTime())
                 .append(" Category: ")
-                .append(getCategory: ");
+                .append(getCategory());
         return builder.toString();
     }
 }
