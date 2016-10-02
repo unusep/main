@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Event's name in the address book.
+ * Represents an Event's name in the to-do list.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Description {

@@ -4,31 +4,31 @@ package seedu.address.model.tag;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Tag in the address book.
+ * Represents a Category in the to-do list.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
-public class Tag {
+public class Category {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Category names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public String tagName;
+    public String category;
 
-    public Tag() {
+    public Category() {
     }
 
     /**
-     * Validates given tag name.
+     * Validates given Category name.
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public Tag(String name) throws IllegalValueException {
+    public Category(String name) throws IllegalValueException {
         assert name != null;
         name = name.trim();
         if (!isValidTagName(name)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
-        this.tagName = name;
+        this.category = name;
     }
 
     /**
@@ -41,20 +41,20 @@ public class Tag {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
+                || (other instanceof Category // instanceof handles nulls
+                && this.category.equals(((Category) other).category)); // state check
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        return category.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + category + ']';
     }
 
 }

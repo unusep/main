@@ -8,8 +8,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Name {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Event names can be in any format";
-    public static final String NAME_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Event names should be alphanumeric";
+    public static final String NAME_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String fullName;
 
@@ -20,6 +20,7 @@ public class Name {
      */
     public Name(String name) throws IllegalValueException {
         assert name != null;
+        name = name.trim();
         if (!isValidName(name)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
