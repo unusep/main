@@ -10,8 +10,7 @@ public interface ReadOnlyEvent {
 
     Title getTitle();
     Description getDescription();
-    StartTime getStartTime();
-    EndTime getEndTime();
+    TimeInterval getTimeInterval();
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -27,8 +26,7 @@ public interface ReadOnlyEvent {
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
                 && other.getDescription().equals(this.getDescription())
-                && other.getStartTime().equals(this.getStartTime())
-                && other.getEndTime().equals(this.getEndTime()));
+                && other.getTimeInterval().equals(this.getTimeInterval()));
     }
 
     /**
@@ -40,9 +38,7 @@ public interface ReadOnlyEvent {
                 .append(" Description: ")
                 .append(getDescription())
                 .append(" StartTime: ")
-                .append(getStartTime())
-                .append(" EndTime: ")
-                .append(getEndTime())
+                .append(getTimeInterval())
                 .append(" Category: ")
                 .append(getCategories());
         return builder.toString();

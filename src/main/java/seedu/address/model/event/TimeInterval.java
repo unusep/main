@@ -62,6 +62,7 @@ public class TimeInterval {
 	   return this.endTime;
    }
 
+
    @Override
    public String toString() {
        return startTime + " -> " + endTime;
@@ -73,6 +74,7 @@ public class TimeInterval {
                || (other instanceof TimeInterval // instanceof handles nulls
                && this.startTime.equals(((TimeInterval) other).startTime)); // state check
    }
+
 
    @Override
    public int hashCode() {

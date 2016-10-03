@@ -21,11 +21,10 @@ public class Event implements ReadOnlyEvent {
      * Every field must be present and not null.
      */
     public Event(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
-        assert !CollectionUtil.isAnyNull(title, description, startTime, endTime, categories);
+        assert title != null;
         this.title = title;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.timeInterval = timeInterval;
         this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
     }
 
@@ -33,7 +32,7 @@ public class Event implements ReadOnlyEvent {
      * Copy constructor.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategories());
+        this(source.getTitle(), source.getDescription(), source.getTimeInterval(), source.getCategories());
     }
 
     @Override
@@ -47,13 +46,8 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
-    public StartTime getStartTime() {
-        return startTime;
-    }
-
-    @Override
-    public EndTime getEndTime() {
-        return endTime;
+    public TimeInterval getTimeInterval() {
+        return timeInterval;
     }
 
     @Override
@@ -79,7 +73,7 @@ public class Event implements ReadOnlyEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, description, startTime, endTime, categories);
+        return Objects.hash(title, description, timeInterval, categories);
     }
 
     @Override
