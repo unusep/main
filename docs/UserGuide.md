@@ -17,8 +17,8 @@
 4. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window. 
 5. Some example commands you can try:
-   * **`list`** CS2103` : lists all tasks in **'CS2103`**
-   * **`add`**` -t Do post-lecture quiz today->tomorrow -c CS2103` : 
+   * **`list`** CS2103 : lists all tasks in **CS2103**
+   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` : 
      adds a task called `Do post-lecture quiz` to the To-Do lit that starts `today`
 	 and ends `tomorrow` under the category `CS2103`.
    * **`delete`**` 3` : deletes the 3rd task shown in the current list
@@ -41,31 +41,33 @@ Format: `help`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-erList<br>
-Format: `add -t TITLE [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] …]` 
+Format: `add -t TITLE [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] …]` 
 
-> Task can have any number of categories (including 0)
-> The START or END parameter can be in natural language (next X hours, today, 
+> * Task can have any number of categories (including 0)
+> * The START or END parameter can be in natural language (next X hours, today, 
   tomorrow, next X days, next week, next month) or in standard format “2016-10-3 10:00”
-> If the START date is missing, the Doer-List set it to today by default.
-> If the there is not START->END parameters or END date is missing, the Doer-list with 
-  create task without start date and end date and move it to `Inbox` build-in category.
+> * If the START date is missing, the Doer-List set it to today by default.
+> * If the there is not START->END parameters or END date is missing, the Doer-list will create task without start date and end date and move it to `Inbox` build-in category.
 
 Examples: 
-* `add -t Do post-lecture quiz today->tomorrow -c CS2103`<br>
-* `add -t Do CA1 -d Oral Presentation ->next 2 days -c CS2101`<br>
-* `add -t Take lecture 2016-10-4 10:00->2016-10-4 12:00 -c CS2102`
+
+* `add -t Do post-lecture quiz <today->tomorrow> -c CS2103`<br>
+* `add -t Do CA1 -d Oral Presentation <->next 2 days> -c CS2101`<br>
+* `add -t Take lecture <2016-10-4 10:00->2016-10-4 12:00> -c CS2102`
 
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-erList<br>
-Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] 
+Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] 
 		[MORE CATEGORY].`
 
-> Edit an existing task by calling its index. The event's title, description, start date, 
-  end date and category can be edited.
+> Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
   
 Examples:
-* `edit 1 -t Do ST2334 quiz -t ST2334`
-* `Edit 2 ->next 5 days`
+
+* `edit 1 -t Do ST2334 quiz -c ST2334`
+* `Edit 2 <->next 5 days>`
+
+> Attributes that aren't supplied will not be updated 
 
 #### Listing tasks in a certain category : `list`
 Shows a list of all tasks in the Doer-list under the specific category.<br>
@@ -74,6 +76,7 @@ Format: `list [CATEGORY]`
 > If the `CATEGORY` parameter is not supplied, then list all tasks.
 
 Examples:
+
 * `list`
 * `list CS2101`
 
@@ -90,6 +93,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
     e.g. `Hans` will match `Hans Bo`
 
 Examples: 
+
 * `find John`<br>
   Returns `John Doe` but not `john`
 * `find Betsy Tim John`<br>
@@ -99,11 +103,12 @@ Examples:
 Deletes the specified task / event from the To-Do list. Irreversible.<br>
 Format: `delete INDEX`
 
-> Deletes the task / event at the specified `INDEX`. 
-  The index refers to the index number shown in the most recent listing.<br>
+> * Deletes the task / event at the specified `INDEX`. 
+> * The index refers to the index number shown in the most recent listing.<br>
   The index **must be a positive integer** 1, 2, 3, ...
 
 Examples: 
+
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task / event in the To-Do list.
@@ -115,11 +120,12 @@ Examples:
 Views the task identified by the index number used in the last task listing.<br>
 Format: `view INDEX`
 
-> Views the details of the task at the specified `INDEX`. 
-  The index refers to the index number shown in the most recent listing.<br>
+> * Views the details of the task at the specified `INDEX`. 
+> * The index refers to the index number shown in the most recent listing.<br>
   The index **must be a positive integer** 1, 2, 3, ...
 
 Examples: 
+
 * `list`<br>
   `view 2`<br>
   Views the 2nd task in the Doer-list.
@@ -138,6 +144,7 @@ Format: `taskdue END_DATE`
   (E.g. 2016-10-3 10:00)
   
 Examples:
+
 * `taskdue tomorrow`
 
 #### Undo the most recent operation : `undo`
@@ -155,6 +162,7 @@ Format: `mark TASK_NUMBER`
 > Mark task `TASK_NUMBER` as done. The task must exist in the To-Do list.
 
 Examples:
+
 * `mark 5`
 * Returns task number `5` as done.
 
@@ -165,6 +173,7 @@ Format: `unmark TASK_NUMBER`
 > Mark task `TASK_NUMBER` as undone. The task must exist in the To-Do list.
 
 Examples:
+
 * `unmark 5`
 * Returns task number `5` as undone.
 
@@ -195,8 +204,8 @@ with Google Calendar and should the UI of Google Calendar.
 
 Command | Format  
 -------- | :-------- 
-Add | `add -t TITLE [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE_CATEGORY]`
-Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE_CATEGORY]`
+Add | `add -t TITLE [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] [MORE_CATEGORY]`
+Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] [MORE_CATEGORY]`
 Delete | `delete INDEX`
 View | `view INDEX`
 Find | `find KEYWORD [MORE_KEYWORDS]`
