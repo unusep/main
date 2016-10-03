@@ -7,8 +7,7 @@ import seedu.address.model.task.*;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import org.joda.time.DateTime;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,9 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
-    private DateTime startTime;
+    private LocalDateTime startTime;
     @XmlElement(required = true)
-    private DateTime endTime;
+    private LocalDateTime endTime;
 
 
     @XmlElement

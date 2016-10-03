@@ -1,8 +1,7 @@
 package seedu.address.model.task;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -12,8 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class TimeInterval {
 
-	public final DateTime startTime;
-	public final DateTime endTime;
+	public final LocalDateTime startTime;
+	public final LocalDateTime endTime;
 
 	public static final String MESSAGE_NAME_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
@@ -24,8 +23,7 @@ public class TimeInterval {
     * @throws IllegalValueException if given startTime string is invalid.
     */
    public TimeInterval(String startingTime, String endingTime) throws IllegalValueException {
-	   DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
 	   if ((startingTime == null) && !isValidTime(startingTime)) {
            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
        }
@@ -33,12 +31,12 @@ public class TimeInterval {
            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
        }
        if(startingTime == null) {
-    	   startTime = new DateTime();
+    	   startTime = LocalDateTime.now();
        } else {
-    	   startTime = formatter.parseDateTime(startingTime);
+    	   startTime = LocalDateTime.parse(startingTime);
        }
 
-       endTime = formatter.parseDateTime(endingTime);
+       endTime = LocalDateTime.parse(endingTime);
    }
 
    /**
@@ -51,14 +49,14 @@ public class TimeInterval {
    /**
     * getter method for startTime
     */
-   public DateTime getStartTime() {
+   public LocalDateTime getStartTime() {
 	   return this.startTime;
    }
 
    /**
     * getter method for endTime
     */
-   public DateTime getEndTime() {
+   public LocalDateTime getEndTime() {
 	   return this.endTime;
    }
 
