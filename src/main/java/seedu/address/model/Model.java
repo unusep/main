@@ -1,9 +1,9 @@
 package seedu.address.model;
 
 import seedu.address.commons.core.UnmodifiableObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.event.Person;
+import seedu.address.model.event.ReadOnlyPerson;
+import seedu.address.model.event.UniquePersonList;
 
 import java.util.Set;
 

@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.event.ReadOnlyPerson;
+import seedu.address.model.event.UniquePersonList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 

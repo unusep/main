@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.event;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
