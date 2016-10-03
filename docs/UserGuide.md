@@ -41,7 +41,7 @@ Format: `help`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-erList<br>
-Format: `add -t TITLE [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] …]` 
+Format: `add -t TITLE [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] ...]` 
 
 > * Task can have any number of categories (including 0)
 > * The START or END parameter can be in natural language (next X hours, today, 
@@ -58,7 +58,7 @@ Examples:
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-erList<br>
 Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [<[START]->[END]>] [-c [CATEGORY] 
-		[MORE CATEGORY].`
+		...`
 
 > Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
   
@@ -134,13 +134,13 @@ Examples:
   Views the 1st task in the results of the `find` command.
   
 #### Find all tasks due : `taskdue`
-Finds all tasks due on and before the date specified in the To-Do list.
+Finds all tasks due on and before the date specified in the To-Do list.<br>
 Format: `taskdue END_DATE`
 
-> Finds all tasks due on and before `END_DATE`.
+> Finds all tasks due on and before `END_DATE`.<br>
   The date can be in natural language
   (E.g. next X hours, today, tomorrow, next X days, next week, next month)
-  Or in standard format
+  or in standard format
   (E.g. 2016-10-3 10:00)
   
 Examples:
@@ -148,15 +148,15 @@ Examples:
 * `taskdue tomorrow`
 
 #### Undo the most recent operation : `undo`
-Undo the most recent operation which modify the data in the Do-erList
+Undo the most recent operation which modify the data in the Do-erList<br>
 Format: `undo`
 
 #### Redo the most recent operation : `redo`
-Redo the most recent undo
+Redo the most recent undo<br>
 Format: `redo`
 
 #### Mark task as done : `mark`
-Marks a certain task as done in the To-Do list.
+Marks a certain task as done in the To-Do list.<br>
 Format: `mark TASK_NUMBER`
 
 > Mark task `TASK_NUMBER` as done. The task must exist in the To-Do list.
@@ -164,10 +164,10 @@ Format: `mark TASK_NUMBER`
 Examples:
 
 * `mark 5`
-* Returns task number `5` as done.
+  <br>Returns task number `5` as done.
 
 #### Unmark task as done : `unmark`
-Marks a certain task as undone in the To-Do list.
+Marks a certain task as undone in the To-Do list.<br>
 Format: `unmark TASK_NUMBER`
 
 > Mark task `TASK_NUMBER` as undone. The task must exist in the To-Do list.
@@ -175,7 +175,7 @@ Format: `unmark TASK_NUMBER`
 Examples:
 
 * `unmark 5`
-* Returns task number `5` as undone.
+  <br>Returns task number `5` as undone.
 
 #### Clearing all entries : `clear`
 Clears all entries from the address book.<br>
@@ -189,7 +189,7 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
-## View event in Google Calendar
+#### View event in Google Calendar
 
 A build-in browser is embedded inside the browser. Once authorized, it will automatically sync events 
 with Google Calendar and should the UI of Google Calendar.
