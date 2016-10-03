@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.UniqueCategoryList;
 
 import java.util.Objects;
 
@@ -16,25 +16,25 @@ public class Event implements ReadOnlyEvent {
     private StartTime startTime;
     private EndTime endTime;
 
-    private Category category;
+    private UniqueCategoryList categories;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Description description, StartTime startTime, EndTime endTime, Category category) {
-        assert !CollectionUtil.isAnyNull(title, description, startTime, endTime, category);
+    public Event(Title title, Description description, StartTime startTime, EndTime endTime, UniqueCategoryList categories) {
+        assert !CollectionUtil.isAnyNull(title, description, startTime, endTime, categories);
         this.title = title;
-        this.description = phone;
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.category = category;
+        this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
     }
 
     /**
      * Copy constructor.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategory());
+        this(source.getTitle(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategories());
     }
 
     @Override
@@ -43,30 +43,30 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
-    public Phone getDescription() {
+    public Description getDescription() {
         return description;
     }
 
     @Override
-    public Email getStartTime() {
+    public StartTime getStartTime() {
         return startTime;
     }
 
     @Override
-    public Address getEndTime() {
+    public EndTime getEndTime() {
         return endTime;
     }
 
     @Override
-    public Category getCategory() {
-        return category;
+    public UniqueCategoryList getCategories() {
+        return categories;
     }
 
     /**
      * Replaces this person's tags with the tags in the argument tag list.
      */
-    public void setCategory(Category replacement) {
-        category.setCategory(replacement);
+    public void setCategories(UniqueCategoryList replacement) {
+        categories.setCategories(replacement);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Event implements ReadOnlyEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, description, startTime, endTime, category);
+        return Objects.hash(title, description, startTime, endTime, categories);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.UniqueCategoryList;
 
 /**
  * A read-only immutable interface for an Event in the to-do list.
@@ -8,7 +8,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyEvent {
 
-    Name getName();
+    Title getTitle();
     Description getDescription();
     StartTime getStartTime();
     EndTime getEndTime();
@@ -17,7 +17,7 @@ public interface ReadOnlyEvent {
      * The returned TagList is a deep copy of the internal TagList,
      * changes on the returned list will not affect the person's internal tags.
      */
-    UniqueTagList getTags();
+    UniqueCategoryList getCategories();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -25,10 +25,10 @@ public interface ReadOnlyEvent {
     default boolean isSameStateAs(ReadOnlyEvent other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getName().equals(this.getName()) // state checks here onwards
+                && other.getTitle().equals(this.getTitle()) // state checks here onwards
                 && other.getDescription().equals(this.getDescription())
                 && other.getStartTime().equals(this.getStartTime())
-                && other.getEndTime().equals(this.getEndtime()));
+                && other.getEndTime().equals(this.getEndTime()));
     }
 
     /**
@@ -36,7 +36,7 @@ public interface ReadOnlyEvent {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
+        builder.append(getTitle())
                 .append(" Description: ")
                 .append(getDescription())
                 .append(" StartTime: ")
@@ -44,7 +44,7 @@ public interface ReadOnlyEvent {
                 .append(" EndTime: ")
                 .append(getEndTime())
                 .append(" Category: ")
-                .append(getCategory());
+                .append(getCategories());
         return builder.toString();
     }
 }

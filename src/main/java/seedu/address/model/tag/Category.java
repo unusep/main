@@ -4,37 +4,37 @@ package seedu.address.model.tag;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Category in the to-do list.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a Category in the address book.
+ * Guarantees: immutable; name is valid as declared in {@link #isValidCategoryName(String)}
  */
 public class Category {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Category names should be alphanumeric";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Categorys names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public String category;
+    public String categoryName;
 
     public Category() {
     }
 
     /**
-     * Validates given Category name.
+     * Validates given category name.
      *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * @throws IllegalValueException if the given category name string is invalid.
      */
     public Category(String name) throws IllegalValueException {
         assert name != null;
         name = name.trim();
-        if (!isValidTagName(name)) {
+        if (!isValidCategoryName(name)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
-        this.category = name;
+        this.categoryName = name;
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
+     * Returns true if a given string is a valid category name.
      */
-    public static boolean isValidTagName(String test) {
+    public static boolean isValidCategoryName(String test) {
         return test.matches(TAG_VALIDATION_REGEX);
     }
 
@@ -42,19 +42,19 @@ public class Category {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Category // instanceof handles nulls
-                && this.category.equals(((Category) other).category)); // state check
+                && this.categoryName.equals(((Category) other).categoryName)); // state check
     }
 
     @Override
     public int hashCode() {
-        return category.hashCode();
+        return categoryName.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + category + ']';
+        return '[' + categoryName + ']';
     }
 
 }
