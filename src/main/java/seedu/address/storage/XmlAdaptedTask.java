@@ -3,7 +3,7 @@ package seedu.address.storage;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.category.Category;
 import seedu.address.model.category.UniqueCategoryList;
-import seedu.address.model.event.*;
+import seedu.address.model.task.*;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JAXB-friendly version of the Event.
+ * JAXB-friendly version of the Task.
  */
-public class XmlAdaptedEvent {
+public class XmlAdaptedTask {
 
     @XmlElement(required = true)
     private String title;
@@ -33,15 +33,15 @@ public class XmlAdaptedEvent {
     /**
      * No-arg constructor for JAXB use.
      */
-    public XmlAdaptedEvent() {}
+    public XmlAdaptedTask() {}
 
 
     /**
-     * Converts a given Event into this class for JAXB use.
+     * Converts a given Task into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedEvent
+     * @param source future changes to this will not affect the created XmlAdaptedTask
      */
-    public XmlAdaptedEvent(ReadOnlyEvent source) {
+    public XmlAdaptedTask(ReadOnlyTask source) {
         title = source.getTitle().fullTitle;
         description = source.getDescription().value;
         startTime = source.getTimeInterval().startTime;
@@ -53,19 +53,19 @@ public class XmlAdaptedEvent {
     }
 
     /**
-     * Converts this jaxb-friendly adapted event object into the model's Event object.
+     * Converts this jaxb-friendly adapted task object into the model's Task object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted event
+     * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
-    public Event toModelType() throws IllegalValueException {
-        final List<Category> eventCategories = new ArrayList<>();
+    public Task toModelType() throws IllegalValueException {
+        final List<Category> taskCategories = new ArrayList<>();
         for (XmlAdaptedCategory category : categorized) {
-            eventCategories.add(category.toModelType());
+            taskCategories.add(category.toModelType());
         }
         final Title title = new Title(this.title);
         final Description description = new Description(this.description);
         final TimeInterval timeInterval = new TimeInterval(this.startTime.toString(), this.endTime.toString());
-        final UniqueCategoryList categories = new UniqueCategoryList(eventCategories);
-        return new Event(title, description, timeInterval, categories);
+        final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
+        return new Task(title, description, timeInterval, categories);
     }
 }

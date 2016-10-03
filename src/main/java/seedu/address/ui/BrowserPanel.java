@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import seedu.address.commons.util.FxViewUtil;
-import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.commons.core.LogsCenter;
 
 import java.util.logging.Logger;
@@ -50,8 +50,8 @@ public class BrowserPanel extends UiPart{
         return browserPanel;
     }
 
-    public void loadEventPage(ReadOnlyEvent event) {
-        loadPage("https://www.google.com.sg/#safe=off&q=" + event.getTitle().fullTitle.replaceAll(" ", "+"));
+    public void loadEventPage(ReadOnlyTask task) {
+        loadPage("https://www.google.com.sg/#safe=off&q=" + task.getTitle().fullTitle.replaceAll(" ", "+"));
     }
 
     public void loadPage(String url){

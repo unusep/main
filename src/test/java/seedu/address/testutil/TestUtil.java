@@ -19,7 +19,7 @@ import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.category.Tag;
 import seedu.address.model.category.UniqueTagList;
-import seedu.address.model.event.*;
+import seedu.address.model.task.*;
 import seedu.address.storage.XmlSerializableAddressBook;
 
 import java.io.File;

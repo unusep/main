@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.category.UniqueCategoryList;
@@ -6,10 +6,10 @@ import seedu.address.model.category.UniqueCategoryList;
 import java.util.Objects;
 
 /**
- * Represents an event in the to-do list.
+ * Represents an task in the to-do list.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Event implements ReadOnlyEvent {
+public class Task implements ReadOnlyTask {
 
     private Title title;
     private Description description;
@@ -18,9 +18,9 @@ public class Event implements ReadOnlyEvent {
     private UniqueCategoryList categories;
 
     /**
-     * Every field must be present and not null.
+     * Title must be presented.
      */
-    public Event(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
+    public Task(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
         assert title != null;
         this.title = title;
         this.description = description;
@@ -31,7 +31,7 @@ public class Event implements ReadOnlyEvent {
     /**
      * Copy constructor.
      */
-    public Event(ReadOnlyEvent source) {
+    public Task(ReadOnlyTask source) {
         this(source.getTitle(), source.getDescription(), source.getTimeInterval(), source.getCategories());
     }
 
@@ -65,8 +65,8 @@ public class Event implements ReadOnlyEvent {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyEvent // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyEvent) other));
+                || (other instanceof ReadOnlyTask // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyTask) other));
 
     }
 

@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -7,7 +7,7 @@ import org.joda.time.format.DateTimeFormatter;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Event's time interval in the to-do List with Start Time and End Time.
+ * Represents an Task's time interval in the to-do List with Start Time and End Time.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class TimeInterval {
@@ -42,7 +42,7 @@ public class TimeInterval {
    }
 
    /**
-    * Returns true if a given string is a valid event startTime.
+    * Returns true if a given string is a valid task startTime.
     */
    public static boolean isValidTime(String test) {
        return test.matches(NAME_VALIDATION_REGEX);

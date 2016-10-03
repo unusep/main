@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,21 +8,21 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import java.util.*;
 
 /**
- * A list of events that enforces uniqueness between its elements and does not allow nulls.
+ * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueEventList implements Iterable<Event> {
+public class UniqueTaskList implements Iterable<Task> {
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
-    public static class DuplicateEventException extends DuplicateDataException {
-        protected DuplicateEventException() {
-            super("Operation would result in duplicate events");
+    public static class DuplicateTaskException extends DuplicateDataException {
+        protected DuplicateTaskException() {
+            super("Operation would result in duplicate tasks");
         }
     }
 
@@ -30,19 +30,19 @@ public class UniqueEventList implements Iterable<Event> {
      * Signals that an operation targeting a specified person in the list would fail because
      * there is no such matching person in the list.
      */
-    public static class EventNotFoundException extends Exception {}
+    public static class TaskNotFoundException extends Exception {}
 
-    private final ObservableList<Event> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty PersonList.
      */
-    public UniqueEventList() {}
+    public UniqueTaskList() {}
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
-    public boolean contains(ReadOnlyEvent toCheck) {
+    public boolean contains(ReadOnlyTask toCheck) {
         assert toCheck != null;
         return internalList.contains(toCheck);
     }
@@ -52,10 +52,10 @@ public class UniqueEventList implements Iterable<Event> {
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Event toAdd) throws DuplicateEventException {
+    public void add(Task toAdd) throws DuplicateTaskException {
         assert toAdd != null;
         if (contains(toAdd)) {
-            throw new DuplicateEventException();
+            throw new DuplicateTaskException();
         }
         internalList.add(toAdd);
     }
@@ -65,30 +65,30 @@ public class UniqueEventList implements Iterable<Event> {
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
+    public boolean remove(ReadOnlyTask toRemove) throws TaskNotFoundException {
         assert toRemove != null;
-        final boolean eventFoundAndDeleted = internalList.remove(toRemove);
-        if (!eventFoundAndDeleted) {
-            throw new EventNotFoundException();
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+        if (!taskFoundAndDeleted) {
+            throw new TaskNotFoundException();
         }
-        return eventFoundAndDeleted;
+        return taskFoundAndDeleted;
     }
 
-    public ObservableList<Event> getInternalList() {
+    public ObservableList<Task> getInternalList() {
         return internalList;
     }
 
     @Override
-    public Iterator<Event> iterator() {
+    public Iterator<Task> iterator() {
         return internalList.iterator();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueEventList // instanceof handles nulls
+                || (other instanceof UniqueTaskList // instanceof handles nulls
                 && this.internalList.equals(
-                ((UniqueEventList) other).internalList));
+                ((UniqueTaskList) other).internalList));
     }
 
     @Override

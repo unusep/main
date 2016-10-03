@@ -1,14 +1,14 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Event's title in the to-do list.
+ * Represents an Task's title in the to-do list.
  * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
  */
 public class Title {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Event titles should be alphanumeric";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Task titles should be alphanumeric";
     public static final String NAME_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String fullTitle;
@@ -28,7 +28,7 @@ public class Title {
     }
 
     /**
-     * Returns true if a given string is a valid event title.
+     * Returns true if a given string is a valid task title.
      */
     public static boolean isValidTitle(String test) {
         return test.matches(NAME_VALIDATION_REGEX);

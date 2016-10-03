@@ -1,14 +1,14 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Event's name in the to-do list.
+ * Represents an Task's name in the to-do list.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Description {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Event descriptions can be in any format";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Task descriptions can be in any format";
     public static final String NAME_VALIDATION_REGEX = ".+";
 
     public final String value;
@@ -27,7 +27,7 @@ public class Description {
     }
 
     /**
-     * Returns true if a given string is a valid event name.
+     * Returns true if a given string is a valid task name.
      */
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);

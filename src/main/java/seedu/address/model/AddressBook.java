@@ -4,9 +4,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.category.Category;
 import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.category.UniqueCategoryList.DuplicateCategoryException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.UniqueTaskList;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,28 +17,28 @@ import java.util.stream.Collectors;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueEventList events;
+    private final UniqueTaskList tasks;
     private final UniqueCategoryList categories;
 
     {
-        events = new UniqueEventList();
+        tasks = new UniqueTaskList();
         categories = new UniqueCategoryList();
     }
 
     public AddressBook() {}
 
     /**
-     * Events and Categories are copied into this addressbook
+     * Tasks and Categories are copied into this addressbook
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
-        this(toBeCopied.getUniqueEventList(), toBeCopied.getUniqueCategoryList());
+        this(toBeCopied.getUniqueTaskList(), toBeCopied.getUniqueCategoryList());
     }
 
     /**
-     * Events and Categories are copied into this addressbook
+     * Tasks and Categories are copied into this addressbook
      */
-    public AddressBook(UniqueEventList events, UniqueCategoryList categories) {
-        resetData(events.getInternalList(), categories.getInternalList());
+    public AddressBook(UniqueTaskList tasks, UniqueCategoryList categories) {
+        resetData(tasks.getInternalList(), categories.getInternalList());
     }
 
     public static ReadOnlyAddressBook getEmptyAddressBook() {
@@ -47,49 +47,49 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 //// list overwrite operations
 
-    public ObservableList<Event> getEvents() {
-        return events.getInternalList();
+    public ObservableList<Task> getTasks() {
+        return tasks.getInternalList();
     }
 
-    public void setEvents(List<Event> events) {
-        this.events.getInternalList().setAll(events);
+    public void setTasks(List<Task> tasks) {
+        this.tasks.getInternalList().setAll(tasks);
     }
 
     public void setCategories(Collection<Category> categories) {
         this.categories.getInternalList().setAll(categories);
     }
 
-    public void resetData(Collection<? extends ReadOnlyEvent> newEvents, Collection<Category> newCategories) {
-        setEvents(newEvents.stream().map(Event::new).collect(Collectors.toList()));
+    public void resetData(Collection<? extends ReadOnlyTask> newTasks, Collection<Category> newCategories) {
+        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
         setCategories(newCategories);
     }
 
     public void resetData(ReadOnlyAddressBook newData) {
-        resetData(newData.getEventList(), newData.getCategoryList());
+        resetData(newData.getTaskList(), newData.getCategoryList());
     }
 
-//// event-level operations
+//// task-level operations
 
     /**
-     * Adds a event to the address book.
-     * Also checks the new event's categories and updates {@link #categories} with any new categories found,
-     * and updates the Category objects in the event to point to those in {@link #categories}.
+     * Adds a task to the address book.
+     * Also checks the new task's categories and updates {@link #categories} with any new categories found,
+     * and updates the Category objects in the task to point to those in {@link #categories}.
      *
-     * @throws UniqueEventList.DuplicateEventException if an equivalent event already exists.
+     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task already exists.
      */
-    public void addEvent(Event p) throws UniqueEventList.DuplicateEventException {
+    public void addTask(Task p) throws UniqueTaskList.DuplicateTaskException {
         syncCategoriesWithMasterList(p);
-        events.add(p);
+        tasks.add(p);
     }
 
     /**
-     * Ensures that every category in this event:
+     * Ensures that every category in this task:
      *  - exists in the master list {@link #categories}
      *  - points to a Category object in the master list
      */
-    private void syncCategoriesWithMasterList(Event event) {
-        final UniqueCategoryList eventCategories = event.getCategories();
-        categories.mergeFrom(eventCategories);
+    private void syncCategoriesWithMasterList(Task task) {
+        final UniqueCategoryList taskCategories = task.getCategories();
+        categories.mergeFrom(taskCategories);
 
         // Create map with values = category object references in the master list
         final Map<Category, Category> masterCategoryObjects = new HashMap<>();
@@ -97,19 +97,19 @@ public class AddressBook implements ReadOnlyAddressBook {
             masterCategoryObjects.put(category, category);
         }
 
-        // Rebuild the list of event categories using references from the master list
+        // Rebuild the list of task categories using references from the master list
         final Set<Category> commonCategoryReferences = new HashSet<>();
-        for (Category category : eventCategories) {
+        for (Category category : taskCategories) {
             commonCategoryReferences.add(masterCategoryObjects.get(category));
         }
-        event.setCategories(new UniqueCategoryList(commonCategoryReferences));
+        task.setCategories(new UniqueCategoryList(commonCategoryReferences));
     }
 
-    public boolean removeEvent(ReadOnlyEvent key) throws UniqueEventList.EventNotFoundException {
-        if (events.remove(key)) {
+    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.remove(key)) {
             return true;
         } else {
-            throw new UniqueEventList.EventNotFoundException();
+            throw new UniqueTaskList.TaskNotFoundException();
         }
     }
 
@@ -123,13 +123,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return events.getInternalList().size() + " events, " + categories.getInternalList().size() +  " categories";
+        return tasks.getInternalList().size() + " tasks, " + categories.getInternalList().size() +  " categories";
         // TODO: refine later
     }
 
     @Override
-    public List<ReadOnlyEvent> getEventList() {
-        return Collections.unmodifiableList(events.getInternalList());
+    public List<ReadOnlyTask> getTaskList() {
+        return Collections.unmodifiableList(tasks.getInternalList());
     }
 
     @Override
@@ -138,8 +138,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public UniqueEventList getUniqueEventList() {
-        return this.events;
+    public UniqueTaskList getUniqueTaskList() {
+        return this.tasks;
     }
 
     @Override
@@ -152,13 +152,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.events.equals(((AddressBook) other).events)
+                && this.tasks.equals(((AddressBook) other).tasks)
                 && this.categories.equals(((AddressBook) other).categories));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(events, categories);
+        return Objects.hash(tasks, categories);
     }
 }

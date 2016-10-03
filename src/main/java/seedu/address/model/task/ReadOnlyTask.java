@@ -1,12 +1,12 @@
-package seedu.address.model.event;
+package seedu.address.model.task;
 
 import seedu.address.model.category.UniqueCategoryList;
 
 /**
- * A read-only immutable interface for an Event in the to-do list.
+ * A read-only immutable interface for an Task in the to-do list.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
-public interface ReadOnlyEvent {
+public interface ReadOnlyTask {
 
     Title getTitle();
     Description getDescription();
@@ -21,7 +21,7 @@ public interface ReadOnlyEvent {
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
-    default boolean isSameStateAs(ReadOnlyEvent other) {
+    default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
@@ -45,7 +45,7 @@ public interface ReadOnlyEvent {
     }
 
     /**
-     * Returns a string representation of this event's categories
+     * Returns a string representation of this task's categories
      */
     default String categoriesString() {
         final StringBuffer buffer = new StringBuffer();

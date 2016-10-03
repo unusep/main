@@ -4,9 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.task.ReadOnlyTask;
 
-public class EventCard extends UiPart{
+public class TaskCard extends UiPart{
 
     private static final String FXML = "EventListCard.fxml";
 
@@ -23,27 +23,27 @@ public class EventCard extends UiPart{
     @FXML
     private Label categories;
 
-    private ReadOnlyEvent event;
+    private ReadOnlyTask task;
     private int displayedIndex;
 
-    public EventCard(){
+    public TaskCard(){
 
     }
 
-    public static EventCard load(ReadOnlyEvent event, int displayedIndex){
-        EventCard card = new EventCard();
-        card.event = event;
+    public static TaskCard load(ReadOnlyTask task, int displayedIndex){
+        TaskCard card = new TaskCard();
+        card.task = task;
         card.displayedIndex = displayedIndex;
         return UiPartLoader.loadUiPart(card);
     }
 
     @FXML
     public void initialize() {
-        title.setText(event.getTitle().fullTitle);
+        title.setText(task.getTitle().fullTitle);
         id.setText(displayedIndex + ". ");
-        description.setText(event.getDescription().value);
-        timeInterval.setText(event.getTimeInterval().toString());
-        categories.setText(event.categoriesString());
+        description.setText(task.getDescription().value);
+        timeInterval.setText(task.getTimeInterval().toString());
+        categories.setText(task.categoriesString());
     }
 
     public HBox getLayout() {
