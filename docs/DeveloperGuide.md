@@ -255,14 +255,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
-`* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
-`* * *` | user | add a new person |
-`* * *` | user | delete a person | remove entries that I no longer need
-`* * *` | user | find a person by name | locate details of persons without having to go through the entire list
-`* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
-`*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* * *` | new user | see usage instructions of all commands | how to use various commands in the App
+`* * *` | user | create task with title and description | put summary as title and more details in description
+`* * *` | user | create task without start time or end time | record tasks that need to be done "some day"
+`* * *` | user | create task with start time and end time or [deadlines](#deadline) | know what event is happening or due at certain time
+`* * *` | user | edit task's title, description, start time, end time and categories | don't have to create new task when I want to update or make mistakes
+`* * *` | user | view all tasks | have an overview of all tasks
+`* * *` | user | view a specific task | get more details of the specific task
+`* * *` | user | find a task by title and description | quickly locate the task if I can only remember few words in the title or description
+`* * *` | user | delete tasks | only track the tasks I care
+`* *` | user | add tasks to different categories | be more organised about managing task
+`* *` | user | view the tasks under a certain category | examine different tasks under different categories
+`* *` | user | view the tasks are going to happen or due today, tomorrow, next 7 days, etc. | become more clear about what is going to happen
+`* *` | user | undo the most recent operations | I will not be panic when I make mistakes in typing command
+`* *` | user | redo the most recent operations | redo the operation after undoing.
+`* *` | user | specify a storage location for data storage | I can ask other could syncing service to sync teh file to prevent data loss
+`* *` | user | mark or unmark the task as [done](#done) | only keep track of the tasks which are needed to be done and archive the tasks done.
+`*` | user | type command parameters in arbitrary order | I don't have to remember the specific order of parameter for certain command 
+`*` | user | add external `ical` file to the todo-lists | keep track of other events created by other.
+`*` | user | create recurring tasks | be reminded to do the same task every fixed-time-interval 
+`*` | user | view events in Google Calendar | I can have a better pictorial view of my shcedule.
 
-{More to be added}
 
 ## Appendix B : Use Cases
 
@@ -294,11 +307,13 @@ Use case ends.
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2. Should be able to hold up to 1000 persons.
+2. Should be able to hold up to 1000 tasks.
 3. Should come with automated unit tests and open source code.
+4. Should log each operations to log file.
 4. Should favor DOS style commands over Unix-style commands.
+5. The product should have no dependency on other packages.
+6. The software can be opened by clicking without installing.
 
-{More to be added}
 
 ## Appendix D : Glossary
 
@@ -306,11 +321,61 @@ Use case ends.
 
 > Windows, Linux, Unix, OS-X
 
-##### Private contact detail
+##### Deadline
 
-> A contact detail that is not meant to be shared with others
+> A time interval with the start day as the day the task created day and the end day as the deadline date.
+
+##### Done
+
+> `Done` is a build-in category in the to-do list which store all the tasks that are marked as `done` 
 
 ## Appendix E : Product Survey
 
-{TODO: Add a summary of competing products}
+### Review of [TickTick](https://ticktick.com/):
+#### Strengths:
+- Desktop software is provided, so we can launch it quickly without using browser.
+- Shortcuts for opening the software is provided, so the todo lists can be opened quickly to those who prefer using keyboard.
+- User can create their own category for tasks and allocate tasks to different categories.
+- Elegant GUI is provided, the UI is not wordy and icons are quite intuitively.
+
+#### Weaknesses:
+- Network connection is required. If there is no network connection, the software even cannot be opened.
+- The `parser` for input text can only deal with simple command. E.g. adding the start time of event. If the command cannot be recognized, it will be automatically added as task title. 
+
+### Review of [WounderList](https://www.wunderlist.com/zh/):
+#### Strengths:
+- Ease of usage is the biggest strength. Adding an item to the list by just typing and pressing Enter. Users can easily add multiple items in this way.
+- Apple Watch integration is a nice bonus for people with Apple Watch
+- Slick user interface that allows customization with a lot of background choices
+
+#### Weaknesses:
+- The free version is seriously limited. Users only get 25 assigns per shared to-do list and 10 background choices
+- Network connection is required. If there is no network connection, the software even cannot be opened.
+- Wunderlist lacks IFTTT integration that many to-do list apps have
+
+
+### Review of [Trello](https://trello.com/)
+#### Strengths:
+- Online/Cloud based program so it can be transferrable to other computers	
+- Ease to add in notes and description into Trello cards
+- Customizable looks
+
+#### Weaknesses:
+- Unable to put due dates or member tags on Trello cards
+- Inability to link with a calendar software like Google calendar which is hard to keep track of tasks done 
+- The free version is much more limited than the paid version, making certain customisation features is hard
+
+### Review of [Google Calendar](https://calendar.google.com/)
+#### Strengths:
+- Add different kind of colouring to the schedule
+- Undo addition or deletion of events
+- Create multiple calendar for different purposes
+- GUI is quite intuitive. The formatting is clear and it does not require guidelines
+- Able to use calendar in offline mode
+
+
+#### Weaknesses:
+- Unable to view all deleted events or reminders
+- Does not have command-line inputs to modify the calendar; most operations require a user to click, which requires time.
+- Only accessible via browsers; no desktop application available
 
