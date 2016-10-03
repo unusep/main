@@ -8,7 +8,7 @@ import seedu.address.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart{
 
-    private static final String FXML = "EventListCard.fxml";
+    private static final String FXML = "TaskListCard.fxml";
 
     @FXML
     private HBox cardPane;
