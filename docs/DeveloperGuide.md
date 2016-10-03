@@ -268,14 +268,165 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Delete person
+#### Use case: Add task
 
 **MSS**
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to delete a specific person in the list
-4. AddressBook deletes the person <br>
+1. User requests to add in a task
+2. Do-erList create task with title, description, start date and end date
+3. The task is moved into the categories according to the parameters
+4. System display the details of the created task <br>
+Use case ends.
+
+**Extensions**
+
+1a. `add` command followed by the wrong parameters
+
+> 1a1. System indicates the error and display the correct format for user
+  Use case ends
+  
+1b. `TITLE` is empty string
+
+> 1b1. System indicates the error that task_name is empty.
+  Use case ends.
+  
+1c. User doesn't supply `[START>END]` or `END` parameters
+
+> 1c1. Event is created and categorized to `Inbox`
+  1c2. System display the created task
+  Use case resumes from steps 2.
+  
+1d. User doesn’t supply `START` parameter
+
+> 1d1. Event is created with start as today
+  Use case resumes from steps 2.
+  
+1e. System is able to parse `START` or `END` which is not in standard format.
+
+> Use case resumes from steps 2.
+
+1f. System is not able to parse `START` or `END` which is not in standard format.
+
+> 1f2. System will create the task without start and end date
+  1f3. System indicates the error to user
+  Use case resumes from steps 2
+  
+#### Use case: Edit task
+
+**MSS**
+
+1. User type in the command
+2. To-Do List finds the task at that index
+3. The task's details are changed accordingly (title, description, start time, end time, category)
+4. System displays the details of the newly edited task. <br>
+Use case ends.
+
+**Extensions**
+
+1a. `edit` command followed by the wrong parameters
+
+> 1a1. System indicates the error and display the correct format for user
+  Use case ends.
+  
+1b.'edit' command is followed by the inexistent index
+
+> 1.b.1 System indicates the error that the index is inexistent
+  Use case ends
+
+1c. `TITLE` is empty string
+
+> 1c1. System indicates the error that task_name is empty.
+  Use case ends.
+  
+1d. System is not able to parse `START` or `END` which is not in standard format.
+
+> 1d1. System will create the task without start and end date
+  1d2. System indicates the error to user
+  Use case resumes from steps 2
+
+#### Use case: Delete task
+
+**MSS**
+
+1. User type in the command
+2. System finds the task at that index
+3. System confirms with the user if he wants to delete the task
+4. User confirms
+5. System deletes the task
+6. Use case ends <br>
+
+**Extensions**
+
+1a. `delete` command is followed by the wrong parameters
+
+> 1a1. System indicates error and display the correct format to user
+  Use case ends.
+       	
+1b. `delete` command is followed by a non-existent index
+
+> 1b1. System indicates the error in the index is non-existent
+  Use case ends.
+  
+4a. User rejects the confirmation
+> 4a1. System indicates that the delete order was not carried out
+  Use case resumes from step1.
+
+#### Use case: List task by category
+
+**MSS**
+
+1. Use type the list command with specific category name as parameter
+2. System displays all the task under the category
+3. Use case ends <br>
+
+**Extensions**
+
+1a. User doesn’t supply category
+
+> 1a1. System display all the tasks
+  Use case ends.
+	
+2a. The category doesn’t exist in the system
+
+> 2a1. System indicates the error.
+  Use case ends.
+       	
+1b. `delete` command is followed by a non-existent index
+
+> 1b1. System indicates the error in the index is non-existent
+  Use case ends.
+
+#### Use case: Undo
+
+**MSS**
+
+1. Use type in the undo command
+2. System try to find the last operation which involve change of data
+3. System undo the operation
+4. System indicates the change to user
+5. Use case ends <br>
+
+**Extensions**
+
+2a. The last operation which involve the change of the data doesn’t exist
+
+> 2a1. System indicates the error
+  Use case ends.
+     	
+1b. `delete` command is followed by a non-existent index
+
+> 1b1. System indicates the error in the index is non-existent
+  Use case ends.
+  
+#### Use case: Clear
+
+**MSS**
+
+1. User type in the command
+2. System confirms if user wants to clear the entire all of the tasks
+3. User confirms
+4. System deletes all the tasks
+5. Use case ends <br>
 Use case ends.
 
 **Extensions**
@@ -288,15 +439,117 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Help Command
 
-{More to be added}
+**MSS**
+
+1. User type in the command
+2. System finds with the details of a command in its parameters
+3. System displays the details
+4. Use case ends <br>
+
+**Extensions**
+
+1a. `help` command is followed by the wrong parameters
+
+> 1a1. System indicates the error and display the correct format for user
+  Use case ends
+  
+1b. `help` command is followed by no parameters
+
+> 1b1. System displays all the commands available with all the details
+  Use case ends
+  
+#### Use case: View a task
+
+**MSS**
+
+1. Use type in the view command
+2. System retrieve the task list based on the index parameter in the recent displayed list
+3. System display the detail of the task
+4. Use case ends <br>
+
+**Extensions**
+
+2a. There is not recent displayed list
+
+> 2a1. System indicated the errors to user.
+  Use cases ends
+  
+2b. The index is not valid
+
+> 2b1. System indicates the errors to user.
+  Use cases ends.
+
+#### Use case: Find keywords
+
+**MSS**
+
+1. User requests to find keyword
+2. To-Do List shows the requested keywords in all categories.
+3. Use case ends. <br>
+
+**Extensions**
+
+2a. Keyword does not exist in the list.
+
+> Use case ends
+
+#### Use case: Task due end date
+
+**MSS**
+
+1. User requests to find all tasks due by end date.
+2. To-Do List shows all of the tasks due by end date.
+3. Use case ends. <br>
+
+**Extensions**
+
+2a. No tasks are due by end date.
+
+> Use case ends
+
+#### Use case: Redo
+
+**MSS**
+
+1. User type the command
+2. To-do List reverses the most recent undo.
+3. Use case ends. <br>
+
+**Extensions**
+
+1a. No recent undo is called.
+
+> 1a1. System indicates the error and shows the error message
+  Use case ends
+  
+#### Use case: Unmark
+
+**MSS**
+
+1. User marks task of task number done.
+2. To-Do List shows if task could be marked as done.
+3. Use case ends. <br>
+
+**Extensions**
+
+2a. No such task of task number.
+
+> 2a1. To-Do List shows an error message
+  Use case ends
+  
+2b. Task of task number is already marked undone.
+
+> Use case ends
 
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
-4. Should favor DOS style commands over Unix-style commands.
+4. Should favor DOS style commands over Unix-style commands. 
 
 {More to be added}
 
