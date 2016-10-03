@@ -1,60 +1,59 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.category.Tag;
-import seedu.address.model.category.UniqueTagList;
+import seedu.address.model.category.Category;
+import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.task.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Adds a person to the address book.
+ * Adds a task to the to-do List.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
-            + "Parameters: NAME p/PHONE e/EMAIL a/ADDRESS  [t/TAG]...\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
+            + "Parameters: -t TASK [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE CATEGORY...]\n"
             + "Example: " + COMMAND_WORD
-            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
+            + " add -t Take lecture 2016-10-4 10:00->2016-10-4 12:00 -c CS2102";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New task added: %1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the to-do List";
 
-    private final Person toAdd;
+    private final Task toAdd;
+
 
     /**
-     * Convenience constructor using raw values.
+     * Add a floating task (task with no start time and DeadLine)
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, String phone, String email, String address, Set<String> tags)
-            throws IllegalValueException {
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+    public AddCommand(String title, String description, Set<String> categories)
+    		throws IllegalValueException {
+    	final Set<Category> categorySet = new HashSet<>();
+        for (String categoryName : categories) {
+            categorySet.add(new Category(categoryName));
         }
-        this.toAdd = new Person(
-                new Name(name),
-                new Phone(phone),
-                new Email(email),
-                new Address(address),
-                new UniqueTagList(tagSet)
-        );
-    }
 
+        this.toAdd = new Task(
+        		new Title(title),
+        		new Description(description),
+        		null,
+        		new UniqueCategoryList(categorySet)
+        );
+
+    }
     @Override
     public CommandResult execute() {
         assert model != null;
         try {
-            model.addPerson(toAdd);
+            model.addTask(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (UniquePersonList.DuplicatePersonException e) {
-            return new CommandResult(MESSAGE_DUPLICATE_PERSON);
+        } catch (UniqueTaskList.DuplicateTaskException e) {
+            return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
-
     }
-
 }

@@ -94,11 +94,9 @@ public class Parser {
         }
         try {
             return new AddCommand(
-                    matcher.group("name"),
-                    matcher.group("phone"),
-                    matcher.group("email"),
-                    matcher.group("address"),
-                    getTagsFromArgs(matcher.group("tagArguments"))
+                    matcher.group("title"),
+                    matcher.group("description"),
+                    getTagsFromArgs(matcher.group("categoriesArguments"))
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
