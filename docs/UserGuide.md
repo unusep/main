@@ -124,10 +124,16 @@ There is no need to save manually.
 
 Command | Format  
 -------- | :-------- 
-Add | `add NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-Clear | `clear`
+Add | `add -t TITLE [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE_CATEGORY]`
+Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE_CATEGORY]`
 Delete | `delete INDEX`
+View | `view INDEX`
 Find | `find KEYWORD [MORE_KEYWORDS]`
-List | `list`
-Help | `help`
-Select | `select INDEX`
+List | `list [CATEGORY]`
+Clear | `clear`
+Help | `help [COMMAND]`
+Task Due | `taskdue [END_DATE]`
+Undo | `undo`
+Redo | `redo`
+Mark Done | `mark TASK_NUMBER`
+Mark Undone | `unmark TASK_NUMBER`
