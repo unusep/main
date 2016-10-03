@@ -1,11 +1,12 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.Person;
-import seedu.address.model.event.ReadOnlyPerson;
-import seedu.address.model.event.UniquePersonList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.category.Category;
+import seedu.address.model.category.UniqueCategoryList;
+import seedu.address.model.category.UniqueCategoryList.DuplicateCategoryException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,28 +17,28 @@ import java.util.stream.Collectors;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
-    private final UniqueTagList tags;
+    private final UniqueEventList events;
+    private final UniqueCategoryList categories;
 
     {
-        persons = new UniquePersonList();
-        tags = new UniqueTagList();
+        events = new UniqueEventList();
+        categories = new UniqueCategoryList();
     }
 
     public AddressBook() {}
 
     /**
-     * Persons and Tags are copied into this addressbook
+     * Events and Categories are copied into this addressbook
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
-        this(toBeCopied.getUniquePersonList(), toBeCopied.getUniqueTagList());
+        this(toBeCopied.getUniqueEventList(), toBeCopied.getUniqueCategoryList());
     }
 
     /**
-     * Persons and Tags are copied into this addressbook
+     * Events and Categories are copied into this addressbook
      */
-    public AddressBook(UniquePersonList persons, UniqueTagList tags) {
-        resetData(persons.getInternalList(), tags.getInternalList());
+    public AddressBook(UniqueEventList events, UniqueCategoryList categories) {
+        resetData(events.getInternalList(), categories.getInternalList());
     }
 
     public static ReadOnlyAddressBook getEmptyAddressBook() {
@@ -46,104 +47,104 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 //// list overwrite operations
 
-    public ObservableList<Person> getPersons() {
-        return persons.getInternalList();
+    public ObservableList<Event> getEvents() {
+        return events.getInternalList();
     }
 
-    public void setPersons(List<Person> persons) {
-        this.persons.getInternalList().setAll(persons);
+    public void setEvents(List<Event> events) {
+        this.events.getInternalList().setAll(events);
     }
 
-    public void setTags(Collection<Tag> tags) {
-        this.tags.getInternalList().setAll(tags);
+    public void setCategories(Collection<Category> categories) {
+        this.categories.getInternalList().setAll(categories);
     }
 
-    public void resetData(Collection<? extends ReadOnlyPerson> newPersons, Collection<Tag> newTags) {
-        setPersons(newPersons.stream().map(Person::new).collect(Collectors.toList()));
-        setTags(newTags);
+    public void resetData(Collection<? extends ReadOnlyEvent> newEvents, Collection<Category> newCategories) {
+        setEvents(newEvents.stream().map(Event::new).collect(Collectors.toList()));
+        setCategories(newCategories);
     }
 
     public void resetData(ReadOnlyAddressBook newData) {
-        resetData(newData.getPersonList(), newData.getTagList());
+        resetData(newData.getEventList(), newData.getCategoryList());
     }
 
-//// person-level operations
+//// event-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a event to the address book.
+     * Also checks the new event's categories and updates {@link #categories} with any new categories found,
+     * and updates the Category objects in the event to point to those in {@link #categories}.
      *
-     * @throws UniquePersonList.DuplicatePersonException if an equivalent person already exists.
+     * @throws UniqueEventList.DuplicateEventException if an equivalent event already exists.
      */
-    public void addPerson(Person p) throws UniquePersonList.DuplicatePersonException {
-        syncTagsWithMasterList(p);
-        persons.add(p);
+    public void addEvent(Event p) throws UniqueEventList.DuplicateEventException {
+        syncCategoriesWithMasterList(p);
+        events.add(p);
     }
 
     /**
-     * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * Ensures that every category in this event:
+     *  - exists in the master list {@link #categories}
+     *  - points to a Category object in the master list
      */
-    private void syncTagsWithMasterList(Person person) {
-        final UniqueTagList personTags = person.getTags();
-        tags.mergeFrom(personTags);
+    private void syncCategoriesWithMasterList(Event event) {
+        final UniqueCategoryList eventCategories = event.getCategories();
+        categories.mergeFrom(eventCategories);
 
-        // Create map with values = tag object references in the master list
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        for (Tag tag : tags) {
-            masterTagObjects.put(tag, tag);
+        // Create map with values = category object references in the master list
+        final Map<Category, Category> masterCategoryObjects = new HashMap<>();
+        for (Category category : categories) {
+            masterCategoryObjects.put(category, category);
         }
 
-        // Rebuild the list of person tags using references from the master list
-        final Set<Tag> commonTagReferences = new HashSet<>();
-        for (Tag tag : personTags) {
-            commonTagReferences.add(masterTagObjects.get(tag));
+        // Rebuild the list of event categories using references from the master list
+        final Set<Category> commonCategoryReferences = new HashSet<>();
+        for (Category category : eventCategories) {
+            commonCategoryReferences.add(masterCategoryObjects.get(category));
         }
-        person.setTags(new UniqueTagList(commonTagReferences));
+        event.setCategories(new UniqueCategoryList(commonCategoryReferences));
     }
 
-    public boolean removePerson(ReadOnlyPerson key) throws UniquePersonList.PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeEvent(ReadOnlyEvent key) throws UniqueEventList.EventNotFoundException {
+        if (events.remove(key)) {
             return true;
         } else {
-            throw new UniquePersonList.PersonNotFoundException();
+            throw new UniqueEventList.EventNotFoundException();
         }
     }
 
-//// tag-level operations
+//// category-level operations
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    public void addCategory(Category t) throws DuplicateCategoryException {
+        categories.add(t);
     }
 
 //// util methods
 
     @Override
     public String toString() {
-        return persons.getInternalList().size() + " persons, " + tags.getInternalList().size() +  " tags";
+        return events.getInternalList().size() + " events, " + categories.getInternalList().size() +  " categories";
         // TODO: refine later
     }
 
     @Override
-    public List<ReadOnlyPerson> getPersonList() {
-        return Collections.unmodifiableList(persons.getInternalList());
+    public List<ReadOnlyEvent> getEventList() {
+        return Collections.unmodifiableList(events.getInternalList());
     }
 
     @Override
-    public List<Tag> getTagList() {
-        return Collections.unmodifiableList(tags.getInternalList());
+    public List<Category> getCategoryList() {
+        return Collections.unmodifiableList(categories.getInternalList());
     }
 
     @Override
-    public UniquePersonList getUniquePersonList() {
-        return this.persons;
+    public UniqueEventList getUniqueEventList() {
+        return this.events;
     }
 
     @Override
-    public UniqueTagList getUniqueTagList() {
-        return this.tags;
+    public UniqueCategoryList getUniqueCategoryList() {
+        return this.categories;
     }
 
 
@@ -151,13 +152,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equals(((AddressBook) other).tags));
+                && this.events.equals(((AddressBook) other).events)
+                && this.categories.equals(((AddressBook) other).categories));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(events, categories);
     }
 }

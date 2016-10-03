@@ -1,7 +1,7 @@
 package seedu.address.model.event;
 
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.tag.UniqueCategoryList;
+import seedu.address.model.category.UniqueCategoryList;
 
 import java.util.Objects;
 

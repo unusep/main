@@ -1,11 +1,11 @@
 package seedu.address.storage;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.ReadOnlyPerson;
-import seedu.address.model.event.UniquePersonList;
+import seedu.address.model.category.Category;
+import seedu.address.model.category.UniqueCategoryList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedEvent> events;
     @XmlElement
-    private List<Tag> tags;
+    private List<Category> categories;
 
     {
-        persons = new ArrayList<>();
-        tags = new ArrayList<>();
+        events = new ArrayList<>();
+        categories = new ArrayList<>();
     }
 
     /**
@@ -39,24 +39,24 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      * Conversion
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        tags = src.getTagList();
+        events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
+        categories = src.getCategoryList();
     }
 
     @Override
-    public UniqueTagList getUniqueTagList() {
+    public UniqueCategoryList getUniqueCategoryList() {
         try {
-            return new UniqueTagList(tags);
-        } catch (UniqueTagList.DuplicateTagException e) {
+            return new UniqueCategoryList(categories);
+        } catch (UniqueCategoryList.DuplicateCategoryException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public UniquePersonList getUniquePersonList() {
-        UniquePersonList lists = new UniquePersonList();
-        for (XmlAdaptedPerson p : persons) {
+    public UniqueEventList getUniqueEventList() {
+        UniqueEventList lists = new UniqueEventList();
+        for (XmlAdaptedEvent p : events) {
             try {
                 lists.add(p.toModelType());
             } catch (IllegalValueException e) {
@@ -67,8 +67,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public List<ReadOnlyPerson> getPersonList() {
-        return persons.stream().map(p -> {
+    public List<ReadOnlyEvent> getEventList() {
+        return events.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
@@ -79,8 +79,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public List<Tag> getTagList() {
-        return Collections.unmodifiableList(tags);
+    public List<Category> getCategoryList() {
+        return Collections.unmodifiableList(categories);
     }
 
 }

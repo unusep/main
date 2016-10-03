@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.category;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

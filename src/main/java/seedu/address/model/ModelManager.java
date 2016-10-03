@@ -4,10 +4,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.event.Person;
-import seedu.address.model.event.ReadOnlyPerson;
-import seedu.address.model.event.UniquePersonList;
-import seedu.address.model.event.UniquePersonList.PersonNotFoundException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.UniqueEventList.EventNotFoundException;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.core.ComponentManager;
 
@@ -22,7 +22,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given AddressBook
@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + src + " and user prefs " + userPrefs);
 
         addressBook = new AddressBook(src);
-        filteredPersons = new FilteredList<>(addressBook.getPersons());
+        filteredEvents = new FilteredList<>(addressBook.getEvents());
     }
 
     public ModelManager() {
@@ -45,7 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager(ReadOnlyAddressBook initialData, UserPrefs userPrefs) {
         addressBook = new AddressBook(initialData);
-        filteredPersons = new FilteredList<>(addressBook.getPersons());
+        filteredEvents = new FilteredList<>(addressBook.getEvents());
     }
 
     @Override
@@ -65,43 +65,43 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+        addressBook.removeEvent(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws UniquePersonList.DuplicatePersonException {
-        addressBook.addPerson(person);
+    public synchronized void addEvent(Event event) throws UniqueEventList.DuplicateEventException {
+        addressBook.addEvent(event);
         updateFilteredListToShowAll();
         indicateAddressBookChanged();
     }
 
-    //=========== Filtered Person List Accessors ===============================================================
+    //=========== Filtered Event List Accessors ===============================================================
 
     @Override
-    public UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return new UnmodifiableObservableList<>(filteredPersons);
+    public UnmodifiableObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return new UnmodifiableObservableList<>(filteredEvents);
     }
 
     @Override
     public void updateFilteredListToShowAll() {
-        filteredPersons.setPredicate(null);
+        filteredEvents.setPredicate(null);
     }
 
     @Override
-    public void updateFilteredPersonList(Set<String> keywords){
-        updateFilteredPersonList(new PredicateExpression(new NameQualifier(keywords)));
+    public void updateFilteredEventList(Set<String> keywords){
+        updateFilteredEventList(new PredicateExpression(new NameQualifier(keywords)));
     }
 
-    private void updateFilteredPersonList(Expression expression) {
-        filteredPersons.setPredicate(expression::satisfies);
+    private void updateFilteredEventList(Expression expression) {
+        filteredEvents.setPredicate(expression::satisfies);
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
 
     interface Expression {
-        boolean satisfies(ReadOnlyPerson person);
+        boolean satisfies(ReadOnlyEvent event);
         String toString();
     }
 
@@ -114,8 +114,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         @Override
-        public boolean satisfies(ReadOnlyPerson person) {
-            return qualifier.run(person);
+        public boolean satisfies(ReadOnlyEvent event) {
+            return qualifier.run(event);
         }
 
         @Override
@@ -125,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     interface Qualifier {
-        boolean run(ReadOnlyPerson person);
+        boolean run(ReadOnlyEvent event);
         String toString();
     }
 
@@ -137,9 +137,9 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         @Override
-        public boolean run(ReadOnlyPerson person) {
+        public boolean run(ReadOnlyEvent event) {
             return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(person.getName().fullName, keyword))
+                    .filter(keyword -> StringUtil.containsIgnoreCase(event.getTitle().fullTitle, keyword))
                     .findAny()
                     .isPresent();
         }

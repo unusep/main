@@ -1,9 +1,9 @@
 package seedu.address.model;
 
 import seedu.address.commons.core.UnmodifiableObservableList;
-import seedu.address.model.event.Person;
-import seedu.address.model.event.ReadOnlyPerson;
-import seedu.address.model.event.UniquePersonList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 
 import java.util.Set;
 
@@ -17,19 +17,19 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Deletes the given person. */
-    void deletePerson(ReadOnlyPerson target) throws UniquePersonList.PersonNotFoundException;
+    /** Deletes the given event. */
+    void deleteEvent(ReadOnlyEvent target) throws UniqueEventList.EventNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(Person person) throws UniquePersonList.DuplicatePersonException;
+    /** Adds the given event */
+    void addEvent(Event event) throws UniqueEventList.DuplicateEventException;
 
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
-    UnmodifiableObservableList<ReadOnlyPerson> getFilteredPersonList();
+    /** Returns the filtered event list as an {@code UnmodifiableObservableList<ReadOnlyEvent>} */
+    UnmodifiableObservableList<ReadOnlyEvent> getFilteredEventList();
 
-    /** Updates the filter of the filtered person list to show all persons */
+    /** Updates the filter of the filtered event list to show all events */
     void updateFilteredListToShowAll();
 
-    /** Updates the filter of the filtered person list to filter by the given keywords*/
-    void updateFilteredPersonList(Set<String> keywords);
+    /** Updates the filter of the filtered event list to filter by the given keywords*/
+    void updateFilteredEventList(Set<String> keywords);
 
 }

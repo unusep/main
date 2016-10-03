@@ -13,7 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.ReadOnlyPerson;
+import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -30,7 +30,7 @@ public class MainWindow extends UiPart {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -53,7 +53,7 @@ public class MainWindow extends UiPart {
     private MenuItem helpMenuItem;
 
     @FXML
-    private AnchorPane personListPanelPlaceholder;
+    private AnchorPane eventListPanelPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -109,7 +109,7 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
         browserPanel = BrowserPanel.load(browserPlaceholder);
-        personListPanel = PersonListPanel.load(primaryStage, getPersonListPlaceholder(), logic.getFilteredPersonList());
+        eventListPanel = EventListPanel.load(primaryStage, getEventListPlaceholder(), logic.getFilteredEventList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getAddressBookFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -127,8 +127,8 @@ public class MainWindow extends UiPart {
         return resultDisplayPlaceholder;
     }
 
-    public AnchorPane getPersonListPlaceholder() {
-        return personListPanelPlaceholder;
+    public AnchorPane getEventListPlaceholder() {
+        return eventListPanelPlaceholder;
     }
 
     public void hide() {
@@ -182,12 +182,12 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
     }
 
-    public void loadPersonPage(ReadOnlyPerson person) {
-        browserPanel.loadPersonPage(person);
+    public void loadEventPage(ReadOnlyEvent event) {
+        browserPanel.loadEventPage(event);
     }
 
     public void releaseResources() {

@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.category;
 
 
 import seedu.address.commons.exceptions.IllegalValueException;

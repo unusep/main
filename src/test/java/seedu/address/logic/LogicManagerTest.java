@@ -15,9 +15,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.category.Tag;
+import seedu.address.model.category.UniqueTagList;
 import seedu.address.model.event.*;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.StorageManager;
 
 import java.util.ArrayList;

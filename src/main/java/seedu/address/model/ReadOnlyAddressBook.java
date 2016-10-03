@@ -1,10 +1,10 @@
 package seedu.address.model;
 
 
-import seedu.address.model.event.ReadOnlyPerson;
-import seedu.address.model.event.UniquePersonList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.category.Category;
+import seedu.address.model.category.UniqueCategoryList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 
 import java.util.List;
 
@@ -13,18 +13,18 @@ import java.util.List;
  */
 public interface ReadOnlyAddressBook {
 
-    UniqueTagList getUniqueTagList();
+    UniqueCategoryList getUniqueCategoryList();
 
-    UniquePersonList getUniquePersonList();
+    UniqueEventList getUniqueEventList();
 
     /**
      * Returns an unmodifiable view of persons list
      */
-    List<ReadOnlyPerson> getPersonList();
+    List<ReadOnlyEvent> getEventList();
 
     /**
-     * Returns an unmodifiable view of tags list
+     * Returns an unmodifiable view of categories list
      */
-    List<Tag> getTagList();
+    List<Category> getCategoryList();
 
 }

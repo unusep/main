@@ -12,8 +12,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class TimeInterval {
 
-	private final DateTime startTime;
-	private final DateTime endTime;
+	public final DateTime startTime;
+	public final DateTime endTime;
 
 	public static final String MESSAGE_NAME_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
@@ -78,7 +78,7 @@ public class TimeInterval {
 
    @Override
    public int hashCode() {
-       return startTime.hashCode();
+       return startTime.hashCode() * 31 + endTime.hashCode();
    }
 
 }

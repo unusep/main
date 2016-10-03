@@ -1,6 +1,6 @@
 package seedu.address.model.event;
 
-import seedu.address.model.tag.UniqueCategoryList;
+import seedu.address.model.category.UniqueCategoryList;
 
 /**
  * A read-only immutable interface for an Event in the to-do list.
@@ -42,5 +42,19 @@ public interface ReadOnlyEvent {
                 .append(" Category: ")
                 .append(getCategories());
         return builder.toString();
+    }
+
+    /**
+     * Returns a string representation of this event's categories
+     */
+    default String categoriesString() {
+        final StringBuffer buffer = new StringBuffer();
+        final String separator = ", ";
+        getCategories().forEach(category -> buffer.append(category).append(separator));
+        if (buffer.length() == 0) {
+            return "";
+        } else {
+            return buffer.substring(0, buffer.length() - separator.length());
+        }
     }
 }
