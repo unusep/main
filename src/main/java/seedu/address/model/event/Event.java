@@ -13,15 +13,14 @@ public class Event implements ReadOnlyEvent {
 
     private Title title;
     private Description description;
-    private StartTime startTime;
-    private EndTime endTime;
+    private TimeInterval timeInterval;
 
     private UniqueCategoryList categories;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Description description, StartTime startTime, EndTime endTime, UniqueCategoryList categories) {
+    public Event(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
         assert !CollectionUtil.isAnyNull(title, description, startTime, endTime, categories);
         this.title = title;
         this.description = description;

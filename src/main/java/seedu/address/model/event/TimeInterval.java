@@ -12,8 +12,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class TimeInterval {
 
-	public final DateTime startTime;
-	public final DateTime endTime;
+	private final DateTime startTime;
+	private final DateTime endTime;
 
 	public static final String MESSAGE_NAME_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
@@ -24,14 +24,20 @@ public class TimeInterval {
     * @throws IllegalValueException if given startTime string is invalid.
     */
    public TimeInterval(String startingTime, String endingTime) throws IllegalValueException {
-       if (!isValidTime(startingTime)) {
+	   DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+
+	   if ((startingTime == null) && !isValidTime(startingTime)) {
            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
        }
        if (!isValidTime(endingTime)) {
            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
        }
-       DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-       startTime = formatter.parseDateTime(startingTime);
+       if(startingTime == null) {
+    	   startTime = new DateTime();
+       } else {
+    	   startTime = formatter.parseDateTime(startingTime);
+       }
+
        endTime = formatter.parseDateTime(endingTime);
    }
 
@@ -40,6 +46,20 @@ public class TimeInterval {
     */
    public static boolean isValidTime(String test) {
        return test.matches(NAME_VALIDATION_REGEX);
+   }
+
+   /**
+    * getter method for startTime
+    */
+   public DateTime getStartTime() {
+	   return this.startTime;
+   }
+
+   /**
+    * getter method for endTime
+    */
+   public DateTime getEndTime() {
+	   return this.endTime;
    }
 
    @Override
