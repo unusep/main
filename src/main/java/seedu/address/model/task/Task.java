@@ -44,10 +44,20 @@ public class Task implements ReadOnlyTask {
     public Description getDescription() {
         return description;
     }
+    
+    @Override
+    public boolean hasDescription() {
+        return description != null;
+    }
 
     @Override
     public TimeInterval getTimeInterval() {
         return timeInterval;
+    }
+    
+    @Override
+    public boolean hasTimeInterval() {
+        return timeInterval != null;
     }
 
     @Override

@@ -8,8 +8,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Title {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Task titles should be alphanumeric";
-    public static final String NAME_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_TITLE_CONSTRAINTS = "Task titles should be alphanumeric";
+    public static final String TITLE_VALIDATION_REGEX = ".+";
 
     public final String fullTitle;
 
@@ -22,7 +22,7 @@ public class Title {
         assert title != null;
         title = title.trim();
         if (!isValidTitle(title)) {
-            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_TITLE_CONSTRAINTS);
         }
         this.fullTitle = title;
     }
@@ -31,7 +31,7 @@ public class Title {
      * Returns true if a given string is a valid task title.
      */
     public static boolean isValidTitle(String test) {
-        return test.matches(NAME_VALIDATION_REGEX);
+        return test.matches(TITLE_VALIDATION_REGEX);
     }
 
 

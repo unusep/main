@@ -26,12 +26,11 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<name>[^/]+)"
-                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
-                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
-                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("-t(?<title>[^-<]+)");
+    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("-d(?<descirption>[^-<]+)");
+    private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("<(?<startTime>.+)->");
+    private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("->(?<endTime>.+)>");
+    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("-c(?<categories>[^-<]+)");
 
     public Parser() {}
 
@@ -87,16 +86,22 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args){
-        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
-        // Validate arg string format
-        if (!matcher.matches()) {
+        final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
+        final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
+        final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
+        final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
+        final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
+        // Validate arg string format (can be only with title)
+        if (!titleMatcher.find()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         try {
             return new AddCommand(
-                    matcher.group("title"),
-                    matcher.group("description"),
-                    getTagsFromArgs(matcher.group("categoriesArguments"))
+                    titleMatcher.group("title"),
+                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,        
+                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -109,7 +114,7 @@ public class Parser {
      */
     private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
         // no tags
-        if (tagArguments.isEmpty()) {
+        if (tagArguments == null) {
             return Collections.emptySet();
         }
         // replace first delimiter prefix, then split

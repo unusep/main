@@ -41,8 +41,8 @@ public class TaskCard extends UiPart{
     public void initialize() {
         title.setText(task.getTitle().fullTitle);
         id.setText(displayedIndex + ". ");
-        description.setText(task.getDescription().value);
-        timeInterval.setText(task.getTimeInterval().toString());
+        description.setText(task.hasDescription() ? task.getDescription().value : "");
+        timeInterval.setText(task.hasTimeInterval() ? task.getTimeInterval().toString() : "");
         categories.setText(task.categoriesString());
     }
 

@@ -10,7 +10,9 @@ public interface ReadOnlyTask {
 
     Title getTitle();
     Description getDescription();
+    boolean hasDescription();
     TimeInterval getTimeInterval();
+    boolean hasTimeInterval();
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -25,8 +27,8 @@ public interface ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
-                && other.getDescription().equals(this.getDescription())
-                && other.getTimeInterval().equals(this.getTimeInterval()));
+                && other.hasDescription() && this.hasDescription() && other.getDescription().equals(this.getDescription())
+                && other.hasTimeInterval() && this.hasTimeInterval() && other.getTimeInterval().equals(this.getTimeInterval()));
     }
 
     /**
@@ -34,13 +36,18 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTitle())
-                .append(" Description: ")
-                .append(getDescription())
-                .append(" StartTime: ")
-                .append(getTimeInterval())
-                .append(" Category: ")
-                .append(getCategories());
+        builder.append(getTitle());
+        if (hasDescription()) {
+            builder.append(" Description: ").append(getDescription());
+        }
+        if (hasTimeInterval()) {
+            builder.append(" Description: ")
+            .append(getDescription())
+            .append(" StartTime: ")
+            .append(getTimeInterval());
+        }
+        builder.append(" Categories: ");
+        getCategories().forEach(builder::append);
         return builder.toString();
     }
 

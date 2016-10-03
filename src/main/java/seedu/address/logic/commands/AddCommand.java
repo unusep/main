@@ -15,13 +15,13 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
-            + "Parameters: -t TASK [-d DESCRIPTION] [[START]->[END]] [-c [CATEGORY] [MORE CATEGORY...]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
+            + "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
             + "Example: " + COMMAND_WORD
-            + " add -t Take lecture 2016-10-4 10:00->2016-10-4 12:00 -c CS2102";
+            + " add -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the to-do List";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
 
     private final Task toAdd;
 
@@ -31,7 +31,7 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String title, String description, Set<String> categories)
+    public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
     		throws IllegalValueException {
     	final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
@@ -40,7 +40,7 @@ public class AddCommand extends Command {
 
         this.toAdd = new Task(
         		new Title(title),
-        		new Description(description),
+        		null,
         		null,
         		new UniqueCategoryList(categorySet)
         );

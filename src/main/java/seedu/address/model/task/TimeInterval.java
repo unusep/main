@@ -38,6 +38,17 @@ public class TimeInterval {
 
        endTime = LocalDateTime.parse(endingTime);
    }
+   
+   /**
+    * For quickly created time interval
+    * 
+    * @param startingTime
+    * @param endTime
+    */
+   public TimeInterval(LocalDateTime startingTime, LocalDateTime endTime) {
+       this.startTime = startingTime;
+       this.endTime = endTime;
+   }
 
    /**
     * Returns true if a given string is a valid task startTime.

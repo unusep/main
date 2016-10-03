@@ -3,34 +3,34 @@ package seedu.address.model.task;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Task's name in the to-do list.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Represents an Task's description in the Do-erlist.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
  */
 public class Description {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Task descriptions can be in any format";
-    public static final String NAME_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_DESCRIPTION_CONSTRAINTS = "Task descriptions can be in any format";
+    public static final String DESCRIPTION_VALIDATION_REGEX = ".+";
 
     public final String value;
 
     /**
-     * Validates given name.
+     * Validates given description.
      *
      * @throws IllegalValueException if given name string is invalid.
      */
     public Description(String address) throws IllegalValueException {
         assert address != null;
-        if (!isValidName(address)) {
-            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        if (!isValidDescription(address)) {
+            throw new IllegalValueException(MESSAGE_DESCRIPTION_CONSTRAINTS);
         }
         this.value = address;
     }
 
     /**
-     * Returns true if a given string is a valid task name.
+     * Returns true if a given string is a valid task description.
      */
-    public static boolean isValidName(String test) {
-        return test.matches(NAME_VALIDATION_REGEX);
+    public static boolean isValidDescription(String test) {
+        return test.matches(DESCRIPTION_VALIDATION_REGEX);
     }
 
 

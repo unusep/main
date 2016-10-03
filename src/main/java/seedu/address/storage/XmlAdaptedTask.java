@@ -18,11 +18,11 @@ public class XmlAdaptedTask {
 
     @XmlElement(required = true)
     private String title;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private String description;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private LocalDateTime startTime;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private LocalDateTime endTime;
 
 
@@ -42,9 +42,13 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
         title = source.getTitle().fullTitle;
-        description = source.getDescription().value;
-        startTime = source.getTimeInterval().startTime;
-        endTime = source.getTimeInterval().endTime;
+        if (source.hasDescription()) {
+            description = source.getDescription().value;
+        }
+        if (source.hasTimeInterval()) {
+            startTime = source.getTimeInterval().startTime;
+            endTime = source.getTimeInterval().endTime;
+        }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
             categorized.add(new XmlAdaptedCategory(category));
@@ -62,8 +66,14 @@ public class XmlAdaptedTask {
             taskCategories.add(category.toModelType());
         }
         final Title title = new Title(this.title);
-        final Description description = new Description(this.description);
-        final TimeInterval timeInterval = new TimeInterval(this.startTime.toString(), this.endTime.toString());
+        Description description = null;
+        TimeInterval timeInterval = null;
+        if (this.description != null) {
+            description = new Description(this.description);
+        }
+        if (this.startTime != null && this.endTime != null) {
+            timeInterval = new TimeInterval(this.startTime, this.endTime);
+        }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
         return new Task(title, description, timeInterval, categories);
     }
