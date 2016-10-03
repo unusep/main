@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class Event implements ReadOnlyEvent {
 
-    private Name name;
+    private Title title;
     private Description description;
     private StartTime startTime;
     private EndTime endTime;
@@ -21,9 +21,9 @@ public class Event implements ReadOnlyEvent {
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, Description description, StartTime startTime, EndTime endTime, Category category) {
-        assert !CollectionUtil.isAnyNull(name, description, startTime, endTime, category);
-        this.name = name;
+    public Event(Title title, Description description, StartTime startTime, EndTime endTime, Category category) {
+        assert !CollectionUtil.isAnyNull(title, description, startTime, endTime, category);
+        this.title = title;
         this.description = phone;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -34,12 +34,12 @@ public class Event implements ReadOnlyEvent {
      * Copy constructor.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getName(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategory());
+        this(source.getTitle(), source.getDescription(), source.getStartTime(), source.getEndTime(), source.getCategory());
     }
 
     @Override
-    public Name getName() {
-        return name;
+    public Title getTitle() {
+        return title;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Event implements ReadOnlyEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, description, startTime, endTime, category);
+        return Objects.hash(title, description, startTime, endTime, category);
     }
 
     @Override
