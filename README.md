@@ -19,8 +19,11 @@
 * [About Us](docs/AboutUs.md)
 * [Contact Us](docs/ContactUs.md)
 
+#### Acknowledgement
+We used parts of the code from [AddressBook-level4](https://github.com/nus-cs2103-AY1617S1/addressbook-level4).
 
-#### Acknowledgements
+#### Dependency
+Our project is dependent on the packages below:
 * [Jackson](https://github.com/FasterXML/jackson)
 * [Guava](https://github.com/google/guava)
 * [TestFX](https://github.com/TestFX/TestFX)
