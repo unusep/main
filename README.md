@@ -3,7 +3,7 @@
 
 # Do-*er*List
 
-<img src="docs/images/Ui.png" width="600"><br>
+<img src="docs/images/prototype_ui_v1.jpg" width="600"><br>
 
 * This is a desktop Todo list application. It has a GUI but most of the user interactions happen using 
   a CLI (Command Line Interface).
@@ -19,8 +19,13 @@
 * [About Us](docs/AboutUs.md)
 * [Contact Us](docs/ContactUs.md)
 
+#### Acknowledgement
+We used parts of the code from [AddressBook-level4](https://github.com/nus-cs2103-AY1617S1/addressbook-level4).
 
-#### Acknowledgements
-
+#### Dependency
+Our project is dependent on the packages below:
+* [Jackson](https://github.com/FasterXML/jackson)
+* [Guava](https://github.com/google/guava)
+* [TestFX](https://github.com/TestFX/TestFX)
 
 #### Licence : [MIT](LICENSE)
