@@ -332,65 +332,65 @@ public class LogicManagerTest {
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-//        assertCommandBehavior("find ", expectedMessage);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        assertCommandBehavior("find ", expectedMessage);
     }
 
     @Test
     public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-//        Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-//        Person p1 = helper.generatePersonWithName("KE Y");
-//        Person p2 = helper.generatePersonWithName("KEYKEYKEY sduauo");
-//
-//        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-//        helper.addToModel(model, fourPersons);
-//
-//        assertCommandBehavior("find KEY",
-//                Command.getMessageForPersonListShownSummary(expectedList.size()),
-//                expectedAB,
-//                expectedList);
+        TestDataHelper helper = new TestDataHelper();
+        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
+        Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
+
+        List<Task> fourPersons = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2);
+        helper.addToModel(model, fourPersons);
+
+        assertCommandBehavior("find KEY",
+                Command.getMessageForPersonListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
     }
 
     @Test
     public void execute_find_isNotCaseSensitive() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Person p1 = helper.generatePersonWithName("bla bla KEY bla");
-//        Person p2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-//        Person p3 = helper.generatePersonWithName("key key");
-//        Person p4 = helper.generatePersonWithName("KEy sduauo");
-//
-//        List<Person> fourPersons = helper.generatePersonList(p3, p1, p4, p2);
-//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-//        List<Person> expectedList = fourPersons;
-//        helper.addToModel(model, fourPersons);
-//
-//        assertCommandBehavior("find KEY",
-//                Command.getMessageForPersonListShownSummary(expectedList.size()),
-//                expectedAB,
-//                expectedList);
+        TestDataHelper helper = new TestDataHelper();
+        Task p1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
+        Task p2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task p3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
+        Task p4 = helper.generateTaskWithTitleAndDescription("KEy sduauo", "dummy");
+
+        List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Task> expectedList = fourPersons;
+        helper.addToModel(model, fourPersons);
+
+        assertCommandBehavior("find KEY",
+                Command.getMessageForPersonListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
     }
 
     @Test
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-//        Person pTarget2 = helper.generatePersonWithName("bla rAnDoM bla bceofeia");
-//        Person pTarget3 = helper.generatePersonWithName("key key");
-//        Person p1 = helper.generatePersonWithName("sduauo");
-//
-//        List<Person> fourPersons = helper.generatePersonList(pTarget1, p1, pTarget2, pTarget3);
-//        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-//        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2, pTarget3);
-//        helper.addToModel(model, fourPersons);
-//
-//        assertCommandBehavior("find key rAnDoM",
-//                Command.getMessageForPersonListShownSummary(expectedList.size()),
-//                expectedAB,
-//                expectedList);
+        TestDataHelper helper = new TestDataHelper();
+        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla rAnDoM bla bceofeia", "dummy");
+        Task cTarget3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
+        Task c1 = helper.generateTaskWithTitleAndDescription("sduauo", "dummy");
+
+        List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
+        helper.addToModel(model, fourPersons);
+
+        assertCommandBehavior("find key rAnDoM",
+                Command.getMessageForPersonListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
     }
 
 
@@ -523,6 +523,16 @@ public class LogicManagerTest {
                 model.addTask(t);
             }
         }
+        
+        Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
+            Category category1 = new Category("CS2101");
+            Category category2 = new Category("CS2103T");
+            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);      
+            return new Task(new Title(title), 
+                    new Description(description), 
+                    new TimeInterval("2016-10-03 14:00", "2016-10-04 15:00"),
+                    categories);
+        }
 
         /**
          * Generates a list of Tasks.
@@ -538,6 +548,8 @@ public class LogicManagerTest {
         List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
+        
+
 
     }
 }

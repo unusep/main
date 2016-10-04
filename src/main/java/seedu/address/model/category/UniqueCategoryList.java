@@ -130,10 +130,20 @@ public class UniqueCategoryList implements Iterable<Category> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniqueCategoryList // instanceof handles nulls
-                && this.internalList.equals(
-                ((UniqueCategoryList) other).internalList));
+        if (other == this) {
+            // short cut
+            return true;
+        }
+        if (other instanceof UniqueCategoryList) {
+            // doing set except
+            UniqueCategoryList otherObj = (UniqueCategoryList) other;
+            ArrayList<Category> compare = new ArrayList<Category>(this.internalList);
+            compare.removeAll(otherObj.internalList);
+            return compare.isEmpty();
+        }
+            
+        return super.equals(other);
+        
     }
 
     @Override
