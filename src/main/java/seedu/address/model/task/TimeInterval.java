@@ -31,12 +31,12 @@ public class TimeInterval {
            throw new IllegalValueException(MESSAGE_TIME_INTERVAL_CONSTRAINTS);
        }
        if(startingTime == null) {
-    	   startTime = LocalDateTime.now();
+    	       startTime = LocalDateTime.now();
        } else {
-    	   startTime = LocalDateTime.parse(startingTime);
+    	       startTime = LocalDateTime.parse(startingTime, formatter);
        }
 
-       endTime = LocalDateTime.parse(endingTime);
+       endTime = LocalDateTime.parse(endingTime, formatter);
    }
    
    /**

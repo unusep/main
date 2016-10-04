@@ -14,24 +14,24 @@ public class TypicalTestTasks {
     public TypicalTestTasks() {
         try {
             alice =  new TaskBuilder().withTitle("CA1 Guide").withDescription("Do your homework 1")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00")
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00")
                     .withTags("CS2101").build();
             benson = new TaskBuilder().withTitle("Guide CA2").withDescription("Do your homework 2")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00")
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00")
                     .withTags("CS2103", "CS2101").build();
             carl = new TaskBuilder().withTitle("Guide Tutorial")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00").build();
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00").build();
             daniel = new TaskBuilder().withTitle("Guide Math").withDescription("Do your homework 3")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00").build();
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00").build();
             elle = new TaskBuilder().withTitle("Math Test")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00").build();
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00").build();
             fiona = new TaskBuilder().withTitle("Lecture Quiz").withDescription("Do your homework 4")
-                    .withTimeInterval("2016-10-3 13:00", "2016-10-4 12:00").build();
+                    .withTimeInterval("2016-10-03 13:00", "2016-10-04 12:00").build();
             george = new TaskBuilder().withTitle("Quiz 1").build();
 
             //Manually added
-            hoon = new TaskBuilder().withTitle("Do quiz 1").withDescription("8482424").build();
-            ida = new TaskBuilder().withTitle("Do quiz 2").withDescription("8482131").build();
+            hoon = new TaskBuilder().withTitle("Do quiz 1").withDescription("quiz 1").build();
+            ida = new TaskBuilder().withTitle("Do quiz 2").withDescription("quiz 2").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";

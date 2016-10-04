@@ -6,6 +6,7 @@ import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.task.*;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,9 +22,7 @@ public class XmlAdaptedTask {
     @XmlElement(required = false)
     private String description;
     @XmlElement(required = false)
-    private LocalDateTime startTime;
-    @XmlElement(required = false)
-    private LocalDateTime endTime;
+    private XmlAdaptedTimeInterval timeInterval;
 
 
     @XmlElement
@@ -46,8 +45,7 @@ public class XmlAdaptedTask {
             description = source.getDescription().value;
         }
         if (source.hasTimeInterval()) {
-            startTime = source.getTimeInterval().startTime;
-            endTime = source.getTimeInterval().endTime;
+            timeInterval = new XmlAdaptedTimeInterval(source.getTimeInterval());
         }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
@@ -71,8 +69,8 @@ public class XmlAdaptedTask {
         if (this.description != null) {
             description = new Description(this.description);
         }
-        if (this.startTime != null && this.endTime != null) {
-            timeInterval = new TimeInterval(this.startTime, this.endTime);
+        if (this.timeInterval != null) {
+            timeInterval = this.timeInterval.toModelType();
         }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
         return new Task(title, description, timeInterval, categories);
