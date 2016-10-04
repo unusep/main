@@ -23,3 +23,8 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 	- Gradle: **Hai Long**
 	- Travis: **Jason**
 	- Eclipse: **Benedict**
+
+- UI Part: **Jason**
+- Logic: **Xiao Pu**
+- Model: **Hai Long**
+- Storage: **Benedict**
