@@ -74,7 +74,7 @@ public class TimeInterval {
 
    @Override
    public String toString() {
-       return startTime + " -> " + endTime;
+       return startTime + "->" + endTime;
    }
 
    @Override

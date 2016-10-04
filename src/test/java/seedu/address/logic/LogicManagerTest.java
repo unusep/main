@@ -20,6 +20,8 @@ import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.task.*;
 import seedu.address.storage.StorageManager;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -148,15 +150,14 @@ public class LogicManagerTest {
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-//        assertCommandBehavior(
-//                "add wrong args wrong args", expectedMessage);
-//        assertCommandBehavior(
-//                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "add", expectedMessage);
+        assertCommandBehavior(
+                "add -t", expectedMessage);
+        assertCommandBehavior(
+                "add -t     ", expectedMessage);
+
     }
 
     @Test
@@ -186,6 +187,21 @@ public class LogicManagerTest {
 //                expectedAB,
 //                expectedAB.getPersonList());
 
+    }
+    
+    @Test
+    public void execute_add_floatingTask_successful() throws Exception {
+      // setup expectations
+      TestDataHelper helper = new TestDataHelper();
+      Task toBeAdded = helper.taskWithAttribute(false, false, false);
+      AddressBook expectedAB = new AddressBook();
+      expectedAB.addTask(toBeAdded);
+
+      // execute command and verify result
+      assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+              expectedAB,
+              expectedAB.getTaskList());
     }
 
     @Test
@@ -380,133 +396,147 @@ public class LogicManagerTest {
     /**
      * A utility class to generate test data.
      */
-//    class TestDataHelper{
-//
-//        Person adam() throws Exception {
-//            Name name = new Name("Adam Brown");
-//            Phone privatePhone = new Phone("111111");
-//            Email email = new Email("adam@gmail.com");
-//            Address privateAddress = new Address("111, alpha street");
-//            Tag tag1 = new Tag("tag1");
-//            Tag tag2 = new Tag("tag2");
-//            UniqueTagList tags = new UniqueTagList(tag1, tag2);
-//            return new Person(name, privatePhone, email, privateAddress, tags);
-//        }
-//
-//        /**
-//         * Generates a valid person using the given seed.
-//         * Running this function with the same parameter values guarantees the returned person will have the same state.
-//         * Each unique seed will generate a unique Person object.
-//         *
-//         * @param seed used to generate the person data field values
-//         */
-//        Person generatePerson(int seed) throws Exception {
-//            return new Person(
-//                    new Name("Person " + seed),
-//                    new Phone("" + Math.abs(seed)),
-//                    new Email(seed + "@email"),
-//                    new Address("House of " + seed),
-//                    new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
-//            );
-//        }
-//
-//        /** Generates the correct add command based on the person given */
-//        String generateAddCommand(Person p) {
-//            StringBuffer cmd = new StringBuffer();
-//
-//            cmd.append("add ");
-//
-//            cmd.append(p.getName().toString());
-//            cmd.append(" p/").append(p.getPhone());
-//            cmd.append(" e/").append(p.getEmail());
-//            cmd.append(" a/").append(p.getAddress());
-//
-//            UniqueTagList tags = p.getTags();
-//            for(Tag t: tags){
-//                cmd.append(" t/").append(t.tagName);
-//            }
-//
-//            return cmd.toString();
-//        }
-//
-//        /**
-//         * Generates an AddressBook with auto-generated persons.
-//         */
-//        AddressBook generateAddressBook(int numGenerated) throws Exception{
-//            AddressBook addressBook = new AddressBook();
-//            addToAddressBook(addressBook, numGenerated);
-//            return addressBook;
-//        }
-//
-//        /**
-//         * Generates an AddressBook based on the list of Persons given.
-//         */
-//        AddressBook generateAddressBook(List<Person> persons) throws Exception{
-//            AddressBook addressBook = new AddressBook();
-//            addToAddressBook(addressBook, persons);
-//            return addressBook;
-//        }
-//
-//        /**
-//         * Adds auto-generated Person objects to the given AddressBook
-//         * @param addressBook The AddressBook to which the Persons will be added
-//         */
-//        void addToAddressBook(AddressBook addressBook, int numGenerated) throws Exception{
-//            addToAddressBook(addressBook, generatePersonList(numGenerated));
-//        }
-//
-//        /**
-//         * Adds the given list of Persons to the given AddressBook
-//         */
-//        void addToAddressBook(AddressBook addressBook, List<Person> personsToAdd) throws Exception{
-//            for(Person p: personsToAdd){
-//                addressBook.addPerson(p);
-//            }
-//        }
-//
-//        /**
-//         * Adds auto-generated Person objects to the given model
-//         * @param model The model to which the Persons will be added
-//         */
-//        void addToModel(Model model, int numGenerated) throws Exception{
-//            addToModel(model, generatePersonList(numGenerated));
-//        }
-//
-//        /**
-//         * Adds the given list of Persons to the given model
-//         */
-//        void addToModel(Model model, List<Person> personsToAdd) throws Exception{
-//            for(Person p: personsToAdd){
-//                model.addPerson(p);
-//            }
-//        }
-//
-//        /**
-//         * Generates a list of Persons based on the flags.
-//         */
-//        List<Person> generatePersonList(int numGenerated) throws Exception{
-//            List<Person> persons = new ArrayList<>();
-//            for(int i = 1; i <= numGenerated; i++){
-//                persons.add(generatePerson(i));
-//            }
-//            return persons;
-//        }
-//
-//        List<Person> generatePersonList(Person... persons) {
-//            return Arrays.asList(persons);
-//        }
-//
-//        /**
-//         * Generates a Person object with given name. Other fields will have some dummy values.
-//         */
-//        Person generatePersonWithName(String name) throws Exception {
-//            return new Person(
-//                    new Name(name),
-//                    new Phone("1"),
-//                    new Email("1@email"),
-//                    new Address("House of 1"),
-//                    new UniqueTagList(new Tag("tag"))
-//            );
-//        }
-//    }
+    class TestDataHelper{
+        
+        /**
+         * Generate a task with/without attribute
+         * 
+         * @param hasDescription indicate whether to has the attribute
+         * @param hasTimeInterval indicate whether to has the attribute
+         * @param hasCategory indicate whether to has the attribute
+         * @return Task generated task
+         * @throws Exception
+         */
+        Task taskWithAttribute(boolean hasDescription, boolean hasTimeInterval, boolean hasCategory) throws Exception {
+            Title title = new Title("My Task");
+            Description description = null;
+            TimeInterval timeInterval = null;
+            UniqueCategoryList categories = new UniqueCategoryList();
+            if (hasDescription) {
+                description = new Description("Do my homework");
+            }
+            if (hasTimeInterval) {
+                timeInterval = new TimeInterval("2016-10-03 14:00", "2016-10-04 15:00");
+            }
+            if (hasCategory) {
+                Category category1 = new Category("CS2101");
+                Category category2 = new Category("CS2103T");
+                categories = new UniqueCategoryList(category1, category2);
+            }
+            
+            return new Task(title, description, timeInterval, categories);
+        }
+
+        /**
+         * Generates a valid task using the given seed.
+         * Running this function with the same parameter values guarantees the returned person will have the same state.
+         * Each unique seed will generate a unique Task object.
+         *
+         * @param seed used to generate the task data field values
+         */
+        Task generateTask(int seed) throws Exception {
+            LocalDateTime sampleDate1 = LocalDateTime.parse("2011-12-03T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            LocalDateTime sampleDate2 = LocalDateTime.parse("2011-12-03T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            return new Task(
+                    new Title("Person " + seed),
+                    new Description("" + Math.abs(seed)),
+                    new TimeInterval(sampleDate1, sampleDate2.plusDays(seed)),
+                    new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
+            );
+        }
+
+        /** Generates the correct add command based on the task given */
+        String generateAddCommand(Task r) {
+            StringBuffer cmd = new StringBuffer();
+
+            cmd.append("add ");
+            cmd.append("-t ").append(r.getTitle()).append(" ");
+            
+            if (r.hasDescription()) {
+                cmd.append("-d ").append(r.getDescription()).append(" ");
+            }
+           
+            if (r.hasTimeInterval()) {
+                cmd.append("{").append(r.getTimeInterval()).append("} ");
+            }
+            
+            UniqueCategoryList categories = r.getCategories();
+            if (!categories.getInternalList().isEmpty()) {
+                cmd.append("-c ");
+                for(Category c: categories){
+                    cmd.append(c.categoryName);
+                }
+            }
+            
+            return cmd.toString();
+        }
+
+        /**
+         * Generates an AddressBook with auto-generated tasks.
+         */
+        AddressBook generateAddressBook(int numGenerated) throws Exception{
+            AddressBook addressBook = new AddressBook();
+            addToAddressBook(addressBook, numGenerated);
+            return addressBook;
+        }
+
+        /**
+         * Generates an AddressBook based on the list of Tasks given.
+         */
+        AddressBook generateAddressBook(List<Task> tasks) throws Exception{
+            AddressBook addressBook = new AddressBook();
+            addToAddressBook(addressBook, tasks);
+            return addressBook;
+        }
+
+        /**
+         * Adds auto-generated Person objects to the given AddressBook
+         * @param addressBook The AddressBook to which the Persons will be added
+         */
+        void addToAddressBook(AddressBook addressBook, int numGenerated) throws Exception{
+            addToAddressBook(addressBook, generateTaskList(numGenerated));
+        }
+
+        /**
+         * Adds the given list of Tasks to the given AddressBook
+         */
+        void addToAddressBook(AddressBook addressBook, List<Task> tasksToAdd) throws Exception{
+            for(Task c: tasksToAdd){
+                addressBook.addTask(c);
+            }
+        }
+
+        /**
+         * Adds auto-generated Task objects to the given model
+         * @param model The model to which the Task will be added
+         */
+        void addToModel(Model model, int numGenerated) throws Exception{
+            addToModel(model, generateTaskList(numGenerated));
+        }
+
+        /**
+         * Adds the given list of Tasks to the given model
+         */
+        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+            for(Task t: tasksToAdd){
+                model.addTask(t);
+            }
+        }
+
+        /**
+         * Generates a list of Tasks.
+         */
+        List<Task> generateTaskList(int numGenerated) throws Exception{
+            List<Task> tasks = new ArrayList<>();
+            for(int i = 1; i <= numGenerated; i++){
+                tasks.add(generateTask(i));
+            }
+            return tasks;
+        }
+
+        List<Task> generateTaskList(Task... tasks) {
+            return Arrays.asList(tasks);
+        }
+
+    }
 }
