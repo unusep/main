@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Category {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Categorys names should be alphanumeric";
+    public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public String categoryName;
@@ -26,7 +26,7 @@ public class Category {
         assert name != null;
         name = name.trim();
         if (!isValidCategoryName(name)) {
-            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_CATEGORY_CONSTRAINTS);
         }
         this.categoryName = name;
     }

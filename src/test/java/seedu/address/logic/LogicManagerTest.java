@@ -15,6 +15,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.category.Category;
 import seedu.address.model.category.Tag;
 import seedu.address.model.category.UniqueTagList;
 import seedu.address.model.task.*;
@@ -103,14 +104,14 @@ public class LogicManagerTest {
      */
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
                                        ReadOnlyAddressBook expectedAddressBook,
-                                       List<? extends ReadOnlyPerson> expectedShownList) throws Exception {
+                                       List<? extends ReadOnlyTask> expectedShownList) throws Exception {
 
         //Execute the command
         CommandResult result = logic.execute(inputCommand);
 
         //Confirm the ui display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedShownList, model.getFilteredPersonList());
+        assertEquals(expectedShownList, model.getFilteredTaskList());
 
         //Confirm the state of data (saved and in-memory) is as expected
         assertEquals(expectedAddressBook, model.getAddressBook());
@@ -138,9 +139,9 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addPerson(helper.generatePerson(1));
-        model.addPerson(helper.generatePerson(2));
-        model.addPerson(helper.generatePerson(3));
+        model.addPerson(helper.generateTask(1));
+        model.addPerson(helper.generateTask(2));
+        model.addPerson(helper.generateTask(3));
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new AddressBook(), Collections.emptyList());
     }
@@ -162,13 +163,13 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidPersonData() throws Exception {
         assertCommandBehavior(
-                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
+                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Title.MESSAGE_TITLE_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
+                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
+                "add Valid Name p/12345 e/notAnEmail a/valid, address", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
 
     }
 

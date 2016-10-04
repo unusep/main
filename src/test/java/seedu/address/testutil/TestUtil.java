@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import com.google.common.io.Files;
-import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.TaskCardHandle;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -17,8 +17,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
-import seedu.address.model.category.Tag;
-import seedu.address.model.category.UniqueTagList;
+import seedu.address.model.category.Category;
+import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.task.*;
 import seedu.address.storage.XmlSerializableAddressBook;
 
@@ -60,20 +60,20 @@ public class TestUtil {
      */
     public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
-    public static final Person[] samplePersonData = getSamplePersonData();
+    public static final Task[] samplePersonData = getSamplePersonData();
 
-    private static Person[] getSamplePersonData() {
+    private static Task[] getSamplePersonData() {
         try {
-            return new Person[]{
-                    new Person(new Name("Ali Muster"), new Phone("9482424"), new Email("hans@google.com"), new Address("4th street"), new UniqueTagList()),
-                    new Person(new Name("Boris Mueller"), new Phone("87249245"), new Email("ruth@google.com"), new Address("81th street"), new UniqueTagList()),
-                    new Person(new Name("Carl Kurz"), new Phone("95352563"), new Email("heinz@yahoo.com"), new Address("wall street"), new UniqueTagList()),
-                    new Person(new Name("Daniel Meier"), new Phone("87652533"), new Email("cornelia@google.com"), new Address("10th street"), new UniqueTagList()),
-                    new Person(new Name("Elle Meyer"), new Phone("9482224"), new Email("werner@gmail.com"), new Address("michegan ave"), new UniqueTagList()),
-                    new Person(new Name("Fiona Kunz"), new Phone("9482427"), new Email("lydia@gmail.com"), new Address("little tokyo"), new UniqueTagList()),
-                    new Person(new Name("George Best"), new Phone("9482442"), new Email("anna@google.com"), new Address("4th street"), new UniqueTagList()),
-                    new Person(new Name("Hoon Meier"), new Phone("8482424"), new Email("stefan@mail.com"), new Address("little india"), new UniqueTagList()),
-                    new Person(new Name("Ida Mueller"), new Phone("8482131"), new Email("hans@google.com"), new Address("chicago ave"), new UniqueTagList())
+            return new Task[]{
+                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TimeInterval("2016-10-3 14:00", "2016-10-4 14:23"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TimeInterval("2016-10-2 14:00", "2016-10-3 14:15"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 4"), null, null, new UniqueCategoryList()),
+                    new Task(new Title("T2A3"), new Description("Very good"), new TimeInterval("2016-10-1 14:00", "2016-10-2 14:20"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 6"), null, new TimeInterval("2016-9-30 14:00", "2016-10-1 14:30"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 7"), null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TimeInterval("2016-9-3 12:00", "2016-10-1 14:40"), new UniqueCategoryList())
             };
         } catch (IllegalValueException e) {
             assert false;
@@ -82,13 +82,13 @@ public class TestUtil {
         }
     }
 
-    public static final Tag[] sampleTagData = getSampleTagData();
+    public static final Category[] sampleTagData = getSampleTagData();
 
-    private static Tag[] getSampleTagData() {
+    private static Category[] getSampleTagData() {
         try {
-            return new Tag[]{
-                    new Tag("relatives"),
-                    new Tag("friends")
+            return new Category[]{
+                    new Category("CS2102"),
+                    new Category("CS2103")
             };
         } catch (IllegalValueException e) {
             assert false;
@@ -97,7 +97,7 @@ public class TestUtil {
         }
     }
 
-    public static List<Person> generateSamplePersonData() {
+    public static List<Task> generateSamplePersonData() {
         return Arrays.asList(samplePersonData);
     }
 
@@ -135,7 +135,7 @@ public class TestUtil {
     }
 
     public static AddressBook generateEmptyAddressBook() {
-        return new AddressBook(new UniquePersonList(), new UniqueTagList());
+        return new AddressBook(new UniqueTaskList(), new UniqueCategoryList());
     }
 
     public static XmlSerializableAddressBook generateSampleStorageAddressBook() {
@@ -273,49 +273,49 @@ public class TestUtil {
     }
 
     /**
-     * Removes a subset from the list of persons.
-     * @param persons The list of persons
-     * @param personsToRemove The subset of persons.
-     * @return The modified persons after removal of the subset from persons.
+     * Removes a subset from the list of tasks.
+     * @param tasks The list of tasks
+     * @param tasksToRemove The subset of tasks.
+     * @return The modified tasks after removal of the subset from tasks.
      */
-    public static TestPerson[] removePersonsFromList(final TestPerson[] persons, TestPerson... personsToRemove) {
-        List<TestPerson> listOfPersons = asList(persons);
-        listOfPersons.removeAll(asList(personsToRemove));
-        return listOfPersons.toArray(new TestPerson[listOfPersons.size()]);
+    public static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
+        List<TestTask> listOfTasks = asList(tasks);
+        listOfTasks.removeAll(asList(tasksToRemove));
+        return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
     }
 
 
     /**
-     * Returns a copy of the list with the person at specified index removed.
+     * Returns a copy of the list with the tasks at specified index removed.
      * @param list original list to copy from
      * @param targetIndexInOneIndexedFormat e.g. if the first element to be removed, 1 should be given as index.
      */
-    public static TestPerson[] removePersonFromList(final TestPerson[] list, int targetIndexInOneIndexedFormat) {
-        return removePersonsFromList(list, list[targetIndexInOneIndexedFormat-1]);
+    public static TestTask[] removeTaskFromList(final TestTask[] list, int targetIndexInOneIndexedFormat) {
+        return removeTasksFromList(list, list[targetIndexInOneIndexedFormat-1]);
     }
 
     /**
-     * Replaces persons[i] with a person.
-     * @param persons The array of persons.
-     * @param person The replacement person
-     * @param index The index of the person to be replaced.
+     * Replaces tasks[i] with a task.
+     * @param tasks The array of tasks.
+     * @param task The replacement task
+     * @param index The index of the task to be replaced.
      * @return
      */
-    public static TestPerson[] replacePersonFromList(TestPerson[] persons, TestPerson person, int index) {
-        persons[index] = person;
-        return persons;
+    public static TestTask[] replacePersonFromList(TestTask[] tasks, TestTask task, int index) {
+        tasks[index] = task;
+        return tasks;
     }
 
     /**
-     * Appends persons to the array of persons.
-     * @param persons A array of persons.
-     * @param personsToAdd The persons that are to be appended behind the original array.
-     * @return The modified array of persons.
+     * Appends tasks to the array of tasks.
+     * @param tasks A array of tasks.
+     * @param tasksToAdd The tasks that are to be appended behind the original array.
+     * @return The modified array of tasks.
      */
-    public static TestPerson[] addPersonsToList(final TestPerson[] persons, TestPerson... personsToAdd) {
-        List<TestPerson> listOfPersons = asList(persons);
-        listOfPersons.addAll(asList(personsToAdd));
-        return listOfPersons.toArray(new TestPerson[listOfPersons.size()]);
+    public static TestTask[] addPersonsToList(final TestTask[] tasks, TestTask... tasksToAdd) {
+        List<TestTask> listOfPersons = asList(tasks);
+        listOfPersons.addAll(asList(tasksToAdd));
+        return listOfPersons.toArray(new TestTask[listOfPersons.size()]);
     }
 
     private static <T> List<T> asList(T[] objs) {
@@ -326,21 +326,21 @@ public class TestUtil {
         return list;
     }
 
-    public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyPerson person) {
-        return card.isSamePerson(person);
+    public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
+        return card.isSameTask(task);
     }
 
-    public static Tag[] getTagList(String tags) {
+    public static Category[] getCategoryList(String categories) {
 
-        if (tags.equals("")) {
-            return new Tag[]{};
+        if (categories.equals("")) {
+            return new Category[]{};
         }
 
-        final String[] split = tags.split(", ");
+        final String[] split = categories.split(", ");
 
-        final List<Tag> collect = Arrays.asList(split).stream().map(e -> {
+        final List<Category> collect = Arrays.asList(split).stream().map(e -> {
             try {
-                return new Tag(e.replaceFirst("Tag: ", ""));
+                return new Category(e.replaceFirst("Category: ", ""));
             } catch (IllegalValueException e1) {
                 //not possible
                 assert false;
@@ -348,7 +348,7 @@ public class TestUtil {
             }
         }).collect(Collectors.toList());
 
-        return collect.toArray(new Tag[split.length]);
+        return collect.toArray(new Category[split.length]);
     }
 
 }

@@ -10,9 +10,14 @@ public interface ReadOnlyTask {
 
     Title getTitle();
     Description getDescription();
-    boolean hasDescription();
+    default boolean hasDescription() {
+        return getDescription() != null;
+    }
+    
     TimeInterval getTimeInterval();
-    boolean hasTimeInterval();
+    default boolean hasTimeInterval() {
+        return getTimeInterval() != null;
+    }
 
     /**
      * The returned TagList is a deep copy of the internal TagList,

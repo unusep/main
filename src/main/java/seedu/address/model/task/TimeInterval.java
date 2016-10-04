@@ -14,7 +14,7 @@ public class TimeInterval {
 	public final LocalDateTime startTime;
 	public final LocalDateTime endTime;
 
-	public static final String MESSAGE_NAME_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
+	public static final String MESSAGE_TIME_INTERVAL_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
 
 	/**
@@ -25,10 +25,10 @@ public class TimeInterval {
    public TimeInterval(String startingTime, String endingTime) throws IllegalValueException {
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
 	   if ((startingTime == null) && !isValidTime(startingTime)) {
-           throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+           throw new IllegalValueException(MESSAGE_TIME_INTERVAL_CONSTRAINTS);
        }
        if (!isValidTime(endingTime)) {
-           throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+           throw new IllegalValueException(MESSAGE_TIME_INTERVAL_CONSTRAINTS);
        }
        if(startingTime == null) {
     	   startTime = LocalDateTime.now();
