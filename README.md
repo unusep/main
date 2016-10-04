@@ -21,6 +21,8 @@
 
 
 #### Acknowledgements
-
+* [Jackson](https://github.com/FasterXML/jackson)
+* [Guava](https://github.com/google/guava)
+* [TestFX](https://github.com/TestFX/TestFX)
 
 #### Licence : [MIT](LICENSE)
