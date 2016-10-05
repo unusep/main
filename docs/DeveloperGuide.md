@@ -296,23 +296,23 @@ Use case ends.
 1a. `add` command followed by the wrong parameters
 
 > 1a1. System indicates the error and display the correct format for user
-  Use case ends
+> Use case ends
   
 1b. `TITLE` is empty string
 
 > 1b1. System indicates the error that task_name is empty.
-  Use case ends.
+> Use case ends.
   
 1c. User doesn't supply `[START->END]` or `END` parameters
 
 > 1c1. Event is created and categorized to `INBOX`
-  1c2. System display the created task
-  Use case resumes from steps 2.
+> 1c2. System display the created task
+> Use case resumes from steps 2.
   
 1d. User does not supply `START` parameter
 
 > 1d1. Event is created with `START` as today
-  Use case resumes from steps 2.
+> Use case resumes from steps 2.
   
 1e. System is able to parse `START` or `END` which is not in standard format.
 
@@ -320,9 +320,9 @@ Use case ends.
 
 1f. System is not able to parse `START` or `END` which is not in standard format.
 
-> 1f2. System will create the task without `START` and `END` date
-  1f3. System indicates the error to user
-  Use case resumes from steps 2.
+> 1f1. System will create the task without `START` and `END` date
+> 1f2. System indicates the error to user
+> Use case resumes from steps 2.
   
 #### Use case: Edit task
 
@@ -339,23 +339,23 @@ Use case ends.
 1a. `edit` command followed by the wrong parameters
 
 > 1a1. System indicates the error and display the correct format for user
-  Use case ends.
+> Use case ends.
   
 1b.`edit` command is followed by the non-existent `INDEX`
 
 > 1.b.1 System indicates the error that the `INDEX` is non-existent
-  Use case ends
+> Use case ends
 
 1c. `TITLE` is empty string
 
 > 1c1. System indicates the error that `TASK_NAME` is empty.
-  Use case ends.
+> Use case ends.
   
 1d. System is not able to parse `START` or `END` which is not in standard format.
 
 > 1d1. System will create the task without `START` and `END` date
-  1d2. System indicates the error to user
-  Use case resumes from steps 2.
+> 1d2. System indicates the error to user
+> Use case resumes from steps 2.
 
 #### Use case: Delete task
 
@@ -373,16 +373,16 @@ Use case ends.
 1a. `delete` command is followed by the wrong parameters
 
 > 1a1. System indicates error and display the correct format to user
-  Use case ends.
+> Use case ends.
        	
 1b. `delete` command is followed by a non-existent `INDEX`
 
 > 1b1. System indicates the error in the `INDEX` is non-existent
-  Use case ends.
+> Use case ends.
   
 4a. User rejects the confirmation
 > 4a1. System indicates that the delete order was not carried out
-  Use case resumes from step 1.
+> Use case resumes from step 1.
 
 #### Use case: List task by category
 
@@ -397,12 +397,12 @@ Use case ends.
 1a. User does not supply `CATEGORY`
 
 > 1a1. System displays all the tasks
-  Use case ends.
+> Use case ends.
 	
 2a. The category does not exist in the system
 
 > 2a1. System indicates the error.
-  Use case ends.
+> Use case ends.
 
 #### Use case: Undo Command
 
@@ -419,7 +419,7 @@ Use case ends.
 2a. The last operation which involve the change of the data does not exist
 
 > 2a1. System indicates the error
-  Use case ends.
+> Use case ends.
 
 #### Use case: Clear Command
 
@@ -436,7 +436,7 @@ Use case ends.
 3a. User rejects the confirmation
 
 > 3a1. System indicates that the clear order was not carried out
-  Use case resumes at step 1.
+> Use case resumes at step 1.
   
 #### Use case: Help Command
 
@@ -452,12 +452,12 @@ Use case ends.
 1a. `help` command is followed by the wrong parameters
 
 > 1a1. System indicates the error and display the correct format for user
-  Use case ends.
+> Use case ends.
   
 1b. `help` command is followed by no parameters
 
 > 1b1. System displays all the commands available with all the details
-  Use case ends.
+> Use case ends.
   
 #### Use case: View a task
 
@@ -473,12 +473,12 @@ Use case ends.
 2a. There is no recent displayed list
 
 > 2a1. System indicates the errors to user.
-  Use cases ends.
+> Use cases ends.
   
 2b. The index is not valid
 
 > 2b1. System indicates the errors to user.
-  Use cases ends.
+> Use cases ends.
 
 #### Use case: Find keywords
 
@@ -521,7 +521,7 @@ Use case ends.
 1a. No recent undo is called.
 
 > 1a1. System indicates the error and shows the error message
-  Use case ends.
+> Use case ends.
   
 #### Use case: Mark Command
 
@@ -536,7 +536,7 @@ Use case ends.
 2a. No such task of `TASK_NUMBER`.
 
 > 2a1. To-Do List shows an error message
-  Use case ends
+> Use case ends
   
 2b. Task of `TASK_NUMBER` is already marked done.
 
@@ -554,8 +554,8 @@ Use case ends.
 
 2a. No such task of `TASK_NUMBER`
 
-> 2a1. To-Do List shows an error message
-Use case ends.
+> 2a1. To-Do List shows an error messag 
+> Use case ends.
 
 2b. Task of `TASK_NUMBER` is already marked undone.
 > Use case ends.
