@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
 import com.google.common.eventbus.Subscribe;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -436,8 +439,8 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            LocalDateTime sampleDate1 = LocalDateTime.parse("2011-12-03T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            LocalDateTime sampleDate2 = LocalDateTime.parse("2011-12-03T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT));
+            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT));
             return new Task(
                     new Title("Person " + seed),
                     new Description("" + Math.abs(seed)),

@@ -1,8 +1,10 @@
 package seedu.address.model.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.DateTime;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -11,19 +13,20 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class TimeInterval {
 
-	public final LocalDateTime startTime;
-	public final LocalDateTime endTime;
+	public final DateTime startTime;
+	public final DateTime endTime;
 
 	public static final String MESSAGE_TIME_INTERVAL_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
-
+	public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
+	
 	/**
     * Validates given startTime.
     *
     * @throws IllegalValueException if given startTime string is invalid.
     */
    public TimeInterval(String startingTime, String endingTime) throws IllegalValueException {
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
+       DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
 	   if ((startingTime == null) && !isValidTime(startingTime)) {
            throw new IllegalValueException(MESSAGE_TIME_INTERVAL_CONSTRAINTS);
        }
@@ -31,12 +34,12 @@ public class TimeInterval {
            throw new IllegalValueException(MESSAGE_TIME_INTERVAL_CONSTRAINTS);
        }
        if(startingTime == null) {
-    	       startTime = LocalDateTime.now();
+    	       startTime = DateTime.now();
        } else {
-    	       startTime = LocalDateTime.parse(startingTime, formatter);
+    	       startTime = DateTime.parse(startingTime, formatter);
        }
 
-       endTime = LocalDateTime.parse(endingTime, formatter);
+       endTime = DateTime.parse(endingTime, formatter);
    }
    
    /**
@@ -45,7 +48,7 @@ public class TimeInterval {
     * @param startingTime
     * @param endTime
     */
-   public TimeInterval(LocalDateTime startingTime, LocalDateTime endTime) {
+   public TimeInterval(DateTime startingTime, DateTime endTime) {
        this.startTime = startingTime;
        this.endTime = endTime;
    }
@@ -60,14 +63,14 @@ public class TimeInterval {
    /**
     * getter method for startTime
     */
-   public LocalDateTime getStartTime() {
+   public DateTime getStartTime() {
 	   return this.startTime;
    }
 
    /**
     * getter method for endTime
     */
-   public LocalDateTime getEndTime() {
+   public DateTime getEndTime() {
 	   return this.endTime;
    }
 
@@ -81,7 +84,8 @@ public class TimeInterval {
    public boolean equals(Object other) {
        return other == this // short circuit if same object
                || (other instanceof TimeInterval // instanceof handles nulls
-               && this.startTime.equals(((TimeInterval) other).startTime)); // state check
+               && this.startTime.isEqual(((TimeInterval) other).startTime) // state check
+               && this.endTime.isEqual(((TimeInterval) other).endTime)); // state check
    }
 
 

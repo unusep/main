@@ -1,6 +1,9 @@
 package seedu.address.testutil;
 
 import java.time.format.DateTimeFormatter;
+
+import org.joda.time.format.DateTimeFormat;
+
 import seedu.address.model.category.UniqueCategoryList;
 import seedu.address.model.task.*;
 
@@ -63,8 +66,8 @@ public class TestTask implements ReadOnlyTask {
         }
         if (this.hasTimeInterval()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
-            sb.append("{" + this.getTimeInterval().getStartTime().format(formatter) 
-                    + "->" + this.getTimeInterval().getEndTime().format(formatter) 
+            sb.append("{" + this.getTimeInterval().getStartTime().toString(DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT))
+                    + "->" + this.getTimeInterval().getEndTime().toString(DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT))
                     + "} ");
         }
         if (!this.getCategories().getInternalList().isEmpty()) {

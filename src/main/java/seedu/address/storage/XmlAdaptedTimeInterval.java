@@ -2,18 +2,21 @@ package seedu.address.storage;
 
 import seedu.address.model.task.TimeInterval;
 import seedu.address.commons.exceptions.IllegalValueException;
-import java.time.LocalDateTime;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.joda.time.DateTime;
 
 /**
  * JAXB-friendly adapted version of the TimeInterval.
  */
 public class XmlAdaptedTimeInterval {
 
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime startTime;
-    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
-    private LocalDateTime endTime;
+    @XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
+    private DateTime startTime;
+    @XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
+    private DateTime endTime;
 
     /**
      * No-arg constructor for JAXB use.
