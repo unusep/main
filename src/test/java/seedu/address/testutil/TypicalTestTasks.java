@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.task.*;
+import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.AddressBook;
+import seedu.doerList.model.task.*;
 
 /**
  *

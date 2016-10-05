@@ -4,8 +4,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.joda.time.format.DateTimeFormat;
 
-import seedu.address.model.category.UniqueCategoryList;
-import seedu.address.model.task.*;
+import seedu.doerList.model.category.UniqueCategoryList;
+import seedu.doerList.model.task.*;
 
 /**
  * A mutable task object. For testing only.

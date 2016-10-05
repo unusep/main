@@ -2,6 +2,22 @@ package seedu.address.logic;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.model.AddressBookChangedEvent;
+import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.logic.Logic;
+import seedu.doerList.logic.LogicManager;
+import seedu.doerList.logic.commands.*;
+import seedu.doerList.model.AddressBook;
+import seedu.doerList.model.Model;
+import seedu.doerList.model.ModelManager;
+import seedu.doerList.model.ReadOnlyAddressBook;
+import seedu.doerList.model.category.Category;
+import seedu.doerList.model.category.UniqueCategoryList;
+import seedu.doerList.model.task.*;
+import seedu.doerList.storage.StorageManager;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
@@ -9,19 +25,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.logic.commands.*;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.category.Category;
-import seedu.address.model.category.UniqueCategoryList;
-import seedu.address.model.task.*;
-import seedu.address.storage.StorageManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +35,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.*;
+import static seedu.doerList.commons.core.Messages.*;
 
 public class LogicManagerTest {
 
