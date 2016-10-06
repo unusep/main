@@ -216,8 +216,8 @@ with Google Calendar and should the UI of Google Calendar.
 
 Command | Format  
 -------- | :-------- 
-Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE_CATEGORY]`
-Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE_CATEGORY]`
+Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
+Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 Delete | `delete INDEX`
 View | `view INDEX`
 Find | `find KEYWORD [MORE_KEYWORDS]`
