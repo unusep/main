@@ -29,6 +29,7 @@
 ## Features
 
 > **Command Format**
+> 
 > * Words in `UPPER_CASE` are the parameters.
 > * Items in `SQUARE_BRACKETS` are optional.
 > * Items with `...` after them can have multiple instances.
@@ -43,7 +44,7 @@ Format: `help` or `help [COMMAND_NAME]`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-*er*List<br>
-Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY ...`
+Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * Task can have any number of categories (including 0)
@@ -71,6 +72,30 @@ Examples:
 * `edit 2 {->next 5 days}`
 
 > Attributes that aren't supplied will not be updated 
+
+#### Mark task as done : `mark`
+Marks a certain task as done in the Do*er*-list.<br>
+Format: `mark TASK_NUMBER`
+
+<img src="../docs/images/UI_Guide/mark_command.png" width="600">
+> Mark task `TASK_NUMBER` as done. The task must exist in the Do*er*-list.
+
+Examples:
+
+* `mark 5`
+  <br>Returns task number `5` as done.
+
+#### Unmark task as done : `unmark`
+Marks a certain task as undone in the Do*er*-list.<br>
+Format: `unmark TASK_NUMBER`
+
+<img src="../docs/images/UI_Guide/unmark_command.png" width="600">
+> Mark task `TASK_NUMBER` as undone. The task must exist in the Do*er*-list.
+
+Examples:
+
+* `unmark 5`
+  <br>Returns task number `5` as undone.
 
 #### Listing tasks in a certain category : `list`
 Shows a list of all tasks in the Do*er*-list under the specific category.<br>
@@ -100,6 +125,24 @@ Examples:
 
 * `find david`<br>
   Returns `Drinks with David `
+  
+#### View a task : `view`
+Views the task identified by the index number used in the last task listing.<br>
+Format: `view INDEX`
+
+<img src="../docs/images/UI_Guide/view_command.png" width="600">
+> * Views the details of the task at the specified `INDEX`. 
+> * The index refers to the index number shown in the most recent listing.<br>
+  The index **must be a positive integer** 1, 2, 3, ...
+
+Examples: 
+
+* `list`<br>
+  `view 2`<br>
+  Views the 2nd task in the Do*er*-list.
+* `find David` <br> 
+  `view 1`<br>
+  Views the 1st task in the results of the `find` command.
 
 #### Deleting a task / an event : `delete`
 Deletes the specified task / event from the Do-*er*List. Irreversible.<br>
@@ -119,24 +162,18 @@ Examples:
   `delete 1`<br>
   Deletes the 1st task / event in the results of the `find` command.
 
-#### View a task : `view`
-Views the task identified by the index number used in the last task listing.<br>
-Format: `view INDEX`
 
-<img src="../docs/images/UI_Guide/view_command.png" width="600">
-> * Views the details of the task at the specified `INDEX`. 
-> * The index refers to the index number shown in the most recent listing.<br>
-  The index **must be a positive integer** 1, 2, 3, ...
+#### Undo the most recent operation : `undo`
+Undo the most recent operation which modify the data in the Do*er*-list<br>
+Format: `undo`
 
-Examples: 
+<img src="../docs/images/UI_Guide/undo_command.png" width="600">
+#### Redo the most recent operation : `redo`
+Redo the most recent undo<br>
+Format: `redo`
 
-* `list`<br>
-  `view 2`<br>
-  Views the 2nd task in the Do*er*-list.
-* `find David` <br> 
-  `view 1`<br>
-  Views the 1st task in the results of the `find` command.
-  
+<img src="../docs/images/UI_Guide/redo_command.png" width="600">
+
 #### Find all tasks due : `taskdue`
 Finds all tasks due on and before the date specified in the Do*er*-list.<br>
 Format: `taskdue END_DATE`
@@ -152,47 +189,6 @@ Examples:
 
 * `taskdue tomorrow`
 
-#### Undo the most recent operation : `undo`
-Undo the most recent operation which modify the data in the Do*er*-list<br>
-Format: `undo`
-
-<img src="../docs/images/UI_Guide/undo_command.png" width="600">
-#### Redo the most recent operation : `redo`
-Redo the most recent undo<br>
-Format: `redo`
-
-<img src="../docs/images/UI_Guide/redo_command.png" width="600">
-
-#### Mark task as done : `mark`
-Marks a certain task as done in the Do*er*-list.<br>
-Format: `mark TASK_NUMBER`
-
-<img src="../docs/images/UI_Guide/mark_command.png" width="600">
-> Mark task `TASK_NUMBER` as done. The task must exist in the Do*er*-list.
-
-Examples:
-
-* `mark 5`
-  <br>Returns task number `5` as done.
-
-#### Unmark task as done : `unmark`
-Marks a certain task as undone in the Do*er*-list.<br>
-Format: `unmark TASK_NUMBER`
-
-<img src="../docs/images/UI_Guide/unmark_command.png" width="600">
-> Mark task `TASK_NUMBER` as undone. The task must exist in the Do*er*-list.
-
-Examples:
-
-* `unmark 5`
-  <br>Returns task number `5` as undone.
-
-#### Clearing all entries : `clear`
-Clears all entries from the address book.<br>
-Format: `clear`  
-
-<img src="../docs/images/UI_Guide/clear_command.png" width="600">
-
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
@@ -201,31 +197,24 @@ Format: `exit`
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
-#### View events in Google Calendar
-
-A build-in browser is embedded inside the browser. Once authorized, it will automatically sync events 
-with Google Calendar and should the UI of Google Calendar.
-
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with 
-       the file that contains the data of your previous Address Book folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
        
 ## Command Summary
 
 Command | Format  
 -------- | :-------- 
+Help | `help [COMMAND]`
 Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
-Delete | `delete INDEX`
-View | `view INDEX`
-Find | `find KEYWORD [MORE_KEYWORDS]`
-List | `list [CATEGORY]`
-Help | `help [COMMAND]`
-Task Due | `taskdue END_DATE`
-Undo | `undo`
-Redo | `redo`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
-Clear | `clear`
+List | `list [CATEGORY]`
+Find | `find KEYWORD [MORE_KEYWORDS]`
+View | `view INDEX`
+Delete | `delete INDEX`
+Undo | `undo`
+Redo | `redo`
+Task Due | `taskdue END_DATE`
