@@ -13,7 +13,7 @@
    
 2. Download the latest `doerlist.jar` from the [releases](../../../releases) tab.
 3. Copy the file to the folder you want to use as the home folder for the Do-*er*List.
-4. Double-click the file to start the app. The GUI should appear in a few seconds. 
+4. Double-click the file to start the app. The GUI should appear in a few seconds.<img src="../docs/images/UI_Guide/welcome.png" width="600"><br> 
 5. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window. 
 6. Some example commands you can try:
@@ -35,14 +35,17 @@
 > * If a command has multiple parameters, the order of parameters doesn't matter.
 
 #### Viewing help : `help`
-Format: `help`
+Format: `help` or `help [COMMAND_NAME]`
 
+<img src="../docs/images/UI_Guide/help_command.png" width="600">
+> If the `COMMAND_NAME` is supplied, it will display the instructions of using that command.<br>
 > Help is also shown if you enter an incorrect command e.g. `abcd`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-*er*List<br>
-Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] ...]` 
+Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY ...`
 
+<img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * Task can have any number of categories (including 0)
 > * The START or END parameter can be in natural language (next X hours, today, 
   tomorrow, next X days, next week, next month) or in standard format “2016-10-3 10:00”
@@ -57,9 +60,9 @@ Examples:
 
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-*er*List<br>
-Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] 
-		...`
+Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 
+<img src="../docs/images/UI_Guide/edit_command.png" width="600">
 > Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
   
 Examples:
@@ -73,6 +76,7 @@ Examples:
 Shows a list of all tasks in the Do*er*-list under the specific category.<br>
 Format: `list [CATEGORY]`
 
+<img src="../docs/images/UI_Guide/list_command.png" width="600">
 > If the `CATEGORY` parameter is not supplied, then list all tasks.
 
 Examples:
@@ -84,25 +88,24 @@ Examples:
 Finds tasks / events whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-> * The search is case sensitive. e.g `hans` will not match `Hans`
-> * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-> * Only the name is searched.
-> * Only full words will be matched e.g. `Han` will not match `Hans`
+<img src="../docs/images/UI_Guide/find_command.png" width="600">
+> * The search is not case sensitive. e.g `lecture` will match `LecTure`
+> * The order of the keywords does not matter. e.g. `go to lecture` will match `Lecture go to`
+> * Title and Description is searched.
 > * All data in the Do-*er*List matching at least one keyword will be returned 
     (i.e. `OR` search).
-    e.g. `Hans` will match `Hans Bo`
+    e.g. `lecture` will match `have lecture`
 
 Examples: 
 
-* `find John`<br>
-  Returns `John Doe` but not `john`
-* `find Betsy Tim John`<br>
-  Returns Any person having names `Betsy`, `Tim`, or `John`
+* `find david`<br>
+  Returns `Drinks with David `
 
 #### Deleting a task / an event : `delete`
 Deletes the specified task / event from the Do-*er*List. Irreversible.<br>
 Format: `delete INDEX`
 
+<img src="../docs/images/UI_Guide/delete_command.png" width="600">
 > * Deletes the task / event at the specified `INDEX`. 
 > * The index refers to the index number shown in the most recent listing.<br>
   The index **must be a positive integer** 1, 2, 3, ...
@@ -112,7 +115,7 @@ Examples:
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task / event in the Do-*er*List.
-* `find Betsy`<br> 
+* `find David`<br> 
   `delete 1`<br>
   Deletes the 1st task / event in the results of the `find` command.
 
@@ -120,6 +123,7 @@ Examples:
 Views the task identified by the index number used in the last task listing.<br>
 Format: `view INDEX`
 
+<img src="../docs/images/UI_Guide/view_command.png" width="600">
 > * Views the details of the task at the specified `INDEX`. 
 > * The index refers to the index number shown in the most recent listing.<br>
   The index **must be a positive integer** 1, 2, 3, ...
@@ -129,7 +133,7 @@ Examples:
 * `list`<br>
   `view 2`<br>
   Views the 2nd task in the Do*er*-list.
-* `find Betsy` <br> 
+* `find David` <br> 
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
   
@@ -137,6 +141,7 @@ Examples:
 Finds all tasks due on and before the date specified in the Do*er*-list.<br>
 Format: `taskdue END_DATE`
 
+<img src="../docs/images/UI_Guide/taskdue_command.png" width="600">
 > Finds all tasks due on and before `END_DATE`.<br>
   The date can be in natural language
   (E.g. next X hours, today, tomorrow, next X days, next week, next month)
@@ -151,14 +156,18 @@ Examples:
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`
 
+<img src="../docs/images/UI_Guide/undo_command.png" width="600">
 #### Redo the most recent operation : `redo`
 Redo the most recent undo<br>
 Format: `redo`
+
+<img src="../docs/images/UI_Guide/redo_command.png" width="600">
 
 #### Mark task as done : `mark`
 Marks a certain task as done in the Do*er*-list.<br>
 Format: `mark TASK_NUMBER`
 
+<img src="../docs/images/UI_Guide/mark_command.png" width="600">
 > Mark task `TASK_NUMBER` as done. The task must exist in the Do*er*-list.
 
 Examples:
@@ -170,6 +179,7 @@ Examples:
 Marks a certain task as undone in the Do*er*-list.<br>
 Format: `unmark TASK_NUMBER`
 
+<img src="../docs/images/UI_Guide/unmark_command.png" width="600">
 > Mark task `TASK_NUMBER` as undone. The task must exist in the Do*er*-list.
 
 Examples:
@@ -180,6 +190,8 @@ Examples:
 #### Clearing all entries : `clear`
 Clears all entries from the address book.<br>
 Format: `clear`  
+
+<img src="../docs/images/UI_Guide/clear_command.png" width="600">
 
 #### Exiting the program : `exit`
 Exits the program.<br>
@@ -204,8 +216,8 @@ with Google Calendar and should the UI of Google Calendar.
 
 Command | Format  
 -------- | :-------- 
-Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE_CATEGORY]`
-Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE_CATEGORY]`
+Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
+Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 Delete | `delete INDEX`
 View | `view INDEX`
 Find | `find KEYWORD [MORE_KEYWORDS]`

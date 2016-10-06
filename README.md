@@ -27,5 +27,6 @@ Our project is dependent on the packages below:
 * [Jackson](https://github.com/FasterXML/jackson)
 * [Guava](https://github.com/google/guava)
 * [TestFX](https://github.com/TestFX/TestFX)
+* [JodaTime](http://www.joda.org/joda-time/index.html)
 
 #### Licence : [MIT](LICENSE)
