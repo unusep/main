@@ -21,7 +21,7 @@ public class TimeInterval {
 	public static final String MESSAGE_TIME_INTERVAL_CONSTRAINTS = "Start Time should be in this format 'yyyy-MM-dd HH:mm'";
 	public static final String NAME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
 	public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
-
+	
 	/**
     * Validates given startTime.
     *
@@ -43,10 +43,10 @@ public class TimeInterval {
 
        endTime = DateTime.parse(endingTime, formatter);
    }
-
+   
    /**
     * For quickly created time interval
-    *
+    * 
     * @param startingTime
     * @param endTime
     */
