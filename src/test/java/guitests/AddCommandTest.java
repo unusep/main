@@ -2,14 +2,14 @@
 //
 //import guitests.guihandles.TaskCardHandle;
 //import org.junit.Test;
-//import seedu.address.logic.commands.AddCommand;
-//import seedu.address.commons.core.Messages;
-//import seedu.address.testutil.TestTask;
-//import seedu.address.testutil.TestUtil;
+//import seedu.doerList.logic.commands.AddCommand;
+//import seedu.doerList.commons.core.Messages;
+//import seedu.doerList.testutil.TestTask;
+//import seedu.doerList.testutil.TestUtil;
 //
 //import static org.junit.Assert.assertTrue;
 //
-//public class AddCommandTest extends AddressBookGuiTest {
+//public class AddCommandTest extends DoerListGuiTest {
 //
 //    @Test
 //    public void add() {

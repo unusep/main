@@ -1,4 +1,4 @@
-package seedu.address.commons.core;
+package seedu.doerList.commons.core;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,8 +19,8 @@ public class ConfigTest {
         String defaultConfigAsString = "App title : Address App\n" +
                 "Current log level : INFO\n" +
                 "Preference file Location : preferences.json\n" +
-                "Local data file location : data/addressbook.xml\n" +
-                "AddressBook name : MyAddressBook";
+                "Local data file location : data/doerList.xml\n" +
+                "DoerList name : MyDoerList";
 
         assertEquals(defaultConfigAsString, new Config().toString());
     }

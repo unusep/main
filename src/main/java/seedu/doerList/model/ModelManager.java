@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * Represents the in-memory model of the doerlist data.
+ * Represents the in-memory model of the doerList data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -33,7 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert src != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with doerlist: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with doerList: " + src + " and user prefs " + userPrefs);
 
         doerList = new DoerList(src);
         filteredTasks = new FilteredList<>(doerList.getTasks());

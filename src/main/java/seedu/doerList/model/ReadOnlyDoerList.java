@@ -9,7 +9,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList;
 
 /**
- * Unmodifiable view of an doerlist
+ * Unmodifiable view of an doerList
  */
 public interface ReadOnlyDoerList {
 

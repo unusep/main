@@ -14,7 +14,7 @@ public class Config {
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
-    private String doerListFilePath = "data/doerlist.xml";
+    private String doerListFilePath = "data/doerList.xml";
     private String doerListName = "MyDoerList";
 
 

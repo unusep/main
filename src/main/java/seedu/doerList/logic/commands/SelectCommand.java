@@ -7,7 +7,7 @@ import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
- * Selects a person identified using it's last displayed index from the doerlist.
+ * Selects a person identified using it's last displayed index from the doerList.
  */
 public class SelectCommand extends Command {
 

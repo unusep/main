@@ -1,18 +1,18 @@
-package seedu.address.logic;
+package seedu.doerList.logic;
 
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.EventsCenter;
-import seedu.doerList.commons.events.model.AddressBookChangedEvent;
+import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.logic.LogicManager;
 import seedu.doerList.logic.commands.*;
-import seedu.doerList.model.AddressBook;
+import seedu.doerList.model.DoerList;
 import seedu.doerList.model.Model;
 import seedu.doerList.model.ModelManager;
-import seedu.doerList.model.ReadOnlyAddressBook;
+import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
@@ -49,13 +49,13 @@ public class LogicManagerTest {
     private Logic logic;
 
     //These are for checking the correctness of the events raised
-    private ReadOnlyAddressBook latestSavedAddressBook;
+    private ReadOnlyDoerList latestSavedDoerList;
     private boolean helpShown;
     private int targetedJumpIndex;
 
     @Subscribe
-    private void handleLocalModelChangedEvent(AddressBookChangedEvent abce) {
-        latestSavedAddressBook = new AddressBook(abce.data);
+    private void handleLocalModelChangedEvent(DoerListChangedEvent abce) {
+        latestSavedDoerList = new DoerList(abce.data);
     }
 
     @Subscribe
@@ -71,12 +71,12 @@ public class LogicManagerTest {
     @Before
     public void setup() {
         model = new ModelManager();
-        String tempAddressBookFile = saveFolder.getRoot().getPath() + "TempAddressBook.xml";
+        String tempDoerListFile = saveFolder.getRoot().getPath() + "TempDoerList.xml";
         String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempAddressBookFile, tempPreferencesFile));
+        logic = new LogicManager(model, new StorageManager(tempDoerListFile, tempPreferencesFile));
         EventsCenter.getInstance().registerHandler(this);
 
-        latestSavedAddressBook = new AddressBook(model.getAddressBook()); // last saved assumed to be up to date before.
+        latestSavedDoerList = new DoerList(model.getDoerList()); // last saved assumed to be up to date before.
         helpShown = false;
         targetedJumpIndex = -1; // non yet
     }
@@ -95,22 +95,22 @@ public class LogicManagerTest {
 
     /**
      * Executes the command and confirms that the result message is correct.
-     * Both the 'address book' and the 'last shown list' are expected to be empty.
-     * @see #assertCommandBehavior(String, String, ReadOnlyAddressBook, List)
+     * Both the 'doerList' and the 'last shown list' are expected to be empty.
+     * @see #assertCommandBehavior(String, String, ReadOnlyDoerList, List)
      */
     private void assertCommandBehavior(String inputCommand, String expectedMessage) throws Exception {
-        assertCommandBehavior(inputCommand, expectedMessage, new AddressBook(), Collections.emptyList());
+        assertCommandBehavior(inputCommand, expectedMessage, new DoerList(), Collections.emptyList());
     }
 
     /**
      * Executes the command and confirms that the result message is correct and
      * also confirms that the following three parts of the LogicManager object's state are as expected:<br>
-     *      - the internal address book data are same as those in the {@code expectedAddressBook} <br>
+     *      - the internal doerList data are same as those in the {@code expectedDoerList} <br>
      *      - the backing list shown by UI matches the {@code shownList} <br>
-     *      - {@code expectedAddressBook} was saved to the storage file. <br>
+     *      - {@code expectedDoerList} was saved to the storage file. <br>
      */
     private void assertCommandBehavior(String inputCommand, String expectedMessage,
-                                       ReadOnlyAddressBook expectedAddressBook,
+                                       ReadOnlyDoerList expectedDoerList,
                                        List<? extends ReadOnlyTask> expectedShownList) throws Exception {
 
         //Execute the command
@@ -121,8 +121,8 @@ public class LogicManagerTest {
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
         //Confirm the state of data (saved and in-memory) is as expected
-        assertEquals(expectedAddressBook, model.getAddressBook());
-        assertEquals(expectedAddressBook, latestSavedAddressBook);
+        assertEquals(expectedDoerList, model.getDoerList());
+        assertEquals(expectedDoerList, latestSavedDoerList);
     }
 
 
@@ -150,7 +150,7 @@ public class LogicManagerTest {
         //model.addPerson(helper.generateTask(2));
         //model.addPerson(helper.generateTask(3));
 
-        //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new AddressBook(), Collections.emptyList());
+        //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
 
 
@@ -169,13 +169,13 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidPersonData() throws Exception {
 //        assertCommandBehavior(
-//                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Title.MESSAGE_TITLE_CONSTRAINTS);
+//                "add []\\[;] p/12345 e/valid@e.mail a/valid, doerList", Title.MESSAGE_TITLE_CONSTRAINTS);
 //        assertCommandBehavior(
-//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
+//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, doerList", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 //        assertCommandBehavior(
-//                "add Valid Name p/12345 e/notAnEmail a/valid, address", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
+//                "add Valid Name p/12345 e/notAnEmail a/valid, doerList", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
 //        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
+//                "add Valid Name p/12345 e/valid@e.mail a/valid, doerList t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
 
     }
 
@@ -184,7 +184,7 @@ public class LogicManagerTest {
 //        // setup expectations
 //        TestDataHelper helper = new TestDataHelper();
 //        Person toBeAdded = helper.adam();
-//        AddressBook expectedAB = new AddressBook();
+//        DoerList expectedAB = new DoerList();
 //        expectedAB.addPerson(toBeAdded);
 //
 //        // execute command and verify result
@@ -200,7 +200,7 @@ public class LogicManagerTest {
       // setup expectations
       TestDataHelper helper = new TestDataHelper();
       Task toBeAdded = helper.taskWithAttribute(false, false, false);
-      AddressBook expectedAB = new AddressBook();
+      DoerList expectedAB = new DoerList();
       expectedAB.addTask(toBeAdded);
 
       // execute command and verify result
@@ -215,11 +215,11 @@ public class LogicManagerTest {
 //        // setup expectations
 //        TestDataHelper helper = new TestDataHelper();
 //        Person toBeAdded = helper.adam();
-//        AddressBook expectedAB = new AddressBook();
+//        DoerList expectedAB = new DoerList();
 //        expectedAB.addPerson(toBeAdded);
 //
 //        // setup starting state
-//        model.addPerson(toBeAdded); // person already in internal address book
+//        model.addPerson(toBeAdded); // person already in internal doerList
 //
 //        // execute command and verify result
 //        assertCommandBehavior(
@@ -235,10 +235,10 @@ public class LogicManagerTest {
     public void execute_list_showsAllPersons() throws Exception {
 //        // prepare expectations
 //        TestDataHelper helper = new TestDataHelper();
-//        AddressBook expectedAB = helper.generateAddressBook(2);
+//        DoerList expectedAB = helper.generateDoerList(2);
 //        List<? extends ReadOnlyPerson> expectedList = expectedAB.getPersonList();
 //
-//        // prepare address book state
+//        // prepare doerList state
 //        helper.addToModel(model, 2);
 //
 //        assertCommandBehavior("list",
@@ -272,12 +272,12 @@ public class LogicManagerTest {
 //        List<Person> personList = helper.generatePersonList(2);
 //
 //        // set AB state to 2 persons
-//        model.resetData(new AddressBook());
+//        model.resetData(new DoerList());
 //        for (Person p : personList) {
 //            model.addPerson(p);
 //        }
 //
-//        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getAddressBook(), personList);
+//        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), personList);
     }
 
     @Test
@@ -296,7 +296,7 @@ public class LogicManagerTest {
 //        TestDataHelper helper = new TestDataHelper();
 //        List<Person> threePersons = helper.generatePersonList(3);
 //
-//        AddressBook expectedAB = helper.generateAddressBook(threePersons);
+//        DoerList expectedAB = helper.generateDoerList(threePersons);
 //        helper.addToModel(model, threePersons);
 //
 //        assertCommandBehavior("select 2",
@@ -325,7 +325,7 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
-        AddressBook expectedAB = helper.generateAddressBook(threeTasks);
+        DoerList expectedAB = helper.generateDoerList(threeTasks);
         expectedAB.removeTask(threeTasks.get(1));
         helper.addToModel(model, threeTasks);
 
@@ -351,7 +351,7 @@ public class LogicManagerTest {
         Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        DoerList expectedAB = helper.generateDoerList(fourPersons);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2);
         helper.addToModel(model, fourPersons);
 
@@ -370,7 +370,7 @@ public class LogicManagerTest {
         Task p4 = helper.generateTaskWithTitleAndDescription("KEy sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        DoerList expectedAB = helper.generateDoerList(fourPersons);
         List<Task> expectedList = fourPersons;
         helper.addToModel(model, fourPersons);
 
@@ -389,7 +389,7 @@ public class LogicManagerTest {
         Task c1 = helper.generateTaskWithTitleAndDescription("sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        DoerList expectedAB = helper.generateDoerList(fourPersons);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
         helper.addToModel(model, fourPersons);
 
@@ -479,37 +479,37 @@ public class LogicManagerTest {
         }
 
         /**
-         * Generates an AddressBook with auto-generated tasks.
+         * Generates an DoerList with auto-generated tasks.
          */
-        AddressBook generateAddressBook(int numGenerated) throws Exception{
-            AddressBook addressBook = new AddressBook();
-            addToAddressBook(addressBook, numGenerated);
-            return addressBook;
+        DoerList generateDoerList(int numGenerated) throws Exception{
+            DoerList doerList = new DoerList();
+            addToDoerList(doerList, numGenerated);
+            return doerList;
         }
 
         /**
-         * Generates an AddressBook based on the list of Tasks given.
+         * Generates an DoerList based on the list of Tasks given.
          */
-        AddressBook generateAddressBook(List<Task> tasks) throws Exception{
-            AddressBook addressBook = new AddressBook();
-            addToAddressBook(addressBook, tasks);
-            return addressBook;
+        DoerList generateDoerList(List<Task> tasks) throws Exception{
+            DoerList doerList = new DoerList();
+            addToDoerList(doerList, tasks);
+            return doerList;
         }
 
         /**
-         * Adds auto-generated Person objects to the given AddressBook
-         * @param addressBook The AddressBook to which the Persons will be added
+         * Adds auto-generated Person objects to the given DoerList
+         * @param doerList The DoerList to which the Persons will be added
          */
-        void addToAddressBook(AddressBook addressBook, int numGenerated) throws Exception{
-            addToAddressBook(addressBook, generateTaskList(numGenerated));
+        void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
+            addToDoerList(doerList, generateTaskList(numGenerated));
         }
 
         /**
-         * Adds the given list of Tasks to the given AddressBook
+         * Adds the given list of Tasks to the given DoerList
          */
-        void addToAddressBook(AddressBook addressBook, List<Task> tasksToAdd) throws Exception{
+        void addToDoerList(DoerList doerList, List<Task> tasksToAdd) throws Exception{
             for(Task c: tasksToAdd){
-                addressBook.addTask(c);
+                doerList.addTask(c);
             }
         }
 

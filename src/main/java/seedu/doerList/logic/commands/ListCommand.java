@@ -2,7 +2,7 @@ package seedu.doerList.logic.commands;
 
 
 /**
- * Lists all persons in the doerlist to the user.
+ * Lists all persons in the doerList to the user.
  */
 public class ListCommand extends Command {
 

@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.doerList.storage;
 
 
 import org.junit.Before;
@@ -6,9 +6,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.address.testutil.TypicalTestTasks;
-import seedu.doerList.model.AddressBook;
-import seedu.doerList.model.ReadOnlyAddressBook;
+import seedu.doerList.testutil.TypicalTestTasks;
+import seedu.doerList.model.DoerList;
+import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.UserPrefs;
 import seedu.doerList.storage.StorageManager;
 
@@ -49,12 +49,12 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
-        AddressBook original = new TypicalTestTasks().getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
-        //More extensive testing of AddressBook saving/reading is done in XmlAddressBookStorageTest
+    public void doerListReadSave() throws Exception {
+        DoerList original = new TypicalTestTasks().getTypicalDoerList();
+        storageManager.saveDoerList(original);
+        ReadOnlyDoerList retrieved = storageManager.readDoerList().get();
+        assertEquals(original, new DoerList(retrieved));
+        //More extensive testing of DoerList saving/reading is done in XmlDoerListStorageTest
     }
 
 

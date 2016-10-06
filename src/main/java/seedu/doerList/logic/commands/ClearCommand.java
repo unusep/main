@@ -3,12 +3,12 @@ package seedu.doerList.logic.commands;
 import seedu.doerList.model.DoerList;
 
 /**
- * Clears the doerlist.
+ * Clears the doerList.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "doerList has been cleared!";
 
     public ClearCommand() {}
 

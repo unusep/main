@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Wraps all data at the doerlist level
+ * Wraps all data at the doerList level
  * Duplicates are not allowed (by .equals comparison)
  */
 public class DoerList implements ReadOnlyDoerList {
@@ -28,14 +28,14 @@ public class DoerList implements ReadOnlyDoerList {
     public DoerList() {}
 
     /**
-     * Tasks and Categories are copied into this doerlist
+     * Tasks and Categories are copied into this doerList
      */
     public DoerList(ReadOnlyDoerList toBeCopied) {
         this(toBeCopied.getUniqueTaskList(), toBeCopied.getUniqueCategoryList());
     }
 
     /**
-     * Tasks and Categories are copied into this doerlist
+     * Tasks and Categories are copied into this doerList
      */
     public DoerList(UniqueTaskList tasks, UniqueCategoryList categories) {
         resetData(tasks.getInternalList(), categories.getInternalList());
@@ -71,7 +71,7 @@ public class DoerList implements ReadOnlyDoerList {
 //// task-level operations
 
     /**
-     * Adds a task to the doerlist.
+     * Adds a task to the doerList.
      * Also checks the new task's categories and updates {@link #categories} with any new categories found,
      * and updates the Category objects in the task to point to those in {@link #categories}.
      *

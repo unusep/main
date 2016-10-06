@@ -4,7 +4,7 @@
 //
 //import static org.junit.Assert.assertTrue;
 //
-//public class ClearCommandTest extends AddressBookGuiTest {
+//public class ClearCommandTest extends DoerListGuiTest {
 //
 //    @Test
 //    public void clear() {
@@ -26,6 +26,6 @@
 //    private void assertClearCommandSuccess() {
 //        commandBox.runCommand("clear");
 //        assertListSize(0);
-//        assertResultMessage("Address book has been cleared!");
+//        assertResultMessage("doerList has been cleared!");
 //    }
 //}

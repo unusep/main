@@ -6,7 +6,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the doerlist.
+ * Deletes a person identified using it's last displayed index from the doerList.
  */
 public class DeleteCommand extends Command {
 

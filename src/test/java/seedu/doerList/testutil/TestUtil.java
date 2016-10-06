@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.doerList.testutil;
 
 import com.google.common.io.Files;
 import guitests.guihandles.TaskCardHandle;
@@ -12,15 +12,15 @@ import javafx.scene.input.KeyCombination;
 import junit.framework.AssertionFailedError;
 import org.loadui.testfx.GuiTest;
 import org.testfx.api.FxToolkit;
-import seedu.address.TestApp;
+import seedu.doerList.TestApp;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.FileUtil;
 import seedu.doerList.commons.util.XmlUtil;
-import seedu.doerList.model.AddressBook;
+import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
-import seedu.doerList.storage.XmlSerializableAddressBook;
+import seedu.doerList.storage.XmlSerializableDoerList;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,7 +117,7 @@ public class TestUtil {
     }
 
     public static void createDataFileWithSampleData(String filePath) {
-        createDataFileWithData(generateSampleStorageAddressBook(), filePath);
+        createDataFileWithData(generateSampleStorageDoerList(), filePath);
     }
 
     public static <T> void createDataFileWithData(T data, String filePath) {
@@ -134,12 +134,12 @@ public class TestUtil {
         createDataFileWithSampleData(TestApp.SAVE_LOCATION_FOR_TESTING);
     }
 
-    public static AddressBook generateEmptyAddressBook() {
-        return new AddressBook(new UniqueTaskList(), new UniqueCategoryList());
+    public static DoerList generateEmptyDoerList() {
+        return new DoerList(new UniqueTaskList(), new UniqueCategoryList());
     }
 
-    public static XmlSerializableAddressBook generateSampleStorageAddressBook() {
-        return new XmlSerializableAddressBook(generateEmptyAddressBook());
+    public static XmlSerializableDoerList generateSampleStorageDoerList() {
+        return new XmlSerializableDoerList(generateEmptyDoerList());
     }
 
     /**

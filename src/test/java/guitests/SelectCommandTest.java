@@ -2,11 +2,11 @@
 //
 //import org.junit.Test;
 //
-//import seedu.address.model.task.ReadOnlyPerson;
+//import seedu.doerList.model.task.ReadOnlyPerson;
 //
 //import static org.junit.Assert.assertEquals;
 //
-//public class SelectCommandTest extends AddressBookGuiTest {
+//public class SelectCommandTest extends DoerListGuiTest {
 //
 //
 //    @Test

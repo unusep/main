@@ -1,3 +1,4 @@
+package guitests;
 //package guitests;
 //
 //import guitests.guihandles.*;
@@ -8,12 +9,12 @@
 //import org.junit.Rule;
 //import org.junit.rules.TestName;
 //import org.testfx.api.FxToolkit;
-//import seedu.address.TestApp;
-//import seedu.address.commons.core.EventsCenter;
-//import seedu.address.model.AddressBook;
-//import seedu.address.model.task.ReadOnlyPerson;
-//import seedu.address.testutil.TestUtil;
-//import seedu.address.testutil.TypicalTestPersons;
+//import seedu.doerList.TestApp;
+//import seedu.doerList.commons.core.EventsCenter;
+//import seedu.doerList.model.DoerList;
+//import seedu.doerList.model.task.ReadOnlyPerson;
+//import seedu.doerList.testutil.TestUtil;
+//import seedu.doerList.testutil.TypicalTestPersons;
 //
 //import java.util.concurrent.TimeoutException;
 //
@@ -21,9 +22,9 @@
 //import static org.junit.Assert.assertTrue;
 //
 ///**
-// * A GUI Test class for AddressBook.
+// * A GUI Test class for DoerList.
 // */
-//public abstract class AddressBookGuiTest {
+//public abstract class DoerListGuiTest {
 //
 //    /* The TestName Rule makes the current test name available inside test methods */
 //    @Rule
@@ -75,9 +76,9 @@
 //     * Override this in child classes to set the initial local data.
 //     * Return null to use the data in the file specified in {@link #getDataFileLocation()}
 //     */
-//    protected AddressBook getInitialData() {
-//        AddressBook ab = TestUtil.generateEmptyAddressBook();
-//        TypicalTestPersons.loadAddressBookWithSampleData(ab);
+//    protected DoerList getInitialData() {
+//        DoerList ab = TestUtil.generateEmptyDoerList();
+//        TypicalTestPersons.loadDoerListWithSampleData(ab);
 //        return ab;
 //    }
 //

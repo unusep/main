@@ -3,7 +3,7 @@ package seedu.doerList.logic.commands;
 import java.util.Set;
 
 /**
- * Finds and lists all tasks in doerlist whose name contains any of the argument keywords.
+ * Finds and lists all tasks in doerList whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class FindCommand extends Command {

@@ -4,7 +4,7 @@ package seedu.doerList.model.category;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Category in the doerlist.
+ * Represents a Category in the doerList.
  * Guarantees: immutable; name is valid as declared in {@link #isValidCategoryName(String)}
  */
 public class Category {

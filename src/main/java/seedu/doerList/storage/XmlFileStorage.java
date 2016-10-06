@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Stores doerlist data in an XML file
+ * Stores doerList data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given doerlist data to the specified file.
+     * Saves the given doerList data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableDoerList doerList)
             throws FileNotFoundException {
@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns doerlist in the file or an empty doerlist
+     * Returns doerList in the file or an empty doerList
      */
     public static XmlSerializableDoerList loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {

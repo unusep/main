@@ -1,4 +1,4 @@
-package seedu.address.commons.util;
+package seedu.doerList.commons.util;
 
 
 import org.junit.Rule;
@@ -79,8 +79,8 @@ public class ConfigUtilTest {
         config.setAppTitle("Typical App Title");
         config.setLogLevel(Level.INFO);
         config.setUserPrefsFilePath("C:\\preferences.json");
-        config.setAddressBookFilePath("addressbook.xml");
-        config.setAddressBookName("TypicalAddressBookName");
+        config.setDoerListFilePath("doerList.xml");
+        config.setDoerListName("TypicalDoerListName");
         return config;
     }
 

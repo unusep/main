@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * An Immutable DoerList that is serializable to XML format
  */
-@XmlRootElement(name = "doerlist")
+@XmlRootElement(name = "doerList")
 public class XmlSerializableDoerList implements ReadOnlyDoerList {
 
     @XmlElement

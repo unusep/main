@@ -1,11 +1,11 @@
-package seedu.address.commons.util;
+package seedu.doerList.commons.util;
 
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import seedu.address.testutil.SerializableTestClass;
-import seedu.address.testutil.TestUtil;
+import seedu.doerList.testutil.SerializableTestClass;
+import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.commons.util.FileUtil;
 
 import java.io.File;

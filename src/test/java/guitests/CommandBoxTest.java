@@ -4,7 +4,7 @@
 //
 //import static org.junit.Assert.assertEquals;
 //
-//public class CommandBoxTest extends AddressBookGuiTest {
+//public class CommandBoxTest extends DoerListGuiTest {
 //
 //    @Test
 //    public void commandBox_commandSucceeds_textCleared() {
