@@ -43,7 +43,7 @@ Format: `help` or `help [COMMAND_NAME]`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-*er*List<br>
-Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] ...]` 
+Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY ...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * Task can have any number of categories (including 0)
@@ -60,8 +60,7 @@ Examples:
 
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-*er*List<br>
-Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] 
-		...`
+Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
 > Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
@@ -90,20 +89,17 @@ Finds tasks / events whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 <img src="../docs/images/UI_Guide/find_command.png" width="600">
-> * The search is case sensitive. e.g `hans` will not match `Hans`
-> * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-> * Only the name is searched.
-> * Only full words will be matched e.g. `Han` will not match `Hans`
+> * The search is not case sensitive. e.g `lecture` will match `LecTure`
+> * The order of the keywords does not matter. e.g. `go to lecture` will match `Lecture go to`
+> * Title and Description is searched.
 > * All data in the Do-*er*List matching at least one keyword will be returned 
     (i.e. `OR` search).
-    e.g. `Hans` will match `Hans Bo`
+    e.g. `lecture` will match `have lecture`
 
 Examples: 
 
-* `find John`<br>
-  Returns `John Doe` but not `john`
-* `find Betsy Tim John`<br>
-  Returns Any person having names `Betsy`, `Tim`, or `John`
+* `find david`<br>
+  Returns `Drinks with David `
 
 #### Deleting a task / an event : `delete`
 Deletes the specified task / event from the Do-*er*List. Irreversible.<br>
@@ -119,7 +115,7 @@ Examples:
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task / event in the Do-*er*List.
-* `find Betsy`<br> 
+* `find David`<br> 
   `delete 1`<br>
   Deletes the 1st task / event in the results of the `find` command.
 
@@ -137,7 +133,7 @@ Examples:
 * `list`<br>
   `view 2`<br>
   Views the 2nd task in the Do*er*-list.
-* `find Betsy` <br> 
+* `find David` <br> 
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
   
