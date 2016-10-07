@@ -3,25 +3,24 @@ package seedu.doerList.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart{
 
-    private static final String FXML = "TaskListCard.fxml";
+    private static final String FXML = "TaskCard.fxml";
 
     @FXML
-    private HBox cardPane;
+    private VBox taskPanel;
+    @FXML
+    private AnchorPane descriptionPanel;
+    @FXML
+    private AnchorPane timeIntervalPanel;
     @FXML
     private Label title;
     @FXML
-    private Label id;
-    @FXML
-    private Label description;
-    @FXML
-    private Label timeInterval;
-    @FXML
-    private Label categories;
+    private Label index;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -40,19 +39,20 @@ public class TaskCard extends UiPart{
     @FXML
     public void initialize() {
         title.setText(task.getTitle().fullTitle);
-        id.setText(displayedIndex + ". ");
-        description.setText(task.hasDescription() ? task.getDescription().value : "");
-        timeInterval.setText(task.hasTimeInterval() ? task.getTimeInterval().toString() : "");
-        categories.setText(task.categoriesString());
+        index.setText("#" + displayedIndex);
+        // don't display description by default
+        // TODO need to parse to human readable time interval
+        // TODO currently just support floating task
+        // TODO need to find way to display category
     }
 
-    public HBox getLayout() {
-        return cardPane;
+    public VBox getLayout() {
+        return taskPanel;
     }
 
     @Override
     public void setNode(Node node) {
-        cardPane = (HBox)node;
+        taskPanel = (VBox)node;
     }
 
     @Override
