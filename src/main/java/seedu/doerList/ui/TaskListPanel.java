@@ -1,6 +1,7 @@
 package seedu.doerList.ui;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,6 +21,7 @@ public class TaskListPanel extends UiPart {
     private static final String FXML = "TaskListPanel.fxml";
     private VBox panel;
     private AnchorPane placeHolderPane;
+    private ObservableList<ReadOnlyTask> allTasks;
 
     @FXML
     private VBox sectionList;
@@ -47,17 +49,30 @@ public class TaskListPanel extends UiPart {
                                        ObservableList<ReadOnlyTask> taskList) {
         TaskListPanel taskListPanel =
                 UiPartLoader.loadUiPart(primaryStage, taskListPlaceholder, new TaskListPanel());
-        taskListPanel.configure(taskList);
+        taskListPanel.allTasks = taskList;
+        taskListPanel.configure();
         return taskListPanel;
     }
 
-    private void configure(ObservableList<ReadOnlyTask> taskList) {
+    private void configure() {
         // TODO create different section `overdue` `today` .. here
         // Need a new data structure to store
+        displayTasks();
+        addToPlaceholder();
+        addListener(allTasks);
+    }
+    
+    private void addListener(ObservableList<ReadOnlyTask> taskList) {
+        taskList.addListener((ListChangeListener.Change<? extends ReadOnlyTask> c) -> {
+            displayTasks();
+        });
+    }
+
+    private void displayTasks() {
+        sectionList.getChildren().clear();
         AnchorPane container_temp = new AnchorPane();
         sectionList.getChildren().add(container_temp);
-        SectionPanel.load(primaryStage, container_temp, taskList);
-        addToPlaceholder();
+        SectionPanel.load(primaryStage, container_temp, allTasks);
     }
 
     private void addToPlaceholder() {
