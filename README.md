@@ -3,7 +3,7 @@
 
 # Do-*er*List
 
-<img src="docs/images/prototype_ui_v1.jpg" width="600"><br>
+<img src="docs/images/UI_Guide/DEMO.png" width="600"><br>
 
 * This is a desktop Todo list application. It has a GUI but most of the user interactions happen using 
   a CLI (Command Line Interface).

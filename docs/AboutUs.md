@@ -4,11 +4,34 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 
 ## Project Team
 
-- [Jason](https://github.com/JasonScourge)
-- [Xiao Pu](https://github.com/xpdavid) 
-- [Hai Long](https://github.com/haiilong)
-- [Benedict](https://github.com/Bendistocratic)
- 
+#### [Xiao Pu](https://github.com/xpdavid) <br>
+<img src="images/pic_xiaopu.jpg" width="150"><br>
+Role: Developer <br>
+Responsibilities: Logic
+
+-----
+
+#### [Yong Sheng](https://github.com/JasonScourge)
+<img src="images/pic_jason.jpg" width="150"><br>
+Role: Developer <br>
+Responsibilities: UI
+
+-----
+
+#### [Benedict Chan](https://github.com/Bendistocratic)
+<img src="images/pic_benedict.jpg" width="150"><br>
+Role: Developer <br>
+Responsibilities: Storage
+
+-----
+
+#### [Vu Long](https://github.com/haiilong)
+<img src="images/pic_hailong.jpg" width="150"><br>
+Role: Developer <br>
+Responsibilities: Model
+
+-----
+
 ## Roles and responsibilities
 
 - Team lead: **Jason**
@@ -23,8 +46,3 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 	- Gradle: **Hai Long**
 	- Travis: **Jason**
 	- Eclipse: **Benedict**
-
-- UI Part: **Jason**
-- Logic: **Xiao Pu**
-- Model: **Hai Long**
-- Storage: **Benedict**
