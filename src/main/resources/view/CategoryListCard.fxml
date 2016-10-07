@@ -20,10 +20,6 @@
             </columnConstraints>
             <children>
                 <VBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" GridPane.columnIndex="0">
-                    <stylesheets>
-                        <URL value="@DarkTheme.css" />
-                        <URL value="@Extensions.css" />
-                    </stylesheets>
                     <padding>
                         <Insets bottom="5" left="15" right="5" top="5" />
                     </padding>

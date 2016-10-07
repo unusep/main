@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -25,6 +26,7 @@ public class MainWindow extends UiPart {
     private static final String FXML = "MainWindow.fxml";
     public static final int MIN_HEIGHT = 600;
     public static final int MIN_WIDTH = 450;
+    public static final float DEFAULT_DIVIDER_POSITION = 0.2f;
 
     private Logic logic;
 
@@ -57,6 +59,8 @@ public class MainWindow extends UiPart {
     @FXML
     private AnchorPane statusbarPlaceholder;
 
+    @FXML
+    private SplitPane splitPane;
 
     public MainWindow() {
         super();
@@ -167,6 +171,12 @@ public class MainWindow extends UiPart {
 
     public void show() {
         primaryStage.show();
+        setDefaultDividerPosition();
+    }
+    
+    // set Default divider position must be called after show to take effect
+    private void setDefaultDividerPosition() {
+        splitPane.setDividerPosition(0, DEFAULT_DIVIDER_POSITION);
     }
 
     /**
