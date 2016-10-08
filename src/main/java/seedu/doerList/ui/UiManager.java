@@ -118,12 +118,13 @@ public class UiManager extends ComponentManager implements Ui {
     
     @Subscribe
     private void handleTaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent event) {
-        //logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().selectionMove(event.getDirection());
     }
     
     @Subscribe
     private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().selectionChanged(event.getNewSelectedCard());
     }
 

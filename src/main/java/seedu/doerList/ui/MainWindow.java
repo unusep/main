@@ -64,9 +64,6 @@ public class MainWindow extends UiPart {
 
     @FXML
     private SplitPane splitPane;
-    
-    @FXML
-    private ScrollPane taskListScrollPanel;
 
     public MainWindow() {
         super();
@@ -107,29 +104,12 @@ public class MainWindow extends UiPart {
         primaryStage.setScene(scene);
 
         setAccelerators();
-        remapArrowKeysForScrollPane();
     }
 
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
     
-    private void remapArrowKeysForScrollPane() {
-        taskListScrollPanel.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
-            event.consume();
-            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                switch (event.getCode()) {
-                    case UP:
-                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
-                        break;
-                    case DOWN:
-                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
-                        break;
-                }
-            }
-            
-        });
-    }
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());

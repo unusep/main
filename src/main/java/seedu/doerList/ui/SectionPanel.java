@@ -117,6 +117,7 @@ public class SectionPanel extends UiPart {
     public void setActive(int index) {
         if (index >= 0 && index < this.getTaskControllers().size()) {
             this.getTaskControllers().get(index).setActive();
+            raise(new TaskPanelSelectionChangedEvent(this.getTaskControllers().get(index)));
         }
     }
 

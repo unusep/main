@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -48,11 +47,7 @@
                   <AnchorPane fx:id="categoryListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <ScrollPane fx:id="taskListScrollPanel" fitToWidth="true">
-               <content>
-                <AnchorPane fx:id="taskListPanelPlaceholder" />
-               </content>
-            </ScrollPane>
+          <AnchorPane fx:id="taskListPanelPlaceholder" />
          </items>
       </SplitPane>
       <AnchorPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

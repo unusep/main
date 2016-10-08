@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="45.0" minWidth="500.0" prefHeight="45.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.TaskListHeader">
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.TaskListHeader">
    <children>
       <Label fx:id="titleField" text="Section Title">
          <VBox.margin>
@@ -22,4 +22,7 @@
          </VBox.margin>
       </Line>
    </children>
+   <padding>
+      <Insets bottom="8.0" top="8.0" />
+   </padding>
 </VBox>

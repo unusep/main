@@ -5,11 +5,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
+import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ import java.util.logging.Logger;
 public class TaskListPanel extends UiPart {
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskListPanel.fxml";
-    private VBox panel;
+    private ScrollPane panel;
     private AnchorPane placeHolderPane;
     private ObservableList<ReadOnlyTask> allTasks;
     
@@ -29,6 +33,9 @@ public class TaskListPanel extends UiPart {
 
     @FXML
     private VBox sectionList;
+    
+    @FXML
+    private ScrollPane scrollPane;
 
     public TaskListPanel() {
         super();
@@ -36,7 +43,7 @@ public class TaskListPanel extends UiPart {
 
     @Override
     public void setNode(Node node) {
-        panel = (VBox) node;
+        panel = (ScrollPane) node;
     }
 
     @Override
@@ -64,6 +71,7 @@ public class TaskListPanel extends UiPart {
         displayTasks();
         addToPlaceholder();
         addListener(allTasks);
+        remapArrowKeysForScrollPane();
     }
     
     private void addListener(ObservableList<ReadOnlyTask> taskList) {
@@ -83,6 +91,7 @@ public class TaskListPanel extends UiPart {
 
     private void addToPlaceholder() {
         placeHolderPane.getChildren().add(panel);
+        FxViewUtil.applyAnchorBoundaryParameters(panel, 0.0, 0.0, 0.0, 0.0);
     }
     
     public void selectionMove(Direction direction) {
@@ -153,6 +162,23 @@ public class TaskListPanel extends UiPart {
             selectionIndex++;
         }
         return selectionIndex;
+    }
+    
+    private void remapArrowKeysForScrollPane() {
+        scrollPane.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
+            event.consume();
+            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                switch (event.getCode()) {
+                    case UP:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
+                        break;
+                    case DOWN:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
+                        break;
+                }
+            }
+            
+        });
     }
     
     
