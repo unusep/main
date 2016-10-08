@@ -4,14 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.GuiSettings;
 import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
 import seedu.doerList.model.task.ReadOnlyTask;
@@ -61,6 +64,9 @@ public class MainWindow extends UiPart {
 
     @FXML
     private SplitPane splitPane;
+    
+    @FXML
+    private ScrollPane taskListScrollPanel;
 
     public MainWindow() {
         super();
@@ -101,10 +107,28 @@ public class MainWindow extends UiPart {
         primaryStage.setScene(scene);
 
         setAccelerators();
+        remapArrowKeysForScrollPane();
     }
 
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+    }
+    
+    private void remapArrowKeysForScrollPane() {
+        taskListScrollPanel.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
+            event.consume();
+            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                switch (event.getCode()) {
+                    case UP:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
+                        break;
+                    case DOWN:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
+                        break;
+                }
+            }
+            
+        });
     }
 
     void fillInnerParts() {

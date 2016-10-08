@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.MainApp;
 import seedu.doerList.commons.core.ComponentManager;
@@ -13,6 +14,7 @@ import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
 import seedu.doerList.logic.Logic;
@@ -113,10 +115,16 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         //mainWindow.getTaskListPanel().scrollTo(event.targetIndex);
     }
-
+    
     @Subscribe
-    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    private void handleTaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent event) {
+        //logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getTaskListPanel().selectionMove(event.getDirection());
+    }
+    
+    @Subscribe
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        mainWindow.getTaskListPanel().selectionChanged(event.getNewSelectedCard());
     }
 
 }

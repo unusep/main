@@ -48,7 +48,7 @@
                   <AnchorPane fx:id="categoryListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <ScrollPane fitToWidth="true">
+            <ScrollPane fx:id="taskListScrollPanel" fitToWidth="true">
                <content>
                 <AnchorPane fx:id="taskListPanelPlaceholder" />
                </content>

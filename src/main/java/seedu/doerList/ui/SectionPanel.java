@@ -15,6 +15,7 @@ import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -26,6 +27,8 @@ public class SectionPanel extends UiPart {
     private VBox panel;
     private AnchorPane placeHolderPane;
     private TaskListHeader header;
+    
+    private ArrayList<TaskCard> taskCardControllers;
 
     @FXML
     private VBox taskListBox;
@@ -74,11 +77,13 @@ public class SectionPanel extends UiPart {
     }
     
     private void setTaskList(ObservableList<ReadOnlyTask> taskList) {
+        taskCardControllers = new ArrayList<TaskCard>();
         int i = 1;
         for(ReadOnlyTask task: taskList) {
             AnchorPane container_temp = new AnchorPane();
             taskListBox.getChildren().add(container_temp);
             TaskCard taskCard = TaskCard.load(primaryStage, container_temp, task, i);
+            taskCardControllers.add(taskCard);
             FxViewUtil.applyAnchorBoundaryParameters(taskCard.getLayout(), 0.0, 0.0, 0.0, 0.0);
             i++;
         }
@@ -89,12 +94,30 @@ public class SectionPanel extends UiPart {
         placeHolderPane.getChildren().add(panel);
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
-        
+    public ArrayList<TaskCard> getTaskControllers() {
+        return taskCardControllers;
     }
 
     public void scrollTo(int index) {
         
+    }
+    
+    public int findSelectionIndex(TaskCard target) {
+        int taskCardIndex = -1;
+        for(TaskCard tc : this.getTaskControllers()) {
+            if (tc == target) {
+                taskCardIndex++;
+                break;
+            }
+            taskCardIndex++;
+        }
+        return taskCardIndex;
+    }
+    
+    public void setActive(int index) {
+        if (index >= 0 && index < this.getTaskControllers().size()) {
+            this.getTaskControllers().get(index).setActive();
+        }
     }
 
 }
