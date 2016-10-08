@@ -83,10 +83,12 @@ public class TaskListPanel extends UiPart {
     private void displayTasks() {
         sectionPanelControllers = new ArrayList<SectionPanel>();
         sectionList.getChildren().clear();
+        
         AnchorPane container_temp = new AnchorPane();
         sectionList.getChildren().add(container_temp);
         SectionPanel controller = SectionPanel.load(primaryStage, container_temp, allTasks);
         sectionPanelControllers.add(controller);
+        // TODO add filter to category task based on timecategory
     }
 
     private void addToPlaceholder() {
@@ -112,14 +114,14 @@ public class TaskListPanel extends UiPart {
             }
         } else {
             TaskCard orginalSelection = TaskCard.selectedTaskController;
-            int selectionIndex = findSelectionSection(orginalSelection);
-            if (selectionIndex != -1) {
-                SectionPanel selectedSection = sectionPanelControllers.get(selectionIndex);
+            int sectionIndex = findSelectionSection(orginalSelection);
+            if (sectionIndex != -1) {
+                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
                 int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
                 if (targetIndex == selectedSection.getTaskControllers().size() - 1) {
                     // last item in section
-                    if (selectionIndex != sectionPanelControllers.size() - 1) {
-                        sectionPanelControllers.get(selectionIndex + 1).setActive(0); 
+                    if (sectionIndex != sectionPanelControllers.size() - 1) {
+                        sectionPanelControllers.get(sectionIndex + 1).setActive(0); 
                     }
                 } else {
                     selectedSection.setActive(targetIndex + 1);
@@ -135,14 +137,14 @@ public class TaskListPanel extends UiPart {
             }
         } else {
             TaskCard orginalSelection = TaskCard.selectedTaskController;
-            int selectionIndex = findSelectionSection(orginalSelection);
-            if (selectionIndex != -1) {
-                SectionPanel selectedSection = sectionPanelControllers.get(selectionIndex);
+            int sectionIndex = findSelectionSection(orginalSelection);
+            if (sectionIndex != -1) {
+                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
                 int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
                 if (targetIndex == 0) {
                     // first item in section
-                    if (selectionIndex != 0) {
-                        SectionPanel previousSection = sectionPanelControllers.get(selectionIndex - 1);
+                    if (sectionIndex != 0) {
+                        SectionPanel previousSection = sectionPanelControllers.get(sectionIndex - 1);
                         previousSection.setActive(previousSection.getTaskControllers().size() - 1); 
                     }
                 } else {
@@ -175,6 +177,8 @@ public class TaskListPanel extends UiPart {
                     case DOWN:
                         raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
                         break;
+                    default:
+                        break;
                 }
             }
             
@@ -184,6 +188,38 @@ public class TaskListPanel extends UiPart {
     
     public void selectionChanged(TaskCard newSelectedCard) {
         newSelectedCard.setActive();
+        ensureTaskVisible(newSelectedCard);
     }
+    
+    private void ensureTaskVisible(TaskCard taskcard) {
+        double height = scrollPane.getContent().getBoundsInLocal().getHeight();
+        double y = taskcard.getLayout().getParent().getBoundsInParent().getMaxY();
+        int sectionIndex = findSelectionSection(taskcard);
+        SectionPanel section = sectionPanelControllers.get(sectionIndex);
+        int selectionIndex = section.findSelectionIndex(taskcard);
+        
+        // offset for the first element
+        if (sectionIndex == 0 && selectionIndex == 0) {
+            y -= taskcard.getLayout().getHeight();
+        }
+        
+        // offset for the second section and so on
+        if (sectionIndex > 0) {
+            y += sectionPanelControllers.get(sectionIndex - 1).getLayout().getBoundsInParent().getMaxY();
+        }
+        
+        // offset for the last element
+        if ((sectionIndex == sectionPanelControllers.size() - 1)
+                && (selectionIndex == section.getTaskControllers().size() - 1)) {
+            y += taskcard.getLayout().getHeight();
+        }
+
+        // scrolling values range from 0 to 1
+        scrollPane.setVvalue(y/height);
+
+        // just for usability
+        scrollPane.requestFocus();
+    }
+
 
 }

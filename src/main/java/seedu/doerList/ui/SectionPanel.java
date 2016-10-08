@@ -16,6 +16,7 @@ import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -43,6 +44,10 @@ public class SectionPanel extends UiPart {
     public void setNode(Node node) {
         panel = (VBox) node;
     }
+    
+    public VBox getLayout() {
+        return panel;
+    }
 
     @Override
     public String getFxmlPath() {
@@ -63,20 +68,20 @@ public class SectionPanel extends UiPart {
     }
 
     public static SectionPanel load(Stage primaryStage, AnchorPane sectionPanelPlaceholder,
-                                       ObservableList<ReadOnlyTask> taskList) {
+                                       List<ReadOnlyTask> taskList) {
         SectionPanel sectionPanel =
                 UiPartLoader.loadUiPart(primaryStage, sectionPanelPlaceholder, new SectionPanel());
         sectionPanel.configure(taskList);
         return sectionPanel;
     }
 
-    private void configure(ObservableList<ReadOnlyTask> taskList) {
+    private void configure(List<ReadOnlyTask> taskList) {
         setTaskList(taskList);
         setHeaderTitle();
         addToPlaceholder();
     }
     
-    private void setTaskList(ObservableList<ReadOnlyTask> taskList) {
+    private void setTaskList(List<ReadOnlyTask> taskList) {
         taskCardControllers = new ArrayList<TaskCard>();
         int i = 1;
         for(ReadOnlyTask task: taskList) {
