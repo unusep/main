@@ -1,10 +1,13 @@
 package seedu.doerList.logic.commands;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.category.*;
+import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
@@ -24,33 +27,50 @@ public class EditCommand extends Command {
 
 	public final int targetIndex;
 
+	 private Title toUpdateTitle = null;
+	 private Description toUpdateDescription = null;
+	private TimeInterval toUpdateTimeInterval = null;
+	 private UniqueCategoryList toUpdateCategories = null;
+
 	public EditCommand(int targetIndex, String title, String description,
-			String startTime, String endTime, Set<String> categories) {
+			String startTime, String endTime, Set<String> categories) throws IllegalValueException {
 		this.targetIndex = targetIndex;
-	}
+
+        if (title.trim().length() != 0) {
+            this.toUpdateTitle = new Title(title);
+        }
+        if (description.trim().length() != 0) {
+            this.toUpdateDescription = new Description(description);
+        }
+
+        //time
+
+        if (!categories.isEmpty()) {
+            final Set<Category> categorySet = new HashSet<>();
+            for (String categoryName : categories) {
+                categorySet.add(new Category(categoryName));
+            }
+            this.toUpdateCategories = new UniqueCategoryList(categorySet);
+        }
+    }
 
 	@Override
 	public CommandResult execute() {
-
-		UnmodifiableObservableList<ReadOnlyTask> lastShownList = model
-				.getFilteredTaskList();
-
-		if (lastShownList.size() < targetIndex) {
-			indicateAttemptToExecuteIncorrectCommand();
-			return new CommandResult(
-					Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-		}
-
-		ReadOnlyTask personToDelete = lastShownList.get(targetIndex - 1);
-
-		try {
-			model.deleteTask(personToDelete);
-		} catch (TaskNotFoundException pnfe) {
-			assert false : "The target person cannot be missing";
-		}
-
-		return new CommandResult(
-				String.format(MESSAGE_DELETE_TASK_SUCCESS, personToDelete));
+		return null;
 	}
 
+	/**
+     * Generate new task based on updated information
+     *
+     * @param original original Person (Person before update)
+     * @return Person with updated information
+     */
+    private Task generateUpdatedTask(ReadOnlyTask original) {
+        return new Task(
+                toUpdateTitle != null ? toUpdateTitle : original.getTitle(),
+                toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
+                toUpdateTimeInterval != null ? toUpdateTimeInterval : original.getTimeInterval(),
+                toUpdateCategories != null ? toUpdateCategories : original.getCategories()
+        );
+    }
 }
