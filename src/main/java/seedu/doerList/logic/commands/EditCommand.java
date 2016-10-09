@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.*;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
@@ -23,7 +24,8 @@ public class EditCommand extends Command {
 			+ "Parameters: INDEX (must be a positive integer) [-t TASK] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY]...\n"
 			+ "Example: " + COMMAND_WORD + " 1 -t Go to lecture -d study";
 
-	public static final String MESSAGE_DELETE_TASK_SUCCESS = "edit task: %1$s";
+	public static final String MESSAGE_EDIT_TASK_SUCCESS = "edit task: %1$s";
+	public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
 
 	public final int targetIndex;
 
@@ -56,7 +58,28 @@ public class EditCommand extends Command {
 
 	@Override
 	public CommandResult execute() {
-		return null;
+		UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+
+        if (lastShownList.size() < targetIndex) {
+            indicateAttemptToExecuteIncorrectCommand();
+            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+        try {
+        	ReadOnlyTask taskToEdit = lastShownList.get(targetIndex - 1);
+        	Task newTask = generateUpdatedTask(taskToEdit);
+
+        	model.deleteTask(taskToEdit);
+        	model.addTask(newTask);
+
+        	lastShownList.remove(taskToEdit);
+        	lastShownList.add(newTask);
+
+        	return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, newTask));
+        } catch (TaskNotFoundException pnfe) {
+            return new CommandResult(Messages.MESSAGE_TASK_NOT_IN_DOERLIST);
+        } catch (UniqueTaskList.DuplicateTaskException dpe) {
+            return new CommandResult(MESSAGE_DUPLICATE_TASK);
+        }
 	}
 
 	/**

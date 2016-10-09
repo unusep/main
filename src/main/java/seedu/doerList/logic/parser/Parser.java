@@ -21,7 +21,8 @@ public class Parser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern TASK_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern TASK_INDEX_ARGS_IGNORE_OTHERS = Pattern.compile("(?<targetIndex>.+?)\\s+");
 
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
@@ -132,31 +133,44 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareEdit(String args) {
-    	 Optional<Integer> index = parseIndex(args);
-         if(!index.isPresent()){
-             return new IncorrectCommand(
-                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-         }
 
+    	try {
+        final int index = findDisplayedIndexInArgs(args);
     	final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
         final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
         final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
         final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
         final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
 
-        try {
-            return new EditCommand(
-            		index.get(),
-                    titleMatcher.find() ? titleMatcher.group("title") : null,
-                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
-                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+
+        return new EditCommand(
+        		index,
+        		titleMatcher.find() ? titleMatcher.group("title") : null,
+        		descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
+        		startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
+        		endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
+        		getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
     }
+
+    /**
+     * Find a single index number in Displayed args.
+     *
+     * @param args arguments string to find a index number
+     * @return the parsed index number
+     * @throws ParseException if no region of the args string could be found for the index
+     * @throws NumberFormatException the args string region is not a valid number
+     */
+    private int findDisplayedIndexInArgs(String args) throws NumberFormatException {
+        final Matcher matcher = TASK_INDEX_ARGS_IGNORE_OTHERS.matcher(args.trim());
+        return Integer.parseInt(matcher.group("targetIndex"));
+    }
+
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -195,7 +209,7 @@ public class Parser {
      *   Returns an {@code Optional.empty()} otherwise.
      */
     private Optional<Integer> parseIndex(String command) {
-        final Matcher matcher = PERSON_INDEX_ARGS_FORMAT.matcher(command.trim());
+        final Matcher matcher = TASK_INDEX_ARGS_FORMAT.matcher(command.trim());
         if (!matcher.matches()) {
             return Optional.empty();
         }
