@@ -53,6 +53,9 @@ public class Parser {
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
 
+        case EditCommand.COMMAND_WORD:
+        	return prepareEdit(arguments);
+
         case SelectCommand.COMMAND_WORD:
             return prepareSelect(arguments);
 
@@ -100,7 +103,7 @@ public class Parser {
                     titleMatcher.group("title"),
                     descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,        
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
                     getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
             );
         } catch (IllegalValueException ive) {
@@ -122,6 +125,38 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+    	 Optional<Integer> index = parseIndex(args);
+         if(!index.isPresent()){
+             return new IncorrectCommand(
+                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+         }
+
+    	final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
+        final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
+        final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
+        final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
+        final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
+
+        try {
+            return new EditCommand(
+            		index.get(),
+                    titleMatcher.find() ? titleMatcher.group("title") : null,
+                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
+                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+            );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
     /**
      * Parses arguments in the context of the delete person command.
      *
