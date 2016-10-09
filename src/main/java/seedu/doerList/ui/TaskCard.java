@@ -108,11 +108,17 @@ public class TaskCard extends UiPart {
         return displayIndex;
     }
     
+    public static TaskCard getSeletedTaskCard() {
+        return selectedTaskController;
+    }
+    
     
     @FXML
     public void handleClickAction(MouseEvent event) {
         logger.fine("Selection in task list panel changed to : '" + event.getSource() + "'");
         raise(new TaskPanelSelectionChangedEvent(this));
     }
+    
+    
     
 }

@@ -108,12 +108,12 @@ public class TaskListPanel extends UiPart {
     }
     
     private void selectionMoveDown() {
-        if (TaskCard.selectedTaskController == null) {
+        if (TaskCard.getSeletedTaskCard() == null) {
             if (sectionPanelControllers.size() > 0) {
                 sectionPanelControllers.get(0).setActive(0);
             }
         } else {
-            TaskCard orginalSelection = TaskCard.selectedTaskController;
+            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
             int sectionIndex = findSelectionSection(orginalSelection);
             if (sectionIndex != -1) {
                 SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
@@ -131,12 +131,12 @@ public class TaskListPanel extends UiPart {
     }
     
     private void selectionMoveUp() {
-        if (TaskCard.selectedTaskController == null) {
+        if (TaskCard.getSeletedTaskCard() == null) {
             if (sectionPanelControllers.size() > 0) {
                 sectionPanelControllers.get(0).setActive(0);
             }
         } else {
-            TaskCard orginalSelection = TaskCard.selectedTaskController;
+            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
             int sectionIndex = findSelectionSection(orginalSelection);
             if (sectionIndex != -1) {
                 SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
