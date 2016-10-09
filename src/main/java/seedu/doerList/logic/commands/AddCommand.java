@@ -37,36 +37,12 @@ public class AddCommand extends Command {
 		for (String categoryName : categories) {
 			categorySet.add(new Category(categoryName));
 		}
-		Title taskTitle = new Title(title);
-		if (description == null && startTime == null && endTime == null) {
-			this.toAdd = new Task(
-					taskTitle,
-					null,
-					null,
-					new UniqueCategoryList(categorySet)
-				);
-		} else if (description == null && startTime != null && endTime != null) {
-			this.toAdd = new Task(
-					taskTitle,
-					null,
-					new TimeInterval(startTime, endTime),
-					new UniqueCategoryList(categorySet)
-					);
-		} else if (description != null && startTime == null && endTime == null) {
-			this.toAdd = new Task(
-					taskTitle,
-					new Description(description),
-					null,
-					new UniqueCategoryList(categorySet)
-					);
-		} else {
-			this.toAdd = new Task(
-					taskTitle,
-					new Description(description),
-					new TimeInterval(startTime, endTime),
-					new UniqueCategoryList(categorySet)
-					);
-		}
+		this.toAdd = new Task(
+		            new Title(title),
+		            description == null ? null : new Description(description),
+		            endTime == null ? null : new TimeInterval(startTime, endTime),
+		            new UniqueCategoryList(categorySet)
+		        );
 	}
 	@Override
 	public CommandResult execute() {
