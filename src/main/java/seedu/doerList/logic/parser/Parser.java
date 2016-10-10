@@ -54,7 +54,7 @@ public class Parser {
             return prepareAdd(arguments);
 
         case ViewCommand.COMMAND_WORD:
-            return prepareSelect(arguments);
+            return prepareView(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
@@ -145,14 +145,14 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareSelect(String args) {
+    private Command prepareView(String args) {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
 
-        return new SelectCommand(index.get());
+        return new ViewCommand(index.get());
     }
 
     /**
