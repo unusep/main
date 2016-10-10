@@ -15,7 +15,7 @@ public class ViewCommand extends Command {
             + "Example: " + COMMAND_WORD
             + " 5";
     
-    public static final String MESSAGE_SUCCESS_TASK = "View task: ";
+    public static final String MESSAGE_SUCCESS_TASK = "Viewing task: ";
     
     public final int targetIndex;
     

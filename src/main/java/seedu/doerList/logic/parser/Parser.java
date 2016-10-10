@@ -84,7 +84,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the add person command.
+     * Parses arguments in the context of the add task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -113,7 +113,7 @@ public class Parser {
     }
 
     /**
-     * Extracts the new person's tags from the add command's tag arguments string.
+     * Extracts the new task's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
     private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
@@ -127,7 +127,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the edit person command.
+     * Parses arguments in the context of the edit task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -142,12 +142,12 @@ public class Parser {
             final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
             
             return new EditCommand(
-            		index,
-            		titleMatcher.find() ? titleMatcher.group("title") : null,
-            		descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
-            		startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-            		endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
-            		getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+                    index,
+                    titleMatcher.find() ? titleMatcher.group("title") : null,
+                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
+                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
                 );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -170,7 +170,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the delete person command.
+     * Parses arguments in the context of the delete task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -187,7 +187,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the select person command.
+     * Parses arguments in the context of the select task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -221,7 +221,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the find person command.
+     * Parses arguments in the context of the find task command.
      *
      * @param args full command args string
      * @return the prepared command
