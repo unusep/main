@@ -199,7 +199,7 @@ public class LogicManagerTest {
     public void execute_add_floatingTask_successful() throws Exception {
       // setup expectations
       TestDataHelper helper = new TestDataHelper();
-      Task toBeAdded = helper.taskWithAttribute(false, false, false);
+      Task toBeAdded = helper.taskWithAttribute(false, false, false, false);
       DoerList expectedAB = new DoerList();
       expectedAB.addTask(toBeAdded);
 
@@ -414,16 +414,20 @@ public class LogicManagerTest {
          * @return Task generated task
          * @throws Exception
          */
-        Task taskWithAttribute(boolean hasDescription, boolean hasTimeInterval, boolean hasCategory) throws Exception {
+        Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasCategory) throws Exception {
             Title title = new Title("My Task");
             Description description = null;
-            TimeInterval timeInterval = null;
+            TodoTime startTime = null;
+            TodoTime endTime = null;
             UniqueCategoryList categories = new UniqueCategoryList();
             if (hasDescription) {
                 description = new Description("Do my homework");
             }
-            if (hasTimeInterval) {
-                timeInterval = new TimeInterval("2016-10-03 14:00", "2016-10-04 15:00");
+            if (hasStartTime) {
+                startTime = new TodoTime("2016-10-03 14:00");
+            }
+            if (hasEndTime) {
+                endTime = new TodoTime("2016-10-04 15:00");
             }
             if (hasCategory) {
                 Category category1 = new Category("CS2101");
@@ -431,7 +435,7 @@ public class LogicManagerTest {
                 categories = new UniqueCategoryList(category1, category2);
             }
             
-            return new Task(title, description, timeInterval, categories);
+            return new Task(title, description, startTime, endTime, categories);
         }
 
         /**
@@ -442,12 +446,13 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT));
-            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT));
+            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
                     new Title("Person " + seed),
                     new Description("" + Math.abs(seed)),
-                    new TimeInterval(sampleDate1, sampleDate2.plusDays(seed)),
+                    new TodoTime(sampleDate1),
+                    new TodoTime(sampleDate2.plus(seed)),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -463,8 +468,16 @@ public class LogicManagerTest {
                 cmd.append("-d ").append(r.getDescription()).append(" ");
             }
            
-            if (r.hasTimeInterval()) {
-                cmd.append("{").append(r.getTimeInterval()).append("} ");
+            if (!r.isFloatingTask()) {
+                cmd.append("{");
+                if (r.hasStartTime()) {
+                    cmd.append(r.getStartTime());
+                }
+                cmd.append("->");
+                if (r.hasEndTime()) {
+                    cmd.append(r.getEndTime());
+                }
+                cmd.append("}");
             }
             
             UniqueCategoryList categories = r.getCategories();
@@ -536,7 +549,8 @@ public class LogicManagerTest {
             UniqueCategoryList categories = new UniqueCategoryList(category1, category2);      
             return new Task(new Title(title), 
                     new Description(description), 
-                    new TimeInterval("2016-10-03 14:00", "2016-10-04 15:00"),
+                    new TodoTime("2016-10-03 14:00"),
+                    new TodoTime("2016-10-04 15:00"),
                     categories);
         }
 

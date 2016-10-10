@@ -13,45 +13,50 @@ import seedu.doerList.model.task.*;
  */
 public class AddCommand extends Command {
 
-	public static final String COMMAND_WORD = "add";
 
-	public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
-			+ "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
-			+ "Example: " + COMMAND_WORD
-			+ " -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
+    public static final String COMMAND_WORD = "add";
 
-	public static final String MESSAGE_SUCCESS = "New task added: %1$s";
-	public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
+            + "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
+            + "Example: " + COMMAND_WORD
+            + " -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
 
-	private final Task toAdd;
+    public static final String MESSAGE_SUCCESS = "New task added: %1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
+
+    private final Task toAdd;
 
 
-	/**
-	 * Add task
-	 *
-	 * @throws IllegalValueException if any of the raw values are invalid
-	 */
-	public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
-			throws IllegalValueException {
-		final Set<Category> categorySet = new HashSet<>();
-		for (String categoryName : categories) {
-			categorySet.add(new Category(categoryName));
-		}
-		this.toAdd = new Task(
-		            new Title(title),
-		            description == null ? null : new Description(description),
-		            endTime == null ? null : new TimeInterval(startTime, endTime),
-		            new UniqueCategoryList(categorySet)
-		        );
-	}
-	@Override
-	public CommandResult execute() {
-		assert model != null;
-		try {
-			model.addTask(toAdd);
-			return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-		} catch (UniqueTaskList.DuplicateTaskException e) {
-			return new CommandResult(MESSAGE_DUPLICATE_TASK);
-		}
-	}
+    /**
+     * Add a floating task (task with no start time and DeadLine)
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
+    		throws IllegalValueException {
+        final Set<Category> categorySet = new HashSet<>();
+        for (String categoryName : categories) {
+            categorySet.add(new Category(categoryName));
+        }
+
+        this.toAdd = new Task(
+        		new Title(title),
+        		description == null ? null : new Description(description),
+        		startTime == null ? null : new TodoTime(startTime),
+        		endTime == null ? null : new TodoTime(endTime),
+        		new UniqueCategoryList(categorySet)
+        );
+
+    }
+    @Override
+    public CommandResult execute() {
+        assert model != null;
+        try {
+            model.addTask(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (UniqueTaskList.DuplicateTaskException e) {
+            return new CommandResult(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+
 }

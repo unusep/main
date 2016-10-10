@@ -22,7 +22,9 @@ public class XmlAdaptedTask {
     @XmlElement(required = false)
     private String description;
     @XmlElement(required = false)
-    private XmlAdaptedTimeInterval timeInterval;
+    private XmlAdaptedTodoTime startTime;
+    @XmlElement(required = false)
+    private XmlAdaptedTodoTime endTime;
 
 
     @XmlElement
@@ -44,8 +46,11 @@ public class XmlAdaptedTask {
         if (source.hasDescription()) {
             description = source.getDescription().value;
         }
-        if (source.hasTimeInterval()) {
-            timeInterval = new XmlAdaptedTimeInterval(source.getTimeInterval());
+        if (source.hasStartTime()) {
+            startTime = new XmlAdaptedTodoTime(source.getStartTime());
+        }
+        if (source.hasEndTime()) {
+            endTime = new XmlAdaptedTodoTime(source.getEndTime());
         }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
@@ -65,14 +70,18 @@ public class XmlAdaptedTask {
         }
         final Title title = new Title(this.title);
         Description description = null;
-        TimeInterval timeInterval = null;
+        TodoTime startTime = null;
+        TodoTime endTime = null;
         if (this.description != null) {
             description = new Description(this.description);
         }
-        if (this.timeInterval != null) {
-            timeInterval = this.timeInterval.toModelType();
+        if (this.startTime != null) {
+            startTime = this.startTime.toModelType();
+        }
+        if (this.endTime != null) {
+            endTime = this.endTime.toModelType();
         }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
-        return new Task(title, description, timeInterval, categories);
+        return new Task(title, description, startTime, endTime, categories);
     }
 }
