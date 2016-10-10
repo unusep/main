@@ -113,7 +113,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //mainWindow.getTaskListPanel().scrollTo(event.targetIndex);
+        mainWindow.getTaskListPanel().scrollTo(event.targetIndex + 1); // index is offset by 1
     }
     
     @Subscribe

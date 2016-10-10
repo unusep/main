@@ -12,11 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart {
@@ -33,7 +35,7 @@ public class TaskCard extends UiPart {
     @FXML
     private AnchorPane descriptionPanel;
     @FXML
-    private AnchorPane timeIntervalPanel;
+    private AnchorPane timePanel;
     @FXML
     private Label title;
     @FXML
@@ -98,10 +100,64 @@ public class TaskCard extends UiPart {
         }
         taskPanel.setStyle("-fx-background-color: #deeff5;");
         selectedTaskController = this;
+        expandDetails();
     }
     
     public void setInactive() {
         taskPanel.setStyle("-fx-background-color: #e6e6e6;");
+        closeDetails();
+    }
+    
+    private void expandDetails() {
+        showDescription();
+        showTime();
+    }
+    
+    private void closeDetails() {
+        hideDescription();
+        hideTime();
+    }
+    
+    private void showDescription() {
+        if (task.hasDescription()) {
+            Text descriptionField = new Text();
+            descriptionField.setText(task.getDescription().toString());
+            descriptionPanel.getChildren().add(descriptionField);
+            FxViewUtil.applyAnchorBoundaryParameters(descriptionField, 0, 0, 0, 0);
+        }
+    }
+    
+    private void hideDescription() {
+        descriptionPanel.getChildren().clear();
+    }
+    
+    private void showTime() {
+        StringBuilder builder = new StringBuilder();
+        if (task.hasStartTime() && !task.hasEndTime()) {
+            builder
+            .append("Begin At: ")
+            .append(task.getStartTime());
+        }
+        if (!task.hasStartTime() && task.hasEndTime()) {
+            builder
+            .append("Due: ")
+            .append(task.getEndTime());
+        }
+        if (task.hasStartTime() && task.hasEndTime()) {
+            builder
+            .append("Time: ")
+            .append(task.getStartTime() + " -> " + task.getEndTime());
+        }
+        if (builder.length() != 0) {
+            Text timeField = new Text();
+            timeField.setText(builder.toString());
+            timePanel.getChildren().add(timeField);
+            FxViewUtil.applyAnchorBoundaryParameters(timeField, 0, 0, 0, 0);
+        }
+    }
+    
+    private void hideTime() {
+        timePanel.getChildren().clear();
     }
     
     public int getDisplayIndex() {
