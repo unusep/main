@@ -177,15 +177,23 @@ public class LogicManagerTest {
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.taskWithAttribute(true, true, true, true);
-        DoerList expectedAB = new DoerList();
-        expectedAB.addTask(toBeAdded);
-
-        // execute command and verify result
-        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                expectedAB,
-                expectedAB.getTaskList());
+        Task[] inputs = {
+                helper.taskWithAttribute(true, false, false, false),
+                helper.taskWithAttribute(false, true, false, false),
+                helper.taskWithAttribute(false, false, true, false),
+                helper.taskWithAttribute(false, false, false, true),
+                helper.taskWithAttribute(false, true, true, false),
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // execute command and verify result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
     }
     
     @Test
