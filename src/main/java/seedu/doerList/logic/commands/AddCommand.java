@@ -33,7 +33,7 @@ public class AddCommand extends Command {
      */
     public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
     		throws IllegalValueException {
-    	final Set<Category> categorySet = new HashSet<>();
+        final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
