@@ -75,7 +75,7 @@ public interface ReadOnlyTask {
         if (hasStartTime() && hasEndTime()) {
             builder
             .append(" Time: ")
-            .append(getStartTime() + " -> " + getEndTime());
+            .append(getStartTime() + "->" + getEndTime());
         }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");

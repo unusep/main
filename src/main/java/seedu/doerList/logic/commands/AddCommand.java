@@ -40,8 +40,8 @@ public class AddCommand extends Command {
         }
 
         this.toAdd = new Task(
-        		new Title(title),
-        		description == null ? null : new Description(description),
+        		new Title(title.trim()),
+        		description == null ? null : new Description(description.trim()),
         		startTime == null ? null : new TodoTime(startTime),
         		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)

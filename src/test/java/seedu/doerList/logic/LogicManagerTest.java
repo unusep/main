@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -176,18 +175,17 @@ public class LogicManagerTest {
 
     @Test
     public void execute_add_successful() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // execute command and verify result
-//        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-//                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB,
-//                expectedAB.getPersonList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithAttribute(true, true, true, true);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
 
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB,
+                expectedAB.getTaskList());
     }
     
     @Test
@@ -479,7 +477,7 @@ public class LogicManagerTest {
             if (!categories.getInternalList().isEmpty()) {
                 cmd.append("-c ");
                 for(Category c: categories){
-                    cmd.append(c.categoryName);
+                    cmd.append(c.categoryName + " ");
                 }
             }
             
