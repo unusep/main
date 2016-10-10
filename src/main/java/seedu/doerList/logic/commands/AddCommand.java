@@ -18,7 +18,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
             + "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
             + "Example: " + COMMAND_WORD
-            + " add -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
+            + " -t Take lecture {2016-10-04 10:00->2016-10-04 12:00} -c CS2102";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
@@ -33,15 +33,16 @@ public class AddCommand extends Command {
      */
     public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
     		throws IllegalValueException {
-    	final Set<Category> categorySet = new HashSet<>();
+        final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
 
         this.toAdd = new Task(
         		new Title(title),
-        		null,
-        		null,
+        		description == null ? null : new Description(description),
+        		startTime == null ? null : new TodoTime(startTime),
+        		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)
         );
 
@@ -56,4 +57,5 @@ public class AddCommand extends Command {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
     }
+
 }

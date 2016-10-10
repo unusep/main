@@ -13,18 +13,20 @@ public class Task implements ReadOnlyTask {
 
     private Title title;
     private Description description;
-    private TimeInterval timeInterval;
+    private TodoTime startTime;
+    private TodoTime endTime;
 
     private UniqueCategoryList categories;
 
     /**
      * Title must be presented.
      */
-    public Task(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
+    public Task(Title title, Description description, TodoTime startTime, TodoTime endTime, UniqueCategoryList categories) {
         assert title != null;
         this.title = title;
         this.description = description;
-        this.timeInterval = timeInterval;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
     }
 
@@ -32,7 +34,11 @@ public class Task implements ReadOnlyTask {
      * Copy constructor.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getTitle(), source.getDescription(), source.getTimeInterval(), source.getCategories());
+        this(source.getTitle(), 
+                source.getDescription(), 
+                source.getStartTime(), 
+                source.getEndTime(), 
+                source.getCategories());
     }
 
     @Override
@@ -44,13 +50,7 @@ public class Task implements ReadOnlyTask {
     public Description getDescription() {
         return description;
     }
-
-    @Override
-    public TimeInterval getTimeInterval() {
-        return timeInterval;
-    }
     
-
     @Override
     public UniqueCategoryList getCategories() {
         return categories;
@@ -74,12 +74,22 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, description, timeInterval, categories);
+        return Objects.hash(title, description, startTime, endTime, categories);
     }
 
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    @Override
+    public TodoTime getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public TodoTime getEndTime() {
+        return endTime;
     }
 
 }
