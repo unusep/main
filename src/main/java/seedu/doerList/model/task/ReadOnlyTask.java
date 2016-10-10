@@ -46,13 +46,14 @@ public interface ReadOnlyTask {
             builder.append(" Description: ").append(getDescription());
         }
         if (hasTimeInterval()) {
-            builder.append(" Description: ")
-            .append(getDescription())
-            .append(" StartTime: ")
+            builder
+            .append(" Time: ")
             .append(getTimeInterval());
         }
-        builder.append(" Categories: ");
-        getCategories().forEach(builder::append);
+        if (!getCategories().getInternalList().isEmpty()) {
+            builder.append(" Categories: ");
+            getCategories().forEach(builder::append);
+        }
         return builder.toString();
     }
 
