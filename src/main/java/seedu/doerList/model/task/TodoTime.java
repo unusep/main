@@ -31,6 +31,10 @@ public class TodoTime {
            throw new IllegalValueException(MESSAGE_TODOTIME_CONSTRAINTS);
        }
    }
+   
+   public TodoTime(DateTime source) {
+       value = source;
+   }
 
    /**
     * Returns true if a given string is a valid time.

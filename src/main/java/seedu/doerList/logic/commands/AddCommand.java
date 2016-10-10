@@ -42,6 +42,7 @@ public class AddCommand extends Command {
         		new Title(title),
         		null,
         		null,
+        		null,
         		new UniqueCategoryList(categorySet)
         );
 

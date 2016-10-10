@@ -11,7 +11,8 @@ import seedu.doerList.model.task.ReadOnlyTask;
 public class TaskCardHandle extends GuiHandle {
     private static final String TITLE_FIELD_ID = "#title";
     private static final String DESCRIPTION_FIELD_ID = "#description";
-    private static final String TIMEINTERVAL_FIELD_ID = "#timeInterval";
+    private static final String START_TIME_FIELD_ID = "#startTime";
+    private static final String END_TIME_FIELD_ID = "#endTime";
 
     private Node node;
 
@@ -32,14 +33,19 @@ public class TaskCardHandle extends GuiHandle {
         return getTextFromLabel(DESCRIPTION_FIELD_ID);
     }
 
-    public String getTimeInterval() {
-        return getTextFromLabel(TIMEINTERVAL_FIELD_ID);
+    public String getStartTime() {
+        return getTextFromLabel(START_TIME_FIELD_ID);
+    }
+    
+    public String getEndTime() {
+        return getTextFromLabel(END_TIME_FIELD_ID); 
     }
 
     public boolean isSameTask(ReadOnlyTask task){
-        return getFullTitle().equals(task.getTitle().fullTitle) && 
-                ((!task.hasDescription() && getDescription().isEmpty()) || task.getDescription().value.equals(getDescription())) &&
-                ((!task.hasTimeInterval() && getTimeInterval().isEmpty()) || (task.getTimeInterval().toString().equals(getTimeInterval())));
+        return task.getTitle().fullTitle.equals(this.getFullTitle())
+                && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))
+                && (!task.hasStartTime() || task.getStartTime().toString().equals(this.getStartTime()))
+                && (!task.hasEndTime() || task.getEndTime().toString().equals(this.getEndTime()));
     }
 
     @Override
@@ -48,13 +54,18 @@ public class TaskCardHandle extends GuiHandle {
             TaskCardHandle handle = (TaskCardHandle) obj;
             return getFullTitle().equals(handle.getFullTitle())
                     && getDescription().equals(handle.getDescription())
-                    && getTimeInterval().equals(handle.getTimeInterval());
+                    && getStartTime().equals(handle.getStartTime())
+                    && getEndTime().equals(handle.getEndTime());
         }
         return super.equals(obj);
     }
 
     @Override
     public String toString() {
-        return getFullTitle() + " " + getDescription() + " " + getTimeInterval();
+        return getFullTitle() + " " 
+                + getDescription() + " " 
+                + getStartTime() + " "
+                + getEndTime();
+                
     }
 }

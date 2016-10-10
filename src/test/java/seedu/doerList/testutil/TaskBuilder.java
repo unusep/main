@@ -32,8 +32,13 @@ public class TaskBuilder {
         return this;
     }
 
-    public TaskBuilder withTimeInterval(String startTime, String endTime) throws IllegalValueException {
-        this.task.setTimeInterval(new TimeInterval(startTime, endTime));
+    public TaskBuilder withStartTime(String startTime) throws IllegalValueException {
+        this.task.setStartTime(new TodoTime(startTime));
+        return this;
+    }
+    
+    public TaskBuilder withEndTime(String endTime) throws IllegalValueException {
+        this.task.setEndTime(new TodoTime(endTime));
         return this;
     }
 

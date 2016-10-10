@@ -65,15 +65,15 @@ public class TestUtil {
     private static Task[] getSamplePersonData() {
         try {
             return new Task[]{
-                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TimeInterval("2016-10-03 14:00", "2016-10-04 14:23"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TimeInterval("2016-10-02 14:00", "2016-10-03 14:15"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 4"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("T2A3"), new Description("Very good"), new TimeInterval("2016-10-01 14:00", "2016-10-02 14:20"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 6"), null, new TimeInterval("2016-09-30 14:00", "2016-10-01 14:30"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 7"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TimeInterval("2016-09-30 12:00", "2016-10-01 14:40"), new UniqueCategoryList())
+                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TodoTime("2016-10-03 14:00"), new TodoTime("2016-10-04 14:23"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TodoTime("2016-10-02 14:00"), new TodoTime("2016-10-03 14:15"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 4"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("T2A3"), new Description("Very good"), new TodoTime("2016-10-01 14:00"), new TodoTime("2016-10-02 14:20"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 6"), null, new TodoTime("2016-09-30 14:00"), new TodoTime("2016-10-01 14:30"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 7"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TodoTime("2016-09-30 12:00"), new TodoTime("2016-10-01 14:40"), new UniqueCategoryList())
             };
         } catch (IllegalValueException e) {
             assert false;

@@ -14,9 +14,18 @@ public interface ReadOnlyTask {
         return getDescription() != null;
     }
     
-    TimeInterval getTimeInterval();
-    default boolean hasTimeInterval() {
-        return getTimeInterval() != null;
+    TodoTime getStartTime();
+    default boolean hasStartTime() {
+        return getStartTime() != null;
+    }
+    
+    TodoTime getEndTime();
+    default boolean hasEndTime() {
+        return getEndTime() != null;
+    }
+    
+    default boolean isFloatingTask() {
+        return !hasStartTime() && !hasEndTime();
     }
 
     /**
@@ -33,7 +42,9 @@ public interface ReadOnlyTask {
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
                 && ((!other.hasDescription() && !this.hasDescription()) || other.getDescription().equals(this.getDescription()))
-                && ((!other.hasTimeInterval() && !this.hasTimeInterval()) || other.getTimeInterval().equals(this.getTimeInterval())));
+                && ((!other.hasStartTime() && !this.hasStartTime()) || other.getStartTime().equals(this.getStartTime()))
+                && ((!other.hasEndTime() && !this.hasEndTime()) || other.getEndTime().equals(this.getEndTime()))
+                        );
     }
 
     /**
@@ -45,10 +56,20 @@ public interface ReadOnlyTask {
         if (hasDescription()) {
             builder.append(" Description: ").append(getDescription());
         }
-        if (hasTimeInterval()) {
+        if (hasStartTime() && !hasEndTime()) {
+            builder
+            .append(" Begin At: ")
+            .append(getStartTime());
+        }
+        if (!hasStartTime() && hasEndTime()) {
+            builder
+            .append(" Due: ")
+            .append(getEndTime());
+        }
+        if (hasStartTime() && hasEndTime()) {
             builder
             .append(" Time: ")
-            .append(getTimeInterval());
+            .append(getStartTime() + " -> " + getEndTime());
         }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");
