@@ -167,16 +167,11 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] p/12345 e/valid@e.mail a/valid, doerList", Title.MESSAGE_TITLE_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, doerList", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/notAnEmail a/valid, doerList", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@e.mail a/valid, doerList t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
-
+    public void execute_add_invalidTaskData() throws Exception {
+        assertCommandBehavior(
+                "add -t valid title -d valid description {invalid format->2011-10-12 13:00} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add -t valid title -d valid description {2011-10-12 12:00->invalid format} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test

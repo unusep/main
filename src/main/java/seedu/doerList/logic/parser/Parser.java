@@ -118,11 +118,11 @@ public class Parser {
      */
     private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
         // no tags
-        if (tagArguments == null) {
+        if (tagArguments == null || tagArguments.isEmpty()) {
             return Collections.emptySet();
         }
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.split(" "));
+        final Collection<String> tagStrings = Arrays.asList(tagArguments.trim().split(" "));
         return new HashSet<>(tagStrings);
     }
 
