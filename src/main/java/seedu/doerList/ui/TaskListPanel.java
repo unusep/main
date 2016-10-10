@@ -185,6 +185,22 @@ public class TaskListPanel extends UiPart {
         });
     }
     
+    public void scrollTo(int targetIndex) {
+        TaskCard target = findTaskCardByIndex(targetIndex);
+        selectionChanged(target);
+    }
+    
+    private TaskCard findTaskCardByIndex(int targetIndex) {
+        for(SectionPanel s : sectionPanelControllers) {
+            for(TaskCard t : s.getTaskControllers()) {
+                if (t.getDisplayIndex() == targetIndex) {
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
+    
     
     public void selectionChanged(TaskCard newSelectedCard) {
         newSelectedCard.setActive();
