@@ -199,21 +199,21 @@ public class LogicManagerTest {
 
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // setup starting state
-//        model.addPerson(toBeAdded); // person already in internal doerList
-//
-//        // execute command and verify result
-//        assertCommandBehavior(
-//                helper.generateAddCommand(toBeAdded),
-//                AddCommand.MESSAGE_DUPLICATE_PERSON,
-//                expectedAB,
-//                expectedAB.getPersonList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(1);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+
+        // setup starting state
+        model.addTask(toBeAdded); // person already in internal doerList
+
+        // execute command and verify result
+        assertCommandBehavior(
+                helper.generateAddCommand(toBeAdded),
+                AddCommand.MESSAGE_DUPLICATE_TASK,
+                expectedAB,
+                expectedAB.getTaskList());
 
     }
 
@@ -433,13 +433,12 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
-            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+            DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
-                    new Title("Person " + seed),
+                    new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
-                    new TodoTime(sampleDate1),
-                    new TodoTime(sampleDate2.plus(seed)),
+                    new TodoTime(sampleDate),
+                    new TodoTime(sampleDate.plusDays(seed)),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
