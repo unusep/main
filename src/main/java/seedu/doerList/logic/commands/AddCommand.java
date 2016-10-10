@@ -18,7 +18,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
             + "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
             + "Example: " + COMMAND_WORD
-            + " add -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
+            + " -t Take lecture {2016-10-04 10:00->2016-10-04 12:00} -c CS2102";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";

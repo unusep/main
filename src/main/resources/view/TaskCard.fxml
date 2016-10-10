@@ -30,7 +30,7 @@
                </children>
             </HBox>
             <AnchorPane fx:id="descriptionPanel" />
-            <AnchorPane fx:id="timeIntervalPanel" />
+            <AnchorPane fx:id="timePanel" />
          </children>
          <padding>
             <Insets bottom="8.0" left="6.0" right="6.0" top="8.0" />
