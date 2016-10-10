@@ -40,9 +40,9 @@ public class AddCommand extends Command {
 
         this.toAdd = new Task(
         		new Title(title),
-        		null,
-        		null,
-        		null,
+        		description == null ? null : new Description(description),
+        		startTime == null ? null : new TodoTime(startTime),
+        		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)
         );
 
@@ -57,4 +57,5 @@ public class AddCommand extends Command {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
     }
+
 }
