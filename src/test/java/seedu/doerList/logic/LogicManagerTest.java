@@ -183,6 +183,7 @@ public class LogicManagerTest {
                 helper.taskWithAttribute(false, false, true, false),
                 helper.taskWithAttribute(false, false, false, true),
                 helper.taskWithAttribute(false, true, true, false),
+                helper.taskWithAttribute(false, false, false, false)
         };
         for(Task toBeAdded : inputs) {
             DoerList expectedAB = new DoerList();
@@ -194,21 +195,6 @@ public class LogicManagerTest {
                     expectedAB,
                     expectedAB.getTaskList());
         }
-    }
-    
-    @Test
-    public void execute_add_floatingTask_successful() throws Exception {
-      // setup expectations
-      TestDataHelper helper = new TestDataHelper();
-      Task toBeAdded = helper.taskWithAttribute(false, false, false, false);
-      DoerList expectedAB = new DoerList();
-      expectedAB.addTask(toBeAdded);
-
-      // execute command and verify result
-      assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-              expectedAB,
-              expectedAB.getTaskList());
     }
 
     @Test
