@@ -228,8 +228,7 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 <br>
 
 **Q**: Running "doerlist.jar" gives and error or does not seem to work.<br>
-**A**: You will need to install the latest version of Java. Refer to the installation guide here.
-<br>
+**A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/download/help/download_options.xml). <br>
 
 **Q**: Where is the save button for me to save my schedule in this program? <br>
 **A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#saving-the-data) in the guide. There is no need for you to save it manually.
