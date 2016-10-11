@@ -83,7 +83,7 @@ Examples:
 * `add {2016-10-4 10:00->2016-10-4 12:00} -t Take lecture -c CS2102`
 
 #### Editing an event : `edit`
-Edit an existing task / event in the Do-*er*List<br>
+Edit an existing task / event in the Do-*er* List<br>
 Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
