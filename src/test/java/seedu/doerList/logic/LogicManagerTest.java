@@ -125,7 +125,6 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
 
-
     @Test
     public void execute_unknownCommandWord() throws Exception {
         //String unknownCommand = "uicfhmowqewca";
@@ -306,6 +305,63 @@ public class LogicManagerTest {
 //        assertEquals(1, targetedJumpIndex);
 //        assertEquals(model.getFilteredPersonList().get(1), threePersons.get(1));
     }
+    
+    @Test
+    public void execute_editInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("edit ", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit Drinks With David", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit -t     ", expectedMessage);
+    }
+    
+    @Test 
+    public void execute_editTaskNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("edit 999");
+    }
+    
+    @Test
+    public void execute_editTaskTitle() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateThreeTaskWithTitleAndDescription();
+
+        helper.addToModel(model, threeTasks);
+        
+        DoerList expectedAB = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
+        
+        String newTitle = "Buy present";
+        Task newTask = helper.generateTaskWithTitleAndDescription(newTitle, taskToEdit.getDescription().toString());
+        
+        expectedAB.removeTask(taskToEdit);
+        expectedAB.addTask(newTask);
+              
+        assertCommandBehavior("edit 3 -t Buy present -d Hai Long's Birthday",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+    
+    @Test
+    public void execute_editTaskDescription() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateThreeTaskWithTitleAndDescription();
+
+        helper.addToModel(model, threeTasks);
+        
+        DoerList expectedAB = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
+        
+        String newDescription = "Hai Long's Belated Birthday";
+        Task newTask = helper.generateTaskWithTitleAndDescription(taskToEdit.getTitle().toString(), newDescription);
+        
+        expectedAB.removeTask(taskToEdit);
+        expectedAB.addTask(newTask);
+              
+        assertCommandBehavior("edit 3 -t Buy cake -d Hai Long's Belated Birthday",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
 
 
     @Test
@@ -350,10 +406,10 @@ public class LogicManagerTest {
         Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
         Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
+        List<Task> fourTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2);
-        helper.addToModel(model, fourPersons);
+        helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -369,10 +425,10 @@ public class LogicManagerTest {
         Task p3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
         Task p4 = helper.generateTaskWithTitleAndDescription("KEy sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
-        List<Task> expectedList = fourPersons;
-        helper.addToModel(model, fourPersons);
+        List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
+        List<Task> expectedList = fourTasks;
+        helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -388,10 +444,10 @@ public class LogicManagerTest {
         Task cTarget3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
         Task c1 = helper.generateTaskWithTitleAndDescription("sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
+        List<Task> fourTasks = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
-        helper.addToModel(model, fourPersons);
+        helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find key rAnDoM",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -404,7 +460,7 @@ public class LogicManagerTest {
      * A utility class to generate test data.
      */
     class TestDataHelper{
-        
+
         /**
          * Generate a task with/without attribute
          * 
@@ -567,6 +623,16 @@ public class LogicManagerTest {
 
         List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
+        }
+        
+        List<Task> generateThreeTaskWithTitleAndDescription() throws Exception {
+            String[] title = { "Do homework", "Water plants", "Buy cake" };
+            String[] description = { "CS2101", "Potted Celery", "Hai Long's Birthday" };
+            List<Task> tasks = new ArrayList<>();
+            for(int i = 0; i < 3; i++){
+                tasks.add(generateTaskWithTitleAndDescription(title[i], description[i]));
+            }
+            return tasks;
         }
         
 
