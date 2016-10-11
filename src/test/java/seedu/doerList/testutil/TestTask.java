@@ -76,7 +76,7 @@ public class TestTask implements ReadOnlyTask {
             cmd.append("-d ").append(this.getDescription()).append(" ");
         }
        
-        if (this.isFloatingTask()) {
+        if (!this.isFloatingTask()) {
             cmd.append("{");
             if (this.hasStartTime()) {
                 cmd.append(this.getStartTime());

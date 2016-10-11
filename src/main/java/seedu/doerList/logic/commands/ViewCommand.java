@@ -15,7 +15,7 @@ public class ViewCommand extends Command {
             + "Example: " + COMMAND_WORD
             + " 5";
     
-    public static final String MESSAGE_SUCCESS_TASK = "Viewing task: ";
+    public static final String MESSAGE_VIEW_TASK_SUCCESS = "Viewing task: %1$s";
     
     public final int targetIndex;
     
@@ -34,7 +34,7 @@ public class ViewCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
-        return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, targetIndex));
+        return new CommandResult(String.format(MESSAGE_VIEW_TASK_SUCCESS, targetIndex));
 
     }
 }

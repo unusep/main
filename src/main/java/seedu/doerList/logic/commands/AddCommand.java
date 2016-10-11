@@ -13,6 +13,7 @@ import seedu.doerList.model.task.*;
  */
 public class AddCommand extends Command {
 
+
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
@@ -39,8 +40,8 @@ public class AddCommand extends Command {
         }
 
         this.toAdd = new Task(
-        		new Title(title),
-        		description == null ? null : new Description(description),
+        		new Title(title.trim()),
+        		description == null ? null : new Description(description.trim()),
         		startTime == null ? null : new TodoTime(startTime),
         		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)

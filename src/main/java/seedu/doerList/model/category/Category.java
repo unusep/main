@@ -9,8 +9,8 @@ import seedu.doerList.commons.exceptions.IllegalValueException;
  */
 public class Category {
 
-    public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names can be in any format";
+    public static final String CATEGORY_VALIDATION_REGEX = ".+";
 
     public String categoryName;
 
@@ -35,7 +35,7 @@ public class Category {
      * Returns true if a given string is a valid category name.
      */
     public static boolean isValidCategoryName(String test) {
-        return test.matches(TAG_VALIDATION_REGEX);
+        return test.matches(CATEGORY_VALIDATION_REGEX);
     }
 
     @Override

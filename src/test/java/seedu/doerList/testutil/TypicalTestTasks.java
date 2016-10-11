@@ -17,7 +17,7 @@ public class TypicalTestTasks {
                     .withStartTime("2016-10-03 13:00")
                     .withEndTime("2016-10-04 12:00")
                     .withTags("CS2101").build();
-            benson = new TaskBuilder().withTitle("Guide CA2").withDescription("Do your homework 2")
+            benson = new TaskBuilder().withTitle("Guide CA2").withDescription("Do your homework 2 Math")
                     .withStartTime("2016-10-03 13:00")
                     .withEndTime("2016-10-04 12:00")
                     .withTags("CS2103", "CS2101").build();
@@ -59,7 +59,7 @@ public class TypicalTestTasks {
         }
     }
 
-    public TestTask[] getTypicalTask() {
+    public TestTask[] getTypicalTasks() {
         return new TestTask[]{alice, benson, carl, daniel, elle, fiona, george};
     }
 

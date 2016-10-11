@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,84 +166,72 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] p/12345 e/valid@e.mail a/valid, doerList", Title.MESSAGE_TITLE_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, doerList", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/notAnEmail a/valid, doerList", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@e.mail a/valid, doerList t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
-
+    public void execute_add_invalidTaskData() throws Exception {
+        assertCommandBehavior(
+                "add -t valid title -d valid description {invalid format->2011-10-12 13:00} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add -t valid title -d valid description {2011-10-12 12:00->invalid format} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test
     public void execute_add_successful() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // execute command and verify result
-//        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-//                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB,
-//                expectedAB.getPersonList());
-
-    }
-    
-    @Test
-    public void execute_add_floatingTask_successful() throws Exception {
-      // setup expectations
-      TestDataHelper helper = new TestDataHelper();
-      Task toBeAdded = helper.taskWithAttribute(false, false, false, false);
-      DoerList expectedAB = new DoerList();
-      expectedAB.addTask(toBeAdded);
-
-      // execute command and verify result
-      assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-              expectedAB,
-              expectedAB.getTaskList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.taskWithAttribute(true, false, false, false),
+                helper.taskWithAttribute(false, true, false, false),
+                helper.taskWithAttribute(false, false, true, false),
+                helper.taskWithAttribute(false, false, false, true),
+                helper.taskWithAttribute(false, true, true, false),
+                helper.taskWithAttribute(false, false, false, false)
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // execute command and verify result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
     }
 
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // setup starting state
-//        model.addPerson(toBeAdded); // person already in internal doerList
-//
-//        // execute command and verify result
-//        assertCommandBehavior(
-//                helper.generateAddCommand(toBeAdded),
-//                AddCommand.MESSAGE_DUPLICATE_PERSON,
-//                expectedAB,
-//                expectedAB.getPersonList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(1);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+
+        // setup starting state
+        model.addTask(toBeAdded); // person already in internal doerList
+
+        // execute command and verify result
+        assertCommandBehavior(
+                helper.generateAddCommand(toBeAdded),
+                AddCommand.MESSAGE_DUPLICATE_TASK,
+                expectedAB,
+                expectedAB.getTaskList());
 
     }
 
 
     @Test
-    public void execute_list_showsAllPersons() throws Exception {
-//        // prepare expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        DoerList expectedAB = helper.generateDoerList(2);
-//        List<? extends ReadOnlyPerson> expectedList = expectedAB.getPersonList();
-//
-//        // prepare doerList state
-//        helper.addToModel(model, 2);
-//
-//        assertCommandBehavior("list",
-//                ListCommand.MESSAGE_SUCCESS,
-//                expectedAB,
-//                expectedList);
+    public void execute_list_showsAllTasks() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        DoerList expectedAB = helper.generateDoerList(2);
+        List<? extends ReadOnlyTask> expectedList = expectedAB.getTaskList();
+
+        // prepare doerList state
+        helper.addToModel(model, 2);
+
+        assertCommandBehavior("list",
+                ListCommand.MESSAGE_SUCCESS,
+                expectedAB,
+                expectedList);
     }
 
 
@@ -254,11 +241,11 @@ public class LogicManagerTest {
      * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
      */
     private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage) throws Exception {
-//        assertCommandBehavior(commandWord , expectedMessage); //index missing
-//        assertCommandBehavior(commandWord + " +1", expectedMessage); //index should be unsigned
-//        assertCommandBehavior(commandWord + " -1", expectedMessage); //index should be unsigned
-//        assertCommandBehavior(commandWord + " 0", expectedMessage); //index cannot be 0
-//        assertCommandBehavior(commandWord + " not_a_number", expectedMessage);
+        assertCommandBehavior(commandWord , expectedMessage); //index missing
+        assertCommandBehavior(commandWord + " +1", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " -1", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " 0", expectedMessage); //index cannot be 0
+        assertCommandBehavior(commandWord + " not_a_number", expectedMessage);
     }
 
     /**
@@ -267,44 +254,44 @@ public class LogicManagerTest {
      * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord) throws Exception {
-//        String expectedMessage = MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-//        TestDataHelper helper = new TestDataHelper();
-//        List<Person> personList = helper.generatePersonList(2);
-//
-//        // set AB state to 2 persons
-//        model.resetData(new DoerList());
-//        for (Person p : personList) {
-//            model.addPerson(p);
-//        }
-//
-//        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), personList);
+        String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> taskList = helper.generateTaskList(2);
+
+        // set AB state to 2 persons
+        model.resetData(new DoerList());
+        for (Task p : taskList) {
+            model.addTask(p);
+        }
+
+        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), taskList);
     }
 
     @Test
-    public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-//        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
+    public void execute_viewInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("view", expectedMessage);
     }
 
     @Test
-    public void execute_selectIndexNotFound_errorMessageShown() throws Exception {
-        //assertIndexNotFoundBehaviorForCommand("select");
+    public void execute_viewIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("view");
     }
 
     @Test
     public void execute_select_jumpsToCorrectPerson() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        List<Person> threePersons = helper.generatePersonList(3);
-//
-//        DoerList expectedAB = helper.generateDoerList(threePersons);
-//        helper.addToModel(model, threePersons);
-//
-//        assertCommandBehavior("select 2",
-//                String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, 2),
-//                expectedAB,
-//                expectedAB.getPersonList());
-//        assertEquals(1, targetedJumpIndex);
-//        assertEquals(model.getFilteredPersonList().get(1), threePersons.get(1));
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threePersons = helper.generateTaskList(3);
+
+        DoerList expectedAB = helper.generateDoerList(threePersons);
+        helper.addToModel(model, threePersons);
+
+        assertCommandBehavior("view 2",
+                String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, 2),
+                expectedAB,
+                expectedAB.getTaskList());
+        assertEquals(1, targetedJumpIndex);
+        assertEquals(model.getFilteredTaskList().get(1), threePersons.get(1));
     }
 
     @Test
@@ -399,17 +386,19 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
+    public void execute_find_onlyMatchesFullWords() throws Exception {
+        // keywords in title or description
         TestDataHelper helper = new TestDataHelper();
         Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task cTarget2 = helper.generateTaskWithTitleAndDescription("dummy", "bla KEY bla bceofeia");
+        Task cTarget3 = helper.generateTaskWithTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
         Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
         Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
-        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2);
-        helper.addToModel(model, fourPersons);
+        List<Task> fiveTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2, cTarget3);
+        DoerList expectedAB = helper.generateDoerList(fiveTasks);
+        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
+        helper.addToModel(model, fiveTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -502,13 +491,12 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
-            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+            DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
-                    new Title("Person " + seed),
+                    new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
-                    new TodoTime(sampleDate1),
-                    new TodoTime(sampleDate2.plus(seed)),
+                    new TodoTime(sampleDate),
+                    new TodoTime(sampleDate.plusDays(seed)),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -540,7 +528,7 @@ public class LogicManagerTest {
             if (!categories.getInternalList().isEmpty()) {
                 cmd.append("-c ");
                 for(Category c: categories){
-                    cmd.append(c.categoryName);
+                    cmd.append(c.categoryName + " ");
                 }
             }
             

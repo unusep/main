@@ -35,7 +35,7 @@ public class TaskListPanel extends UiPart {
     private VBox sectionList;
     
     @FXML
-    private ScrollPane scrollPane;
+    private ScrollPane tasksScrollPane;
 
     public TaskListPanel() {
         super();
@@ -71,6 +71,7 @@ public class TaskListPanel extends UiPart {
         displayTasks();
         addToPlaceholder();
         addListener(allTasks);
+        tasksScrollPane.setUserData(this); // store the controller
         remapArrowKeysForScrollPane();
     }
     
@@ -167,7 +168,7 @@ public class TaskListPanel extends UiPart {
     }
     
     private void remapArrowKeysForScrollPane() {
-        scrollPane.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
+        tasksScrollPane.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
             event.consume();
             if (event.getEventType() == KeyEvent.KEY_PRESSED) {
                 switch (event.getCode()) {
@@ -208,7 +209,7 @@ public class TaskListPanel extends UiPart {
     }
     
     private void ensureTaskVisible(TaskCard taskcard) {
-        double height = scrollPane.getContent().getBoundsInLocal().getHeight();
+        double height = tasksScrollPane.getContent().getBoundsInLocal().getHeight();
         double y = taskcard.getLayout().getParent().getBoundsInParent().getMaxY();
         int sectionIndex = findSelectionSection(taskcard);
         SectionPanel section = sectionPanelControllers.get(sectionIndex);
@@ -231,10 +232,10 @@ public class TaskListPanel extends UiPart {
         }
 
         // scrolling values range from 0 to 1
-        scrollPane.setVvalue(y/height);
+        tasksScrollPane.setVvalue(y/height);
 
         // just for usability
-        scrollPane.requestFocus();
+        tasksScrollPane.requestFocus();
     }
 
 

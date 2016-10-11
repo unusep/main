@@ -53,7 +53,7 @@ public class TodoTime {
 
    @Override
    public String toString() {
-       return value.toString();
+       return value.toString(DateTimeFormat.forPattern(TIME_STANDARD_FORMAT));
    }
 
    @Override
