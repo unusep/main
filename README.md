@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/TeamPGP/main.svg?branch=master)](https://travis-ci.org/TeamPGP/main)
-[![Coverage Status](https://coveralls.io/repos/github/TeamPGP/main/badge.svg?branch=master)](https://coveralls.io/github/TeamPGP/main?branch=master)
+[![Build Status](https://travis-ci.org/CS2103AUG2016-W09-C4/main.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-W09-C4/main)
+[![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-W09-C4/main/badge.svg?branch=V0.2_Deliverables)](https://coveralls.io/github/CS2103AUG2016-W09-C4/main?branch=V0.2_Deliverables)
 
 # Do-*er*List
 
