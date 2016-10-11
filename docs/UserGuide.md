@@ -1,10 +1,18 @@
 # User Guide
 
+* [About Us](#about-us)
 * [Overiew](#overview)
 * [Getting Started](#getting-started)
 * [Features](#features)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
+
+## About Us
+**Do-er List** is a beginner-friendly desktop program that aids you in the planning and completion of your daily tasks. Featuring an intuitive display and keyboard driven inputs to operate our program, we have done away the need of a mouse so you can schedule your tasks on the fly.
+Be-gone with the woes of trawling through clunky interfaces of other scheduling apps to find those the buttons with your unresponsive touch-pad while waiting for the bus!
+
+*Just type it in, hit* `enter`, *and your commands will be executed as you desired!*
+
 
 ## Overview
 
@@ -12,27 +20,27 @@
 
 | Labels | Description |
 |-------- | -------- |
-|1 | Command console allows you to input and execute your commands|
-|2 | Feedback consoles shows if your command is executed properly or not |
-|3 | Contains all of your default categories |
-|4 | Display all the tasks in a panel|
-|5 | Shows all the custom categories that you have created|
-|6 | Indicates the file storage directory and the last time you have edited|
+|1 | **Command Console** enables you to input and execute your commands|
+|2 | **Feedback Console** shows if your command is executed properly or not |
+|3 | **Deafault Panel** contains all of your default categories |
+|4 | **Tasks Panel** will display all the taks you listed in a panel|
+|5 | **Category Panel** shows all the custom categories that you have created|
+|6 | **Update Status** bar will indicate the file storage directory and your last update|
 
 
 ## Getting Started
 
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
-   > Having any Java 8 version is not enough. <br>
-   This app will not work with earlier versions of Java 8.
+   > This app will not work with earlier versions of Java 8.<br>
    
 2. Download the latest `doerlist.jar` from the [releases](../../../releases) tab.
 3. Copy the file to the folder you want to use as the home folder for the Do-*er*List.
-4. Double-click the file to start the app. The GUI should appear in a few seconds.<img src="../docs/images/UI_Guide/welcome.png" width="600"><br> 
-5. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
-   e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window. 
+4. Double-click the file to start the app. The GUI should appear in a few seconds. <br>
+<img src="../docs/images/UI_Guide/welcome.png" width="600"><br>
+5. Type the command in the command box and press <kbd>Enter</kbd> to execute it.
+   *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
 6. Some example commands you can try:
-   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` : 
+   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` :
      adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today`
 	 and ends` tomorrow` under the category `CS2103`.
 	* **`list`**` CS2103` : lists all tasks in **CS2103**
@@ -172,7 +180,8 @@ Examples:
 
 * `list`<br>
   `delete 2`<br>
-  Deletes the 2nd task / event in the Do-*er*List.
+  Deletes the 2nd task / event in the Do-*er*List. <br>
+  
 * `find David`<br> 
   `delete 1`<br>
   Deletes the 1st task / event in the results of the `find` command.
@@ -216,6 +225,10 @@ There is no need to save manually.
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+**Q**: How do I save my schedule after editing it?
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
        
 ## Command Summary
 
