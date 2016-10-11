@@ -114,9 +114,9 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    public void replaceTask(int i, Task t) throws UniqueTaskList.TaskNotFoundException, DuplicateTaskException {
-        syncCategoriesWithMasterList(t);
+    public void replaceTask(int i, Task t) throws DuplicateTaskException {
         tasks.replace(i, t);
+        syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
 
 //// category-level operations
