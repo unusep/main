@@ -1,34 +1,68 @@
-//package guitests;
+package guitests;
 
-//import guitests.guihandles.TaskCardHandle;
-//import org.junit.Test;
-//import seedu.doerList.logic.commands.AddCommand;
-//import seedu.doerList.commons.core.Messages;
-//import seedu.doerList.testutil.TestTask;
-//import seedu.doerList.testutil.TestUtil;
+import guitests.guihandles.TaskCardHandle;
 
-////public class ViewCommandTest extends DoerListGuiTest {
-//
-//    @Test
-//    public void view() {
-//        //view one task
-//        TestTask[] currentList = td.getTypicalTask();
-//        commandBox.runCommand("view 2");
-//        int targetIndex = 2;
-//        assertViewSuccess(targetIndex, currentList);
-//
-//        //invalid view command
-//        commandBox.runCommand("view");
-//        assertResultMessage("This command is invalid");
-//        
-//        //invalid view index
-//        currentList = TestUtil.removeTaskFromList(currentList, targetIndex);
-//        commandBox.runCommand("view " + targetIndex);
-//        assertResultMessage("The task index provided is invalid");
-//    }
+import static org.junit.Assert.assertEquals;
 
-//    private void assertViewSuccess(int targetIndex, TestTask... currentList) {
-//        TestTask taskToBeViewed = currentList[targetIndex-1];
-//        assertTrue(tastToBeViewed.isFound());
-//    }
-//}
+import org.junit.Test;
+import static org.junit.Assert.assertNull;
+import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static org.junit.Assert.assertNotNull;
+import seedu.doerList.logic.commands.ViewCommand;
+import seedu.doerList.commons.core.Messages;
+import seedu.doerList.ui.TaskCard;
+
+public class ViewCommandTest extends DoerListGuiTest {
+
+    @Test
+    public void viewTask_invalidComamnd() {
+        //invalid view command
+        commandBox.runCommand("view");
+        assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+    }
+    
+    @Test
+    public void viewTask_nonEmptyList() {
+
+        assertViewInvalid(10); //invalid index
+        assertNoTaskSelected();
+
+        assertViewSuccess(1); //first person in the list
+        int taskCount = td.getTypicalTasks().length;
+        assertViewSuccess(taskCount); //last person in the list
+        int middleIndex = taskCount / 2;
+        assertViewSuccess(middleIndex); //a person in the middle of the list
+
+        assertViewInvalid(taskCount + 1); //invalid index
+        assertTaskSelected(middleIndex); //assert previous selection remains
+        /* Testing other invalid indexes such as -1 should be done when testing the ViewCommand */
+    }
+
+    @Test
+    public void viewTask_emptyList() {
+        commandBox.runCommand("clear");
+        assertListSize(0);
+        assertViewInvalid(1); //invalid index
+    }
+
+    private void assertViewInvalid(int index) {
+        commandBox.runCommand("view " + index);
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    private void assertViewSuccess(int index) {
+        commandBox.runCommand("view " + index);
+        assertResultMessage(String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, index));
+        assertTaskSelected(index);
+    }
+
+    private void assertTaskSelected(int index) {
+        assertNotNull(TaskCard.getSeletedTaskCard());
+        assertEquals(TaskCard.getSeletedTaskCard().getDisplayIndex(), index);
+    }
+
+    private void assertNoTaskSelected() {
+        assertNull(TaskCard.getSeletedTaskCard());
+    }
+
+}

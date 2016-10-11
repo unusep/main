@@ -36,10 +36,9 @@ public class TaskListPanelHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
-//    public List<ReadOnlyTask> getSelectedTask() {
-//        ListView<ReadOnlyTask> personList = getListView();
-//        return personList.getSelectionModel().getSelectedItems();
-//    }
+    public ReadOnlyTask getSelectedTask() {
+        return TaskCard.getSeletedTaskCard().getTask();
+    }
 
     public TaskListPanel getTaskListPanel() {
         return (TaskListPanel)(getNode(TASK_LIST_PANEL_ID).getUserData());

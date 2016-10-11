@@ -241,11 +241,11 @@ public class LogicManagerTest {
      * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
      */
     private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage) throws Exception {
-//        assertCommandBehavior(commandWord , expectedMessage); //index missing
-//        assertCommandBehavior(commandWord + " +1", expectedMessage); //index should be unsigned
-//        assertCommandBehavior(commandWord + " -1", expectedMessage); //index should be unsigned
-//        assertCommandBehavior(commandWord + " 0", expectedMessage); //index cannot be 0
-//        assertCommandBehavior(commandWord + " not_a_number", expectedMessage);
+        assertCommandBehavior(commandWord , expectedMessage); //index missing
+        assertCommandBehavior(commandWord + " +1", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " -1", expectedMessage); //index should be unsigned
+        assertCommandBehavior(commandWord + " 0", expectedMessage); //index cannot be 0
+        assertCommandBehavior(commandWord + " not_a_number", expectedMessage);
     }
 
     /**
@@ -254,44 +254,44 @@ public class LogicManagerTest {
      * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord) throws Exception {
-//        String expectedMessage = MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-//        TestDataHelper helper = new TestDataHelper();
-//        List<Person> personList = helper.generatePersonList(2);
-//
-//        // set AB state to 2 persons
-//        model.resetData(new DoerList());
-//        for (Person p : personList) {
-//            model.addPerson(p);
-//        }
-//
-//        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), personList);
+        String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> taskList = helper.generateTaskList(2);
+
+        // set AB state to 2 persons
+        model.resetData(new DoerList());
+        for (Task p : taskList) {
+            model.addTask(p);
+        }
+
+        assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), taskList);
     }
 
     @Test
-    public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-//        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
+    public void execute_viewInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("view", expectedMessage);
     }
 
     @Test
-    public void execute_selectIndexNotFound_errorMessageShown() throws Exception {
-        //assertIndexNotFoundBehaviorForCommand("select");
+    public void execute_viewIndexNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("view");
     }
 
     @Test
     public void execute_select_jumpsToCorrectPerson() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        List<Person> threePersons = helper.generatePersonList(3);
-//
-//        DoerList expectedAB = helper.generateDoerList(threePersons);
-//        helper.addToModel(model, threePersons);
-//
-//        assertCommandBehavior("select 2",
-//                String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, 2),
-//                expectedAB,
-//                expectedAB.getPersonList());
-//        assertEquals(1, targetedJumpIndex);
-//        assertEquals(model.getFilteredPersonList().get(1), threePersons.get(1));
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threePersons = helper.generateTaskList(3);
+
+        DoerList expectedAB = helper.generateDoerList(threePersons);
+        helper.addToModel(model, threePersons);
+
+        assertCommandBehavior("view 2",
+                String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, 2),
+                expectedAB,
+                expectedAB.getTaskList());
+        assertEquals(1, targetedJumpIndex);
+        assertEquals(model.getFilteredTaskList().get(1), threePersons.get(1));
     }
 
 
