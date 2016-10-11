@@ -60,9 +60,9 @@ public class TestUtil {
      */
     public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
-    public static final Task[] samplePersonData = getSamplePersonData();
+    public static final Task[] sampleTaskData = getSampleTaskData();
 
-    private static Task[] getSamplePersonData() {
+    private static Task[] getSampleTaskData() {
         try {
             return new Task[]{
                     new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TodoTime("2016-10-03 14:00"), new TodoTime("2016-10-04 14:23"), new UniqueCategoryList()),
@@ -82,9 +82,9 @@ public class TestUtil {
         }
     }
 
-    public static final Category[] sampleTagData = getSampleTagData();
+    public static final Category[] sampleTagData = getSampleCategoryData();
 
-    private static Category[] getSampleTagData() {
+    private static Category[] getSampleCategoryData() {
         try {
             return new Category[]{
                     new Category("CS2102"),
@@ -97,8 +97,8 @@ public class TestUtil {
         }
     }
 
-    public static List<Task> generateSamplePersonData() {
-        return Arrays.asList(samplePersonData);
+    public static List<Task> generateSampleTaskData() {
+        return Arrays.asList(sampleTaskData);
     }
 
     /**
@@ -312,7 +312,7 @@ public class TestUtil {
      * @param tasksToAdd The tasks that are to be appended behind the original array.
      * @return The modified array of tasks.
      */
-    public static TestTask[] addPersonsToList(final TestTask[] tasks, TestTask... tasksToAdd) {
+    public static TestTask[] addTasksToList(final TestTask[] tasks, TestTask... tasksToAdd) {
         List<TestTask> listOfPersons = asList(tasks);
         listOfPersons.addAll(asList(tasksToAdd));
         return listOfPersons.toArray(new TestTask[listOfPersons.size()]);

@@ -22,6 +22,9 @@ import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart {
+    public static final String DESCRIPTION_FIELD_ID = "description";
+    public static final String TIME_FIELD_ID = "time";
+    
     public static TaskCard selectedTaskController;
     
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
@@ -77,6 +80,10 @@ public class TaskCard extends UiPart {
     public VBox getLayout() {
         return rootPanel;
     }
+    
+    public ReadOnlyTask getTask() {
+        return task;
+    }
 
     @Override
     public void setNode(Node node) {
@@ -121,6 +128,7 @@ public class TaskCard extends UiPart {
     private void showDescription() {
         if (task.hasDescription()) {
             Text descriptionField = new Text();
+            descriptionField.setId(DESCRIPTION_FIELD_ID);
             descriptionField.setText(task.getDescription().toString());
             descriptionPanel.getChildren().add(descriptionField);
             FxViewUtil.applyAnchorBoundaryParameters(descriptionField, 0, 0, 0, 0);
@@ -132,25 +140,11 @@ public class TaskCard extends UiPart {
     }
     
     private void showTime() {
-        StringBuilder builder = new StringBuilder();
-        if (task.hasStartTime() && !task.hasEndTime()) {
-            builder
-            .append("Begin At: ")
-            .append(task.getStartTime());
-        }
-        if (!task.hasStartTime() && task.hasEndTime()) {
-            builder
-            .append("Due: ")
-            .append(task.getEndTime());
-        }
-        if (task.hasStartTime() && task.hasEndTime()) {
-            builder
-            .append("Time: ")
-            .append(task.getStartTime() + " -> " + task.getEndTime());
-        }
-        if (builder.length() != 0) {
+        String result = task.getTime();
+        if (result.length() != 0) {
             Text timeField = new Text();
-            timeField.setText(builder.toString());
+            timeField.setId(TIME_FIELD_ID);
+            timeField.setText(result);
             timePanel.getChildren().add(timeField);
             FxViewUtil.applyAnchorBoundaryParameters(timeField, 0, 0, 0, 0);
         }

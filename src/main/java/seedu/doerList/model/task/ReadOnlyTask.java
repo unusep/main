@@ -27,6 +27,25 @@ public interface ReadOnlyTask {
     default boolean isFloatingTask() {
         return !hasStartTime() && !hasEndTime();
     }
+    default String getTime() {
+        final StringBuilder builder = new StringBuilder();
+        if (hasStartTime() && !hasEndTime()) {
+            builder
+            .append(" Begin At: ")
+            .append(getStartTime());
+        }
+        if (!hasStartTime() && hasEndTime()) {
+            builder
+            .append(" Due: ")
+            .append(getEndTime());
+        }
+        if (hasStartTime() && hasEndTime()) {
+            builder
+            .append(" Time: ")
+            .append(getStartTime() + "->" + getEndTime());
+        }
+        return builder.toString();
+    }
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -62,21 +81,7 @@ public interface ReadOnlyTask {
         if (hasDescription()) {
             builder.append(" Description: ").append(getDescription());
         }
-        if (hasStartTime() && !hasEndTime()) {
-            builder
-            .append(" Begin At: ")
-            .append(getStartTime());
-        }
-        if (!hasStartTime() && hasEndTime()) {
-            builder
-            .append(" Due: ")
-            .append(getEndTime());
-        }
-        if (hasStartTime() && hasEndTime()) {
-            builder
-            .append(" Time: ")
-            .append(getStartTime() + "->" + getEndTime());
-        }
+        builder.append(getTime());
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");
             getCategories().forEach(builder::append);
