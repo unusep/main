@@ -219,19 +219,19 @@ public class LogicManagerTest {
 
 
     @Test
-    public void execute_list_showsAllPersons() throws Exception {
-//        // prepare expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        DoerList expectedAB = helper.generateDoerList(2);
-//        List<? extends ReadOnlyPerson> expectedList = expectedAB.getPersonList();
-//
-//        // prepare doerList state
-//        helper.addToModel(model, 2);
-//
-//        assertCommandBehavior("list",
-//                ListCommand.MESSAGE_SUCCESS,
-//                expectedAB,
-//                expectedList);
+    public void execute_list_showsAllTasks() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        DoerList expectedAB = helper.generateDoerList(2);
+        List<? extends ReadOnlyTask> expectedList = expectedAB.getTaskList();
+
+        // prepare doerList state
+        helper.addToModel(model, 2);
+
+        assertCommandBehavior("list",
+                ListCommand.MESSAGE_SUCCESS,
+                expectedAB,
+                expectedList);
     }
 
 
