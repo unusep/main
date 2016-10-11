@@ -39,16 +39,16 @@ public class EditCommand extends Command {
 			String startTime, String endTime, Set<String> categories) throws IllegalValueException {
 		this.targetIndex = targetIndex;
 
-        if (title == null) {
+        if (title != null) {
             this.toUpdateTitle = new Title(title);
         }
-        if (description == null) {
+        if (description != null) {
             this.toUpdateDescription = new Description(description);
         }
-        if (startTime == null) {
+        if (startTime != null) {
             this.toUpdateStartTime = new TodoTime(startTime);
         }
-        if (endTime == null) {
+        if (endTime != null) {
             this.toUpdateEndTime = new TodoTime(endTime);
         }
 
@@ -98,7 +98,7 @@ public class EditCommand extends Command {
                 toUpdateTitle != null ? toUpdateTitle : original.getTitle(),
                 toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
                 toUpdateStartTime != null ? toUpdateStartTime : original.getStartTime(),
-                toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),        
+                toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),
                 toUpdateCategories != null ? toUpdateCategories : original.getCategories()
         );
     }
