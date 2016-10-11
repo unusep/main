@@ -14,9 +14,37 @@ public interface ReadOnlyTask {
         return getDescription() != null;
     }
     
-    TimeInterval getTimeInterval();
-    default boolean hasTimeInterval() {
-        return getTimeInterval() != null;
+    TodoTime getStartTime();
+    default boolean hasStartTime() {
+        return getStartTime() != null;
+    }
+    
+    TodoTime getEndTime();
+    default boolean hasEndTime() {
+        return getEndTime() != null;
+    }
+    
+    default boolean isFloatingTask() {
+        return !hasStartTime() && !hasEndTime();
+    }
+    default String getTime() {
+        final StringBuilder builder = new StringBuilder();
+        if (hasStartTime() && !hasEndTime()) {
+            builder
+            .append(" Begin At: ")
+            .append(getStartTime());
+        }
+        if (!hasStartTime() && hasEndTime()) {
+            builder
+            .append(" Due: ")
+            .append(getEndTime());
+        }
+        if (hasStartTime() && hasEndTime()) {
+            builder
+            .append(" Time: ")
+            .append(getStartTime() + "->" + getEndTime());
+        }
+        return builder.toString();
     }
 
     /**
@@ -32,8 +60,16 @@ public interface ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
-                && ((!other.hasDescription() && !this.hasDescription()) || other.getDescription().equals(this.getDescription()))
-                && ((!other.hasTimeInterval() && !this.hasTimeInterval()) || other.getTimeInterval().equals(this.getTimeInterval())));
+                && ((!other.hasDescription() && !this.hasDescription()) 
+                        || (other.hasDescription() && this.hasDescription() 
+                                && other.getDescription().equals(this.getDescription())))
+                && ((!other.hasStartTime() && !this.hasStartTime()) 
+                        || (other.hasStartTime() && this.hasStartTime() 
+                                && other.getStartTime().equals(this.getStartTime())))
+                && ((!other.hasEndTime() && !this.hasEndTime()) 
+                        || (other.hasEndTime() && this.hasEndTime() 
+                                && other.getEndTime().equals(this.getEndTime())))
+                   );
     }
 
     /**
@@ -45,14 +81,11 @@ public interface ReadOnlyTask {
         if (hasDescription()) {
             builder.append(" Description: ").append(getDescription());
         }
-        if (hasTimeInterval()) {
-            builder.append(" Description: ")
-            .append(getDescription())
-            .append(" StartTime: ")
-            .append(getTimeInterval());
+        builder.append(getTime());
+        if (!getCategories().getInternalList().isEmpty()) {
+            builder.append(" Categories: ");
+            getCategories().forEach(builder::append);
         }
-        builder.append(" Categories: ");
-        getCategories().forEach(builder::append);
         return builder.toString();
     }
 

@@ -7,18 +7,21 @@ import javafx.scene.layout.VBox;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.BaseEvent;
 import seedu.doerList.model.task.ReadOnlyTask;
-import seedu.doerList.ui.TaskCard;
 
 /**
  * Represents a selection change in the Event List Panel
  */
-public class TaskPanelSelectionChangedEvent extends BaseEvent {
+public class TaskPanelArrowKeyPressEvent extends BaseEvent {
 
+    private Direction direction;
+    
+    public static enum Direction {
+        UP,
+        DOWN
+    };
 
-    private final TaskCard selectedCard;
-
-    public TaskPanelSelectionChangedEvent(TaskCard selectedCard){
-        this.selectedCard = selectedCard;
+    public TaskPanelArrowKeyPressEvent(Direction direction){
+        this.direction = direction;
     }
 
     @Override
@@ -26,8 +29,8 @@ public class TaskPanelSelectionChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public TaskCard getNewSelectedCard() {
-        return selectedCard;
+    public Direction getDirection() {
+        return direction;
     }
     
 }

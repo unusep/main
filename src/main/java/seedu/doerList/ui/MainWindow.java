@@ -4,13 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.GuiSettings;
 import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
 import seedu.doerList.model.task.ReadOnlyTask;
@@ -25,11 +29,11 @@ public class MainWindow extends UiPart {
     private static final String FXML = "MainWindow.fxml";
     public static final int MIN_HEIGHT = 600;
     public static final int MIN_WIDTH = 450;
+    public static final float DEFAULT_DIVIDER_POSITION = 0.2f;
 
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private TaskListPanel taskListPanel;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
@@ -42,9 +46,6 @@ public class MainWindow extends UiPart {
     private Scene scene;
 
     private String doerListName;
-
-    @FXML
-    private AnchorPane browserPlaceholder;
 
     @FXML
     private AnchorPane commandBoxPlaceholder;
@@ -61,6 +62,8 @@ public class MainWindow extends UiPart {
     @FXML
     private AnchorPane statusbarPlaceholder;
 
+    @FXML
+    private SplitPane splitPane;
 
     public MainWindow() {
         super();
@@ -106,9 +109,9 @@ public class MainWindow extends UiPart {
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
+    
 
     void fillInnerParts() {
-        browserPanel = BrowserPanel.load(browserPlaceholder);
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getDoerListFilePath());
@@ -172,6 +175,12 @@ public class MainWindow extends UiPart {
 
     public void show() {
         primaryStage.show();
+        setDefaultDividerPosition();
+    }
+    
+    // set Default divider position must be called after show to take effect
+    private void setDefaultDividerPosition() {
+        splitPane.setDividerPosition(0, DEFAULT_DIVIDER_POSITION);
     }
 
     /**
@@ -184,13 +193,5 @@ public class MainWindow extends UiPart {
 
     public TaskListPanel getTaskListPanel() {
         return this.taskListPanel;
-    }
-
-    public void loadTaskPage(ReadOnlyTask task) {
-        browserPanel.loadTaskPage(task);
-    }
-
-    public void releaseResources() {
-        browserPanel.freeResources();
     }
 }

@@ -1,19 +1,22 @@
 package seedu.doerList.ui;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
-import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
+import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
+import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -22,11 +25,17 @@ import java.util.logging.Logger;
 public class TaskListPanel extends UiPart {
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskListPanel.fxml";
-    private VBox panel;
+    private ScrollPane panel;
     private AnchorPane placeHolderPane;
+    private ObservableList<ReadOnlyTask> allTasks;
+    
+    private ArrayList<SectionPanel> sectionPanelControllers;
 
     @FXML
-    private ListView<ReadOnlyTask> taskListView;
+    private VBox sectionList;
+    
+    @FXML
+    private ScrollPane tasksScrollPane;
 
     public TaskListPanel() {
         super();
@@ -34,7 +43,7 @@ public class TaskListPanel extends UiPart {
 
     @Override
     public void setNode(Node node) {
-        panel = (VBox) node;
+        panel = (ScrollPane) node;
     }
 
     @Override
@@ -51,58 +60,183 @@ public class TaskListPanel extends UiPart {
                                        ObservableList<ReadOnlyTask> taskList) {
         TaskListPanel taskListPanel =
                 UiPartLoader.loadUiPart(primaryStage, taskListPlaceholder, new TaskListPanel());
-        taskListPanel.configure(taskList);
+        taskListPanel.allTasks = taskList;
+        taskListPanel.configure();
         return taskListPanel;
     }
 
-    private void configure(ObservableList<ReadOnlyTask> taskList) {
-        setConnections(taskList);
+    private void configure() {
+        // TODO create different section `overdue` `today` .. here
+        // Need a new data structure to store
+        displayTasks();
         addToPlaceholder();
+        addListener(allTasks);
+        tasksScrollPane.setUserData(this); // store the controller
+        remapArrowKeysForScrollPane();
+    }
+    
+    private void addListener(ObservableList<ReadOnlyTask> taskList) {
+        taskList.addListener((ListChangeListener.Change<? extends ReadOnlyTask> c) -> {
+            displayTasks();
+        });
     }
 
-    private void setConnections(ObservableList<ReadOnlyTask> taskList) {
-        taskListView.setItems(taskList);
-        taskListView.setCellFactory(listView -> new TaskListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+    private void displayTasks() {
+        sectionPanelControllers = new ArrayList<SectionPanel>();
+        sectionList.getChildren().clear();
+        
+        AnchorPane container_temp = new AnchorPane();
+        sectionList.getChildren().add(container_temp);
+        SectionPanel controller = SectionPanel.load(primaryStage, container_temp, allTasks);
+        sectionPanelControllers.add(controller);
+        // TODO add filter to category task based on timecategory
     }
 
     private void addToPlaceholder() {
-        SplitPane.setResizableWithParent(placeHolderPane, false);
         placeHolderPane.getChildren().add(panel);
+        FxViewUtil.applyAnchorBoundaryParameters(panel, 0.0, 0.0, 0.0, 0.0);
     }
-
-    private void setEventHandlerForSelectionChangeEvent() {
-        taskListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                raise(new TaskPanelSelectionChangedEvent(newValue));
-            }
-        });
-    }
-
-    public void scrollTo(int index) {
-        Platform.runLater(() -> {
-            taskListView.scrollTo(index);
-            taskListView.getSelectionModel().clearAndSelect(index);
-        });
-    }
-
-    class TaskListViewCell extends ListCell<ReadOnlyTask> {
-
-        public TaskListViewCell() {
-        }
-
-        @Override
-        protected void updateItem(ReadOnlyTask task, boolean empty) {
-            super.updateItem(task, empty);
-
-            if (empty || task == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
-            }
+    
+    public void selectionMove(Direction direction) {
+        switch(direction) {
+            case UP:
+                selectionMoveUp();
+                break;
+            case DOWN:
+                selectionMoveDown();
+                break;
         }
     }
+    
+    private void selectionMoveDown() {
+        if (TaskCard.getSeletedTaskCard() == null) {
+            if (sectionPanelControllers.size() > 0) {
+                sectionPanelControllers.get(0).setActive(0);
+            }
+        } else {
+            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
+            int sectionIndex = findSelectionSection(orginalSelection);
+            if (sectionIndex != -1) {
+                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
+                int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
+                if (targetIndex == selectedSection.getTaskControllers().size() - 1) {
+                    // last item in section
+                    if (sectionIndex != sectionPanelControllers.size() - 1) {
+                        sectionPanelControllers.get(sectionIndex + 1).setActive(0); 
+                    }
+                } else {
+                    selectedSection.setActive(targetIndex + 1);
+                }
+            }
+        }
+    }
+    
+    private void selectionMoveUp() {
+        if (TaskCard.getSeletedTaskCard() == null) {
+            if (sectionPanelControllers.size() > 0) {
+                sectionPanelControllers.get(0).setActive(0);
+            }
+        } else {
+            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
+            int sectionIndex = findSelectionSection(orginalSelection);
+            if (sectionIndex != -1) {
+                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
+                int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
+                if (targetIndex == 0) {
+                    // first item in section
+                    if (sectionIndex != 0) {
+                        SectionPanel previousSection = sectionPanelControllers.get(sectionIndex - 1);
+                        previousSection.setActive(previousSection.getTaskControllers().size() - 1); 
+                    }
+                } else {
+                    selectedSection.setActive(targetIndex - 1);
+                }
+            }
+        }
+    }
+    
+    private int findSelectionSection(TaskCard target) {
+        int selectionIndex = -1;
+        for(SectionPanel sp: sectionPanelControllers) {
+            if (sp.getTaskControllers().contains(target)) {
+                selectionIndex++;
+                break;
+            }
+            selectionIndex++;
+        }
+        return selectionIndex;
+    }
+    
+    private void remapArrowKeysForScrollPane() {
+        tasksScrollPane.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
+            event.consume();
+            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                switch (event.getCode()) {
+                    case UP:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
+                        break;
+                    case DOWN:
+                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+        });
+    }
+    
+    public void scrollTo(int targetIndex) {
+        TaskCard target = findTaskCardByIndex(targetIndex);
+        selectionChanged(target);
+    }
+    
+    private TaskCard findTaskCardByIndex(int targetIndex) {
+        for(SectionPanel s : sectionPanelControllers) {
+            for(TaskCard t : s.getTaskControllers()) {
+                if (t.getDisplayIndex() == targetIndex) {
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
+    public void selectionChanged(TaskCard newSelectedCard) {
+        newSelectedCard.setActive();
+        ensureTaskVisible(newSelectedCard);
+    }
+    
+    private void ensureTaskVisible(TaskCard taskcard) {
+        double height = tasksScrollPane.getContent().getBoundsInLocal().getHeight();
+        double y = taskcard.getLayout().getParent().getBoundsInParent().getMaxY();
+        int sectionIndex = findSelectionSection(taskcard);
+        SectionPanel section = sectionPanelControllers.get(sectionIndex);
+        int selectionIndex = section.findSelectionIndex(taskcard);
+        
+        // offset for the first element
+        if (sectionIndex == 0 && selectionIndex == 0) {
+            y -= taskcard.getLayout().getHeight();
+        }
+        
+        // offset for the second section and so on
+        if (sectionIndex > 0) {
+            y += sectionPanelControllers.get(sectionIndex - 1).getLayout().getBoundsInParent().getMaxY();
+        }
+        
+        // offset for the last element
+        if ((sectionIndex == sectionPanelControllers.size() - 1)
+                && (selectionIndex == section.getTaskControllers().size() - 1)) {
+            y += taskcard.getLayout().getHeight();
+        }
+
+        // scrolling values range from 0 to 1
+        tasksScrollPane.setVvalue(y/height);
+
+        // just for usability
+        tasksScrollPane.requestFocus();
+    }
+
 
 }
