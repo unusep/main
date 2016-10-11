@@ -83,8 +83,9 @@ public class UniqueTaskList implements Iterable<Task> {
         assert toReplace != null;
         assert (i >= 0) && (i <= internalList.size() - 1);
         Task original = internalList.get(i);
-        if (contains(toReplace) && toReplace.getCategories().equals(original.getCategories())) {
-            // task are same and categories are also the same
+        if (contains(toReplace) && 
+                !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
+            // is not just update categories
             throw new DuplicateTaskException();
         }
         internalList.set(i, toReplace);

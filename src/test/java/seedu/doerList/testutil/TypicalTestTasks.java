@@ -9,7 +9,7 @@ import seedu.doerList.model.task.*;
  */
 public class TypicalTestTasks {
 
-    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida;
+    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida, task;
 
     public TypicalTestTasks() {
         try {
@@ -38,6 +38,10 @@ public class TypicalTestTasks {
             //Manually added
             hoon = new TaskBuilder().withTitle("Do quiz 1").withDescription("quiz 1").build();
             ida = new TaskBuilder().withTitle("Do quiz 2").withDescription("quiz 2").build();
+            task = new TaskBuilder().withTitle("Hai Long Birthday").withDescription("Bring Gift")
+                    .withStartTime("2016-10-05 13:00")
+                    .withEndTime("2016-10-06 12:00")
+                    .withTags("Life").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";

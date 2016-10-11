@@ -18,6 +18,15 @@ public class TestTask implements ReadOnlyTask {
     public TestTask() {
         categories = new UniqueCategoryList();
     }
+    
+    // copy constructor
+    public TestTask(ReadOnlyTask source) {
+        this.title = source.getTitle();
+        this.description = source.getDescription();
+        this.startTime = source.getStartTime();
+        this.endTime = source.getEndTime();
+        this.categories = source.getCategories();
+    }
 
     public void setTitle(Title title) {
         this.title = title;
@@ -90,7 +99,7 @@ public class TestTask implements ReadOnlyTask {
         
         UniqueCategoryList categories = this.getCategories();
         if (!categories.getInternalList().isEmpty()) {
-            cmd.append("-c ");
+            cmd.append(" -c ");
             for(Category c: categories){
                 cmd.append(c.categoryName);
             }
