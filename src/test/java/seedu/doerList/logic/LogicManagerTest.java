@@ -307,6 +307,62 @@ public class LogicManagerTest {
 //        assertEquals(model.getFilteredPersonList().get(1), threePersons.get(1));
     }
 
+    @Test
+    public void execute_editInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("edit ", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit Drinks With David", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit -t     ", expectedMessage);
+    }
+    
+    @Test 
+    public void execute_editTaskNotFound_errorMessageShown() throws Exception {
+        assertIndexNotFoundBehaviorForCommand("edit 999");
+    }
+    
+    @Test
+    public void execute_editTaskTitle() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateTaskList(3);
+
+        helper.addToModel(model, threeTasks);
+        
+        DoerList expectedAB = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
+        
+        String newTitle = "Buy present";
+        Task newTask = helper.generateTaskWithTitleAndDescription(newTitle, taskToEdit.getDescription().toString());
+        
+        expectedAB.removeTask(taskToEdit);
+        expectedAB.addTask(newTask);
+              
+        assertCommandBehavior("edit 3 -t Buy present -d Hai Long's Birthday",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+    
+    @Test
+    public void execute_editTaskDescription() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateTaskList(3);
+
+        helper.addToModel(model, threeTasks);
+        
+        DoerList expectedAB = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
+        
+        String newDescription = "Hai Long's Belated Birthday";
+        Task newTask = helper.generateTaskWithTitleAndDescription(taskToEdit.getTitle().toString(), newDescription);
+        
+        expectedAB.removeTask(taskToEdit);
+        expectedAB.addTask(newTask);
+              
+        assertCommandBehavior("edit 3 -t Buy cake -d Hai Long's Belated Birthday",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
 
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
