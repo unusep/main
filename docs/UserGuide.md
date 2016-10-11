@@ -1,11 +1,26 @@
 # User Guide
 
-* [Quick Start](#quick-start)
+* [Overiew](#overview)
+* [Getting Started](#getting-started)
 * [Features](#features)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
-## Quick Start
+## Overview
+
+<img src="../docs/images/UI_Guide/demo_labels.png" width="800">
+
+| Labels | Description |
+|-------- | -------- |
+|1 | Command console allows you to input and execute your commands|
+|2 | Feedback consoles shows if your command is executed properly or not |
+|3 | Contains all of your default categories |
+|4 | Display all the tasks in a panel|
+|5 | Shows all the custom categories that you have created|
+|6 | Indicates the file storage directory and the last time you have edited|
+
+
+## Getting Started
 
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
    > Having any Java 8 version is not enough. <br>
