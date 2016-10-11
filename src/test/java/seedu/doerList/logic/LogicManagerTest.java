@@ -308,45 +308,33 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_editTaskTitle() throws Exception {
+    public void execute_edit_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
-
         helper.addToModel(model, threeTasks);
         
         DoerList expectedAB = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
-        
-        String newTitle = "Buy present";
-        Task newTask = helper.generateTaskWithTitleAndDescription(newTitle, taskToEdit.getDescription().toString());
-        
+        Task editedTask = helper.generateTask(4);
         expectedAB.removeTask(taskToEdit);
-        expectedAB.addTask(newTask);
+        expectedAB.addTask(editedTask);
               
-        assertCommandBehavior("edit 3 -t Buy present -d Hai Long's Birthday",
-                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+        assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
                 expectedAB,
                 expectedAB.getTaskList());
     }
     
     @Test
-    public void execute_editTaskDescription() throws Exception {
+    public void execute_editResultInDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        List<Task> threeTasks = helper.generateTaskList(3);
-
-        helper.addToModel(model, threeTasks);
+        Task task1 = helper.generateTaskWithTitleAndDescription("Task 1", "D 1");
+        Task task2 = helper.generateTaskWithTitleAndDescription("Task 1", "D 2");
+        helper.addToModel(model, Arrays.asList(task1, task2));
         
-        DoerList expectedAB = helper.generateDoerList(threeTasks);
-        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
-        
-        String newDescription = "Hai Long's Belated Birthday";
-        Task newTask = helper.generateTaskWithTitleAndDescription(taskToEdit.getTitle().toString(), newDescription);
-        
-        expectedAB.removeTask(taskToEdit);
-        expectedAB.addTask(newTask);
-              
-        assertCommandBehavior("edit 3 -t Buy cake -d Hai Long's Belated Birthday",
-                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, threeTasks.get(2)),
+        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
+        assertCommandBehavior("edit 1 -d D 2",
+                String.format(EditCommand.MESSAGE_DUPLICATE_TASK),
                 expectedAB,
                 expectedAB.getTaskList());
     }
@@ -526,7 +514,7 @@ public class LogicManagerTest {
             
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
-                cmd.append("-c ");
+                cmd.append(" -c ");
                 for(Category c: categories){
                     cmd.append(c.categoryName + " ");
                 }

@@ -24,8 +24,8 @@ public class EditCommand extends Command {
 			+ "Parameters: INDEX (must be a positive integer) [-t TASK] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY]...\n"
 			+ "Example: " + COMMAND_WORD + " 1 -t Go to lecture -d study";
 
-	public static final String MESSAGE_EDIT_TASK_SUCCESS = "edit task: %1$s";
-	public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
+	public static final String MESSAGE_EDIT_TASK_SUCCESS = "edit task: \nBefore: %1$s\nAfter: %2$s";
+	public static final String MESSAGE_DUPLICATE_TASK = "The edited task already exists in the Do-erlist";
 
 	public final int targetIndex;
 

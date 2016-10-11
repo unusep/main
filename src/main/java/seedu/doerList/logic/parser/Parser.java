@@ -101,11 +101,11 @@ public class Parser {
         }
         try {
             return new AddCommand(
-                    titleMatcher.group("title"),
-                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
-                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+                    titleMatcher.group("title").trim(),
+                    descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
+                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories").trim() : null)
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -122,7 +122,7 @@ public class Parser {
             return Collections.emptySet();
         }
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.trim().split(" "));
+        final Collection<String> tagStrings = Arrays.asList(tagArguments.split(" "));
         return new HashSet<>(tagStrings);
     }
 
@@ -145,11 +145,11 @@ public class Parser {
 
             return new EditCommand(
                     targetIndex,
-                    titleMatcher.find() ? titleMatcher.group("title") : null,
-                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
-                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+                    titleMatcher.find() ? titleMatcher.group("title").trim() : null,
+                    descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
+                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories").trim() : null)
                 );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());

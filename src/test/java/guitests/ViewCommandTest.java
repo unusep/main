@@ -23,7 +23,7 @@ public class ViewCommandTest extends DoerListGuiTest {
     
     @Test
     public void viewTask_nonEmptyList() {
-
+        TaskCard.clearSelection(); // TODO to be changed - this is not a good practice
         assertViewInvalid(10); //invalid index
         assertNoTaskSelected();
 
