@@ -217,17 +217,22 @@ Examples:
 Exits the program.<br>
 Format: `exit`  
 
-#### Saving the data 
+### Saving the data 
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
-There is no need to save manually.
+
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+**Q**: How do I transfer my data to another computer?<br>
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Do-*er* List folder.
+<br>
 
-**Q**: How do I save my schedule after editing it?
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+**Q**: Running "doerlist.jar" gives and error or does not seem to work.<br>
+**A**: You will need to install the latest version of Java. Refer to the installation guide here.
+<br>
+
+**Q**: Where is the save button for me to save my schedule in this program? <br>
+**A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#saving-the-data) in the guide. There is no need for you to save it manually.
 
        
 ## Command Summary
