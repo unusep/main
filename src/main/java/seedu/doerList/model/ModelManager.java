@@ -77,6 +77,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDoerListChanged();
     }
 
+    @Override
+    public synchronized void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
+        doerList.replaceTask(i, task);
+        updateFilteredListToShowAll();
+        indicateDoerListChanged();
+    }
+
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override
@@ -150,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
             return "title=" + String.join(", ", titleKeyWords);
         }
     }
-    
+
     private class DescriptionQualifier implements Qualifier {
         private Set<String> descriptionKeyWords;
 

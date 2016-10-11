@@ -73,11 +73,7 @@ public class EditCommand extends Command {
         	    ReadOnlyTask taskToEdit = lastShownList.get(targetIndex - 1);
         	    Task newTask = generateUpdatedTask(taskToEdit);
 
-        	    model.deleteTask(taskToEdit);
-        	    model.addTask(newTask);
-
-        	    lastShownList.remove(taskToEdit);
-        	    lastShownList.add(newTask);
+        	    model.replaceTask(targetIndex - 1, newTask);
 
         	    return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, newTask));
         } catch (TaskNotFoundException pnfe) {

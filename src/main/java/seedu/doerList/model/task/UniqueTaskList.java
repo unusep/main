@@ -74,6 +74,19 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
+    /**
+     *
+     * @return
+     * @throws DuplicateTaskException
+     */
+    public void replace(int i, Task toReplace) throws TaskNotFoundException, DuplicateTaskException {
+        assert toReplace != null;
+        if (contains(toReplace)) {
+            throw new DuplicateTaskException();
+        }
+        internalList.set(i, (Task) toReplace);
+    }
+
     public ObservableList<Task> getInternalList() {
         return internalList;
     }
