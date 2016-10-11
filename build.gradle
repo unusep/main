@@ -76,10 +76,10 @@ allprojects {
     }
     
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "doerList.jar"
 
         manifest {
-            attributes "Main-Class": "seedu.address.MainApp"
+            attributes "Main-Class": "seedu.doerList.MainApp"
         }
 
         destinationDir = file("${buildDir}/jar/")
