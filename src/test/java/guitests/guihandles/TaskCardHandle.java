@@ -2,17 +2,16 @@ package guitests.guihandles;
 
 import guitests.GuiRobot;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.ui.TaskCard;
 
 /**
  * Provides a handle to a task card in the task list panel.
  */
 public class TaskCardHandle extends GuiHandle {
-    private static final String TITLE_FIELD_ID = "#title";
-    private static final String DESCRIPTION_FIELD_ID = "#description";
-    private static final String START_TIME_FIELD_ID = "#startTime";
-    private static final String END_TIME_FIELD_ID = "#endTime";
+    private static final String TITLE_FIELD_ID = "title";
 
     private Node node;
 
@@ -24,28 +23,28 @@ public class TaskCardHandle extends GuiHandle {
     protected String getTextFromLabel(String fieldId) {
         return getTextFromLabel(fieldId, node);
     }
+    
+    protected String getContentFromText(String fieldId) { 
+        return getTextFromText(fieldId, node);
+    }
 
     public String getFullTitle() {
-        return getTextFromLabel(TITLE_FIELD_ID);
+        return getTextFromLabel("#" + TITLE_FIELD_ID);
     }
 
     public String getDescription() {
-        return getTextFromLabel(DESCRIPTION_FIELD_ID);
+        return getContentFromText("#" + TaskCard.DESCRIPTION_FIELD_ID);
     }
 
-    public String getStartTime() {
-        return getTextFromLabel(START_TIME_FIELD_ID);
+    public String getTime() {
+        return getContentFromText("#" + TaskCard.TIME_FIELD_ID);
     }
     
-    public String getEndTime() {
-        return getTextFromLabel(END_TIME_FIELD_ID); 
-    }
 
     public boolean isSameTask(ReadOnlyTask task){
         return task.getTitle().fullTitle.equals(this.getFullTitle())
                 && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))
-                && (!task.hasStartTime() || task.getStartTime().toString().equals(this.getStartTime()))
-                && (!task.hasEndTime() || task.getEndTime().toString().equals(this.getEndTime()));
+                && (task.isFloatingTask() || task.getTime().equals(this.getTime()));
     }
 
     @Override
@@ -54,8 +53,7 @@ public class TaskCardHandle extends GuiHandle {
             TaskCardHandle handle = (TaskCardHandle) obj;
             return getFullTitle().equals(handle.getFullTitle())
                     && getDescription().equals(handle.getDescription())
-                    && getStartTime().equals(handle.getStartTime())
-                    && getEndTime().equals(handle.getEndTime());
+                    && getTime().equals(handle.getTime());
         }
         return super.equals(obj);
     }
@@ -64,8 +62,7 @@ public class TaskCardHandle extends GuiHandle {
     public String toString() {
         return getFullTitle() + " " 
                 + getDescription() + " " 
-                + getStartTime() + " "
-                + getEndTime();
+                + getTime() + " ";
                 
     }
 }

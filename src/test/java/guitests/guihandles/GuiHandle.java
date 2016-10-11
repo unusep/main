@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import seedu.doerList.TestApp;
@@ -49,8 +50,8 @@ public class GuiHandle {
         return guiRobot.lookup(query).tryQuery().get();
     }
 
-    protected String getTextFieldText(String filedName) {
-        return ((TextField) getNode(filedName)).getText();
+    protected String getTextFieldText(String fieldName) {
+        return ((TextField) getNode(fieldName)).getText();
     }
 
     protected void setTextField(String textFieldId, String newText) {
@@ -65,6 +66,10 @@ public class GuiHandle {
 
     protected String getTextFromLabel(String fieldId, Node parentNode) {
         return ((Label) guiRobot.from(parentNode).lookup(fieldId).tryQuery().get()).getText();
+    }
+    
+    protected String getTextFromText(String fieldId, Node parentNode) {
+        return ((Text) guiRobot.from(parentNode).lookup(fieldId).tryQuery().get()).getText();
     }
 
     public void focusOnSelf() {

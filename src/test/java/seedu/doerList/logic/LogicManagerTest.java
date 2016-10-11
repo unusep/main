@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -167,66 +166,54 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_invalidPersonData() throws Exception {
-//        assertCommandBehavior(
-//                "add []\\[;] p/12345 e/valid@e.mail a/valid, doerList", Title.MESSAGE_TITLE_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/not_numbers e/valid@e.mail a/valid, doerList", Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/notAnEmail a/valid, doerList", TimeInterval.MESSAGE_TIME_INTERVAL_CONSTRAINTS);
-//        assertCommandBehavior(
-//                "add Valid Name p/12345 e/valid@e.mail a/valid, doerList t/invalid_-[.tag", Category.MESSAGE_CATEGORY_CONSTRAINTS);
-
+    public void execute_add_invalidTaskData() throws Exception {
+        assertCommandBehavior(
+                "add -t valid title -d valid description {invalid format->2011-10-12 13:00} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add -t valid title -d valid description {2011-10-12 12:00->invalid format} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test
     public void execute_add_successful() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // execute command and verify result
-//        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-//                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB,
-//                expectedAB.getPersonList());
-
-    }
-    
-    @Test
-    public void execute_add_floatingTask_successful() throws Exception {
-      // setup expectations
-      TestDataHelper helper = new TestDataHelper();
-      Task toBeAdded = helper.taskWithAttribute(false, false, false, false);
-      DoerList expectedAB = new DoerList();
-      expectedAB.addTask(toBeAdded);
-
-      // execute command and verify result
-      assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-              expectedAB,
-              expectedAB.getTaskList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.taskWithAttribute(true, false, false, false),
+                helper.taskWithAttribute(false, true, false, false),
+                helper.taskWithAttribute(false, false, true, false),
+                helper.taskWithAttribute(false, false, false, true),
+                helper.taskWithAttribute(false, true, true, false),
+                helper.taskWithAttribute(false, false, false, false)
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // execute command and verify result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
     }
 
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
-//        // setup expectations
-//        TestDataHelper helper = new TestDataHelper();
-//        Person toBeAdded = helper.adam();
-//        DoerList expectedAB = new DoerList();
-//        expectedAB.addPerson(toBeAdded);
-//
-//        // setup starting state
-//        model.addPerson(toBeAdded); // person already in internal doerList
-//
-//        // execute command and verify result
-//        assertCommandBehavior(
-//                helper.generateAddCommand(toBeAdded),
-//                AddCommand.MESSAGE_DUPLICATE_PERSON,
-//                expectedAB,
-//                expectedAB.getPersonList());
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(1);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+
+        // setup starting state
+        model.addTask(toBeAdded); // person already in internal doerList
+
+        // execute command and verify result
+        assertCommandBehavior(
+                helper.generateAddCommand(toBeAdded),
+                AddCommand.MESSAGE_DUPLICATE_TASK,
+                expectedAB,
+                expectedAB.getTaskList());
 
     }
 
@@ -446,13 +433,12 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            DateTime sampleDate1 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
-            DateTime sampleDate2 = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+            DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
-                    new Title("Person " + seed),
+                    new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
-                    new TodoTime(sampleDate1),
-                    new TodoTime(sampleDate2.plus(seed)),
+                    new TodoTime(sampleDate),
+                    new TodoTime(sampleDate.plusDays(seed)),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -484,7 +470,7 @@ public class LogicManagerTest {
             if (!categories.getInternalList().isEmpty()) {
                 cmd.append("-c ");
                 for(Category c: categories){
-                    cmd.append(c.categoryName);
+                    cmd.append(c.categoryName + " ");
                 }
             }
             
