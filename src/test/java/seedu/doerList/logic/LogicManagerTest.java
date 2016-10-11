@@ -330,17 +330,19 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
+    public void execute_find_onlyMatchesFullWords() throws Exception {
+        // keywords in title or description
         TestDataHelper helper = new TestDataHelper();
         Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task cTarget2 = helper.generateTaskWithTitleAndDescription("dummy", "bla KEY bla bceofeia");
+        Task cTarget3 = helper.generateTaskWithTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
         Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
         Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(c1, cTarget1, c2, cTarget2);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
-        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2);
-        helper.addToModel(model, fourPersons);
+        List<Task> fiveTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2, cTarget3);
+        DoerList expectedAB = helper.generateDoerList(fiveTasks);
+        List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
+        helper.addToModel(model, fiveTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),

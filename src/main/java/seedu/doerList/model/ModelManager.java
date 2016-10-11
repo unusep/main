@@ -91,8 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateFilteredTaskList(Set<String> keywords){
-        updateFilteredTaskList(new PredicateExpression(new TitleQualifier(keywords)));
-        //TODO: add description filter
+        updateFilteredTaskList(new PredicateExpression(new TitleDescriptionQualifier(keywords)));
     }
 
     private void updateFilteredTaskList(Expression expression) {
@@ -130,45 +129,27 @@ public class ModelManager extends ComponentManager implements Model {
         String toString();
     }
 
-    private class TitleQualifier implements Qualifier {
-        private Set<String> titleKeyWords;
+    private class TitleDescriptionQualifier implements Qualifier {
+        private Set<String> titleDescriptionKeyWords;
 
-        TitleQualifier(Set<String> titleKeyWords) {
-            this.titleKeyWords = titleKeyWords;
+        TitleDescriptionQualifier(Set<String> titleKeyWords) {
+            this.titleDescriptionKeyWords = titleKeyWords;
         }
 
         @Override
         public boolean run(ReadOnlyTask task) {
-            return titleKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword))
+            return titleDescriptionKeyWords.stream()
+                    .filter(keyword -> {
+                        return StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword) ||
+                                (task.hasDescription() && StringUtil.containsIgnoreCase(task.getDescription().value, keyword));
+                        })
                     .findAny()
                     .isPresent();
         }
 
         @Override
         public String toString() {
-            return "title=" + String.join(", ", titleKeyWords);
-        }
-    }
-    
-    private class DescriptionQualifier implements Qualifier {
-        private Set<String> descriptionKeyWords;
-
-        DescriptionQualifier(Set<String> descriptionKeyWords) {
-            this.descriptionKeyWords = descriptionKeyWords;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            return task.hasDescription() && descriptionKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCase(task.getDescription().value, keyword))
-                    .findAny()
-                    .isPresent();
-        }
-
-        @Override
-        public String toString() {
-            return "description=" + String.join(", ", descriptionKeyWords);
+            return "title||description=" + String.join(", ", titleDescriptionKeyWords);
         }
     }
 
