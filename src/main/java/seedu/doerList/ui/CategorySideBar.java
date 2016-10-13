@@ -19,7 +19,7 @@ public class CategorySideBar extends UiPart {
     private AnchorPane placeHolderPane;
     private VBox root;
     
-    private BuildInCategoryListPanel buildInCategoryList;
+    private CategoryListPanel buildInCategoryList;
     private CategoryListPanel categoryList;
     
     @FXML
@@ -40,7 +40,7 @@ public class CategorySideBar extends UiPart {
     }
     
     private void configure(ObservableList<Category> buildInCategories, ObservableList<Category> categories) {
-        buildInCategoryList = BuildInCategoryListPanel.load(primaryStage, getBuildInCategoryListPlaceholder(), buildInCategories);
+        buildInCategoryList = CategoryListPanel.load(primaryStage, getBuildInCategoryListPlaceholder(), buildInCategories);
         categoryList = CategoryListPanel.load(primaryStage, getCategoryListPanelPlaceholder(), categories);
         addToPlaceholder();
     }
