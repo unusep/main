@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -37,13 +36,7 @@
        </AnchorPane>
       <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.2" VBox.vgrow="ALWAYS">
          <items>
-            <VBox minWidth="160.0">
-               <children>
-                  <AnchorPane fx:id="buildInCategoryListPanelPlaceholder" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="245.0" />
-                  <Separator prefWidth="200.0" />
-                  <AnchorPane fx:id="categoryListPanelPlaceholder" />
-               </children>
-            </VBox>
+            <AnchorPane fx:id="categorySideBarPlaceholder" />
           <AnchorPane fx:id="taskListPanelPlaceholder" />
          </items>
       </SplitPane>

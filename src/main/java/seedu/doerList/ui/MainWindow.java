@@ -36,8 +36,7 @@ public class MainWindow extends UiPart {
 
     // Independent Ui parts residing in this Ui container
     private TaskListPanel taskListPanel;
-    private BuildInCategoryListPanel buildInCategoryList;
-    private CategoryListPanel categoryList;
+    private CategorySideBar categorySideBar;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -60,10 +59,7 @@ public class MainWindow extends UiPart {
     private AnchorPane taskListPanelPlaceholder;
     
     @FXML
-    private AnchorPane buildInCategoryListPanelPlaceholder;
-    
-    @FXML
-    private AnchorPane categoryListPanelPlaceholder;
+    private AnchorPane categorySideBarPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -122,8 +118,8 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
-        buildInCategoryList = BuildInCategoryListPanel.load(primaryStage, getBuildInCategoryListPlaceholder(), logic.getBuildInCategoryList());
-        categoryList = CategoryListPanel.load(primaryStage, getCategoryListPlaceholder(), logic.getCategoryList());
+        categorySideBar = CategorySideBar.load(primaryStage, getCategorySideBarPlaceholder(), 
+                logic.getBuildInCategoryList(), logic.getCategoryList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getDoerListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -145,12 +141,8 @@ public class MainWindow extends UiPart {
         return taskListPanelPlaceholder;
     }
     
-    public AnchorPane getBuildInCategoryListPlaceholder() {
-        return buildInCategoryListPanelPlaceholder;
-    }
-    
-    public AnchorPane getCategoryListPlaceholder() {
-        return categoryListPanelPlaceholder;
+    public AnchorPane getCategorySideBarPlaceholder() {
+        return categorySideBarPlaceholder;
     }
 
     public void hide() {
@@ -197,14 +189,6 @@ public class MainWindow extends UiPart {
         setDefaultDividerPosition();
     }
     
-    public void clearOtherSelectionExcept(Category selections) {
-        if (selections.isBuildIn()) {
-            categoryList.clearSelection();
-        } else {
-            buildInCategoryList.clearSelection();
-        }
-    }
-    
     // set Default divider position must be called after show to take effect
     private void setDefaultDividerPosition() {
         splitPane.setDividerPosition(0, DEFAULT_DIVIDER_POSITION);
@@ -221,9 +205,10 @@ public class MainWindow extends UiPart {
     public TaskListPanel getTaskListPanel() {
         return this.taskListPanel;
     }
-
-    public void categoryScrollTo(Category target) {
-        categoryList.scrollTo(target);
-        buildInCategoryList.scrollTo(target);  
+    
+    public CategorySideBar getCategorySideBar() {
+        return this.categorySideBar;
     }
+
+    
 }

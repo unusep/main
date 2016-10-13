@@ -134,14 +134,14 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleCategorySelectionChangedEvent(CategorySelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.clearOtherSelectionExcept(event.getNewSelection());
+        mainWindow.getCategorySideBar().clearOtherSelectionExcept(event.getNewSelection());
         logic.setPredicateForTaskList(event.getNewSelection().getPredicate());
     }
     
     @Subscribe
     private void handleJumpToCategoryEvent(JumpToCategoryEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.categoryScrollTo(event.target);
+        mainWindow.getCategorySideBar().categoryScrollTo(event.target);
     }
 
 }
