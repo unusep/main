@@ -51,6 +51,14 @@ public class DoerList implements ReadOnlyDoerList {
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
     }
+    
+    public ObservableList<Category> getCategories() {
+        return categories.getInternalList();
+    }
+    
+    public ObservableList<Category> getBuildInCategories() {
+        return categories.getBuildInList();
+    }
 
     public void setTasks(List<Task> tasks) {
         this.tasks.getInternalList().setAll(tasks);

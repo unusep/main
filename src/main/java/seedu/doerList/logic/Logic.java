@@ -2,6 +2,7 @@ package seedu.doerList.logic;
 
 import javafx.collections.ObservableList;
 import seedu.doerList.logic.commands.CommandResult;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
@@ -17,5 +18,11 @@ public interface Logic {
 
     /** Returns the filtered list of tasks */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
+    
+    /** Returns the list of category */
+    ObservableList<Category> getCategoryList();
+    
+    /** Returns the list of build-in category */
+    ObservableList<Category> getBuildInCategoryList();
 
 }

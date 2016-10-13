@@ -3,6 +3,7 @@ package seedu.doerList.model;
 import java.util.Set;
 
 import seedu.doerList.commons.core.UnmodifiableObservableList;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
@@ -28,6 +29,12 @@ public interface Model {
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    /** Returns the build-in category list as an {@code UnmodifiableObservableList<Category>} */
+    UnmodifiableObservableList<Category> getBuildInCategoryList();
+    
+    /** Returns the user-created category list as an {@code UnmodifiableObservableList<Category>} **/
+    UnmodifiableObservableList<Category> getCategoryList();
+    
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
 

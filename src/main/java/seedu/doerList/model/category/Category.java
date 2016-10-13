@@ -1,7 +1,9 @@
 package seedu.doerList.model.category;
 
+import java.util.function.Predicate;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
  * Represents a Category in the doerList.
@@ -12,11 +14,9 @@ public class Category {
     public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names can be in any format";
     public static final String CATEGORY_VALIDATION_REGEX = ".+";
 
-    public String categoryName;
-
-    public Category() {
-    }
-
+    public String categoryName; 
+    public Category() {}
+    
     /**
      * Validates given category name.
      *
@@ -56,5 +56,20 @@ public class Category {
     public String toString() {
         return '[' + categoryName + ']';
     }
+    
+    /**
+     * Return predicate to help filter tasks
+     * @return predicate(lambda) expression to help filter tasks 
+     */
+    public Predicate<ReadOnlyTask> getPredicate() {
+        return (ReadOnlyTask task) -> {
+            return task.getCategories().contains(this);
+        };
+    }
+    
+    public boolean isBuildIn() {
+        return false;
+    }
+    
 
 }

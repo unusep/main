@@ -3,9 +3,12 @@ package seedu.doerList.model.category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.exceptions.DuplicateDataException;
+import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.CollectionUtil;
 
 import java.util.*;
+
+import org.joda.time.DateTime;
 
 /**
  * A list of categories that enforces no nulls and uniqueness between its elements.
@@ -27,11 +30,46 @@ public class UniqueCategoryList implements Iterable<Category> {
     }
 
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
+    
+    private final ObservableList<Category> buildInList = FXCollections.observableArrayList();
 
+    private void addBuildInCategories() {
+        try {
+            // add `All` category
+            buildInList.add(new BuildInCategory("All", (task) -> {return true;}));
+            // add `Tomorrow` category
+            buildInList.add(new BuildInCategory("Tomorrow", (task) -> {
+                DateTime todayEnd = new DateTime().plusDays(1).withTimeAtStartOfDay();
+                DateTime tomorrowEnd = todayEnd.plusDays(1);        
+                return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
+                        task.hasEndTime() && task.getEndTime().value.isBefore(tomorrowEnd);
+            }));
+            // add `Next 7 Days` category
+            buildInList.add(new BuildInCategory("Next 7 Days", (task) -> {
+                DateTime todayEnd = new DateTime(1).withTimeAtStartOfDay();
+                DateTime sevenDaysEnd = todayEnd.plusDays(7);        
+                return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
+                        task.hasEndTime() && task.getEndTime().value.isBefore(sevenDaysEnd);
+            }));
+            // add `Inbox` category
+            buildInList.add(new BuildInCategory("Inbox", (task) -> {
+                        return !task.hasEndTime() && !task.hasEndTime();
+                    }));
+            // add `Complete` category
+            buildInList.add(new BuildInCategory("Complete", null));
+        } catch (IllegalValueException e) {
+            // impossible
+            e.printStackTrace();
+        }
+    }
+    
+    
     /**
      * Constructs empty CategoryList.
      */
-    public UniqueCategoryList() {}
+    public UniqueCategoryList() {
+        addBuildInCategories();
+    }
 
     /**
      * Varargs/array constructor, enforces no nulls or duplicates.
@@ -43,6 +81,7 @@ public class UniqueCategoryList implements Iterable<Category> {
             throw new DuplicateCategoryException();
         }
         internalList.addAll(initialCategories);
+        addBuildInCategories();
     }
 
     /**
@@ -54,6 +93,7 @@ public class UniqueCategoryList implements Iterable<Category> {
             throw new DuplicateCategoryException();
         }
         internalList.addAll(categories);
+        addBuildInCategories();
     }
 
     /**
@@ -62,6 +102,7 @@ public class UniqueCategoryList implements Iterable<Category> {
     public UniqueCategoryList(Set<Category> categories) {
         CollectionUtil.assertNoNullElements(categories);
         internalList.addAll(categories);
+        addBuildInCategories();
     }
 
     /**
@@ -69,6 +110,7 @@ public class UniqueCategoryList implements Iterable<Category> {
      */
     public UniqueCategoryList(UniqueCategoryList source) {
         internalList.addAll(source.internalList); // insulate internal list from changes in argument
+        addBuildInCategories();
     }
 
     /**
@@ -126,6 +168,10 @@ public class UniqueCategoryList implements Iterable<Category> {
 
     public ObservableList<Category> getInternalList() {
         return internalList;
+    }
+    
+    public ObservableList<Category> getBuildInList() {
+        return buildInList;
     }
 
     @Override

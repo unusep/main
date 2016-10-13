@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane HBox.hgrow="ALWAYS">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="187.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="63.0" />
-            </columnConstraints>
-            <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" GridPane.columnIndex="0">
-                    <padding>
-                        <Insets bottom="5" left="15" right="5" top="5" />
-                    </padding>
+          <VBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+              <padding>
+                  <Insets bottom="5" left="15" right="5" top="5" />
+              </padding>
 
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="5">
-                            <children>
-                                 <Label fx:id="categoryName" styleClass="cell_big_label" text="Category Name" />
-                            </children>
-                        </HBox>
-
-                    </children>
-                </VBox>
-            <VBox alignment="CENTER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" GridPane.columnIndex="1">
-               <children>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <Circle fill="#e4e4e4" radius="14.0" stroke="WHITE" strokeType="INSIDE" />
-                              <Label fx:id="categoryCount" text="0" />
-                           </children>
-                        </StackPane>
-                     </children>
+              <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                      <children>
+                           <Label fx:id="categoryName" styleClass="cell_big_label" text="Category Name" />
+                      </children>
                   </HBox>
+
+              </children>
+          </VBox>
+      <Region HBox.hgrow="ALWAYS" />
+      <VBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <StackPane>
+                     <children>
+                        <Circle fill="#e4e4e4" radius="14.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label fx:id="categoryCount" text="0" />
+                     </children>
+                  </StackPane>
                </children>
-            </VBox>
-            </children>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-        </GridPane>
+            </HBox>
+         </children>
+      </VBox>
     </children>
 </HBox>

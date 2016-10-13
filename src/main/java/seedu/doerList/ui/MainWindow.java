@@ -27,14 +27,16 @@ public class MainWindow extends UiPart {
 
     private static final String ICON = "/images/doerList_32.png";
     private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 600;
-    public static final int MIN_WIDTH = 450;
-    public static final float DEFAULT_DIVIDER_POSITION = 0.2f;
+    public static final int MIN_HEIGHT = 580;
+    public static final int MIN_WIDTH = 660;
+    public static final float DEFAULT_DIVIDER_POSITION = 0.3f;
 
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private TaskListPanel taskListPanel;
+    private BuildInCategoryListPanel buildInCategoryList;
+    private CategoryListPanel categoryList;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -55,6 +57,12 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane taskListPanelPlaceholder;
+    
+    @FXML
+    private AnchorPane buildInCategoryListPanelPlaceholder;
+    
+    @FXML
+    private AnchorPane categoryListPanelPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -113,6 +121,8 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
+        buildInCategoryList = BuildInCategoryListPanel.load(primaryStage, getBuildInCategoryListPlaceholder(), logic.getBuildInCategoryList());
+        categoryList = CategoryListPanel.load(primaryStage, getCategoryListPlaceholder(), logic.getCategoryList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getDoerListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -132,6 +142,14 @@ public class MainWindow extends UiPart {
 
     public AnchorPane getTaskListPlaceholder() {
         return taskListPanelPlaceholder;
+    }
+    
+    public AnchorPane getBuildInCategoryListPlaceholder() {
+        return buildInCategoryListPanelPlaceholder;
+    }
+    
+    public AnchorPane getCategoryListPlaceholder() {
+        return categoryListPanelPlaceholder;
     }
 
     public void hide() {
