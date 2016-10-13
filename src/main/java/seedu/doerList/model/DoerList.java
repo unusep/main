@@ -1,6 +1,7 @@
 package seedu.doerList.model;
 
 import javafx.collections.ObservableList;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
@@ -20,10 +21,12 @@ public class DoerList implements ReadOnlyDoerList {
 
     private final UniqueTaskList tasks;
     private final UniqueCategoryList categories;
+    private final BuildInCategoryList buildInCategories;
 
     {
         tasks = new UniqueTaskList();
         categories = new UniqueCategoryList();
+        buildInCategories = new BuildInCategoryList();
     }
 
     public DoerList() {}
@@ -57,7 +60,7 @@ public class DoerList implements ReadOnlyDoerList {
     }
     
     public ObservableList<Category> getBuildInCategories() {
-        return categories.getBuildInList();
+        return buildInCategories.getInternalList();
     }
 
     public void setTasks(List<Task> tasks) {

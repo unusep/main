@@ -13,6 +13,7 @@ import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
@@ -135,6 +136,12 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.clearOtherSelectionExcept(event.getNewSelection());
         logic.setPredicateForTaskList(event.getNewSelection().getPredicate());
+    }
+    
+    @Subscribe
+    private void handleJumpToCategoryEvent(JumpToCategoryEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.categoryScrollTo(event.target);
     }
 
 }

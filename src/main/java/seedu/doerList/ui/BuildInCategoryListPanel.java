@@ -2,6 +2,7 @@ package seedu.doerList.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
@@ -74,6 +75,27 @@ public class BuildInCategoryListPanel extends UiPart {
     @Override
     public void setPlaceholder(AnchorPane pane) {
         this.placeHolderPane = pane;
+    }
+    
+    public void scrollTo(Category target) {
+        int index = getIndexInListView(target);
+        if (index >= 0) {
+            Platform.runLater(() -> {
+                buildInCategoryListView.scrollTo(index);
+                buildInCategoryListView.getSelectionModel().clearAndSelect(index);
+            });  
+        }  
+    }
+    
+    private int getIndexInListView(Category target) {
+        int i = 0;
+        for(Category c : buildInCategoryListView.getItems()) {
+            if (c.equals(target)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
     
 }

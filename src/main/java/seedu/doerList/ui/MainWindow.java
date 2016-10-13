@@ -221,4 +221,9 @@ public class MainWindow extends UiPart {
     public TaskListPanel getTaskListPanel() {
         return this.taskListPanel;
     }
+
+    public void categoryScrollTo(Category target) {
+        categoryList.scrollTo(target);
+        buildInCategoryList.scrollTo(target);  
+    }
 }
