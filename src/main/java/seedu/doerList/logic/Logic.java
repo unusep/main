@@ -1,5 +1,7 @@
 package seedu.doerList.logic;
 
+import java.util.function.Predicate;
+
 import javafx.collections.ObservableList;
 import seedu.doerList.logic.commands.CommandResult;
 import seedu.doerList.model.category.Category;
@@ -16,6 +18,8 @@ public interface Logic {
      */
     CommandResult execute(String commandText);
 
+    void setPredicateForTaskList(Predicate<ReadOnlyTask> predicate);
+    
     /** Returns the filtered list of tasks */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
     

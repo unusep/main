@@ -12,6 +12,7 @@ import seedu.doerList.commons.core.ComponentManager;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
+import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
@@ -126,6 +127,12 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().selectionChanged(event.getNewSelectedCard());
+    }
+    
+    @Subscribe
+    private void handleCategorySelectionChangedEvent(CategorySelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.setPredicateForTaskList(event.getNewSelection().getPredicate());
     }
 
 }

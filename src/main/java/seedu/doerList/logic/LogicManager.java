@@ -11,6 +11,7 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.storage.Storage;
 
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -48,5 +49,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Category> getBuildInCategoryList() {
         return model.getBuildInCategoryList();
+    }
+
+    @Override
+    public void setPredicateForTaskList(Predicate<ReadOnlyTask> predicate) {
+        model.updateFilteredTaskList(predicate);
     }
 }

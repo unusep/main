@@ -1,6 +1,7 @@
 package seedu.doerList.model;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.category.Category;
@@ -40,6 +41,9 @@ public interface Model {
 
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
+    
+    /** Updates the filter of the filtered task list to filter by the given predicate*/
+    void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
     void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
 

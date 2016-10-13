@@ -13,6 +13,7 @@ import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -115,6 +116,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
+    }
+    
+    public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+        filteredTasks.setPredicate(predicate);
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
