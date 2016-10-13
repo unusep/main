@@ -25,7 +25,7 @@ public class TaskCard extends UiPart {
     public static final String DESCRIPTION_FIELD_ID = "description";
     public static final String TIME_FIELD_ID = "time";
     
-    public static TaskCard selectedTaskController; // TODO this is not a good practice
+    public static TaskCard selectedTaskController;
     
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskCard.fxml";
