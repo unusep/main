@@ -57,6 +57,10 @@ public class CategoryListPanel extends UiPart {
                 });
     }
     
+    public void clearSelection() {
+        categoryListView.getSelectionModel().clearSelection();
+    }
+    
     @Override
     public void setNode(Node node) {
         root = (VBox) node;

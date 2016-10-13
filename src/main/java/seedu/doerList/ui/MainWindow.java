@@ -17,6 +17,7 @@ import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
@@ -194,6 +195,14 @@ public class MainWindow extends UiPart {
     public void show() {
         primaryStage.show();
         setDefaultDividerPosition();
+    }
+    
+    public void clearOtherSelectionExcept(Category selections) {
+        if (selections.isBuildIn()) {
+            categoryList.clearSelection();
+        } else {
+            buildInCategoryList.clearSelection();
+        }
     }
     
     // set Default divider position must be called after show to take effect

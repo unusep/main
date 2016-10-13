@@ -20,6 +20,7 @@ import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
+import seedu.doerList.model.category.Category;
 
 import java.util.logging.Logger;
 
@@ -132,6 +133,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleCategorySelectionChangedEvent(CategorySelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.clearOtherSelectionExcept(event.getNewSelection());
         logic.setPredicateForTaskList(event.getNewSelection().getPredicate());
     }
 

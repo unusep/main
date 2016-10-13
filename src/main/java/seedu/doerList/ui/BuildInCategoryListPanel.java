@@ -57,6 +57,10 @@ public class BuildInCategoryListPanel extends UiPart {
                 });
     }
     
+    public void clearSelection() {
+        buildInCategoryListView.getSelectionModel().clearSelection();
+    }
+    
     @Override
     public void setNode(Node node) {
         root = (VBox) node;
