@@ -52,7 +52,7 @@ public class BuildInCategoryList implements Iterable<Category> {
             }));
             // add `Next 7 Days` category
             buildInList.add(new BuildInCategory("Next 7 Days", (task) -> {
-                DateTime todayEnd = new DateTime(1).withTimeAtStartOfDay();
+                DateTime todayEnd = new DateTime().withTimeAtStartOfDay().plusDays(1);
                 DateTime sevenDaysEnd = todayEnd.plusDays(7);        
                 return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
                         task.hasEndTime() && task.getEndTime().value.isBefore(sevenDaysEnd);

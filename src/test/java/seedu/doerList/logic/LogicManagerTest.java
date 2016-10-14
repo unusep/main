@@ -6,6 +6,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.logic.LogicManager;
 import seedu.doerList.logic.commands.*;
@@ -13,8 +14,10 @@ import seedu.doerList.model.DoerList;
 import seedu.doerList.model.Model;
 import seedu.doerList.model.ModelManager;
 import seedu.doerList.model.ReadOnlyDoerList;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
+import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
 import seedu.doerList.model.task.*;
 import seedu.doerList.storage.StorageManager;
 
@@ -232,6 +235,52 @@ public class LogicManagerTest {
                 String.format(ListCommand.MESSAGE_SUCCESS, "All"),
                 expectedAB,
                 expectedList);
+    }
+    
+    @Test
+    public void execute_list_buildInCategory() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8), 
+                        new DateTime().withHourOfDay(12)); // today
+        Task Next7Days1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1), 
+                        new DateTime().withHourOfDay(12).plusDays(1)); // tomorrow
+        Task Next7Days2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5), 
+                        new DateTime().withHourOfDay(12).plusDays(5)); // next 5 days
+        Task Next7Days3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7), 
+                        new DateTime().withHourOfDay(12).plusDays(7)); // next 7 days
+        Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
+        Task Complete1 = helper.generateTaskWithCategory(5, model.getBuildInCategoryList()
+                        .get(BuildInCategoryList.ListOfCategory.COMPLETE.ordinal())); // complete
+
+        // prepare doerList state
+        helper.addToModel(model, Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1));
+
+        // Test ALL
+        assertCategoryListed(Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1),
+                        BuildInCategoryList.ListOfCategory.ALL
+                        );
+        // Test Next 7 Days
+        assertCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
+                        BuildInCategoryList.ListOfCategory.NEXT7DAYS
+                        );
+        // Test Inbox
+        assertCategoryListed(Arrays.asList(Inbox1),
+                        BuildInCategoryList.ListOfCategory.INBOX
+                        );
+        // Test complete
+        assertCategoryListed(Arrays.asList(Complete1),
+                        BuildInCategoryList.ListOfCategory.COMPLETE
+                        );
+    }
+    
+    private void assertCategoryListed(List<? extends ReadOnlyTask> expected, BuildInCategoryList.ListOfCategory categoryType) throws Exception {
+        Category category = model.getBuildInCategoryList().get(categoryType.ordinal());
+        //Execute the command
+        CommandResult result = logic.execute("list " + category.categoryName);
+        //Confirm the ui display elements should contain the right data
+        assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, category.categoryName), result.feedbackToUser);
+        assertEquals(expected, category.getTasks());
     }
 
 
@@ -487,6 +536,52 @@ public class LogicManagerTest {
                     new TodoTime(sampleDate.plusDays(seed)),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
+        }
+        
+        /**
+         * Generate Task with given seed, startTime and endTime
+         * 
+         * @param seed
+         * @param startTime
+         * @param endTime
+         * @return
+         */
+        Task generateTaskWithTime(int seed, DateTime startTime, DateTime endTime) {
+            try {
+                return new Task(
+                        new Title("Task " + seed),
+                        new Description("" + Math.abs(seed)),
+                        startTime != null ? new TodoTime(startTime) : null,
+                        endTime != null ? new TodoTime(endTime) : null,
+                        new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
+                );
+            } catch (Exception e) {
+                // impossible
+            }
+            return null;
+        }
+        
+        /**
+         * Generate task based on given seed and category
+         * 
+         * @param seed
+         * @param Category... c
+         * @return task with given seed and category
+         */
+        Task generateTaskWithCategory(int seed, Category... c) {
+            try {
+                DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+                return new Task(
+                        new Title("Task " + seed),
+                        new Description("" + Math.abs(seed)),
+                        new TodoTime(sampleDate),
+                        new TodoTime(sampleDate.plusDays(seed)),
+                        new UniqueCategoryList(Arrays.asList(c))
+                );
+            } catch (Exception e) {
+                // impossible
+            }
+            return null;
         }
 
         /** Generates the correct add command based on the task given */
