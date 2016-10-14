@@ -11,6 +11,7 @@ import seedu.doerList.MainApp;
 import seedu.doerList.commons.core.ComponentManager;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
+import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
@@ -105,6 +106,12 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait("Could not save data", "Could not save data to file", event.exception);
+    }
+    
+    @Subscribe
+    private void handleDoerListChangedEvent(DoerListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCategorySideBar().refreshCategories(); // to update category count
     }
 
     @Subscribe

@@ -84,6 +84,10 @@ public class CategorySideBar extends UiPart {
             buildInCategoryList.clearSelection();
         }
     }
-    
+
+    public void refreshCategories() {
+        categoryList.redrawListView();
+        buildInCategoryList.redrawListView();
+    }
     
 }

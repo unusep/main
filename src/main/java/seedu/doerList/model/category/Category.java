@@ -2,8 +2,13 @@ package seedu.doerList.model.category;
 
 import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Task;
 
 /**
  * Represents a Category in the doerList.
@@ -16,6 +21,7 @@ public class Category {
 
     public String categoryName; 
     public Category() {}
+    private ObservableList<ReadOnlyTask> filteredList = FXCollections.observableArrayList();
     
     /**
      * Validates given category name.
@@ -43,6 +49,16 @@ public class Category {
         return other == this // short circuit if same object
                 || (other instanceof Category // instanceof handles nulls
                 && this.categoryName.equals(((Category) other).categoryName)); // state check
+    }
+    
+    public void setFilteredTaskList(ObservableList<Task> theFilteredList) {
+        assert theFilteredList != null;
+        filteredList = new UnmodifiableObservableList<>(theFilteredList);
+    }
+    
+    public FilteredList<ReadOnlyTask> getTasks() {
+        assert filteredList != null;
+        return filteredList.filtered(this.getPredicate());
     }
 
     @Override

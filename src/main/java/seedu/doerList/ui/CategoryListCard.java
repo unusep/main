@@ -38,11 +38,9 @@ public class CategoryListCard extends UiPart {
     @FXML
     public void initialize() {
         categoryName.setText(category.categoryName);
-        // TODO set account
+        categoryCount.setText(category.getTasks().size() + "");
     }
-    
-    
-    
+       
     @Override
     public void setNode(Node node) {
         root = (HBox) node;

@@ -39,7 +39,7 @@ public class BuildInCategoryList implements Iterable<Category> {
 
     private final ObservableList<Category> buildInList = FXCollections.observableArrayList();
 
-    private void addBuildInCategories() {
+    public void addBuildInCategories() {
         try {
             // add `All` category
             buildInList.add(new BuildInCategory("All", (task) -> {return true;}));
@@ -73,9 +73,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     /**
      * Constructs empty CategoryList.
      */
-    public BuildInCategoryList() {
-        addBuildInCategories();
-    }
+    public BuildInCategoryList() {}
 
     public Category getCategory(ListOfCategory index) {
         return buildInList.get(index.ordinal());

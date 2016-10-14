@@ -62,6 +62,15 @@ public class CategoryListPanel extends UiPart {
         categoryListView.getSelectionModel().clearSelection();
     }
     
+    /**
+     * Redraw the list view
+     */
+    public void redrawListView() {
+        ObservableList<Category> items = categoryListView.getItems();
+        categoryListView.setItems(null);
+        categoryListView.setItems(items);
+    }
+    
     @Override
     public void setNode(Node node) {
         root = (VBox) node;
