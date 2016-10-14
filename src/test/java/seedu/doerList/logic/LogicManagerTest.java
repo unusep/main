@@ -257,30 +257,69 @@ public class LogicManagerTest {
         helper.addToModel(model, Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1));
 
         // Test ALL
-        assertCategoryListed(Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1),
+        assertBuildInCategoryListed(Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1),
                         BuildInCategoryList.ListOfCategory.ALL
                         );
         // Test Next 7 Days
-        assertCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
+        assertBuildInCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
                         BuildInCategoryList.ListOfCategory.NEXT7DAYS
                         );
         // Test Inbox
-        assertCategoryListed(Arrays.asList(Inbox1),
+        assertBuildInCategoryListed(Arrays.asList(Inbox1),
                         BuildInCategoryList.ListOfCategory.INBOX
                         );
         // Test complete
-        assertCategoryListed(Arrays.asList(Complete1),
+        assertBuildInCategoryListed(Arrays.asList(Complete1),
                         BuildInCategoryList.ListOfCategory.COMPLETE
                         );
     }
     
-    private void assertCategoryListed(List<? extends ReadOnlyTask> expected, BuildInCategoryList.ListOfCategory categoryType) throws Exception {
+    @Test
+    public void execute_list_category() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("CA1"), new Category("CA2"));
+        Task task2 = helper.generateTaskWithCategory(2, new Category("CA1"));
+        Task task3 = helper.generateTaskWithCategory(3, new Category("CA2"));
+        Task task4 = helper.generateTaskWithCategory(4);
+        
+        // prepare doerList state
+        helper.addToModel(model, Arrays.asList(task1, task2, task3, task4));
+
+        // list unknown category
+        CommandResult result = logic.execute("list CA3");
+        assertEquals(ListCommand.MESSAGE_CATEGORY_NOT_EXISTS, result.feedbackToUser);
+        
+        // list All
+        //Execute the command
+        result = logic.execute("list");
+        assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList());
+        
+        // List CA1
+        assertCategoryListed(Arrays.asList(task1, task2),
+                        "CA1"
+                        );
+        // list CA2
+        assertCategoryListed(Arrays.asList(task1, task3),
+                        "CA2"
+                        );
+    }
+    
+    private void assertBuildInCategoryListed(List<? extends ReadOnlyTask> expected, BuildInCategoryList.ListOfCategory categoryType) throws Exception {
         Category category = model.getBuildInCategoryList().get(categoryType.ordinal());
         //Execute the command
         CommandResult result = logic.execute("list " + category.categoryName);
         //Confirm the ui display elements should contain the right data
         assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, category.categoryName), result.feedbackToUser);
         assertEquals(expected, category.getTasks());
+    }
+    
+    private void assertCategoryListed(List<? extends ReadOnlyTask> expected, String categoryName) {
+        //Execute the command
+        CommandResult result = logic.execute("list " + categoryName);
+        //Confirm the ui display elements should contain the right data
+        assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, categoryName), result.feedbackToUser);
+        assertEquals(expected, logic.getFilteredTaskList());
     }
 
 

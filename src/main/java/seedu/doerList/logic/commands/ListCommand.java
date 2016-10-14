@@ -20,11 +20,9 @@ public class ListCommand extends Command {
 
     public String toSelectCategoryName;
     
-    public ListCommand() {
-        toSelectCategoryName = "All";
-    }
+    public ListCommand() {}
     
-    public ListCommand(String categoryName) throws IllegalValueException {
+    public ListCommand(String categoryName) {
         toSelectCategoryName = categoryName;
     }
     
@@ -35,6 +33,9 @@ public class ListCommand extends Command {
      * @return Optional<Category> indicates whether find it or not 
      */
     public Optional<Category> findNameInCategory(String keyword) {
+        if (keyword == null) {
+            return Optional.of(model.getBuildInCategoryList().get(BuildInCategoryList.ListOfCategory.ALL.ordinal()));
+        }
         for(Category c : model.getBuildInCategoryList()) {
             if (c.categoryName.equals(keyword)) {
                 return Optional.of(c);

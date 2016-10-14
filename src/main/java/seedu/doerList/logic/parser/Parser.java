@@ -201,11 +201,7 @@ public class Parser {
         if (args.trim().length() == 0) {
             return new ListCommand();
         } else {
-            try {
-                return new ListCommand(args.trim());
-            } catch (IllegalValueException ive) {
-                return new IncorrectCommand(ive.getMessage());
-            }
+            return new ListCommand(args.trim());
         }
     }
 
