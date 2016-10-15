@@ -27,8 +27,6 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern HELP_KEYWORDS_ARGS_FORMAT = Pattern.compile("(?<command>\\S+)");
-
     private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("-t(?<title>[^-\\{]+)");
     private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("-d(?<description>[^-\\{]+)");
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\{(?<startTime>.+)->");
@@ -78,7 +76,7 @@ public class Parser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand(arguments);
+            return new HelpCommand(arguments.trim());
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -244,17 +242,6 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
-    }
-
-    /**
-     * Parse arguments in the context of the help command
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareHelp(String args) {
-        final Matcher matcher = HELP_KEYWORDS_ARGS_FORMAT.matcher(args.trim());
-        return new HelpCommand(matcher.group("command"));
     }
 
     /**

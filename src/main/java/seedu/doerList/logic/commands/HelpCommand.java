@@ -16,6 +16,8 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
+    private static final String INVALID_HELP_MESSAGE = "Invalid Command Name after 'help' - type 'help' to bring up the User Guide";
+
     private static final String SHOWING_HELP_ADD_MESSAGE =
             "add: Add a task to the Do-er List. \n"
                     + "Parameters: -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...\n"
@@ -71,7 +73,7 @@ public class HelpCommand extends Command {
                     + "Parameters: END_DATE \n"
                     + "taskdue tomorrow";
 
-    public String command = "";
+    private final String command;
 
     public HelpCommand(String command) {
         this.command = command;
@@ -114,9 +116,12 @@ public class HelpCommand extends Command {
         case "taskdue":
             return new CommandResult(SHOWING_HELP_TASKDUE_MESSAGE);
 
-        default:
-            //EventsCenter.getInstance().post(new ShowHelpRequestEvent());
+        case "":
+            EventsCenter.getInstance().post(new ShowHelpRequestEvent());
             return new CommandResult(SHOWING_HELP_MESSAGE);
+
+        default:
+            return new CommandResult(INVALID_HELP_MESSAGE);
         }
     }
 }
