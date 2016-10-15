@@ -332,9 +332,6 @@ public class TestUtil {
         return card.isSameTask(task);
     }
     
-    public static boolean compareCardAndCategory(CategoryCardHandle card, Category category) {
-        return card.isSameCategory(category);
-    }
     
     public static boolean compareCardAndTestCategory(CategoryCardHandle card, TestCategory category) {
         return card.isSameTestCategory(category);

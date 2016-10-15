@@ -49,8 +49,6 @@ public class TypicalTestTasks {
                     .withStartTime(new DateTime().withHourOfDay(16).plusDays(1))
                     .withEndTime(new DateTime().withHourOfDay(17).plusDays(1)).build(); // task tomorrow
             task10 = new TaskBuilder().withTitle("Hai Long Birthday").withDescription("Bring Gift")
-                    .withStartTime(new DateTime().withHourOfDay(14).plusDays(4))
-                    .withEndTime(new DateTime().withHourOfDay(15).plusDays(4))
                     .withCategories("Life").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();

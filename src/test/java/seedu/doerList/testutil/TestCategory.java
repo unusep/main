@@ -20,4 +20,8 @@ public class TestCategory extends BuildInCategory {
         super(name, null);
         this.expectedNumTasks = expectedNumTasks;
     }
+    
+    public void setExpectedNumTasks(int num) {
+        expectedNumTasks = num;
+    } 
 }

@@ -13,6 +13,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
 import seedu.doerList.ui.CategoryListCard;
@@ -109,8 +110,8 @@ public abstract class DoerListGuiTest {
     /**
      * Asserts the category shown in the category sidebar is same as the given category
      */
-    public void assertMatching(Category category, CategoryCardHandle card) {
-        assertTrue(TestUtil.compareCardAndCategory(card, category));
+    public void assertMatching(TestCategory category, CategoryCardHandle card) {
+        assertTrue(TestUtil.compareCardAndTestCategory(card, category));
     }
 
     /**

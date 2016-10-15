@@ -45,7 +45,7 @@ public class CategorySideBarHandle extends GuiHandle {
         if (buildInCategoryList.size() == 1 && categoryList.size() == 0) {
             return getCategoryCardHandle(buildInCategoryList.get(0));
         } else if (buildInCategoryList.size() == 0 && categoryList.size() == 1){
-            return getCategoryCardHandle(buildInCategoryList.get(0));
+            return getCategoryCardHandle(categoryList.get(0));
         } else if (buildInCategoryList.size() != 0 && categoryList.size() != 0) {
             throw new IllegalArgumentException("Two selections exist in the categorySideBar");
         } else {
