@@ -27,11 +27,11 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("t/(?<title>[^-\\{]+)");
-    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("d/(?<description>[^-\\{]+)");
+    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("t/(?<title>[^/\\{]+)");
+    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("d/(?<description>[^/\\{]+)");
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\{(?<startTime>.+)->");
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("->(?<endTime>.+)\\}");
-    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("c/(?<categories>[^-\\{]+)");
+    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("c/(?<categories>[^/\\{]+)");
 
     public Parser() {}
 
