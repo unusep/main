@@ -27,8 +27,7 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern HELP_KEYWORDS_ARGS_FORMAT =
-            Pattern.compile("?<command>\\S+");
+    private static final Pattern HELP_KEYWORDS_ARGS_FORMAT = Pattern.compile("(?<command>\\S+)");
 
     private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("-t(?<title>[^-\\{]+)");
     private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("-d(?<description>[^-\\{]+)");
@@ -79,7 +78,7 @@ public class Parser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new HelpCommand(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
