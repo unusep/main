@@ -16,7 +16,7 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
-    public HelpCommand() {}
+    public HelpCommand(String command) {}
 
     @Override
     public CommandResult execute() {
