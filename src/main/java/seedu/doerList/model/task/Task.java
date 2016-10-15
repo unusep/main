@@ -3,6 +3,8 @@ package seedu.doerList.model.task;
 import java.util.Objects;
 
 import seedu.doerList.commons.util.CollectionUtil;
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList;
 
 /**
@@ -17,6 +19,7 @@ public class Task implements ReadOnlyTask {
     private TodoTime endTime;
 
     private UniqueCategoryList categories;
+    private BuildInCategoryList buildInCategoires;
 
     /**
      * Title must be presented.
@@ -28,6 +31,7 @@ public class Task implements ReadOnlyTask {
         this.startTime = startTime;
         this.endTime = endTime;
         this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
+        this.buildInCategoires = new BuildInCategoryList();
     }
 
     /**
@@ -39,6 +43,7 @@ public class Task implements ReadOnlyTask {
                 source.getStartTime(), 
                 source.getEndTime(), 
                 source.getCategories());
+        buildInCategoires.replaceWith(source.getBuildInCategories());
     }
 
     @Override
@@ -55,6 +60,21 @@ public class Task implements ReadOnlyTask {
     public UniqueCategoryList getCategories() {
         return categories;
     }
+    
+    @Override
+    public BuildInCategoryList getBuildInCategories() {
+        return buildInCategoires;
+    }
+    
+    @Override
+    public void addBuildInCategory(BuildInCategory category) {
+        buildInCategoires.add(category);
+    }
+
+    @Override
+    public void removeBuildInCategory(BuildInCategory category) {
+        buildInCategoires.remove(category);
+    }
 
     /**
      * Replaces this person's tags with the tags in the argument tag list.
@@ -62,7 +82,16 @@ public class Task implements ReadOnlyTask {
     public void setCategories(UniqueCategoryList replacement) {
         categories.setCategories(replacement);
     }
-
+    
+    /**
+     * Replace this task's build in category with given build in categories
+     * 
+     * @param theBuildInCategories
+     */
+    public void setBuildInCategories(BuildInCategoryList theBuildInCategories) {
+        buildInCategoires.replaceWith(theBuildInCategories);
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -17,7 +17,7 @@ public class CategoryListCard extends UiPart {
     Category category;
     
     @FXML
-    private HBox cardPane;
+    private HBox categoryCardPane;
     
     @FXML
     private Label categoryName;
@@ -53,7 +53,7 @@ public class CategoryListCard extends UiPart {
     
     
     public HBox getLayout() {
-        return cardPane;
+        return categoryCardPane;
     }
     
     static class CategoryListViewCell extends ListCell<Category> {

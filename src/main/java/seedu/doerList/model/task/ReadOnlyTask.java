@@ -1,5 +1,7 @@
 package seedu.doerList.model.task;
 
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList;
 
 /**
@@ -52,6 +54,10 @@ public interface ReadOnlyTask {
      * changes on the returned list will not affect the person's internal tags.
      */
     UniqueCategoryList getCategories();
+    
+    BuildInCategoryList getBuildInCategories();   
+    void addBuildInCategory(BuildInCategory category);
+    void removeBuildInCategory(BuildInCategory category);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

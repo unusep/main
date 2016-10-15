@@ -21,18 +21,18 @@ public class EditCommandTest extends DoerListGuiTest {
     public void edit() {
         // edit task successfully
         TestTask[] expectedList = td.getTypicalTasks();
-        expectedList[0] = td.task;
-        assertEditSuccess(1, td.task, expectedList);
+        expectedList[0] = td.task8;
+        assertEditSuccess(1, td.task8, expectedList);
 
 
         // edit task result in duplicate
-        commandBox.runCommand(td.task.getAddCommand().replace("add", "edit 2"));
+        commandBox.runCommand(td.task8.getAddCommand().replace("add", "edit 2"));
         assertResultMessage(EditCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(expectedList));
 
         // edit to empty list
         commandBox.runCommand("clear");
-        commandBox.runCommand(td.task.getAddCommand().replace("add", "edit 1"));
+        commandBox.runCommand(td.task8.getAddCommand().replace("add", "edit 1"));
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         assertEquals(taskListPanel.getAllTasksInTaskCards().size(), 0);
 

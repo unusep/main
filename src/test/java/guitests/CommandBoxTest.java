@@ -8,7 +8,7 @@ public class CommandBoxTest extends DoerListGuiTest {
 
     @Test
     public void commandBox_commandSucceeds_textCleared() {
-        commandBox.runCommand(td.benson.getAddCommand());
+        commandBox.runCommand(td.task1.getAddCommand());
         assertEquals(commandBox.getCommandInput(), "");
     }
 

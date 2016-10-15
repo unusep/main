@@ -29,7 +29,7 @@ public class DoerList implements ReadOnlyDoerList {
         categories = new UniqueCategoryList();
         buildInCategories = new BuildInCategoryList();
         addListenerToCategoryList();
-        buildInCategories.addBuildInCategories();
+        buildInCategories.addAllBuildInCategories();
     }
     
     

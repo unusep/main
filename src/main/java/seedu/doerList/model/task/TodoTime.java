@@ -60,7 +60,7 @@ public class TodoTime {
    public boolean equals(Object other) {
        return other == this // short circuit if same object
                || (other instanceof TodoTime // instanceof handles nulls
-               && this.value.isEqual(((TodoTime) other).value)); // state check
+               && this.toString().equals(((TodoTime) other).toString())); // state check
    }
 
 

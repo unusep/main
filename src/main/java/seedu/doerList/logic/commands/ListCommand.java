@@ -34,7 +34,7 @@ public class ListCommand extends Command {
      */
     public Optional<Category> findNameInCategory(String keyword) {
         if (keyword == null) {
-            return Optional.of(model.getBuildInCategoryList().get(BuildInCategoryList.ListOfCategory.ALL.ordinal()));
+            return Optional.of(BuildInCategoryList.ALL);
         }
         for(Category c : model.getBuildInCategoryList()) {
             if (c.categoryName.equals(keyword)) {

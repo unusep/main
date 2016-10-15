@@ -250,27 +250,27 @@ public class LogicManagerTest {
         Task Next7Days3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7), 
                         new DateTime().withHourOfDay(12).plusDays(7)); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
-        Task Complete1 = helper.generateTaskWithCategory(5, model.getBuildInCategoryList()
-                        .get(BuildInCategoryList.ListOfCategory.COMPLETE.ordinal())); // complete
+        Task Complete1 = helper.generateTaskWithCategory(5); // complete
+        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
 
         // prepare doerList state
         helper.addToModel(model, Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1));
 
         // Test ALL
         assertBuildInCategoryListed(Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1),
-                        BuildInCategoryList.ListOfCategory.ALL
+                        BuildInCategoryList.ALL
                         );
         // Test Next 7 Days
         assertBuildInCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
-                        BuildInCategoryList.ListOfCategory.NEXT7DAYS
+                        BuildInCategoryList.NEXT7DAYS
                         );
         // Test Inbox
         assertBuildInCategoryListed(Arrays.asList(Inbox1),
-                        BuildInCategoryList.ListOfCategory.INBOX
+                        BuildInCategoryList.INBOX
                         );
         // Test complete
         assertBuildInCategoryListed(Arrays.asList(Complete1),
-                        BuildInCategoryList.ListOfCategory.COMPLETE
+                        BuildInCategoryList.COMPLETE
                         );
     }
     
@@ -305,8 +305,7 @@ public class LogicManagerTest {
                         );
     }
     
-    private void assertBuildInCategoryListed(List<? extends ReadOnlyTask> expected, BuildInCategoryList.ListOfCategory categoryType) throws Exception {
-        Category category = model.getBuildInCategoryList().get(categoryType.ordinal());
+    private void assertBuildInCategoryListed(List<? extends ReadOnlyTask> expected, Category category) throws Exception {
         //Execute the command
         CommandResult result = logic.execute("list " + category.categoryName);
         //Confirm the ui display elements should contain the right data
