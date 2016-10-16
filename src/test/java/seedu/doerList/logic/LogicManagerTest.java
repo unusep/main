@@ -518,6 +518,27 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
+    
+    @Test
+    public void execute_unmark_unmarkATaskAsUndone() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5);
+        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        
+        helper.addToModel(model, Arrays.asList(Complete1));
+        
+        assertCommandBehavior("unmark 1", String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS));
+    }
+    
+    @Test
+    public void execute_unmark_unmarkAnUndoneTask() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5);
+        
+        helper.addToModel(model, Arrays.asList(Complete1));
+        
+        assertCommandBehavior("unmark 1", String.format(UnmarkCommand.MESSAGE_DUPLICATE_UNMARK));
+    }
 
 
     /**
