@@ -262,7 +262,7 @@ public class Parser {
     }
     
     /**
-     * Parses arguments in the context of the select task command.
+     * Parses arguments in the context of the unmark task command.
      *
      * @param args full command args string
      * @return the prepared command
