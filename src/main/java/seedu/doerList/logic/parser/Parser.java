@@ -77,6 +77,9 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+        
+        case UnmarkCommand.COMMAND_WORD:
+            return prepareUnmark(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -256,6 +259,22 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+    
+    /**
+     * Parses arguments in the context of the select task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUnmark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
+        }
+
+        return new UnmarkCommand(index.get());
     }
 
     /**
