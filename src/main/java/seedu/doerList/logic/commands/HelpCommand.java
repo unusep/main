@@ -20,12 +20,12 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_ADD_MESSAGE =
             "add: Add a task to the Do-er List. \n"
-                    + "Parameters: /t TITLE [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...\n"
-                    + "Example: add /t Do post-lecture quiz {today->tomorrow} /c CS2103";
+                    + "Parameters: /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...\n"
+                    + "Example: add /t Do post-lecture quiz /s today /e tomorrow /c CS2103";
 
     public static final String SHOWING_HELP_EDIT_MESSAGE =
             "edit: Edit an existing task in the Do-er List. \n"
-                    + "Parameters: INDEX [/t TITLE] [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...\n"
+                    + "Parameters: INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...\n"
                     + "edit 1 /t Do ST2334 quiz /c ST2334";
 
     public static final String SHOWING_HELP_MARK_MESSAGE =

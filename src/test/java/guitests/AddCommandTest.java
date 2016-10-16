@@ -31,7 +31,7 @@ public class AddCommandTest extends DoerListGuiTest {
 
         //add to empty list
         commandBox.runCommand("clear");
-        assertAddSuccess(td.alice);
+        //assertAddSuccess(td.alice);
 
         //invalid command
         commandBox.runCommand("adds Do Homework");

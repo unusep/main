@@ -190,9 +190,9 @@ public class LogicManagerTest {
     @Test
     public void execute_add_invalidTaskData() throws Exception {
         assertCommandBehavior(
-                "add /t valid title /d valid description {invalid format->2011-10-12 13:00} /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description /s invalid format /e 2011-10-12 13:00 /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
-                "add /t valid title /d valid description {2011-10-12 12:00->invalid format} /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test
@@ -523,15 +523,14 @@ public class LogicManagerTest {
             }
 
             if (!r.isFloatingTask()) {
-                cmd.append("{");
                 if (r.hasStartTime()) {
+                    cmd.append("/s ");
                     cmd.append(r.getStartTime());
                 }
-                cmd.append("->");
                 if (r.hasEndTime()) {
+                    cmd.append(" /e ");
                     cmd.append(r.getEndTime());
                 }
-                cmd.append("}");
             }
 
             UniqueCategoryList categories = r.getCategories();
