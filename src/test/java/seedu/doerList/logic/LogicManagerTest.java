@@ -518,6 +518,30 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
+    
+    @Test
+    public void execute_mark_markTaskAsDone() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5); // complete
+        
+        helper.addToModel(model, Arrays.asList(Complete1));
+        
+        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        
+        assertCommandBehavior("mark 1", String.format(MarkCommand.MESSAGE_EDIT_TASK_SUCCESS, Complete1));
+        
+    }
+    
+    @Test
+    public void execute_mark_markDoneTaskAsDone() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5);
+        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        
+        helper.addToModel(model, Arrays.asList(Complete1));
+        
+        assertCommandBehavior("mark 1", String.format(MarkCommand.MESSAGE_DUPLICATE_MARK));
+    }
 
 
     /**
