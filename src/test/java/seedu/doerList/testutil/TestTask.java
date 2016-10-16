@@ -79,10 +79,10 @@ public class TestTask implements ReadOnlyTask {
         StringBuffer cmd = new StringBuffer();
 
         cmd.append("add ");
-        cmd.append("-t ").append(this.getTitle()).append(" ");
+        cmd.append("/t ").append(this.getTitle()).append(" ");
         
         if (this.hasDescription()) {
-            cmd.append("-d ").append(this.getDescription()).append(" ");
+            cmd.append("/d ").append(this.getDescription()).append(" ");
         }
        
         if (!this.isFloatingTask()) {
@@ -99,7 +99,7 @@ public class TestTask implements ReadOnlyTask {
         
         UniqueCategoryList categories = this.getCategories();
         if (!categories.getInternalList().isEmpty()) {
-            cmd.append(" -c ");
+            cmd.append(" /c ");
             for(Category c: categories){
                 cmd.append(c.categoryName);
             }

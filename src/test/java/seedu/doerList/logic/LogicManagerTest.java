@@ -181,18 +181,18 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add", expectedMessage);
         assertCommandBehavior(
-                "add -t", expectedMessage);
+                "add /t", expectedMessage);
         assertCommandBehavior(
-                "add -t     ", expectedMessage);
+                "add /t     ", expectedMessage);
 
     }
 
     @Test
     public void execute_add_invalidTaskData() throws Exception {
         assertCommandBehavior(
-                "add t/ valid title d/ valid description {invalid format->2011-10-12 13:00} c/ valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description {invalid format->2011-10-12 13:00} /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
-                "add t/ valid title d/ valid description {2011-10-12 12:00->invalid format} c/ valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description {2011-10-12 12:00->invalid format} /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test
@@ -321,7 +321,7 @@ public class LogicManagerTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("edit ", expectedMessage);
         assertIncorrectIndexFormatBehaviorForCommand("edit Drinks With David", expectedMessage);
-        assertIncorrectIndexFormatBehaviorForCommand("edit -t     ", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit /t     ", expectedMessage);
     }
 
     @Test
@@ -355,7 +355,7 @@ public class LogicManagerTest {
         helper.addToModel(model, Arrays.asList(task1, task2));
 
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
-        assertCommandBehavior("edit 1 -d D 2",
+        assertCommandBehavior("edit 1 /d D 2",
                 String.format(EditCommand.MESSAGE_DUPLICATE_TASK),
                 expectedAB,
                 expectedAB.getTaskList());
@@ -516,10 +516,10 @@ public class LogicManagerTest {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
-            cmd.append("t/ ").append(r.getTitle()).append(" ");
+            cmd.append("/t ").append(r.getTitle()).append(" ");
 
             if (r.hasDescription()) {
-                cmd.append("d/ ").append(r.getDescription()).append(" ");
+                cmd.append("/d ").append(r.getDescription()).append(" ");
             }
 
             if (!r.isFloatingTask()) {
@@ -536,7 +536,7 @@ public class LogicManagerTest {
 
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
-                cmd.append(" c/ ");
+                cmd.append(" /c ");
                 for(Category c: categories){
                     cmd.append(c.categoryName + " ");
                 }
