@@ -67,7 +67,7 @@ Format: `help` or `help [COMMAND_NAME]`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-*er*List<br>
-Format: `add /t TITLE [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...`
+Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * Task can have any number of categories (including 0)
@@ -78,13 +78,13 @@ Format: `add /t TITLE [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...`
 
 Examples: 
 
-* `add /t Do post-lecture quiz {today->tomorrow} /c CS2103`<br>
-* `add /t Do CA1 /d Oral Presentation {->next 2 days} /c CS2101`<br>
-* `add {2016-10-4 10:00->2016-10-4 12:00} /t Take lecture /c CS2102`
+* `add /t Do post-lecture quiz /s today /e tomorrow} /c CS2103`<br>
+* `add /t Do CA1 /d Oral Presentation /e next 2 days /c CS2101`<br>
+* `add /s 2016-10-4 10:00 /e 2016-10-4 12:00 /t Take lecture /c CS2102`
 
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-*er* List<br>
-Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...`
+Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
 > Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
@@ -92,7 +92,7 @@ Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY]
 Examples:
 
 * `edit 1 /t Do ST2334 quiz /c ST2334`
-* `edit 2 {->next 5 days}`
+* `edit 2 /e next 5 days`
 
 > Attributes that aren't supplied will not be updated 
 
@@ -240,8 +240,8 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 Command | Format  
 -------- | :-------- 
 Help | `help [COMMAND]`
-Add | `add /t TITLE [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...`
-Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [{[START]->[END]}] [/c CATEGORY] ...`
+Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
+Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
 List | `list [CATEGORY]`
