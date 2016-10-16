@@ -91,7 +91,7 @@ public class TestTask implements ReadOnlyTask {
                 cmd.append(this.getStartTime());
             }
             if (this.hasEndTime()) {
-                cmd.append(" /e ");
+                cmd.append("/e ");
                 cmd.append(this.getEndTime());
             }
         }
