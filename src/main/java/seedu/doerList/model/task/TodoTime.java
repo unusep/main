@@ -17,7 +17,7 @@ public class TodoTime {
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm'";
     public static final String TODOTIME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
-    
+
     /**
     * Validates given rawTime.
     *
@@ -26,12 +26,12 @@ public class TodoTime {
    public TodoTime(String rawTime) throws IllegalValueException {
        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
        try {
-           value = DateTime.parse(rawTime, formatter); 
+           value = DateTime.parse(rawTime, formatter);
        } catch (IllegalArgumentException ire) {
            throw new IllegalValueException(MESSAGE_TODOTIME_CONSTRAINTS);
        }
    }
-   
+
    public TodoTime(DateTime source) {
        value = source;
    }
@@ -50,6 +50,12 @@ public class TodoTime {
        return value;
    }
 
+   /**
+    * Returns true if a given time is before the deadline
+    */
+   public boolean isBefore(TodoTime deadline) {
+       return this.value.isBefore(deadline.value);
+   }
 
    @Override
    public String toString() {
