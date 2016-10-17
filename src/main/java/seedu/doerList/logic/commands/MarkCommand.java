@@ -3,7 +3,8 @@ package seedu.doerList.logic.commands;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.*;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class MarkCommand extends Command {
     
@@ -24,6 +25,7 @@ public class MarkCommand extends Command {
     }
     
     public CommandResult execute() {
+        assert model != null;
         
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
@@ -32,13 +34,15 @@ public class MarkCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
-        if (taskToMark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
-            return new CommandResult(MESSAGE_DUPLICATE_MARK);
-        }
-            
-        taskToMark.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToMark));
+        Task taskToMark = (Task) lastShownList.get(targetIndex - 1);
         
+        if (taskToMark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE))
+            return new CommandResult(MESSAGE_DUPLICATE_MARK);
+        try {
+            model.markTask(taskToMark);
+        } catch (TaskNotFoundException e) {
+            assert false : "The target task cannot be missing";
+        }
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToMark));   
     }
 }

@@ -147,6 +147,11 @@ public class DoerList implements ReadOnlyDoerList {
         tasks.replace(i, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
+    
+    public void markTask(Task t) {
+        t.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        syncCategoriesWithMasterList(t);
+    }
 
 //// category-level operations
 
