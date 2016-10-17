@@ -454,6 +454,33 @@ public class LogicManagerTest {
                 expectedList);
     }
 
+    @Test
+    public void execute_taskdue_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue 123d", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+    }
+
+
+    @Test
+    public void execute_taskdue_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+        helper.addToModel(model, fourTasks);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
+
+        List<Task> expectedList = fourTasks.subList(0, 3);
+
+        assertCommandBehavior("taskdue 2016-10-06 23:59",
+                Command.getMessageForTaskListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+    }
+
 
     /**
      * A utility class to generate test data.
