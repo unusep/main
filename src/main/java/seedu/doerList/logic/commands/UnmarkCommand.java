@@ -39,8 +39,9 @@ public class UnmarkCommand extends Command {
 
         Task taskToUnmark = (Task) lastShownList.get(targetIndex - 1);
         
-        if (!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE))
+        if (!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
             return new CommandResult(String.format(MESSAGE_DUPLICATE_UNMARK));
+        }
         
         try {
             model.unmarkTask(taskToUnmark);

@@ -6,6 +6,8 @@ import seedu.doerList.commons.core.Messages;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestTask;
+import seedu.doerList.testutil.TestUtil;
+import seedu.doerList.testutil.TypicalTestTasks;
 
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +43,9 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         
         commandBox.runCommand("unmark " + targetIndex);
         
-        assertTrue(taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
+        System.out.println(taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
+        
+        assertTrue(!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
         
         assertResultMessage(String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
     }
