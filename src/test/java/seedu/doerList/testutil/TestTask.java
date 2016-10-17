@@ -18,7 +18,7 @@ public class TestTask implements ReadOnlyTask {
     public TestTask() {
         categories = new UniqueCategoryList();
     }
-    
+
     // copy constructor
     public TestTask(ReadOnlyTask source) {
         this.title = source.getTitle();
@@ -39,7 +39,7 @@ public class TestTask implements ReadOnlyTask {
     public void setStartTime(TodoTime startTime) {
         this.startTime = startTime;
     }
-    
+
     public void setEndTime(TodoTime endTime) {
         this.endTime = endTime;
     }
@@ -53,7 +53,7 @@ public class TestTask implements ReadOnlyTask {
     public Description getDescription() {
         return description;
     }
-    
+
     @Override
     public TodoTime getStartTime() {
         return this.startTime;
@@ -79,32 +79,30 @@ public class TestTask implements ReadOnlyTask {
         StringBuffer cmd = new StringBuffer();
 
         cmd.append("add ");
-        cmd.append("-t ").append(this.getTitle()).append(" ");
-        
+        cmd.append("/t ").append(this.getTitle()).append(" ");
+
         if (this.hasDescription()) {
-            cmd.append("-d ").append(this.getDescription()).append(" ");
+            cmd.append("/d ").append(this.getDescription()).append(" ");
         }
-       
+
         if (!this.isFloatingTask()) {
-            cmd.append("{");
             if (this.hasStartTime()) {
-                cmd.append(this.getStartTime());
+                cmd.append("/s ");
+                cmd.append(this.getStartTime()).append(" ");
             }
-            cmd.append("->");
             if (this.hasEndTime()) {
-                cmd.append(this.getEndTime());
+                cmd.append("/e ");
+                cmd.append(this.getEndTime()).append(" ");
             }
-            cmd.append("}");
         }
-        
+
         UniqueCategoryList categories = this.getCategories();
         if (!categories.getInternalList().isEmpty()) {
-            cmd.append(" -c ");
             for(Category c: categories){
-                cmd.append(c.categoryName);
+                cmd.append("/c " + c.categoryName + " ");
             }
         }
-        
+
         return cmd.toString();
     }
 

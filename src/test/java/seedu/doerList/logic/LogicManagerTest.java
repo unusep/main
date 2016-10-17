@@ -132,9 +132,31 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_help() throws Exception {
-        //assertCommandBehavior("help", HelpCommand.SHOWING_HELP_MESSAGE);
-        //assertTrue(helpShown);
+    public void execute_help_noArgs() throws Exception {
+        assertCommandBehavior("help", HelpCommand.SHOWING_HELP_MESSAGE);
+        assertTrue(helpShown);
+    }
+
+    @Test
+    public void execute_help_invalidArgs() throws Exception {
+        assertCommandBehavior("help sdfdsf", HelpCommand.INVALID_HELP_MESSAGE);
+        assertCommandBehavior("help 123", HelpCommand.INVALID_HELP_MESSAGE);
+        assertCommandBehavior("help hmmm hahaha", HelpCommand.INVALID_HELP_MESSAGE);
+    }
+
+    @Test
+    public void execute_help_correctArgs() throws Exception {
+        assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help unmark", UnMarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -159,18 +181,18 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add", expectedMessage);
         assertCommandBehavior(
-                "add -t", expectedMessage);
+                "add /t", expectedMessage);
         assertCommandBehavior(
-                "add -t     ", expectedMessage);
+                "add /t     ", expectedMessage);
 
     }
 
     @Test
     public void execute_add_invalidTaskData() throws Exception {
         assertCommandBehavior(
-                "add -t valid title -d valid description {invalid format->2011-10-12 13:00} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description /s invalid format /e 2011-10-12 13:00 /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
-                "add -t valid title -d valid description {2011-10-12 12:00->invalid format} -c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
     @Test
@@ -299,41 +321,41 @@ public class LogicManagerTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("edit ", expectedMessage);
         assertIncorrectIndexFormatBehaviorForCommand("edit Drinks With David", expectedMessage);
-        assertIncorrectIndexFormatBehaviorForCommand("edit -t     ", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("edit /t     ", expectedMessage);
     }
-    
-    @Test 
+
+    @Test
     public void execute_editTaskNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("edit 999");
     }
-    
+
     @Test
     public void execute_edit_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
         helper.addToModel(model, threeTasks);
-        
+
         DoerList expectedAB = helper.generateDoerList(threeTasks);
-        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);  
+        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);
         Task editedTask = helper.generateTask(4);
         expectedAB.removeTask(taskToEdit);
         expectedAB.addTask(editedTask);
-              
+
         assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
                 String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
                 expectedAB,
                 expectedAB.getTaskList());
     }
-    
+
     @Test
     public void execute_editResultInDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.generateTaskWithTitleAndDescription("Task 1", "D 1");
         Task task2 = helper.generateTaskWithTitleAndDescription("Task 1", "D 2");
         helper.addToModel(model, Arrays.asList(task1, task2));
-        
+
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
-        assertCommandBehavior("edit 1 -d D 2",
+        assertCommandBehavior("edit 1 /d D 2",
                 String.format(EditCommand.MESSAGE_DUPLICATE_TASK),
                 expectedAB,
                 expectedAB.getTaskList());
@@ -437,10 +459,10 @@ public class LogicManagerTest {
      * A utility class to generate test data.
      */
     class TestDataHelper{
-        
+
         /**
          * Generate a task with/without attribute
-         * 
+         *
          * @param hasDescription indicate whether to has the attribute
          * @param hasTimeInterval indicate whether to has the attribute
          * @param hasCategory indicate whether to has the attribute
@@ -467,7 +489,7 @@ public class LogicManagerTest {
                 Category category2 = new Category("CS2103T");
                 categories = new UniqueCategoryList(category1, category2);
             }
-            
+
             return new Task(title, description, startTime, endTime, categories);
         }
 
@@ -494,32 +516,30 @@ public class LogicManagerTest {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
-            cmd.append("-t ").append(r.getTitle()).append(" ");
-            
+            cmd.append("/t ").append(r.getTitle()).append(" ");
+
             if (r.hasDescription()) {
-                cmd.append("-d ").append(r.getDescription()).append(" ");
+                cmd.append("/d ").append(r.getDescription()).append(" ");
             }
-           
+
             if (!r.isFloatingTask()) {
-                cmd.append("{");
                 if (r.hasStartTime()) {
-                    cmd.append(r.getStartTime());
+                    cmd.append("/s ");
+                    cmd.append(r.getStartTime() + " ");
                 }
-                cmd.append("->");
                 if (r.hasEndTime()) {
-                    cmd.append(r.getEndTime());
+                    cmd.append("/e ");
+                    cmd.append(r.getEndTime() + " ");
                 }
-                cmd.append("}");
             }
-            
+
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
-                cmd.append(" -c ");
                 for(Category c: categories){
-                    cmd.append(c.categoryName + " ");
+                    cmd.append("/c " + c.categoryName + " ");
                 }
             }
-            
+
             return cmd.toString();
         }
 
@@ -574,13 +594,13 @@ public class LogicManagerTest {
                 model.addTask(t);
             }
         }
-        
+
         Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
             Category category1 = new Category("CS2101");
             Category category2 = new Category("CS2103T");
-            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);      
-            return new Task(new Title(title), 
-                    new Description(description), 
+            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
+            return new Task(new Title(title),
+                    new Description(description),
                     new TodoTime("2016-10-03 14:00"),
                     new TodoTime("2016-10-04 15:00"),
                     categories);
@@ -600,7 +620,7 @@ public class LogicManagerTest {
         List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
-        
+
 
 
     }
