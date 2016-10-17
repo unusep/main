@@ -42,7 +42,7 @@ public class Parser {
      * @return the command based on the user input
      * @throws IllegalValueException
      */
-    public Command parseCommand(String userInput) throws IllegalValueException {
+    public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -80,7 +80,7 @@ public class Parser {
             return new HelpCommand(arguments.trim());
 
         case TaskdueCommand.COMMAND_WORD:
-            return new TaskdueCommand(arguments.trim());
+            return prepareTaskdue(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -246,6 +246,21 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+
+    /**
+     * Parses arguments in the context of the taskdue command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareTaskdue(String args) {
+        String time = args.trim();
+        try {
+            return new TaskdueCommand(time);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
     }
 
     /**
