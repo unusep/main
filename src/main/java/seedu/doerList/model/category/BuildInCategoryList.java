@@ -95,7 +95,7 @@ public class BuildInCategoryList implements Iterable<Category> {
      * @param category
      */
     public void remove(BuildInCategory category) {
-        if (!contains(category)) {
+        if (contains(category)) {
             internalList.remove(category);
         }
     }
