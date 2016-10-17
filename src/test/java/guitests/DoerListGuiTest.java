@@ -11,9 +11,13 @@ import org.testfx.api.FxToolkit;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.model.DoerList;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
+import seedu.doerList.ui.CategoryListCard;
+import seedu.doerList.ui.CategorySideBar;
 
 import java.util.concurrent.TimeoutException;
 
@@ -40,6 +44,7 @@ public abstract class DoerListGuiTest {
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
     protected TaskListPanelHandle taskListPanel;
+    protected CategorySideBarHandle categorySideBar;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;
@@ -60,6 +65,7 @@ public abstract class DoerListGuiTest {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
             taskListPanel = mainGui.getTaskListPanel();
+            categorySideBar = mainGui.getCategorySideBar();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
             this.stage = stage;
@@ -99,6 +105,13 @@ public abstract class DoerListGuiTest {
      */
     public void assertMatching(ReadOnlyTask person, TaskCardHandle card) {
         assertTrue(TestUtil.compareCardAndTask(card, person));
+    }
+    
+    /**
+     * Asserts the category shown in the category sidebar is same as the given category
+     */
+    public void assertMatching(TestCategory category, CategoryCardHandle card) {
+        assertTrue(TestUtil.compareCardAndTestCategory(card, category));
     }
 
     /**

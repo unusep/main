@@ -7,9 +7,11 @@ import seedu.doerList.logic.commands.Command;
 import seedu.doerList.logic.commands.CommandResult;
 import seedu.doerList.logic.parser.Parser;
 import seedu.doerList.model.Model;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.storage.Storage;
 
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -37,5 +39,20 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyTask> getFilteredTaskList() {
         return model.getFilteredTaskList();
+    }
+    
+    @Override
+    public ObservableList<Category> getCategoryList() {
+        return model.getCategoryList();
+    }
+    
+    @Override
+    public ObservableList<Category> getBuildInCategoryList() {
+        return model.getBuildInCategoryList();
+    }
+
+    @Override
+    public void setPredicateForTaskList(Predicate<ReadOnlyTask> predicate) {
+        model.updateFilteredTaskList(predicate);
     }
 }

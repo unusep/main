@@ -6,6 +6,7 @@ import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.testutil.TestTask;
 import seedu.doerList.testutil.TestUtil;
+import seedu.doerList.testutil.TypicalTestTasks;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,23 +16,23 @@ public class AddCommandTest extends DoerListGuiTest {
     public void add() {
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
-        TestTask taskToAdd = td.hoon;
+        TestTask taskToAdd = TypicalTestTasks.task8;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add another person
-        taskToAdd = td.ida;
+        //add another task
+        taskToAdd = TypicalTestTasks.task9;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
         //add duplicate person
-        commandBox.runCommand(td.hoon.getAddCommand());
+        commandBox.runCommand(TypicalTestTasks.task1.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(currentList));
 
         //add to empty list
         commandBox.runCommand("clear");
-        assertAddSuccess(td.alice);
+        assertAddSuccess(TypicalTestTasks.task1);
 
         //invalid command
         commandBox.runCommand("adds Do Homework");

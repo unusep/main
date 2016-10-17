@@ -70,7 +70,7 @@ public class Parser {
             return prepareFind(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return prepareList(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -188,6 +188,20 @@ public class Parser {
         }
 
         return new DeleteCommand(index.get());
+    }
+    
+    /**
+     * Parses arguments in the context of the category name.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareList(String args) {
+        if (args.trim().length() == 0) {
+            return new ListCommand();
+        } else {
+            return new ListCommand(args.trim());
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 package seedu.doerList.testutil;
 
 import com.google.common.io.Files;
+
+import guitests.guihandles.CategoryCardHandle;
 import guitests.guihandles.TaskCardHandle;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -328,6 +330,11 @@ public class TestUtil {
 
     public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
         return card.isSameTask(task);
+    }
+    
+    
+    public static boolean compareCardAndTestCategory(CategoryCardHandle card, TestCategory category) {
+        return card.isSameTestCategory(category);
     }
 
     public static Category[] getCategoryList(String categories) {

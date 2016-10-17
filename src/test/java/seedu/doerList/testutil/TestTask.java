@@ -1,5 +1,7 @@
 package seedu.doerList.testutil;
 
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
@@ -14,9 +16,12 @@ public class TestTask implements ReadOnlyTask {
     private TodoTime startTime;
     private TodoTime endTime;
     private UniqueCategoryList categories;
+    private BuildInCategoryList buildInCategories;
+    
 
     public TestTask() {
         categories = new UniqueCategoryList();
+        buildInCategories = new BuildInCategoryList();
     }
 
     // copy constructor
@@ -69,6 +74,21 @@ public class TestTask implements ReadOnlyTask {
     public UniqueCategoryList getCategories() {
         return categories;
     }
+    
+    @Override
+    public BuildInCategoryList getBuildInCategories() {
+        return buildInCategories;
+    }
+    
+    @Override
+    public void addBuildInCategory(BuildInCategory category) {
+        buildInCategories.add(category);
+    }
+
+    @Override
+    public void removeBuildInCategory(BuildInCategory category) {
+        buildInCategories.remove(category);      
+    }
 
     @Override
     public String toString() {
@@ -105,5 +125,6 @@ public class TestTask implements ReadOnlyTask {
 
         return cmd.toString();
     }
+
 
 }
