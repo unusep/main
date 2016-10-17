@@ -8,12 +8,11 @@ import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.task.TodoTime;
 
 public class TimeParser {
 
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-    public static final String MESSAGE_NO_TIME_FOUND = "No time was found in the given String";
 
     public TimeParser() {}
     public static String parse(String s) throws IllegalValueException {
@@ -26,7 +25,7 @@ public class TimeParser {
 
             return dateFormat.format(firstDate);
         } catch (IndexOutOfBoundsException ire) {
-            throw new IllegalValueException(MESSAGE_NO_TIME_FOUND);
+            throw new IllegalValueException(TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         }
     }
 }
