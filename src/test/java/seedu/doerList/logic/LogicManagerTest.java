@@ -3,6 +3,7 @@ package seedu.doerList.logic;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
@@ -520,16 +521,18 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_mark_markTaskAsDone() throws Exception {
+    public void execute_mark_markInvalidTaskAsDone() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task Complete1 = helper.generateTaskWithCategory(5); // complete
+        Task Complete1 = helper.generateTaskWithCategory(5);
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
         
-        helper.addToModel(model, Arrays.asList(Complete1));
+        helper.addToModel(model, expectedList);
         
-        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        
-        assertCommandBehavior("mark 1", String.format(MarkCommand.MESSAGE_EDIT_TASK_SUCCESS, Complete1));
-        
+        assertCommandBehavior("mark 2", 
+                String.format(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX),
+                expectedAB,
+                expectedList);
     }
     
     @Test
@@ -537,12 +540,32 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         Task Complete1 = helper.generateTaskWithCategory(5);
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
         
         helper.addToModel(model, Arrays.asList(Complete1));
         
-        assertCommandBehavior("mark 1", String.format(MarkCommand.MESSAGE_DUPLICATE_MARK));
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_DUPLICATE_MARK),
+                expectedAB,
+                expectedList);
     }
+    
+    @Test
+    public void execute_mark_markTaskAsDone() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5); // complete
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
+        
+        helper.addToModel(model, Arrays.asList(Complete1));
 
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, Complete1), 
+                expectedAB, 
+                expectedList);
+        
+    }
 
     /**
      * A utility class to generate test data.

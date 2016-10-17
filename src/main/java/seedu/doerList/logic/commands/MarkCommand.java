@@ -15,7 +15,7 @@ public class MarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_EDIT_TASK_SUCCESS = "mark task: %1$s";
+    public static final String MESSAGE_MARK_TASK_SUCCESS = "mark task: %1$s";
     public static final String MESSAGE_DUPLICATE_MARK = "The task is already marked as done in the Do-erList";
     
     private int targetIndex;
@@ -43,6 +43,6 @@ public class MarkCommand extends Command {
         } catch (TaskNotFoundException e) {
             assert false : "The target task cannot be missing";
         }
-        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToMark));   
+        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark));   
     }
 }
