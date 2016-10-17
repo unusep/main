@@ -6,7 +6,9 @@ import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
+import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class UnmarkCommand extends Command {
     
@@ -35,14 +37,19 @@ public class UnmarkCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex - 1);
-        BuildInCategoryList taskCategories = taskToUnmark.getBuildInCategories();
-        if (taskCategories.contains(BuildInCategoryList.COMPLETE)) {
-            taskToUnmark.removeBuildInCategory(BuildInCategoryList.COMPLETE);
-            return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
-        } else {
+        Task taskToUnmark = (Task) lastShownList.get(targetIndex - 1);
+        
+        if (!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE))
             return new CommandResult(String.format(MESSAGE_DUPLICATE_UNMARK));
+        
+        try {
+            model.unmarkTask(taskToUnmark);
+        } catch (TaskNotFoundException pnfe) {
+            assert false : "The target task cannot be missing";
         }
+        
+        taskToUnmark.removeBuildInCategory(BuildInCategoryList.COMPLETE);
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
             
     }
 }

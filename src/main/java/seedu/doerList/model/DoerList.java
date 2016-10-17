@@ -147,6 +147,11 @@ public class DoerList implements ReadOnlyDoerList {
         tasks.replace(i, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
+    
+    public void unmarkTask(Task task) throws UniqueTaskList.TaskNotFoundException {
+        tasks.unmark(task);
+        syncCategoriesWithMasterList(task);
+    }
 
 //// category-level operations
 
