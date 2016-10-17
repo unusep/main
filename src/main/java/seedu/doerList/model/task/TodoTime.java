@@ -3,6 +3,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.logic.parser.TimeParser;
 
 import org.joda.time.DateTime;
 
@@ -14,10 +15,10 @@ public class TodoTime {
 
     public final DateTime value;
 
-    public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm'";
+    public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
     public static final String TODOTIME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
-    
+
     /**
     * Validates given rawTime.
     *
@@ -26,12 +27,13 @@ public class TodoTime {
    public TodoTime(String rawTime) throws IllegalValueException {
        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
        try {
-           value = DateTime.parse(rawTime, formatter); 
+           String time = TimeParser.parse(rawTime);
+           value = DateTime.parse(time, formatter);
        } catch (IllegalArgumentException ire) {
            throw new IllegalValueException(MESSAGE_TODOTIME_CONSTRAINTS);
        }
    }
-   
+
    public TodoTime(DateTime source) {
        value = source;
    }
