@@ -3,6 +3,7 @@ package seedu.doerList.logic;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
@@ -520,24 +521,49 @@ public class LogicManagerTest {
     }
     
     @Test
+    public void execute_unmark_unmarkInvalidTaskAsUndone() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task Complete1 = helper.generateTaskWithCategory(5);
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
+        
+        helper.addToModel(model, expectedList);
+        
+        assertCommandBehavior("unmark 2", 
+                String.format(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX),
+                expectedAB,
+                expectedList);
+    }
+    
+    @Test
     public void execute_unmark_unmarkATaskAsUndone() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task Complete1 = helper.generateTaskWithCategory(5);
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
         
-        helper.addToModel(model, Arrays.asList(Complete1));
+        helper.addToModel(model, expectedList);
         
-        assertCommandBehavior("unmark 1", String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS));
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, Complete1),
+                expectedAB,
+                expectedList);
     }
     
     @Test
     public void execute_unmark_unmarkAnUndoneTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task Complete1 = helper.generateTaskWithCategory(5);
+        List<Task> expectedList = helper.generateTaskList(Complete1);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
         
-        helper.addToModel(model, Arrays.asList(Complete1));
+        helper.addToModel(model, expectedList);
         
-        assertCommandBehavior("unmark 1", String.format(UnmarkCommand.MESSAGE_DUPLICATE_UNMARK));
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_DUPLICATE_UNMARK),
+                expectedAB,
+                expectedList);
     }
 
 

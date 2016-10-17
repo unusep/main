@@ -48,8 +48,6 @@ public class UnmarkCommand extends Command {
             assert false : "The target task cannot be missing";
         }
         
-        taskToUnmark.removeBuildInCategory(BuildInCategoryList.COMPLETE);
-        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
-            
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));    
     }
 }
