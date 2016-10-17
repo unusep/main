@@ -78,6 +78,9 @@ public class Parser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand(arguments.trim());
 
+        case TaskdueCommand.COMMAND_WORD:
+            return new TaskdueCommand(arguments.trim());
+
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
         }
