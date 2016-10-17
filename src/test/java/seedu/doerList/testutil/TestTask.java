@@ -88,19 +88,18 @@ public class TestTask implements ReadOnlyTask {
         if (!this.isFloatingTask()) {
             if (this.hasStartTime()) {
                 cmd.append("/s ");
-                cmd.append(this.getStartTime());
+                cmd.append(this.getStartTime()).append(" ");
             }
             if (this.hasEndTime()) {
                 cmd.append("/e ");
-                cmd.append(this.getEndTime());
+                cmd.append(this.getEndTime()).append(" ");
             }
         }
 
         UniqueCategoryList categories = this.getCategories();
         if (!categories.getInternalList().isEmpty()) {
-            cmd.append(" /c ");
             for(Category c: categories){
-                cmd.append(c.categoryName);
+                cmd.append("/c " + c.categoryName + " ");
             }
         }
 

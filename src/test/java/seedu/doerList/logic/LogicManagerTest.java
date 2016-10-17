@@ -146,17 +146,17 @@ public class LogicManagerTest {
 
     @Test
     public void execute_help_correctArgs() throws Exception {
-        assertCommandBehavior("help add", HelpCommand.SHOWING_HELP_ADD_MESSAGE);
-        assertCommandBehavior("help edit", HelpCommand.SHOWING_HELP_EDIT_MESSAGE);
-        //assertCommandBehavior("help mark", HelpCommand.SHOWING_HELP_MARK_MESSAGE);
-        //assertCommandBehavior("help unmark", HelpCommand.SHOWING_HELP_UNMARK_MESSAGE);
-        assertCommandBehavior("help list", HelpCommand.SHOWING_HELP_LIST_MESSAGE);
-        assertCommandBehavior("help find", HelpCommand.SHOWING_HELP_FIND_MESSAGE);
-        assertCommandBehavior("help view", HelpCommand.SHOWING_HELP_VIEW_MESSAGE);
-        assertCommandBehavior("help delete", HelpCommand.SHOWING_HELP_DELETE_MESSAGE);
-        //assertCommandBehavior("help undo", HelpCommand.SHOWING_HELP_UNDO_MESSAGE);
-        //assertCommandBehavior("help redo", HelpCommand.SHOWING_HELP_REDO_MESSAGE);
-        //assertCommandBehavior("help taskdue", HelpCommand.SHOWING_HELP_TASKDUE_MESSAGE);
+        assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help unmark", UnMarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
+        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -525,19 +525,18 @@ public class LogicManagerTest {
             if (!r.isFloatingTask()) {
                 if (r.hasStartTime()) {
                     cmd.append("/s ");
-                    cmd.append(r.getStartTime());
+                    cmd.append(r.getStartTime() + " ");
                 }
                 if (r.hasEndTime()) {
                     cmd.append("/e ");
-                    cmd.append(r.getEndTime());
+                    cmd.append(r.getEndTime() + " ");
                 }
             }
 
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
-                cmd.append(" /c ");
                 for(Category c: categories){
-                    cmd.append(c.categoryName + " ");
+                    cmd.append("/c " + c.categoryName + " ");
                 }
             }
 
