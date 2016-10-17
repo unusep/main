@@ -16,7 +16,6 @@ public class TodoTime {
     public final DateTime value;
 
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
-    public static final String TODOTIME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
 
     /**
@@ -36,13 +35,6 @@ public class TodoTime {
 
    public TodoTime(DateTime source) {
        value = source;
-   }
-
-   /**
-    * Returns true if a given string is a valid time.
-    */
-   public static boolean isValidTime(String test) {
-       return test != null && test.matches(TODOTIME_VALIDATION_REGEX);
    }
 
    /**
