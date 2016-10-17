@@ -5,6 +5,7 @@ import java.util.Set;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
@@ -33,6 +34,9 @@ public interface Model {
 
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
+
+    /** Updates the filter of the filtered task list to filter by the deadline*/
+    void updateFilteredTaskList(TodoTime deadline);
 
     void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
 

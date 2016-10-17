@@ -8,6 +8,7 @@ import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
@@ -101,6 +102,11 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(new PredicateExpression(new TitleDescriptionQualifier(keywords)));
     }
 
+    @Override
+    public void updateFilteredTaskList(TodoTime deadline) {
+        updateFilteredTaskList(new PredicateExpression(new TaskdueQualifier(deadline)));
+    }
+
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }
@@ -157,6 +163,24 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return "title||description=" + String.join(", ", titleDescriptionKeyWords);
+        }
+    }
+
+    private class TaskdueQualifier implements Qualifier {
+        private TodoTime deadline;
+
+        TaskdueQualifier(TodoTime deadline) {
+            this.deadline = deadline;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return task.getEndTime().isBefore(deadline);
+        }
+
+        @Override
+        public String toString() {
+            return "";
         }
     }
 
