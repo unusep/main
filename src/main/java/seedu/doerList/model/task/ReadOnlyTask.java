@@ -50,8 +50,8 @@ public interface ReadOnlyTask {
     }
 
     /**
-     * The returned TagList is a deep copy of the internal TagList,
-     * changes on the returned list will not affect the person's internal tags.
+     * The returned CategoryList is a deep copy of the internal CategoryList,
+     * changes on the returned list will not affect the person's internal categories.
      */
     UniqueCategoryList getCategories();
     
