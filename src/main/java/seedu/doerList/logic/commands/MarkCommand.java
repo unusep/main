@@ -43,6 +43,7 @@ public class MarkCommand extends Command {
         } catch (TaskNotFoundException e) {
             assert false : "The target task cannot be missing";
         }
+        
         return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark));   
     }
 }

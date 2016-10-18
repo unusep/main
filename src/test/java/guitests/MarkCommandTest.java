@@ -3,6 +3,7 @@ package guitests;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.task.Task;
 import seedu.doerList.testutil.TestTask;
 
 import org.junit.Test;
@@ -16,15 +17,15 @@ public class MarkCommandTest extends DoerListGuiTest {
         //marks one task from top
         TestTask[] currentList = td.getTypicalTasks();
         int targetIndex = 1;
-        assertMarkSuccess(targetIndex, currentList);
+        assertMarkSuccess(targetIndex);
         
         //marks one task from middle
         targetIndex = currentList.length;
-        assertMarkSuccess(targetIndex / 2, currentList);
+        assertMarkSuccess(targetIndex / 2);
         
         //marks one task from end
         targetIndex = currentList.length - 1;
-        assertMarkSuccess(targetIndex, currentList);
+        assertMarkSuccess(targetIndex);
         
         //marks invalid task
         commandBox.runCommand("mark " + currentList.length + 1);
@@ -32,10 +33,10 @@ public class MarkCommandTest extends DoerListGuiTest {
         
     }
     
-    private void assertMarkSuccess(int indexToBeMarked, TestTask[] currentList) {
-        TestTask taskToMark = currentList[indexToBeMarked - 1];
-        
+    private void assertMarkSuccess(int indexToBeMarked) {
         commandBox.runCommand("mark " + indexToBeMarked);
+        
+        Task taskToMark = (Task) taskListPanel.getTask(indexToBeMarked - 1);
         
         assertTrue(taskToMark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
         
