@@ -5,10 +5,13 @@ import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestTask;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertTrue;
 
 public class MarkCommandTest extends DoerListGuiTest {
 
+    @Test
     public void mark() {
         //marks one task from top
         TestTask[] currentList = td.getTypicalTasks();
