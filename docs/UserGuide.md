@@ -97,14 +97,14 @@ Format: `help` or `help [COMMAND_NAME]`
 [Back To Top](#user-guide)
 
 #### Adding a task : `add`
-Adds a task/event to the Do-*er*List<br>
+Adds a task to the Do-*er*List<br>
 Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * A task can have any number of categories (including 0).
 > * The START or END parameter can be in natural language*.
 > * If the START date is missing, the Do*er*-List set it to today by default.
-> * If there is no START or END parameters, the Do*er*-list will create task without start date and end date and move it to `Inbox` build-in category.
+> * If there is no START or END parameters, the Do*er*-list will create task without start date and end date and move it to `Inbox` built-in category.
 <br>
 > * Supported list for natural language*:
 >  * next X hours / days / weeks / months
@@ -126,7 +126,7 @@ Edit an existing task in the Do-*er* List<br>
 Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
-> Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
+> Edit an existing task by calling its index. The task's title, description, start date, end date and category can be edited.
   
 Examples:
 
@@ -171,7 +171,7 @@ Shows a list of all tasks in the Do*er*-list under the specific category.<br>
 Format: `list [CATEGORY]` or `list [DATE]`
 
 <img src="../docs/images/UI_Guide/list_command.png" width="600">
-> * If the `CATEGORY` or `DATE` parameter is not supplied, then list all tasks.
+> * If the `CATEGORY` or `DATE` parameter is not supplied, then it will list all tasks.
 > * Using `DATE` will display all the tasks that falls under the date, in natural language*.
 <br>
 > * Supported list for natural language*:
