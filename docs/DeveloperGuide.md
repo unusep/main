@@ -235,18 +235,14 @@ See [UsingTravis.md](UsingTravis.md) for more details.
 Here are the steps to create a new release.
  
  1. Generate a JAR file [using Gradle](UsingGradle.md#creating-the-jar-file).
- 2. Tag the repo with the version number. e.g. `v0.1`
- 2. [Crete a new release using GitHub](https://help.github.com/articles/creating-releases/) 
-    and upload the JAR file your created.
+ 2. Tag the repository with the version number. e.g. `v0.1`
+ 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/) and upload the JAR file your created.
    
 ### Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the
-[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_
-can be automated using Gradle. For example, Gradle can download the dependencies automatically, which
-is better than these alternatives.<br>
-a. Include those libraries in the repo (this bloats the repo size)<br>
-b. Require developers to download those libraries manually (this creates extra work for developers)<br>
+A project often depends on third-party libraries. For example, Do-er List depends on the [Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives.<br>
+a. Include those libraries in the repository (this bloats the repo size)<br>
+b. Require developers to download the necessary libraries manually (this creates extra work for developers)<br>
 
 ## Appendix A : User Stories
 
