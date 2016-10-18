@@ -255,26 +255,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
-`* * *` | new user | see usage instructions of all commands | how to use various commands in the App
-`* * *` | user | create task with title and description | put summary as title and more details in description
-`* * *` | user | create task without start time or end time | record tasks that need to be done "some day"
-`* * *` | user | create task with start time and end time or [deadlines](#deadline) | know what event is happening or due at certain time
-`* * *` | user | edit task's title, description, start time, end time and categories | don't have to create new task when I want to update or make mistakes
-`* * *` | user | view all tasks | have an overview of all tasks
+`* * *` | new user | see the usage instructions of all commands | how to use various commands in the application
+`* * *` | user | create task with title and description | put summary as title and more details in the description
+`* * *` | user | create task without start or end time | record tasks that need to be done without [deadlines](#deadline)
+`* * *` | user | create task with start and end time or [deadlines](#deadline) | know what task I should be doing or due on a certain timing
+`* * *` | user | edit task's title, description, start time, end time and categories | update it when I want to in the event I need to make some changes instead of creating a new task
+`* * *` | user | view all tasks | have an overview of all the tasks
 `* * *` | user | view a specific task | get more details of the specific task
 `* * *` | user | find a task by title and description | quickly locate the task if I can only remember few words in the title or description
-`* * *` | user | delete tasks | only track the tasks I care
-`* *` | user | add tasks to different categories | be more organised about managing task
+`* * *` | user | delete tasks | track only the required tasks
+`* *` | user | add tasks to different categories | organise my tasks properly
 `* *` | user | view the tasks under a certain category | examine different tasks under different categories
-`* *` | user | view the tasks are going to happen or due today, tomorrow, next 7 days, etc. | become more clear about what is going to happen
-`* *` | user | undo the most recent operations | I will not be panic when I make mistakes in typing command
-`* *` | user | redo the most recent operations | redo the operation after undoing.
-`* *` | user | specify a storage location for data storage | I can ask other could syncing service to sync teh file to prevent data loss
-`* *` | user | mark or unmark the task as [done](#done) | only keep track of the tasks which are needed to be done and archive the tasks done.
-`*` | user | type command parameters in arbitrary order | I don't have to remember the specific order of parameter for certain command 
-`*` | user | add external `ical` file to the todo-lists | keep track of other events created by other.
-`*` | user | create recurring tasks | be reminded to do the same task every fixed-time-interval 
-`*` | user | view events in Google Calendar | I can have a better pictorial view of my shcedule.
+`* *` | user | view the tasks are going to happen or due today, tomorrow, next 7 days, etc. | know what is going to happen in the coming day(s)
+`* *` | user | undo the most recent operations | revert back the changes when I make a wrong command by mistake
+`* *` | user | redo the most recent operations | redo the operation after undoing it
+`* *` | user | specify a storage location for data storage | specify my data location to the cloud syncing service provider to prevent data loss
+`* *` | user | mark or unmark the task as [done](#done) | only need to keep track of the tasks which are needed to be done and archive the finished tasks
+`*` | user | type command parameters in arbitrary order | find the specific order of parameter(s) in the event I forget
+`*` | user | add external `ical` file to the todo-lists | keep track of tasks created by other applications.
+`*` | user | create recurring tasks | be reminded to do the same task at the same time interval
+`*` | user | view events in Google Calendar | have a better pictorial view of my schedule
 
 
 ## Appendix B : Use Cases
@@ -285,43 +285,43 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. User requests to add in a task.
+1. User requests to add a task in.
 2. To-Do List creates task with title, description, start date and end date.
-3. The task is moved into the categories according to the parameters.
+3. The task is moved into the categories according to the supplied parameters.
 4. System displays the details of the created task.<br>
 Use case ends.
 
 **Extensions**
 
-1a. `add` command followed by the wrong parameters
+1a. `add` command followed by the wrong parameters.
 
-> 1a1. System indicates the error and display the correct format for user
-> Use case ends
-  
-1b. `TITLE` is empty string
-
-> 1b1. System indicates the error that task_name is empty.
+> 1a1. System indicates the error and displays the correct format for user.
 > Use case ends.
   
-1c. User doesn't supply `[START->END]` or `END` parameters
+1b. `TITLE` is empty string.
 
-> 1c1. Event is created and categorized to `INBOX`
-> 1c2. System display the created task
+> 1b1. System indicates the error that `TASK_NAME` is empty.
+> Use case ends.
+  
+1c. User does not supply `START` or `END` parameters.
+
+> 1c1. Task is created and categorized to `INBOX`.
+> 1c2. System display the created task.
 > Use case resumes from steps 2.
   
-1d. User does not supply `START` parameter
+1d. User does not supply `START` parameter.
 
-> 1d1. Event is created with `START` as today
+> 1d1. Task is created with `START` as today.
 > Use case resumes from steps 2.
   
-1e. System is able to parse `START` or `END` which is not in standard format.
+1e. System is able to parse `START` or `END`, which are not in standard format.
 
 > Use case resumes from steps 2.
 
-1f. System is not able to parse `START` or `END` which is not in standard format.
+1f. System is unable to parse `START` or `END`, which are not in standard format.
 
-> 1f1. System will create the task without `START` and `END` date
-> 1f2. System indicates the error to user
+> 1f1. System will create the task without `START` and `END` date.
+> 1f2. System indicates the error to user.
 > Use case resumes from steps 2.
   
 #### Use case: Edit task
@@ -329,32 +329,33 @@ Use case ends.
 **MSS**
 
 1. User types in the command.
-2. To-Do List finds the task at that index.
-3. The task's details are changed accordingly (title, description, start time, end time, category).
+2. System finds the task at that index.
+3. The task details are changed accordingly
+(E.g. title, description, start time, end time, category).
 4. System displays the details of the newly edited task. <br>
 Use case ends.
 
 **Extensions**
 
-1a. `edit` command followed by the wrong parameters
+1a. `edit` command followed by the wrong parameters.
 
-> 1a1. System indicates the error and display the correct format for user
+> 1a1. System indicates the error and display the correct format for user.
 > Use case ends.
   
-1b.`edit` command is followed by the non-existent `INDEX`
+1b.`edit` command is followed by the non-existent `INDEX`.
 
 > 1.b.1 System indicates the error that the `INDEX` is non-existent
-> Use case ends
+> Use case ends.
 
-1c. `TITLE` is empty string
+1c. `TITLE` is empty string.
 
 > 1c1. System indicates the error that `TASK_NAME` is empty.
 > Use case ends.
   
 1d. System is not able to parse `START` or `END` which is not in standard format.
 
-> 1d1. System will create the task without `START` and `END` date
-> 1d2. System indicates the error to user
+> 1d1. System will create the task without `START` and `END` date.
+> 1d2. System indicates the error to user.
 > Use case resumes from steps 2.
 
 #### Use case: Delete task
@@ -372,34 +373,40 @@ Use case ends.
 
 1a. `delete` command is followed by the wrong parameters
 
-> 1a1. System indicates error and display the correct format to user
+> 1a1. System indicates error and display the correct format to user.
 > Use case ends.
-       	
+
 1b. `delete` command is followed by a non-existent `INDEX`
 
-> 1b1. System indicates the error in the `INDEX` is non-existent
+> 1b1. System indicates the error in the `INDEX` is non-existent.
 > Use case ends.
-  
-4a. User rejects the confirmation
-> 4a1. System indicates that the delete order was not carried out
+
+4a. User rejects the confirmation.
+> 4a1. System indicates that the delete order was not carried out.
 > Use case resumes from step 1.
 
 #### Use case: List task by category
 
 **MSS**
 
-1. User types the list command with specific category name as parameter.
-2. System displays all the task under `CATEGORY`. <br>
+1. User types the command with `CATEGORY` or `DATE` as parameter. 
+2. System displays all the task under `CATEGORY` or all tasks that fall on `DATE`. <br>
+
 Use case ends.
 
 **Extensions**
 
-1a. User does not supply `CATEGORY`
+1a. User does not supply `CATEGORY`.
 
-> 1a1. System displays all the tasks
+> 1a1. System displays all the tasks.
 > Use case ends.
-	
-2a. The category does not exist in the system
+
+1b. User does not supply `DATE`.
+
+> 1b1. System displays all the tasks.
+> Use case ends.
+
+2a. The category does not exist in the system.
 
 > 2a1. System indicates the error.
 > Use case ends.
@@ -409,8 +416,8 @@ Use case ends.
 **MSS**
 
 1. User types in the undo command.
-2. System try to find the last operation which involve change of data.
-3. System undo the operation.
+2. System tries to find the last operation that caused a change of data.
+3. System undoes the operation.
 4. System indicates the change to user. <br>
 Use case ends.
 
@@ -418,7 +425,7 @@ Use case ends.
 
 2a. The last operation which involve the change of the data does not exist
 
-> 2a1. System indicates the error
+> 2a1. System indicates the error.
 > Use case ends.
 
 #### Use case: Clear Command
@@ -426,14 +433,14 @@ Use case ends.
 **MSS**
 
 1. User types in the command.
-2. System confirms if user wants to clear the entire all of the tasks.
+2. System confirms if user wants to clear all of the tasks.
 3. User confirms.
-4. System deletes all the tasks. <br>
+4. System deletes all of the tasks. <br>
 Use case ends.
 
 **Extensions**
 
-3a. User rejects the confirmation
+3a. User rejects the confirmation.
 
 > 3a1. System indicates that the clear order was not carried out
 > Use case resumes at step 1.
@@ -443,39 +450,39 @@ Use case ends.
 **MSS**
 
 1. User types in the command.
-2. System finds with the details of a command in its parameters.
+2. System finds the details of a command with its parameters.
 3. System displays the details. <br>
 Use case ends.
 
 **Extensions**
 
-1a. `help` command is followed by the wrong parameters
+1a. `help` command is followed by the wrong parameters.
 
-> 1a1. System indicates the error and display the correct format for user
+> 1a1. System indicates the error and displays the correct format for the user.
 > Use case ends.
-  
-1b. `help` command is followed by no parameters
 
-> 1b1. System displays all the commands available with all the details
+1b. `help` command is followed by no parameters.
+
+> 1b1. System displays all the commands available with all the details.
 > Use case ends.
-  
+
 #### Use case: View a task
 
 **MSS**
 
 1. User types in the view command.
-2. System retrieve the task list based on the index parameter in the recent displayed list.
-3. System display the detail of the task. <br>
+2. System retrieves the task list based on the index parameter in the recent displayed list.
+3. System displays the detail of the task. <br>
 Use case ends.
 
 **Extensions**
 
-2a. There is no recent displayed list
+2a. There is no recent displayed list.
 
 > 2a1. System indicates the errors to user.
 > Use cases ends.
   
-2b. The index is not valid
+2b. The index is not valid.
 
 > 2b1. System indicates the errors to user.
 > Use cases ends.
@@ -484,7 +491,7 @@ Use case ends.
 
 **MSS**
 
-1. User requests to find keyword
+1. User requests to find keyword.
 2. To-Do List shows the requested keywords in all categories. <br>
 Use case ends.
 
@@ -513,14 +520,14 @@ Use case ends.
 **MSS**
 
 1. User types the command.
-2. To-do List reverses the most recent undo. <br>
+2. To-do List reverses the changes caused by the most recent undo. <br>
 Use case ends.
 
 **Extensions**
 
 1a. No recent undo is called.
 
-> 1a1. System indicates the error and shows the error message
+> 1a1. System indicates the error and shows the error message.
 > Use case ends.
   
 #### Use case: Mark Command
@@ -535,12 +542,12 @@ Use case ends.
 
 2a. No such task of `TASK_NUMBER`.
 
-> 2a1. To-Do List shows an error message
-> Use case ends
+> 2a1. To-Do List shows an error message.
+> Use case ends.
   
 2b. Task of `TASK_NUMBER` is already marked done.
 
-> Use case ends
+> Use case ends.
 
 #### Use case: Unmark Command
 
@@ -554,7 +561,7 @@ Use case ends.
 
 2a. No such task of `TASK_NUMBER`
 
-> 2a1. To-Do List shows an error messag 
+> 2a1. To-Do List shows an error message.
 > Use case ends.
 
 2b. Task of `TASK_NUMBER` is already marked undone.
