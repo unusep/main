@@ -40,7 +40,7 @@ Be-gone with the woes of trawling through clunky interfaces of other scheduling 
 5. Type the command in the command box and press <kbd>Enter</kbd> to execute it.
    *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
 6. Some example commands you can try:
-   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` :
+   * **`add`**` /t Do post-lecture quiz <today->tomorrow> /c CS2103` :
      adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today`
 	 and ends` tomorrow` under the category `CS2103`.
 	* **`list`**` CS2103` : lists all tasks in **CS2103**
@@ -67,7 +67,7 @@ Format: `help` or `help [COMMAND_NAME]`
  
 #### Adding a task / an event: `add`
 Adds a task/event to the Do-*er*List<br>
-Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
+Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * Task can have any number of categories (including 0)
@@ -78,21 +78,21 @@ Format: `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
 
 Examples: 
 
-* `add -t Do post-lecture quiz {today->tomorrow} -c CS2103`<br>
-* `add -t Do CA1 -d Oral Presentation {->next 2 days} -c CS2101`<br>
-* `add {2016-10-4 10:00->2016-10-4 12:00} -t Take lecture -c CS2102`
+* `add /t Do post-lecture quiz /s today /e tomorrow} /c CS2103`<br>
+* `add /t Do CA1 /d Oral Presentation /e next 2 days /c CS2101`<br>
+* `add /s 2016-10-4 10:00 /e 2016-10-4 12:00 /t Take lecture /c CS2102`
 
 #### Editing an event : `edit`
 Edit an existing task / event in the Do-*er* List<br>
-Format: `edit INDEX [-n TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
+Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
 > Edit an existing task by calling its index. The event's title, description, start date, end date and category can be edited.
   
 Examples:
 
-* `edit 1 -t Do ST2334 quiz -c ST2334`
-* `edit 2 {->next 5 days}`
+* `edit 1 /t Do ST2334 quiz /c ST2334`
+* `edit 2 /e next 5 days`
 
 > Attributes that aren't supplied will not be updated 
 
@@ -228,7 +228,7 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 <br>
 
 **Q**: Running "doerlist.jar" gives and error or does not seem to work.<br>
-**A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/download/help/download_options.xml). 
+**A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/downloa/dhelp/download_options.xml). 
 <br>
 
 **Q**: Where is the save button for me to save my schedule in this program? <br>
@@ -240,8 +240,8 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 Command | Format  
 -------- | :-------- 
 Help | `help [COMMAND]`
-Add | `add -t TITLE [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
-Edit | `edit INDEX [-t TITLE] [-d DESCRIPTION] [{[START]->[END]}] [-c CATEGORY] ...`
+Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
+Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
 List | `list [CATEGORY]`

@@ -33,17 +33,15 @@ public class MarkCommand extends Command {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-
-        Task taskToMark = (Task) lastShownList.get(targetIndex - 1);
         
-        if (taskToMark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE))
-            return new CommandResult(MESSAGE_DUPLICATE_MARK);
+        ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
+        
         try {
             model.markTask(taskToMark);
-        } catch (TaskNotFoundException e) {
-            assert false : "The target task cannot be missing";
+            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark)); 
+        } catch (TaskNotFoundException tnf) {
+            return new CommandResult(MESSAGE_DUPLICATE_MARK);
         }
-        
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark));   
+          
     }
 }

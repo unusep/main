@@ -28,7 +28,7 @@ public class ListCommandTest extends DoerListGuiTest {
         TestCategory[] expectedBuildInCateogires = {
                 new TestCategory(BuildInCategoryList.ALL.categoryName, 7),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT7DAYS.categoryName, 2),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
                 new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
         };
@@ -69,7 +69,7 @@ public class ListCommandTest extends DoerListGuiTest {
         expectedBuildInCateogires[0].setExpectedNumTasks(9);
         expectedBuildInCateogires[2].setExpectedNumTasks(3);
         TestTask[] expectedList3 = {TypicalTestTasks.task3, TypicalTestTasks.task4, TypicalTestTasks.task9};
-        assertListSuccess(new TestCategory(BuildInCategoryList.NEXT7DAYS.categoryName, 3), 
+        assertListSuccess(new TestCategory(BuildInCategoryList.NEXT.categoryName, 3), 
                 expectedList3, expectedBuildInCateogires, expectedCategories);
         
         
