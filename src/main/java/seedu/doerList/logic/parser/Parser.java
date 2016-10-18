@@ -40,6 +40,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -77,6 +78,9 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand(arguments.trim());
+
+        case TaskdueCommand.COMMAND_WORD:
+            return new TaskdueCommand(arguments.trim());
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

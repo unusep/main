@@ -2,6 +2,12 @@ package seedu.doerList.logic.commands;
 
 import java.util.Set;
 
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
+import seedu.doerList.commons.util.StringUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.task.ReadOnlyTask;
+
 /**
  * Finds and lists all tasks in doerList whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -23,8 +29,20 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredTaskList(keywords);
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        model.updateFilteredListToShowAll();
+        BuildInCategoryList.resetBuildInCategoryPredicate();
+        BuildInCategoryList.ALL.updatePredicate((ReadOnlyTask task) -> {
+            return this.keywords.stream()
+            .filter(keyword -> {
+                return StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword) ||
+                        (task.hasDescription() && StringUtil.containsIgnoreCase(task.getDescription().value, keyword));
+                })
+            .findAny()
+            .isPresent();
+        });
+        EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
+        model.updateFilteredTaskList(BuildInCategoryList.ALL.getPredicate());
+        return new CommandResult(getMessageForTaskListShownSummary(BuildInCategoryList.ALL.getTasks().size()));
     }
 
 }

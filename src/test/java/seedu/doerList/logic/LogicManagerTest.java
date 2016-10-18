@@ -284,7 +284,7 @@ public class LogicManagerTest {
                         );
         // Test Next 7 Days
         assertBuildInCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
-                        BuildInCategoryList.NEXT7DAYS
+                        BuildInCategoryList.NEXT
                         );
         // Test Inbox
         assertBuildInCategoryListed(Arrays.asList(Inbox1),
@@ -536,6 +536,33 @@ public class LogicManagerTest {
         helper.addToModel(model, fourPersons);
 
         assertCommandBehavior("find key rAnDoM",
+                Command.getMessageForTaskListShownSummary(expectedList.size()),
+                expectedAB,
+                expectedList);
+    }
+
+    @Test
+    public void execute_taskdue_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+    }
+
+
+    @Test
+    public void execute_taskdue_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> fourTasks = helper.generateTaskList(4);
+        helper.addToModel(model, fourTasks);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
+
+        List<Task> expectedList = fourTasks.subList(0, 3);
+
+        assertCommandBehavior("taskdue 2016-10-06 23:59",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);

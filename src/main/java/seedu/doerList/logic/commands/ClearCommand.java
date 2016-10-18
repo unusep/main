@@ -1,6 +1,9 @@
 package seedu.doerList.logic.commands;
 
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.model.DoerList;
+import seedu.doerList.model.category.BuildInCategoryList;
 
 /**
  * Clears the doerList.
@@ -17,6 +20,8 @@ public class ClearCommand extends Command {
     public CommandResult execute() {
         assert model != null;
         model.resetData(DoerList.getEmptyDoerList());
+        BuildInCategoryList.resetBuildInCategoryPredicate();
+        EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

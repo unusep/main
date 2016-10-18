@@ -3,7 +3,10 @@ package seedu.doerList.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
@@ -53,6 +56,8 @@ public class AddCommand extends Command {
         assert model != null;
         try {
             model.addTask(toAdd);
+            BuildInCategoryList.resetBuildInCategoryPredicate();
+            EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);

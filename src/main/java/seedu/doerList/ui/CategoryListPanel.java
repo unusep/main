@@ -66,9 +66,13 @@ public class CategoryListPanel extends UiPart {
      * Redraw the list view
      */
     public void redrawListView() {
+        int beforeRefresh = categoryListView.getSelectionModel().getSelectedIndex();
         ObservableList<Category> items = categoryListView.getItems();
         categoryListView.setItems(null);
         categoryListView.setItems(items);
+        if (beforeRefresh >= 0) {
+            categoryListView.getSelectionModel().select(beforeRefresh);
+        }
     }
     
     @Override

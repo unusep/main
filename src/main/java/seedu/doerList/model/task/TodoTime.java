@@ -27,7 +27,6 @@ public class TodoTime {
        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
        String time = new TimeParser().parse(rawTime);
        value = DateTime.parse(time, formatter);
-
    }
 
    public TodoTime(DateTime source) {
@@ -41,6 +40,12 @@ public class TodoTime {
        return value;
    }
 
+   /**
+    * Returns true if a given time is before the deadline
+    */
+   public boolean isBefore(TodoTime deadline) {
+       return this.value.isBefore(deadline.value);
+   }
 
    @Override
    public String toString() {
