@@ -573,17 +573,6 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_taskdue_invalidArgsFormat() throws Exception {
-        assertCommandBehavior(
-                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
-        assertCommandBehavior(
-                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
-        assertCommandBehavior(
-                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
-    }
-
-
-    @Test
     public void execute_taskdue_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
@@ -596,6 +585,17 @@ public class LogicManagerTest {
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
+    }
+
+    @Test
+    public void execute_taskdue_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
 
