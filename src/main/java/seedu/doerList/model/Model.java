@@ -41,5 +41,7 @@ public interface Model {
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
     void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
+    
+    void markTask(ReadOnlyTask task) throws TaskNotFoundException;
 
 }

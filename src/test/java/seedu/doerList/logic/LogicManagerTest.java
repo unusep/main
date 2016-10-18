@@ -3,6 +3,7 @@ package seedu.doerList.logic;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
@@ -540,18 +541,36 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
-
+    
+    
     @Test
-    public void execute_taskdue_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
-        assertCommandBehavior(
-                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
-        assertCommandBehavior(
-                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
-        assertCommandBehavior(
-                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+    public void exectue_mark_invalidIndex() throws Exception {
+        assertIncorrectIndexFormatBehaviorForCommand("mark ", 
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
     }
+    
+    @Test
+    public void execute_mark_markTaskAsDone_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task notComplete = helper.generateTask(5); // not complete
+        Task complete = helper.generateTask(5);
+        complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        List<Task> expectedList = helper.generateTaskList(complete);
+        DoerList expectedAB = helper.generateDoerList(expectedList);
+        
+        helper.addToModel(model, Arrays.asList(notComplete));
 
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
+                expectedAB, 
+                expectedList);
+        
+        // marking twice should be ok
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
+                expectedAB, 
+                expectedList);       
+    }
 
     @Test
     public void execute_taskdue_successful() throws Exception {
@@ -566,6 +585,17 @@ public class LogicManagerTest {
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedAB,
                 expectedList);
+    }
+
+    @Test
+    public void execute_taskdue_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
 

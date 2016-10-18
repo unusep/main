@@ -115,7 +115,7 @@ public class BuildInCategoryList implements Iterable<Category> {
      * @param category
      */
     public void remove(BuildInCategory category) {
-        if (!contains(category)) {
+        if (contains(category)) {
             internalList.remove(category);
         }
     }
@@ -131,6 +131,16 @@ public class BuildInCategoryList implements Iterable<Category> {
     @Override
     public Iterator<Category> iterator() {
         return internalList.iterator();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BuildInCategoryList) {
+            BuildInCategoryList other = (BuildInCategoryList) o;
+            return this.internalList.equals(other.getInternalList());
+        } else {
+            return super.equals(o);
+        }
     }
 
     public UnmodifiableObservableList<Category> getInternalList() {

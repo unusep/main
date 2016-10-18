@@ -78,6 +78,9 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand(arguments.trim());
+            
+        case MarkCommand.COMMAND_WORD:
+            return prepareMark(arguments);
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
@@ -261,6 +264,22 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Parses arguments in the context of the mark task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareMark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+
+        return new MarkCommand(index.get());
+    }
+    
     /**
      * Signals that the user input could not be parsed.
      */

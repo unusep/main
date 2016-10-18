@@ -85,6 +85,12 @@ public class ModelManager extends ComponentManager implements Model {
         doerList.replaceTask(i, task);
         indicateDoerListChanged();
     }
+    
+    @Override
+    public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {
+        doerList.markTask(task);
+        indicateDoerListChanged();
+    }
 
     //=========== Filtered Task List Accessors ===============================================================
 
