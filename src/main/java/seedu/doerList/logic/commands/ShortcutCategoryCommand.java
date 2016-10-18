@@ -24,12 +24,14 @@ public class ShortcutCategoryCommand extends Command {
     public static final String MESSAGE_CATEGORY_NOT_EXISTS = "The category name does not exist";
 
 
-    public String toSelectCategoryName;
-    
+    public String defaultCategories;
+
+    public ShortcutCategoryCommand() {}
+
     public ShortcutCategoryCommand(String shortcut) {
-        this.toSelectCategoryName = shortcut;
+        defaultCategories = shortcut;
     }
-    
+
     /**
      * Try find category name that equals to keyword
      * 
@@ -52,12 +54,12 @@ public class ShortcutCategoryCommand extends Command {
         }
         return Optional.empty();
     }
-   
+
     @Override
     public CommandResult execute() {
         Category toSelectCategory;
         BuildInCategoryList.resetBuildInCategoryPredicate();
-        Optional<Category> fromCategory = findNameInCategory(toSelectCategoryName);
+        Optional<Category> fromCategory = findNameInCategory(defaultCategories);
         if (fromCategory.isPresent()) {
             toSelectCategory = fromCategory.get();
         } else {
