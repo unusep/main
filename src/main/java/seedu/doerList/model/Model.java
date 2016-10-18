@@ -42,7 +42,7 @@ public interface Model {
 
     void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
     
-    void unmarkTask(Task task) throws TaskNotFoundException;
+    void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
 

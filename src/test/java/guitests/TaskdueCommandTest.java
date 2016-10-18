@@ -25,7 +25,7 @@ public class TaskdueCommandTest extends DoerListGuiTest {
         
         TestTask[] expected1 = {td.task6, td.task7};
         TestTask[] expected2 = {td.task1, td.task6, td.task7};
-        assertTaskdueResult("taskdue yesterday", expected1, expectedBuildInCateogires, expectedCategories); //multiple results
+        assertTaskdueResult("taskdue yesterday 23pm", expected1, expectedBuildInCateogires, expectedCategories); //multiple results
         expectedBuildInCateogires[0].expectedNumTasks = 3;
         assertTaskdueResult("taskdue today 23pm", expected2, expectedBuildInCateogires, expectedCategories); //one results
 

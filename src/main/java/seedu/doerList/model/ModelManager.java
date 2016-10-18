@@ -93,9 +93,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void unmarkTask(Task task) throws TaskNotFoundException {
+    public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.unmarkTask(task);
-        updateFilteredListToShowAll();
         indicateDoerListChanged();
     }
     //=========== Filtered Task List Accessors ===============================================================

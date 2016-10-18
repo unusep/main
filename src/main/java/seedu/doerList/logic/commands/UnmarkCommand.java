@@ -20,7 +20,6 @@ public class UnmarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_UNMARK_TASK_SUCCESS = "unmark task: %1$s";
-    public static final String MESSAGE_DUPLICATE_UNMARK = "The task is still not done yet.";
     
     private int targetIndex;
     
@@ -29,26 +28,23 @@ public class UnmarkCommand extends Command {
     }
     
     public CommandResult execute() {
-        
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         if (lastShownList.size() < targetIndex) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-
-        Task taskToUnmark = (Task) lastShownList.get(targetIndex - 1);
         
-        if (!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
-            return new CommandResult(String.format(MESSAGE_DUPLICATE_UNMARK));
-        }
+        ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
         
         try {
-            model.unmarkTask(taskToUnmark);
-        } catch (TaskNotFoundException pnfe) {
-            assert false : "The target task cannot be missing";
+            model.unmarkTask(taskToMark);
+            return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToMark)); 
+        } catch (TaskNotFoundException tnf) {
+            // impossible
+            assert false;
+            return null;
         }
         
-        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));    
     }
 }

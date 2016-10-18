@@ -16,7 +16,6 @@ public class MarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "mark task: %1$s";
-    public static final String MESSAGE_DUPLICATE_MARK = "The task is already marked as done in the Do-erList";
     
     private int targetIndex;
     
@@ -40,7 +39,9 @@ public class MarkCommand extends Command {
             model.markTask(taskToMark);
             return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark)); 
         } catch (TaskNotFoundException tnf) {
-            return new CommandResult(MESSAGE_DUPLICATE_MARK);
+            // impossible
+            assert false;
+            return null;
         }
           
     }

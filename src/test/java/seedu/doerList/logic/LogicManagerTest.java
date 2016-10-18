@@ -543,49 +543,32 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_unmark_unmarkInvalidTaskAsUndone() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task Complete1 = helper.generateTaskWithCategory(5);
-        List<Task> expectedList = helper.generateTaskList(Complete1);
-        DoerList expectedAB = helper.generateDoerList(expectedList);
-        
-        helper.addToModel(model, expectedList);
-        
-        assertCommandBehavior("unmark 2", 
-                String.format(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX),
-                expectedAB,
-                expectedList);
+    public void execute_unmark_unmarkInvalidIndex() throws Exception {
+        assertIncorrectIndexFormatBehaviorForCommand("unmark ", 
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
     }
     
     @Test
-    public void execute_unmark_unmarkATaskAsUndone() throws Exception {
+    public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task Complete1 = helper.generateTaskWithCategory(5);
-        List<Task> expectedList = helper.generateTaskList(Complete1);
-        DoerList expectedAB = helper.generateDoerList(expectedList);
-        Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        
-        helper.addToModel(model, expectedList);
-        
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, Complete1),
-                expectedAB,
-                expectedList);
-    }
-    
-    @Test
-    public void execute_unmark_unmarkAnUndoneTask() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task Complete1 = helper.generateTaskWithCategory(5);
-        List<Task> expectedList = helper.generateTaskList(Complete1);
+        Task notComplete = helper.generateTask(5); // not complete
+        Task complete = helper.generateTask(5);
+        complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        List<Task> expectedList = helper.generateTaskList(notComplete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
         
-        helper.addToModel(model, expectedList);
-        
+        helper.addToModel(model, Arrays.asList(complete));
+
         assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_DUPLICATE_UNMARK),
-                expectedAB,
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
+                expectedAB, 
                 expectedList);
+        
+        // marking twice should be ok
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
+                expectedAB, 
+                expectedList);       
     }
     
     @Test
