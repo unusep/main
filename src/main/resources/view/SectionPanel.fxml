@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.SectionPanel">
+    <children>
+      <AnchorPane fx:id="sectionHeaderPlaceholder" />
+      <VBox fx:id="taskListBox">
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin></VBox>
+    </children>
+</VBox>

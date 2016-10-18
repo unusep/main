@@ -6,31 +6,28 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.joda.time.DateTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.model.task.TimeInterval;
+import seedu.doerList.model.task.TodoTime;
 
 /**
  * JAXB-friendly adapted version of the TimeInterval.
  */
-public class XmlAdaptedTimeInterval {
+public class XmlAdaptedTodoTime {
 
     @XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
-    private DateTime startTime;
-    @XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
-    private DateTime endTime;
+    private DateTime value;
 
     /**
      * No-arg constructor for JAXB use.
      */
-    public XmlAdaptedTimeInterval() {}
+    public XmlAdaptedTodoTime() {}
 
     /**
-     * Converts a given TimeInterval into this class for JAXB use.
+     * Converts a given TodoTime into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created
      */
-    public XmlAdaptedTimeInterval(TimeInterval source) {
-        startTime = source.startTime;
-        endTime = source.endTime;
+    public XmlAdaptedTodoTime(TodoTime source) {
+        value = source.getTime();
     }
 
     /**
@@ -38,8 +35,8 @@ public class XmlAdaptedTimeInterval {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted TimeInterval
      */
-    public TimeInterval toModelType() throws IllegalValueException {
-        return new TimeInterval(startTime, endTime);
+    public TodoTime toModelType() throws IllegalValueException {
+        return new TodoTime(value);
     }
 
 }

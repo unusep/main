@@ -21,16 +21,17 @@ public class Parser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern TASK_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
+    private static final Pattern TASK_INDEX_ARGS_IGNORE_OTHERS = Pattern.compile("(?<targetIndex>.+?)\\s+");
 
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("-t(?<title>[^-<]+)");
-    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("-d(?<descirption>[^-<]+)");
-    private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("<(?<startTime>.+)->");
-    private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("->(?<endTime>.+)>");
-    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("-c(?<categories>[^-<]+)");
+    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("\\/t(?<title>[^\\/]+)");
+    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("\\/d(?<description>[^\\/]+)");
+    private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
+    private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
+    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
 
     public Parser() {}
 
@@ -39,6 +40,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -53,8 +55,11 @@ public class Parser {
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return prepareSelect(arguments);
+        case ViewCommand.COMMAND_WORD:
+            return prepareView(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return prepareEdit(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
@@ -66,13 +71,22 @@ public class Parser {
             return prepareFind(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return prepareList(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new HelpCommand(arguments.trim());
+        
+        case UnmarkCommand.COMMAND_WORD:
+            return prepareUnmark(arguments);
+            
+        case MarkCommand.COMMAND_WORD:
+            return prepareMark(arguments);
+
+        case TaskdueCommand.COMMAND_WORD:
+            return new TaskdueCommand(arguments.trim());
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -80,7 +94,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the add person command.
+     * Parses arguments in the context of the add task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -97,11 +111,11 @@ public class Parser {
         }
         try {
             return new AddCommand(
-                    titleMatcher.group("title"),
-                    descriptionMatcher.find() ? descriptionMatcher.group("description") : null,
-                    startTimeMatcher.find() ? startTimeMatcher.group("startTime") : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime") : null,        
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories") : null)
+                    titleMatcher.group("title").trim(),
+                    descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
+                    getTagsFromArgs(categoriesMatcher)
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -109,21 +123,68 @@ public class Parser {
     }
 
     /**
-     * Extracts the new person's tags from the add command's tag arguments string.
+     * Extracts the new task's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
-    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-        // no tags
-        if (tagArguments == null) {
-            return Collections.emptySet();
-        }
+    private static Set<String> getTagsFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
+        final Collection<String> tagStrings = new ArrayList<String>();
+        while(categoriesMatcher.find()) {
+            tagStrings.add(categoriesMatcher.group().replace("/c", ""));
+        }
         return new HashSet<>(tagStrings);
     }
 
     /**
-     * Parses arguments in the context of the delete person command.
+     * Parses arguments in the context of the edit task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     * @throws ParseException
+     */
+    private Command prepareEdit(String args) {
+        try {
+            final int targetIndex = findDisplayedIndexInArgs(args);
+            final String removeArgsIndex = args.replaceFirst(String.valueOf(targetIndex), ""); // remove the index
+            final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
+            final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
+            final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
+            final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
+            final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
+
+            return new EditCommand(
+                    targetIndex,
+                    titleMatcher.find() ? titleMatcher.group("title").trim() : null,
+                    descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
+                    startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
+                    getTagsFromArgs(categoriesMatcher)
+                );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Find a single index number in Displayed args.
+     *
+     * @param args arguments string to find a index number
+     * @return the parsed index number
+     * @throws ParseException if no region of the args string could be found for the index
+     * @throws NumberFormatException the args string region is not a valid number
+     */
+    private int findDisplayedIndexInArgs(String args) throws NumberFormatException, ParseException {
+        final Matcher matcher = TASK_INDEX_ARGS_IGNORE_OTHERS.matcher(args.trim());
+        if (!matcher.find()) {
+            throw new ParseException("Could not find index number to parse");
+        }
+        return Integer.parseInt(matcher.group("targetIndex"));
+    }
+
+    /**
+     * Parses arguments in the context of the delete task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -138,21 +199,35 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
-
+    
     /**
-     * Parses arguments in the context of the select person command.
+     * Parses arguments in the context of the category name.
      *
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareSelect(String args) {
+    private Command prepareList(String args) {
+        if (args.trim().length() == 0) {
+            return new ListCommand();
+        } else {
+            return new ListCommand(args.trim());
+        }
+    }
+
+    /**
+     * Parses arguments in the context of the select task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareView(String args) {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
 
-        return new SelectCommand(index.get());
+        return new ViewCommand(index.get());
     }
 
     /**
@@ -160,7 +235,7 @@ public class Parser {
      *   Returns an {@code Optional.empty()} otherwise.
      */
     private Optional<Integer> parseIndex(String command) {
-        final Matcher matcher = PERSON_INDEX_ARGS_FORMAT.matcher(command.trim());
+        final Matcher matcher = TASK_INDEX_ARGS_FORMAT.matcher(command.trim());
         if (!matcher.matches()) {
             return Optional.empty();
         }
@@ -174,7 +249,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the find person command.
+     * Parses arguments in the context of the find task command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -191,5 +266,45 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
+    
+    /**
+     * Parses arguments in the context of the unmark task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUnmark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
+        }
 
+        return new UnmarkCommand(index.get());
+    }
+
+    /**
+     * Parses arguments in the context of the mark task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareMark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+
+        return new MarkCommand(index.get());
+    }
+    
+    /**
+     * Signals that the user input could not be parsed.
+     */
+    public static class ParseException extends Exception {
+        ParseException(String message) {
+            super(message);
+        }
+    }
 }

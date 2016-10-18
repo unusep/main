@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
@@ -22,11 +23,15 @@ public class XmlAdaptedTask {
     @XmlElement(required = false)
     private String description;
     @XmlElement(required = false)
-    private XmlAdaptedTimeInterval timeInterval;
+    private XmlAdaptedTodoTime startTime;
+    @XmlElement(required = false)
+    private XmlAdaptedTodoTime endTime;
 
 
     @XmlElement
     private List<XmlAdaptedCategory> categorized = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedCategory> buildInCategorized = new ArrayList<>();
 
     /**
      * No-arg constructor for JAXB use.
@@ -44,12 +49,19 @@ public class XmlAdaptedTask {
         if (source.hasDescription()) {
             description = source.getDescription().value;
         }
-        if (source.hasTimeInterval()) {
-            timeInterval = new XmlAdaptedTimeInterval(source.getTimeInterval());
+        if (source.hasStartTime()) {
+            startTime = new XmlAdaptedTodoTime(source.getStartTime());
+        }
+        if (source.hasEndTime()) {
+            endTime = new XmlAdaptedTodoTime(source.getEndTime());
         }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
             categorized.add(new XmlAdaptedCategory(category));
+        }
+        buildInCategorized = new ArrayList<>();
+        for (Category category : source.getBuildInCategories()) {
+            buildInCategorized.add(new XmlAdaptedCategory(category));
         }
     }
 
@@ -63,16 +75,28 @@ public class XmlAdaptedTask {
         for (XmlAdaptedCategory category : categorized) {
             taskCategories.add(category.toModelType());
         }
+        final List<Category> taskBuildInCategories = new ArrayList<>();
+        for (XmlAdaptedCategory category : buildInCategorized) {
+            taskBuildInCategories.add(category.toModelType());
+        }
+        
         final Title title = new Title(this.title);
         Description description = null;
-        TimeInterval timeInterval = null;
+        TodoTime startTime = null;
+        TodoTime endTime = null;
         if (this.description != null) {
             description = new Description(this.description);
         }
-        if (this.timeInterval != null) {
-            timeInterval = this.timeInterval.toModelType();
+        if (this.startTime != null) {
+            startTime = this.startTime.toModelType();
+        }
+        if (this.endTime != null) {
+            endTime = this.endTime.toModelType();
         }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
-        return new Task(title, description, timeInterval, categories);
+        Task newTask = new Task(title, description, startTime, endTime, categories);      
+        final BuildInCategoryList buildInCategories = new BuildInCategoryList(taskBuildInCategories);
+        newTask.setBuildInCategories(buildInCategories);
+        return newTask;
     }
 }

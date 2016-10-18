@@ -1,7 +1,14 @@
 package seedu.doerList.model.category;
 
+import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Task;
 
 /**
  * Represents a Category in the doerList.
@@ -9,14 +16,13 @@ import seedu.doerList.commons.exceptions.IllegalValueException;
  */
 public class Category {
 
-    public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CATEGORY_CONSTRAINTS = "Categorys names can be in any format";
+    public static final String CATEGORY_VALIDATION_REGEX = ".+";
 
-    public String categoryName;
-
-    public Category() {
-    }
-
+    public String categoryName; 
+    public Category() {}
+    private ObservableList<ReadOnlyTask> filteredList = FXCollections.observableArrayList();
+    
     /**
      * Validates given category name.
      *
@@ -35,7 +41,7 @@ public class Category {
      * Returns true if a given string is a valid category name.
      */
     public static boolean isValidCategoryName(String test) {
-        return test.matches(TAG_VALIDATION_REGEX);
+        return test.matches(CATEGORY_VALIDATION_REGEX);
     }
 
     @Override
@@ -43,6 +49,16 @@ public class Category {
         return other == this // short circuit if same object
                 || (other instanceof Category // instanceof handles nulls
                 && this.categoryName.equals(((Category) other).categoryName)); // state check
+    }
+    
+    public void setFilteredTaskList(ObservableList<Task> theFilteredList) {
+        assert theFilteredList != null;
+        filteredList = new UnmodifiableObservableList<>(theFilteredList);
+    }
+    
+    public FilteredList<ReadOnlyTask> getTasks() {
+        assert filteredList != null;
+        return filteredList.filtered(this.getPredicate());
     }
 
     @Override
@@ -56,5 +72,20 @@ public class Category {
     public String toString() {
         return '[' + categoryName + ']';
     }
+    
+    /**
+     * Return predicate to help filter tasks
+     * @return predicate(lambda) expression to help filter tasks 
+     */
+    public Predicate<ReadOnlyTask> getPredicate() {
+        return (ReadOnlyTask task) -> {
+            return task.getCategories().contains(this);
+        };
+    }
+    
+    public boolean isBuildIn() {
+        return false;
+    }
+    
 
 }

@@ -1,6 +1,8 @@
 package seedu.doerList.testutil;
 
 import com.google.common.io.Files;
+
+import guitests.guihandles.CategoryCardHandle;
 import guitests.guihandles.TaskCardHandle;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -60,20 +62,20 @@ public class TestUtil {
      */
     public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
-    public static final Task[] samplePersonData = getSamplePersonData();
+    public static final Task[] sampleTaskData = getSampleTaskData();
 
-    private static Task[] getSamplePersonData() {
+    private static Task[] getSampleTaskData() {
         try {
             return new Task[]{
-                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TimeInterval("2016-10-03 14:00", "2016-10-04 14:23"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TimeInterval("2016-10-02 14:00", "2016-10-03 14:15"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 4"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("T2A3"), new Description("Very good"), new TimeInterval("2016-10-01 14:00", "2016-10-02 14:20"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 6"), null, new TimeInterval("2016-09-30 14:00", "2016-10-01 14:30"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 7"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TimeInterval("2016-09-30 12:00", "2016-10-01 14:40"), new UniqueCategoryList())
+                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TodoTime("2016-10-03 14:00"), new TodoTime("2016-10-04 14:23"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TodoTime("2016-10-02 14:00"), new TodoTime("2016-10-03 14:15"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 4"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("T2A3"), new Description("Very good"), new TodoTime("2016-10-01 14:00"), new TodoTime("2016-10-02 14:20"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 6"), null, new TodoTime("2016-09-30 14:00"), new TodoTime("2016-10-01 14:30"), new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 7"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TodoTime("2016-09-30 12:00"), new TodoTime("2016-10-01 14:40"), new UniqueCategoryList())
             };
         } catch (IllegalValueException e) {
             assert false;
@@ -82,9 +84,9 @@ public class TestUtil {
         }
     }
 
-    public static final Category[] sampleTagData = getSampleTagData();
+    public static final Category[] sampleTagData = getSampleCategoryData();
 
-    private static Category[] getSampleTagData() {
+    private static Category[] getSampleCategoryData() {
         try {
             return new Category[]{
                     new Category("CS2102"),
@@ -97,8 +99,8 @@ public class TestUtil {
         }
     }
 
-    public static List<Task> generateSamplePersonData() {
-        return Arrays.asList(samplePersonData);
+    public static List<Task> generateSampleTaskData() {
+        return Arrays.asList(sampleTaskData);
     }
 
     /**
@@ -312,7 +314,7 @@ public class TestUtil {
      * @param tasksToAdd The tasks that are to be appended behind the original array.
      * @return The modified array of tasks.
      */
-    public static TestTask[] addPersonsToList(final TestTask[] tasks, TestTask... tasksToAdd) {
+    public static TestTask[] addTasksToList(final TestTask[] tasks, TestTask... tasksToAdd) {
         List<TestTask> listOfPersons = asList(tasks);
         listOfPersons.addAll(asList(tasksToAdd));
         return listOfPersons.toArray(new TestTask[listOfPersons.size()]);
@@ -328,6 +330,11 @@ public class TestUtil {
 
     public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
         return card.isSameTask(task);
+    }
+    
+    
+    public static boolean compareCardAndTestCategory(CategoryCardHandle card, TestCategory category) {
+        return card.isSameTestCategory(category);
     }
 
     public static Category[] getCategoryList(String categories) {

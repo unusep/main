@@ -1,9 +1,8 @@
 package seedu.doerList.testutil;
 
-import java.time.format.DateTimeFormatter;
-
-import org.joda.time.format.DateTimeFormat;
-
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
 
@@ -14,11 +13,24 @@ public class TestTask implements ReadOnlyTask {
 
     private Title title;
     private Description description;
-    private TimeInterval interval;
+    private TodoTime startTime;
+    private TodoTime endTime;
     private UniqueCategoryList categories;
+    private BuildInCategoryList buildInCategories;
+    
 
     public TestTask() {
         categories = new UniqueCategoryList();
+        buildInCategories = new BuildInCategoryList();
+    }
+
+    // copy constructor
+    public TestTask(ReadOnlyTask source) {
+        this.title = source.getTitle();
+        this.description = source.getDescription();
+        this.startTime = source.getStartTime();
+        this.endTime = source.getEndTime();
+        this.categories = source.getCategories();
     }
 
     public void setTitle(Title title) {
@@ -29,8 +41,12 @@ public class TestTask implements ReadOnlyTask {
         this.description = description;
     }
 
-    public void setTimeInterval(TimeInterval interval) {
-        this.interval = interval;
+    public void setStartTime(TodoTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(TodoTime endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -44,13 +60,34 @@ public class TestTask implements ReadOnlyTask {
     }
 
     @Override
-    public TimeInterval getTimeInterval() {
-        return interval;
+    public TodoTime getStartTime() {
+        return this.startTime;
     }
+
+    @Override
+    public TodoTime getEndTime() {
+        return this.endTime;
+    }
+
 
     @Override
     public UniqueCategoryList getCategories() {
         return categories;
+    }
+    
+    @Override
+    public BuildInCategoryList getBuildInCategories() {
+        return buildInCategories;
+    }
+    
+    @Override
+    public void addBuildInCategory(BuildInCategory category) {
+        buildInCategories.add(category);
+    }
+
+    @Override
+    public void removeBuildInCategory(BuildInCategory category) {
+        buildInCategories.remove(category);      
     }
 
     @Override
@@ -59,21 +96,35 @@ public class TestTask implements ReadOnlyTask {
     }
 
     public String getAddCommand() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("add -t " + this.getTitle().fullTitle + " ");
+        StringBuffer cmd = new StringBuffer();
+
+        cmd.append("add ");
+        cmd.append("/t ").append(this.getTitle()).append(" ");
+
         if (this.hasDescription()) {
-            sb.append("-d " + this.getDescription().value + " ");
+            cmd.append("/d ").append(this.getDescription()).append(" ");
         }
-        if (this.hasTimeInterval()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
-            sb.append("{" + this.getTimeInterval().getStartTime().toString(DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT))
-                    + "->" + this.getTimeInterval().getEndTime().toString(DateTimeFormat.forPattern(TimeInterval.TIME_STANDARD_FORMAT))
-                    + "} ");
+
+        if (!this.isFloatingTask()) {
+            if (this.hasStartTime()) {
+                cmd.append("/s ");
+                cmd.append(this.getStartTime()).append(" ");
+            }
+            if (this.hasEndTime()) {
+                cmd.append("/e ");
+                cmd.append(this.getEndTime()).append(" ");
+            }
         }
-        if (!this.getCategories().getInternalList().isEmpty()) {
-            sb.append("-c ");
-            this.getCategories().getInternalList().stream().forEach(s -> sb.append("t/" + s.categoryName + " "));
+
+        UniqueCategoryList categories = this.getCategories();
+        if (!categories.getInternalList().isEmpty()) {
+            for(Category c: categories){
+                cmd.append("/c " + c.categoryName + " ");
+            }
         }
-        return sb.toString();
+
+        return cmd.toString();
     }
+
+
 }

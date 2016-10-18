@@ -3,6 +3,8 @@ package seedu.doerList.model.task;
 import java.util.Objects;
 
 import seedu.doerList.commons.util.CollectionUtil;
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList;
 
 /**
@@ -13,26 +15,35 @@ public class Task implements ReadOnlyTask {
 
     private Title title;
     private Description description;
-    private TimeInterval timeInterval;
+    private TodoTime startTime;
+    private TodoTime endTime;
 
     private UniqueCategoryList categories;
+    private BuildInCategoryList buildInCategoires;
 
     /**
      * Title must be presented.
      */
-    public Task(Title title, Description description, TimeInterval timeInterval, UniqueCategoryList categories) {
+    public Task(Title title, Description description, TodoTime startTime, TodoTime endTime, UniqueCategoryList categories) {
         assert title != null;
         this.title = title;
         this.description = description;
-        this.timeInterval = timeInterval;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
+        this.buildInCategoires = new BuildInCategoryList();
     }
 
     /**
      * Copy constructor.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getTitle(), source.getDescription(), source.getTimeInterval(), source.getCategories());
+        this(source.getTitle(), 
+                source.getDescription(), 
+                source.getStartTime(), 
+                source.getEndTime(), 
+                source.getCategories());
+        buildInCategoires.replaceWith(source.getBuildInCategories());
     }
 
     @Override
@@ -44,16 +55,25 @@ public class Task implements ReadOnlyTask {
     public Description getDescription() {
         return description;
     }
-
-    @Override
-    public TimeInterval getTimeInterval() {
-        return timeInterval;
-    }
     
-
     @Override
     public UniqueCategoryList getCategories() {
         return categories;
+    }
+    
+    @Override
+    public BuildInCategoryList getBuildInCategories() {
+        return buildInCategoires;
+    }
+    
+    @Override
+    public void addBuildInCategory(BuildInCategory category) {
+        buildInCategoires.add(category);
+    }
+
+    @Override
+    public void removeBuildInCategory(BuildInCategory category) {
+        buildInCategoires.remove(category);
     }
 
     /**
@@ -62,7 +82,16 @@ public class Task implements ReadOnlyTask {
     public void setCategories(UniqueCategoryList replacement) {
         categories.setCategories(replacement);
     }
-
+    
+    /**
+     * Replace this task's build in category with given build in categories
+     * 
+     * @param theBuildInCategories
+     */
+    public void setBuildInCategories(BuildInCategoryList theBuildInCategories) {
+        buildInCategoires.replaceWith(theBuildInCategories);
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -74,12 +103,22 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, description, timeInterval, categories);
+        return Objects.hash(title, description, startTime, endTime, categories);
     }
 
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    @Override
+    public TodoTime getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public TodoTime getEndTime() {
+        return endTime;
     }
 
 }

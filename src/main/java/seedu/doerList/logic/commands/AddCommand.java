@@ -3,7 +3,10 @@ package seedu.doerList.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
@@ -13,12 +16,13 @@ import seedu.doerList.model.task.*;
  */
 public class AddCommand extends Command {
 
+
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
-            + "Parameters: -t TASK [-d DESCRIPTION] [{[START]->[END]}] [-c [CATEGORY] [MORE CATEGORY...]\n"
+            + "Parameters: /t TASK [/d DESCRIPTION] [/s START] [/e END] [/c [CATEGORY] ... \n"
             + "Example: " + COMMAND_WORD
-            + " add -t Take lecture {2016-10-4 10:00->2016-10-4 12:00} -c CS2102";
+            + " /t Take lecture /s 2016-10-04 10:00 /e 2016-10-04 12:00 /c CS2102";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
@@ -33,15 +37,16 @@ public class AddCommand extends Command {
      */
     public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
     		throws IllegalValueException {
-    	final Set<Category> categorySet = new HashSet<>();
+        final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
 
         this.toAdd = new Task(
-        		new Title(title),
-        		null,
-        		null,
+        		new Title(title.trim()),
+        		description == null ? null : new Description(description.trim()),
+        		startTime == null ? null : new TodoTime(startTime),
+        		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)
         );
 
@@ -51,9 +56,12 @@ public class AddCommand extends Command {
         assert model != null;
         try {
             model.addTask(toAdd);
+            BuildInCategoryList.resetBuildInCategoryPredicate();
+            EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
     }
+
 }

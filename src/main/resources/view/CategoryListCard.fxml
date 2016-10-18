@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<HBox id="categoryCardPane" fx:id="categoryCardPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+          <VBox alignment="CENTER_LEFT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+              <padding>
+                  <Insets bottom="5" left="15" right="5" top="5" />
+              </padding>
+
+              <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                      <children>
+                           <Label fx:id="categoryName" styleClass="cell_big_label" text="Category Name" />
+                      </children>
+                  </HBox>
+
+              </children>
+          </VBox>
+      <Region HBox.hgrow="ALWAYS" />
+      <VBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <StackPane>
+                     <children>
+                        <Circle fill="#e4e4e4" radius="14.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label fx:id="categoryCount" text="0" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+    </children>
+</HBox>

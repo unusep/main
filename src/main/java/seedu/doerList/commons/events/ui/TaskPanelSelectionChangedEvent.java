@@ -1,7 +1,13 @@
 package seedu.doerList.commons.events.ui;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.BaseEvent;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.ui.TaskCard;
 
 /**
  * Represents a selection change in the Event List Panel
@@ -9,10 +15,10 @@ import seedu.doerList.model.task.ReadOnlyTask;
 public class TaskPanelSelectionChangedEvent extends BaseEvent {
 
 
-    private final ReadOnlyTask newSelection;
+    private final TaskCard selectedCard;
 
-    public TaskPanelSelectionChangedEvent(ReadOnlyTask newSelection){
-        this.newSelection = newSelection;
+    public TaskPanelSelectionChangedEvent(TaskCard selectedCard){
+        this.selectedCard = selectedCard;
     }
 
     @Override
@@ -20,7 +26,8 @@ public class TaskPanelSelectionChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public ReadOnlyTask getNewSelection() {
-        return newSelection;
+    public TaskCard getNewSelectedCard() {
+        return selectedCard;
     }
+    
 }

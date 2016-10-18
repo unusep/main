@@ -88,7 +88,7 @@ public class XmlUtilTest {
         //TODO: use equality instead of string comparisons
 
         DoerListBuilder builder = new DoerListBuilder(new DoerList());
-        dataToWrite = new XmlSerializableDoerList(builder.withTask(TestUtil.generateSamplePersonData().get(0)).withCategory("Friends").build());
+        dataToWrite = new XmlSerializableDoerList(builder.withTask(TestUtil.generateSampleTaskData().get(0)).withCategory("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableDoerList.class);
