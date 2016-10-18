@@ -27,6 +27,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     public static final BuildInCategory NEXT;
     public static final BuildInCategory INBOX;
     public static final BuildInCategory COMPLETE;
+    public static final BuildInCategory DUE;
        
     static {
         try {
@@ -37,7 +38,7 @@ public class BuildInCategoryList implements Iterable<Category> {
             COMPLETE = new BuildInCategory("Complete", (task) -> {
                 return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
             });
-            TODAY = new BuildInCategory("Today", (task) -> {
+            TODAY = new BuildInCategory("Today", (task) -> {                
                 DateTime todayBegin = new DateTime().withTimeAtStartOfDay();
                 DateTime todayEnd = todayBegin.plusDays(1);  
                 if (!INBOX.getPredicate().test(task)) {
@@ -63,6 +64,11 @@ public class BuildInCategoryList implements Iterable<Category> {
                 return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
                         task.hasEndTime() && task.getEndTime().value.isAfter(todayEnd);
             });
+            DUE = new BuildInCategory("Overdue", (task) -> {
+                DateTime todayBegin = new DateTime().withTimeAtStartOfDay();     
+                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) &&
+                        task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
+            });
         } catch (Exception e) {
             e.printStackTrace();
             // impossible
@@ -76,6 +82,7 @@ public class BuildInCategoryList implements Iterable<Category> {
         NEXT.setToDeafultPredicate();
         INBOX.setToDeafultPredicate();
         COMPLETE.setToDeafultPredicate();
+        DUE.setToDeafultPredicate();
     }
     
     public static void setTasksSource(ObservableList<Task> observableList) {
@@ -84,6 +91,7 @@ public class BuildInCategoryList implements Iterable<Category> {
         NEXT.setFilteredTaskList(observableList);
         INBOX.setFilteredTaskList(observableList);
         COMPLETE.setFilteredTaskList(observableList);
+        DUE.setFilteredTaskList(observableList);
     }
 
 
@@ -122,8 +130,9 @@ public class BuildInCategoryList implements Iterable<Category> {
             ObservableList<ReadOnlyTask> tasks, 
             BuildInCategory ... categories) throws TaskNotFoundException {
         Map<BuildInCategory, List<ReadOnlyTask>> results = categorizedByBuildInCategory(tasks, categories);
-        int i = 0;
+        int i = 1;
         for(BuildInCategory c : categories) {
+            if (results.get(c) == null) continue;
             for(ReadOnlyTask t : results.get(c)) {
                 if (index == i) {
                     return t;

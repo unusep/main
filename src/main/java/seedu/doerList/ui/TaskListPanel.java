@@ -14,15 +14,25 @@ import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.model.category.BuildInCategory;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
  * Panel containing the list of events.
  */
 public class TaskListPanel extends UiPart {
+    public static final BuildInCategory[] categorizedBy = {
+            BuildInCategoryList.DUE,
+            BuildInCategoryList.TODAY, BuildInCategoryList.NEXT, BuildInCategoryList.INBOX,
+            BuildInCategoryList.COMPLETE
+    };
+    
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskListPanel.fxml";
     private ScrollPane panel;
@@ -85,14 +95,23 @@ public class TaskListPanel extends UiPart {
         // clear selection first
         TaskCard.clearSelection();
         
+        Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = BuildInCategoryList.categorizedByBuildInCategory(allTasks,
+                categorizedBy);
+        
+        int displayIndexStart = 1;
         sectionPanelControllers = new ArrayList<SectionPanel>();
         sectionList.getChildren().clear();
-        
-        AnchorPane container_temp = new AnchorPane();
-        sectionList.getChildren().add(container_temp);
-        SectionPanel controller = SectionPanel.load(primaryStage, container_temp, allTasks);
-        sectionPanelControllers.add(controller);
-        // TODO add filter to category task based on timecategory
+        for(BuildInCategory c : categorizedBy) {  
+            if (categorized_tasks.get(c) == null) continue;
+            
+            AnchorPane container_temp = new AnchorPane();
+            sectionList.getChildren().add(container_temp);
+            SectionPanel controller = SectionPanel.load(primaryStage, container_temp, 
+                    categorized_tasks.get(c), c.categoryName, displayIndexStart);
+            sectionPanelControllers.add(controller);
+            
+            displayIndexStart += categorized_tasks.get(c).size();
+        }
     }
 
     private void addToPlaceholder() {

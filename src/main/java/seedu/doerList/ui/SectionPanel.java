@@ -59,31 +59,27 @@ public class SectionPanel extends UiPart {
         this.placeHolderPane = pane;
     }
     
-    public void setHeaderTitle(String title) {
-        //
-    }
-    
-    public void setHeaderTitle() {
-        header = TaskListHeader.load(primaryStage, sectionHeaderPlaceholder, "Test");
+    public void setHeaderTitle(String headerName) {
+        header = TaskListHeader.load(primaryStage, sectionHeaderPlaceholder, headerName);
     }
 
     public static SectionPanel load(Stage primaryStage, AnchorPane sectionPanelPlaceholder,
-                                       List<ReadOnlyTask> taskList) {
+                                       List<ReadOnlyTask> taskList, String headerName, int displayIndexStart) {
         SectionPanel sectionPanel =
                 UiPartLoader.loadUiPart(primaryStage, sectionPanelPlaceholder, new SectionPanel());
-        sectionPanel.configure(taskList);
+        sectionPanel.configure(taskList, headerName, displayIndexStart);
         return sectionPanel;
     }
 
-    private void configure(List<ReadOnlyTask> taskList) {
-        setTaskList(taskList);
-        setHeaderTitle();
+    private void configure(List<ReadOnlyTask> taskList, String headerName, int displayIndexStart) {
+        setTaskList(taskList, displayIndexStart);
+        setHeaderTitle(headerName);
         addToPlaceholder();
     }
     
-    private void setTaskList(List<ReadOnlyTask> taskList) {
+    private void setTaskList(List<ReadOnlyTask> taskList, int displayIndexStart) {
         taskCardControllers = new ArrayList<TaskCard>();
-        int i = 1;
+        int i = displayIndexStart;
         for(ReadOnlyTask task: taskList) {
             AnchorPane container_temp = new AnchorPane();
             taskListBox.getChildren().add(container_temp);

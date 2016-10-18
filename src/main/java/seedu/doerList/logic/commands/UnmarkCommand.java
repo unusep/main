@@ -2,13 +2,16 @@ package seedu.doerList.logic.commands;
 
 import java.util.Optional;
 
+import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
+import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.doerList.ui.TaskListPanel;
 
 public class UnmarkCommand extends Command {
     
@@ -30,21 +33,14 @@ public class UnmarkCommand extends Command {
     public CommandResult execute() {
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        if (lastShownList.size() < targetIndex) {
+        try {
+            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            model.unmarkTask(target);
+            return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, target)); 
+        } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-        
-        ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
-        
-        try {
-            model.unmarkTask(taskToMark);
-            return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToMark)); 
-        } catch (TaskNotFoundException tnf) {
-            // impossible
-            assert false;
-            return null;
-        }
-        
+                
     }
 }

@@ -10,6 +10,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -142,10 +143,11 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    public void replaceTask(int i, Task t) throws DuplicateTaskException {
-        tasks.replace(i, t);
+    public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
+        tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
+
     
     public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
         if (tasks.contains(task)) {

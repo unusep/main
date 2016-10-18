@@ -1,9 +1,13 @@
 package seedu.doerList.logic.commands;
 
+import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
+import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.doerList.ui.TaskListPanel;
 
 /**
  * Deletes a task identified using it's last displayed index from the doerList.
@@ -28,23 +32,17 @@ public class DeleteCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        if (lastShownList.size() < targetIndex) {
+        try {
+            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            model.deleteTask(target);
+            return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, target));
+        } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask taskToDelete = lastShownList.get(targetIndex - 1);
-
-        try {
-            model.deleteTask(taskToDelete);
-        } catch (TaskNotFoundException pnfe) {
-            assert false : "The target task cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
     }
 
 }

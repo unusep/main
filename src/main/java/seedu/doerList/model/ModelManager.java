@@ -84,10 +84,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
-        doerList.replaceTask(i, task);
+    public synchronized void replaceTask(ReadOnlyTask prevTask, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
+        doerList.replaceTask(prevTask, task);
         indicateDoerListChanged();
     }
+
     
     @Override
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {

@@ -5,6 +5,7 @@ import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.doerList.ui.TaskListPanel;
 
 public class MarkCommand extends Command {
     
@@ -23,25 +24,16 @@ public class MarkCommand extends Command {
         this.targetIndex = targetIndex;
     }
     
-    public CommandResult execute() {
-        assert model != null;
-        
+    public CommandResult execute() {       
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if (lastShownList.size() < targetIndex) {
-            indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-        
-        ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
         
         try {
-            model.markTask(taskToMark);
-            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark)); 
-        } catch (TaskNotFoundException tnf) {
-            // impossible
-            assert false;
-            return null;
+            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            model.markTask(target);
+            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, target));  
+        } catch (TaskNotFoundException e) {
+            indicateAttemptToExecuteIncorrectCommand();
+            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
           
     }

@@ -7,11 +7,13 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
+import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.*;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.doerList.ui.TaskListPanel;
 
 /**
  * Deletes a person identified using it's last displayed index from the
@@ -65,24 +67,21 @@ public class EditCommand extends Command {
 
 	@Override
 	public CommandResult execute() {
-		UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+	    UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        if (lastShownList.size() < targetIndex) {
-            indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
         try {
-        	    ReadOnlyTask taskToEdit = lastShownList.get(targetIndex - 1);
-        	    Task newTask = generateUpdatedTask(taskToEdit);
-
-        	    model.replaceTask(targetIndex - 1, newTask);
-        	    
-        	    return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, newTask));
+            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            Task newTask = generateUpdatedTask(target);
+            
+            model.replaceTask(target, newTask);
+            
+            return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, target, newTask));
         } catch (TaskNotFoundException pnfe) {
-            return new CommandResult(Messages.MESSAGE_TASK_NOT_IN_DOERLIST);
+            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
+       
 	}
 
 	/**
