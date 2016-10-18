@@ -89,19 +89,19 @@ public class Parser {
             return new TaskdueCommand(arguments.trim());
             
         case ShortcutCategoryCommand.COMMAND_WORD_1:
-            return prepareShortcutCategoryCommand(arguments);
+            return prepareShortcutCategoryCommand(ShortcutCategoryCommand.COMMAND_WORD_1);
             
         case ShortcutCategoryCommand.COMMAND_WORD_2:
-            return prepareShortcutCategoryCommand(arguments);
+            return prepareShortcutCategoryCommand(ShortcutCategoryCommand.COMMAND_WORD_2);
             
         case ShortcutCategoryCommand.COMMAND_WORD_3:
-            return prepareShortcutCategoryCommand(arguments);
+            return prepareShortcutCategoryCommand(ShortcutCategoryCommand.COMMAND_WORD_3);
 
         case ShortcutCategoryCommand.COMMAND_WORD_4:
-            return prepareShortcutCategoryCommand(arguments);
+            return prepareShortcutCategoryCommand(ShortcutCategoryCommand.COMMAND_WORD_4);
 
         case ShortcutCategoryCommand.COMMAND_WORD_5:
-            return prepareShortcutCategoryCommand(arguments);
+            return prepareShortcutCategoryCommand(ShortcutCategoryCommand.COMMAND_WORD_5);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -237,9 +237,9 @@ public class Parser {
      */
     private Command prepareShortcutCategoryCommand(String args) {
         if (args.trim().length() == 0) {
-            return new ListCommand();
+            return new ShortcutCategoryCommand();
         } else {
-            return new ListCommand(args.trim());
+            return new ShortcutCategoryCommand(args.trim());
         }
     }
 
