@@ -27,11 +27,11 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
-    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("-t(?<title>[^-\\{]+)");
-    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("-d(?<description>[^-\\{]+)");
-    private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\{(?<startTime>.+)->");
-    private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("->(?<endTime>.+)\\}");
-    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("-c(?<categories>[^-\\{]+)");
+    private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("\\/t(?<title>[^\\/]+)");
+    private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("\\/d(?<description>[^\\/]+)");
+    private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
+    private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
+    private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
 
     public Parser() {}
 
@@ -40,6 +40,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -76,10 +77,16 @@ public class Parser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new HelpCommand(arguments.trim());
         
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
+            
+        case MarkCommand.COMMAND_WORD:
+            return prepareMark(arguments);
+
+        case TaskdueCommand.COMMAND_WORD:
+            return new TaskdueCommand(arguments.trim());
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -108,7 +115,7 @@ public class Parser {
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories").trim() : null)
+                    getTagsFromArgs(categoriesMatcher)
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -119,13 +126,12 @@ public class Parser {
      * Extracts the new task's tags from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
-    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-        // no tags
-        if (tagArguments == null || tagArguments.isEmpty()) {
-            return Collections.emptySet();
-        }
+    private static Set<String> getTagsFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
         // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.split(" "));
+        final Collection<String> tagStrings = new ArrayList<String>();
+        while(categoriesMatcher.find()) {
+            tagStrings.add(categoriesMatcher.group().replace("/c", ""));
+        }
         return new HashSet<>(tagStrings);
     }
 
@@ -152,7 +158,7 @@ public class Parser {
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher.find() ? categoriesMatcher.group("categories").trim() : null)
+                    getTagsFromArgs(categoriesMatcher)
                 );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -277,6 +283,22 @@ public class Parser {
         return new UnmarkCommand(index.get());
     }
 
+    /**
+     * Parses arguments in the context of the mark task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareMark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+
+        return new MarkCommand(index.get());
+    }
+    
     /**
      * Signals that the user input could not be parsed.
      */

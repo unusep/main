@@ -75,7 +75,7 @@ public interface ReadOnlyTask {
                 && ((!other.hasEndTime() && !this.hasEndTime()) 
                         || (other.hasEndTime() && this.hasEndTime() 
                                 && other.getEndTime().equals(this.getEndTime())))
-                   );
+                && this.getBuildInCategories().equals(other.getBuildInCategories()));
     }
 
     /**

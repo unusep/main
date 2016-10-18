@@ -49,7 +49,7 @@ public class EditCommandTest extends DoerListGuiTest {
         assertMatching(editedTask, editedCard);
 
         //confirm the list now contains all previous tasks withUpdated task
-        currentList[index - 1] = editedTask; 
+        currentList[index - 1] = editedTask;
         assertTrue(taskListPanel.isListMatching(currentList));
     }
 

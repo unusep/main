@@ -12,11 +12,18 @@ import seedu.doerList.model.task.ReadOnlyTask;
 
 public class BuildInCategory extends Category {
     
-    Predicate<ReadOnlyTask> predicate;
+    public static String CATEGORY_FILTERED_BADGE = " (filtered)";
+    
+    Predicate<ReadOnlyTask> defaultPredicate;
+    String defaultCategoryName;
+    
+    Predicate<ReadOnlyTask> currentPredicate;
     
     public BuildInCategory(String name, Predicate<ReadOnlyTask> thePredicate) throws IllegalValueException {
         super(name);
-        predicate = thePredicate;
+        defaultPredicate = thePredicate;
+        currentPredicate = thePredicate;
+        defaultCategoryName = name;
     }
     
     /**
@@ -24,10 +31,22 @@ public class BuildInCategory extends Category {
      * @return predicate(lambda) expression to help filter tasks 
      */
     public Predicate<ReadOnlyTask> getPredicate() {
-        if (predicate == null) {
+        if (currentPredicate == null) {
             return super.getPredicate();
         } else {
-            return predicate;
+            return currentPredicate;
+        }
+    }
+    
+    public void setToDeafultPredicate() {
+        this.currentPredicate = this.defaultPredicate;
+        this.categoryName = this.defaultCategoryName;
+    }
+    
+    public void updatePredicate(Predicate<ReadOnlyTask> thePredicate) {
+        this.currentPredicate = thePredicate;
+        if (!this.categoryName.contains(CATEGORY_FILTERED_BADGE)) {
+            this.categoryName = this.categoryName + CATEGORY_FILTERED_BADGE;
         }
     }
     
