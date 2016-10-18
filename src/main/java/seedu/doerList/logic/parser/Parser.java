@@ -87,6 +87,21 @@ public class Parser {
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
+            
+        case ShortcutCategoryCommand.COMMAND_WORD_1:
+            return prepareShortcutCategoryCommand(arguments);
+            
+        case ShortcutCategoryCommand.COMMAND_WORD_2:
+            return prepareShortcutCategoryCommand(arguments);
+            
+        case ShortcutCategoryCommand.COMMAND_WORD_3:
+            return prepareShortcutCategoryCommand(arguments);
+
+        case ShortcutCategoryCommand.COMMAND_WORD_4:
+            return prepareShortcutCategoryCommand(arguments);
+
+        case ShortcutCategoryCommand.COMMAND_WORD_5:
+            return prepareShortcutCategoryCommand(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -207,6 +222,20 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareList(String args) {
+        if (args.trim().length() == 0) {
+            return new ListCommand();
+        } else {
+            return new ListCommand(args.trim());
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the category name.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareShortcutCategoryCommand(String args) {
         if (args.trim().length() == 0) {
             return new ListCommand();
         } else {
