@@ -512,7 +512,7 @@ Use case ends.
 
 **MSS**
 
-1. User types the command
+1. User types the command.
 2. To-do List reverses the most recent undo. <br>
 Use case ends.
 
@@ -562,13 +562,14 @@ Use case ends.
 
 ## Appendix C : Non Functional Requirements
 
-1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2. Should be able to hold up to 1000 tasks.
-3. Should come with automated unit tests and open source code.
-4. Should log each operations to log file.
-5. Should favor DOS style commands over Unix-style commands.
-6. The product should have no dependency on other packages.
-7. The software can be opened by clicking without installing.
+1. The program should work on any mainstream OS as long as it has Java 1.8.0_60 or higher installed.
+2. It should be able to hold up to 1000 tasks.
+3. Automated unit tests and open source code for this program 4. should be readily available.
+4. Every operation executed should be logged to the log file.
+5. The program should favour DOS style commands over Unix-style commands.
+6. The product should not have dependencies on other packages.
+7. The software can be launched, without installing, by clicking on the executable file.
+
 
 
 
@@ -576,63 +577,63 @@ Use case ends.
 
 ##### Mainstream OS
 
-> Windows, Linux, Unix, OS-X
+> Windows, Linux, Unix and OS-X
 
 ##### Deadline
 
-> A time interval with the start day as the day the task created day and the end day as the deadline date.
+> A time interval with the start day as the day the task created day and the end day represents the date of the deadline.
 
 ##### Done
 
-> `Done` is a build-in category in the to-do list which store all the tasks that are marked as `done` 
+> The built-in category in the To-Do list which store all the tasks that are marked as `done`.
 
 ## Appendix E : Product Survey
 
 ### Review of [TickTick](https://ticktick.com/):
 #### Strengths:
-- Desktop software is provided, so we can launch it quickly without using browser.
-- Shortcuts for opening the software is provided, so the todo lists can be opened quickly to those who prefer using keyboard.
-- User can create their own category for tasks and allocate tasks to different categories.
-- Elegant GUI is provided, the UI is not wordy and icons are quite intuitively.
+- Desktop software is provided, so we can launch it quickly without using a browser.
+- Shortcuts for opening the software is provided, so that the todo lists can be opened quickly to those who prefer using the keyboard.
+- User can create their own categories for tasks and allocate tasks to different categories.
+- Elegant GUI is provided; the UI is not wordy and icons are quite intuitively.
 
 #### Weaknesses:
 - Network connection is required. If there is no network connection, the software even cannot be opened.
-- The `parser` for input text can only deal with simple command. E.g. adding the start time of event. If the command cannot be recognized, it will be automatically added as task title. 
+- The `parser` for input text can only deal with simple command.  
+	- E.g. Adding the start time of event. If the command cannot be recognized, it will be automatically added as task title.
 
 ### Review of [WunderList](https://www.wunderlist.com/zh/):
 #### Strengths:
-- Ease of usage is the biggest strength. Adding an item to the list by just typing and pressing Enter. Users can easily add multiple items in this way.
-- Apple Watch integration is a nice bonus for people with Apple Watch
-- Slick user interface that allows customization with a lot of background choices
+- Ease of usage is the biggest strength. A user can easily add multiple items just by entering his desired items.
+- Apple Watch integration is a nice bonus for Apple Watch owners.
+- Slick user interface that allows background customizations.
 
 #### Weaknesses:
-- The free version is seriously limited. Users only get 25 assigns per shared to-do list and 10 background choices
-- Network connection is required. If there is no network connection, the software even cannot be opened.
-- Wunderlist lacks IFTTT integration that many to-do list apps have
+- The free version has very limited features. Users only get 25 assigns per shared to-do list and 10 background choices.
+- A constant network connection is required. If there is no network connection, the software cannot be opened.
+- Wunderlist lacks IFTTT integration compared to other to-do list applications.
 
 
 ### Review of [Trello](https://trello.com/)
 #### Strengths:
-- Online/Cloud based program so it can be transferrable to other computers	
-- Ease to add in notes and description into Trello cards
-- Customizable looks
+- Online/Cloud based program that allows it to be transferrable to other computers.
+- Ease to add in notes and description into Trello cards.
+- Customizable looks.
 
 #### Weaknesses:
-- Unable to put due dates or member tags on Trello cards
-- Inability to link with a calendar software like Google calendar which is hard to keep track of tasks done 
-- The free version is much more limited than the paid version, making certain customisation features is hard
+- It cannot link up with other calendar software like Google calendar, which makes it hard to keep track of tasks done.
+- The free version is much more limited than the paid version, making certain customisation features difficult to accomplish.
 
 ### Review of [Google Calendar](https://calendar.google.com/)
 #### Strengths:
-- Add different kind of colouring to the schedule
-- Undo addition or deletion of events
-- Create multiple calendar for different purposes
-- GUI is quite intuitive. The formatting is clear and it does not require guidelines
-- Able to use calendar in offline mode
+- Adds different kind of colouring to the schedule.
+- Undo addition or deletion of events.
+- Create multiple calendar for different purposes.
+- GUI is quite intuitive. The formatting is clear and it does not require guidelines.
+- Able to use calendar in offline mode.
 
 
 #### Weaknesses:
-- Unable to view all deleted events or reminders
-- Does not have command-line inputs to modify the calendar; most operations require a user to click, which requires time.
-- Only accessible via browsers; no desktop application available
+- Unable to view all deleted events or reminders.
+- It does not have command-line inputs to modify the calendar; most operations require a user to click, which can be time-consuming.
+- Only accessible via browsers; no desktop application available.
 
