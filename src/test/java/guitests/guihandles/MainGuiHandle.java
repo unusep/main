@@ -3,6 +3,7 @@ package guitests.guihandles;
 import guitests.GuiRobot;
 import javafx.stage.Stage;
 import seedu.doerList.TestApp;
+import seedu.doerList.ui.CategorySideBar;
 
 /**
  * Provides a handle for the main GUI.
@@ -15,6 +16,10 @@ public class MainGuiHandle extends GuiHandle {
 
     public TaskListPanelHandle getTaskListPanel() {
         return new TaskListPanelHandle(guiRobot, primaryStage);
+    }
+    
+    public CategorySideBarHandle getCategorySideBar() {
+        return new CategorySideBarHandle(guiRobot, primaryStage);
     }
 
     public ResultDisplayHandle getResultDisplay() {

@@ -18,28 +18,6 @@ public class HelpCommand extends Command {
 
     public static final String INVALID_HELP_MESSAGE = "Invalid Command Name after 'help' - type 'help' to bring up the User Guide";
 
-    public static final String SHOWING_HELP_ADD_MESSAGE = AddCommand.MESSAGE_USAGE;
-
-    public static final String SHOWING_HELP_EDIT_MESSAGE = EditCommand.MESSAGE_USAGE;
-
-    //public static final String SHOWING_HELP_MARK_MESSAGE = MarkCommand.MESSAGE_USAGE;
-
-    //public static final String SHOWING_HELP_UNMARK_MESSAGE = UnmarkCommand.MESSAGE_USAGE;
-
-    public static final String SHOWING_HELP_LIST_MESSAGE = ListCommand.MESSAGE_USAGE;
-
-    public static final String SHOWING_HELP_FIND_MESSAGE = FindCommand.MESSAGE_USAGE;
-
-    public static final String SHOWING_HELP_VIEW_MESSAGE = ViewCommand.MESSAGE_USAGE;
-
-    public static final String SHOWING_HELP_DELETE_MESSAGE = DeleteCommand.MESSAGE_USAGE;
-
-    //public static final String SHOWING_HELP_UNDO_MESSAGE = UndoCommand.MESSAGE_USAGE;
-
-    //public static final String SHOWING_HELP_REDO_MESSAGE = RedoCommand.MESSAGE_USAGE;
-
-    //public static final String SHOWING_HELP_TASKDUE_MESSAGE = TaskdueCommand.MESSAGE_USAGE;
-
     private final String command;
 
     public HelpCommand(String command) {
@@ -51,10 +29,10 @@ public class HelpCommand extends Command {
         switch (command) {
 
         case AddCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_ADD_MESSAGE);
+            return new CommandResult(AddCommand.MESSAGE_USAGE);
 
         case EditCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_EDIT_MESSAGE);
+            return new CommandResult(EditCommand.MESSAGE_USAGE);
 
         //case MarkCommand.COMMAND_WORD:
         //    return new CommandResult(SHOWING_HELP_MARK_MESSAGE);
@@ -63,16 +41,16 @@ public class HelpCommand extends Command {
         //    return new CommandResult(SHOWING_HELP_UNMARK_MESSAGE);
 
         case ListCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_LIST_MESSAGE);
+            return new CommandResult(ListCommand.MESSAGE_USAGE);
 
         case FindCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_FIND_MESSAGE);
+            return new CommandResult(FindCommand.MESSAGE_USAGE);
 
         case ViewCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_VIEW_MESSAGE);
+            return new CommandResult(ViewCommand.MESSAGE_USAGE);
 
         case DeleteCommand.COMMAND_WORD:
-            return new CommandResult(SHOWING_HELP_DELETE_MESSAGE);
+            return new CommandResult(DeleteCommand.MESSAGE_USAGE);
 
         //case UndoCommand.COMMAND_WORD:
         //    return new CommandResult(SHOWING_HELP_UNDO_MESSAGE);

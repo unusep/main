@@ -3,6 +3,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.logic.parser.TimeParser;
 
 import org.joda.time.DateTime;
 
@@ -14,8 +15,7 @@ public class TodoTime {
 
     public final DateTime value;
 
-    public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm'";
-    public static final String TODOTIME_VALIDATION_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d";
+    public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
 
     /**
@@ -25,22 +25,12 @@ public class TodoTime {
     */
    public TodoTime(String rawTime) throws IllegalValueException {
        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
-       try {
-           value = DateTime.parse(rawTime, formatter);
-       } catch (IllegalArgumentException ire) {
-           throw new IllegalValueException(MESSAGE_TODOTIME_CONSTRAINTS);
-       }
+       String time = new TimeParser().parse(rawTime);
+       value = DateTime.parse(time, formatter);
    }
 
    public TodoTime(DateTime source) {
        value = source;
-   }
-
-   /**
-    * Returns true if a given string is a valid time.
-    */
-   public static boolean isValidTime(String test) {
-       return test != null && test.matches(TODOTIME_VALIDATION_REGEX);
    }
 
    /**
@@ -66,7 +56,7 @@ public class TodoTime {
    public boolean equals(Object other) {
        return other == this // short circuit if same object
                || (other instanceof TodoTime // instanceof handles nulls
-               && this.value.isEqual(((TodoTime) other).value)); // state check
+               && this.toString().equals(((TodoTime) other).toString())); // state check
    }
 
 

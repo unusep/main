@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.TaskListPanel">
+<VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.CategoryListPanel">
     <children>
-        <ListView fx:id="CategoryListView" prefHeight="320.0" prefWidth="248.0" VBox.vgrow="ALWAYS" />
+        <ListView fx:id="categoryListView" VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

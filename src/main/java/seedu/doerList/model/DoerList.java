@@ -1,6 +1,8 @@
 package seedu.doerList.model;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
@@ -20,10 +22,29 @@ public class DoerList implements ReadOnlyDoerList {
 
     private final UniqueTaskList tasks;
     private final UniqueCategoryList categories;
+    private final BuildInCategoryList buildInCategories;
 
     {
         tasks = new UniqueTaskList();
         categories = new UniqueCategoryList();
+        buildInCategories = new BuildInCategoryList();
+        addListenerToCategoryList();
+        buildInCategories.addAllBuildInCategories();
+    }
+    
+    
+    private void addListenerToCategoryList() {
+        ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    for(Category addedCategory : c.getAddedSubList()) {
+                        addedCategory.setFilteredTaskList(getTasks());
+                    }
+                }
+            }
+        };
+        buildInCategories.getInternalList().addListener(listener);
+        categories.getInternalList().addListener(listener);
     }
 
     public DoerList() {}
@@ -50,6 +71,14 @@ public class DoerList implements ReadOnlyDoerList {
 
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
+    }
+    
+    public ObservableList<Category> getCategories() {
+        return categories.getInternalList();
+    }
+    
+    public ObservableList<Category> getBuildInCategories() {
+        return buildInCategories.getInternalList();
     }
 
     public void setTasks(List<Task> tasks) {

@@ -11,7 +11,10 @@ import seedu.doerList.MainApp;
 import seedu.doerList.commons.core.ComponentManager;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
+import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
+import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
@@ -19,6 +22,7 @@ import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
+import seedu.doerList.model.category.Category;
 
 import java.util.logging.Logger;
 
@@ -103,6 +107,12 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait("Could not save data", "Could not save data to file", event.exception);
     }
+    
+    @Subscribe
+    private void handleDoerListChangedEvent(DoerListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCategorySideBar().refreshCategories(); // to update category count
+    }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
@@ -126,6 +136,19 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().selectionChanged(event.getNewSelectedCard());
+    }
+    
+    @Subscribe
+    private void handleCategorySelectionChangedEvent(CategorySelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCategorySideBar().clearOtherSelectionExcept(event.getNewSelection());
+        logic.setPredicateForTaskList(event.getNewSelection().getPredicate());
+    }
+    
+    @Subscribe
+    private void handleJumpToCategoryEvent(JumpToCategoryEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCategorySideBar().categoryScrollTo(event.target);
     }
 
 }

@@ -6,6 +6,7 @@ import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.TodoTime;
@@ -13,6 +14,7 @@ import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 /**
@@ -91,6 +93,17 @@ public class ModelManager extends ComponentManager implements Model {
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
+    
+    @Override
+    public UnmodifiableObservableList<Category> getBuildInCategoryList() {
+        return new UnmodifiableObservableList<>(doerList.getBuildInCategories());
+    }
+    
+    @Override
+    public UnmodifiableObservableList<Category> getCategoryList() {
+        return new UnmodifiableObservableList<>(doerList.getCategories());
+    }
+    
 
     @Override
     public void updateFilteredListToShowAll() {
@@ -109,6 +122,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
+    }
+    
+    public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+        filteredTasks.setPredicate(predicate);
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================

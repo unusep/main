@@ -17,6 +17,7 @@ import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
+import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
@@ -27,14 +28,15 @@ public class MainWindow extends UiPart {
 
     private static final String ICON = "/images/doerList_32.png";
     private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 600;
-    public static final int MIN_WIDTH = 450;
-    public static final float DEFAULT_DIVIDER_POSITION = 0.2f;
+    public static final int MIN_HEIGHT = 580;
+    public static final int MIN_WIDTH = 660;
+    public static final float DEFAULT_DIVIDER_POSITION = 0.3f;
 
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private TaskListPanel taskListPanel;
+    private CategorySideBar categorySideBar;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -55,6 +57,9 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane taskListPanelPlaceholder;
+    
+    @FXML
+    private AnchorPane categorySideBarPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -113,6 +118,8 @@ public class MainWindow extends UiPart {
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
+        categorySideBar = CategorySideBar.load(primaryStage, getCategorySideBarPlaceholder(), 
+                logic.getBuildInCategoryList(), logic.getCategoryList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getDoerListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -132,6 +139,10 @@ public class MainWindow extends UiPart {
 
     public AnchorPane getTaskListPlaceholder() {
         return taskListPanelPlaceholder;
+    }
+    
+    public AnchorPane getCategorySideBarPlaceholder() {
+        return categorySideBarPlaceholder;
     }
 
     public void hide() {
@@ -194,4 +205,10 @@ public class MainWindow extends UiPart {
     public TaskListPanel getTaskListPanel() {
         return this.taskListPanel;
     }
+    
+    public CategorySideBar getCategorySideBar() {
+        return this.categorySideBar;
+    }
+
+    
 }

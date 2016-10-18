@@ -82,6 +82,9 @@ public class TaskListPanel extends UiPart {
     }
 
     private void displayTasks() {
+        // clear selection first
+        TaskCard.clearSelection();
+        
         sectionPanelControllers = new ArrayList<SectionPanel>();
         sectionList.getChildren().clear();
         
