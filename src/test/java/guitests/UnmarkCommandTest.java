@@ -5,6 +5,7 @@ import org.junit.Test;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.task.Task;
 import seedu.doerList.testutil.TestTask;
 import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
@@ -19,17 +20,17 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         //unmarks one task from top
         TestTask[] currentList = td.getTypicalTasks();
         int targetIndex = 1;
-        currentList[targetIndex-1].addBuildInCategory(BuildInCategoryList.COMPLETE);
+        taskListPanel.getTask(targetIndex-1).addBuildInCategory(BuildInCategoryList.COMPLETE);
         assertUnmarkSuccess(targetIndex, currentList);
         
         //unmarks one task from middle
         targetIndex = currentList.length / 2;
-        currentList[targetIndex-1].addBuildInCategory(BuildInCategoryList.COMPLETE);
+        taskListPanel.getTask(targetIndex-1).addBuildInCategory(BuildInCategoryList.COMPLETE);
         assertUnmarkSuccess(targetIndex, currentList);
         
         //unmarks one task from the end
         targetIndex = currentList.length;
-        currentList[targetIndex-1].addBuildInCategory(BuildInCategoryList.COMPLETE);
+        taskListPanel.getTask(targetIndex-1).addBuildInCategory(BuildInCategoryList.COMPLETE);
         assertUnmarkSuccess(targetIndex, currentList);
         
         //invalid index
@@ -38,12 +39,10 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         
     }
     
-    private void assertUnmarkSuccess(int targetIndex, TestTask[] currentList) {
-        TestTask taskToUnmark = currentList[targetIndex - 1];
-        
+    private void assertUnmarkSuccess(int targetIndex, TestTask[] currentList) {     
         commandBox.runCommand("unmark " + targetIndex);
         
-        System.out.println(taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
+        Task taskToUnmark = (Task) taskListPanel.getTask(targetIndex-1);
         
         assertTrue(!taskToUnmark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
         
