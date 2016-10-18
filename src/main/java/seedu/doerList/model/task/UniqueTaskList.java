@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.exceptions.DuplicateDataException;
 import seedu.doerList.commons.util.CollectionUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
 
 import java.util.*;
 
@@ -90,7 +91,16 @@ public class UniqueTaskList implements Iterable<Task> {
         }
         internalList.set(i, toReplace);
     }
-
+    
+    public void unmark(Task task) throws TaskNotFoundException {
+        assert task != null;
+        if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
+            task.removeBuildInCategory(BuildInCategoryList.COMPLETE);     
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
+    
     public ObservableList<Task> getInternalList() {
         return internalList;
     }

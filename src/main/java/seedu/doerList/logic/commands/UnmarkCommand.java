@@ -1,31 +1,33 @@
 package seedu.doerList.logic.commands;
 
+import java.util.Optional;
+
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.task.*;
+import seedu.doerList.model.category.Category;
+import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
-public class MarkCommand extends Command {
+public class UnmarkCommand extends Command {
     
-    public static final String COMMAND_WORD = "mark";
+    public static final String COMMAND_WORD = "unmark";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": To mark this task as done.\n"
+            + ": marks a 'done' task as 'not done'.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MARK_TASK_SUCCESS = "mark task: %1$s";
+    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "unmark task: %1$s";
     
     private int targetIndex;
     
-    public MarkCommand(int targetIndex) {
+    public UnmarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
     
     public CommandResult execute() {
-        assert model != null;
-        
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         if (lastShownList.size() < targetIndex) {
@@ -36,13 +38,13 @@ public class MarkCommand extends Command {
         ReadOnlyTask taskToMark = lastShownList.get(targetIndex - 1);
         
         try {
-            model.markTask(taskToMark);
-            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToMark)); 
+            model.unmarkTask(taskToMark);
+            return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, taskToMark)); 
         } catch (TaskNotFoundException tnf) {
             // impossible
             assert false;
             return null;
         }
-          
+        
     }
 }

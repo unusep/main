@@ -148,13 +148,20 @@ public class DoerList implements ReadOnlyDoerList {
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
     
-    public void markTask(ReadOnlyTask t) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.contains(t)) {
-            t.addBuildInCategory(BuildInCategoryList.COMPLETE);
+    public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.contains(task)) {
+            task.removeBuildInCategory(BuildInCategoryList.COMPLETE);
         } else {
             throw new UniqueTaskList.TaskNotFoundException();
         }
-        
+    }
+
+    public void markTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.contains(task)) {
+            task.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
     }
 
 //// category-level operations
