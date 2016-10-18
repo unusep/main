@@ -46,9 +46,6 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given predicate*/
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
-    /** Updates the filter of the filtered task list to filter by the deadline*/
-    void updateFilteredTaskList(TodoTime deadline);
-
     void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
 
 }

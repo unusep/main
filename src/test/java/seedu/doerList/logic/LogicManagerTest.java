@@ -284,7 +284,7 @@ public class LogicManagerTest {
                         );
         // Test Next 7 Days
         assertBuildInCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
-                        BuildInCategoryList.NEXT7DAYS
+                        BuildInCategoryList.NEXT
                         );
         // Test Inbox
         assertBuildInCategoryListed(Arrays.asList(Inbox1),
@@ -547,7 +547,7 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
-                "taskdue 123d", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+                "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }

@@ -80,7 +80,7 @@ public class Parser {
             return new HelpCommand(arguments.trim());
 
         case TaskdueCommand.COMMAND_WORD:
-            return prepareTaskdue(arguments);
+            return new TaskdueCommand(arguments.trim());
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -259,21 +259,6 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
-    }
-
-    /**
-     * Parses arguments in the context of the taskdue command.
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareTaskdue(String args) {
-        String time = args.trim();
-        try {
-            return new TaskdueCommand(time);
-        } catch (IllegalValueException ive) {
-            return new IncorrectCommand(ive.getMessage());
-        }
     }
 
     /**

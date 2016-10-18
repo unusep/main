@@ -115,11 +115,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(new PredicateExpression(new TitleDescriptionQualifier(keywords)));
     }
 
-    @Override
-    public void updateFilteredTaskList(TodoTime deadline) {
-        updateFilteredTaskList(new PredicateExpression(new TaskdueQualifier(deadline)));
-    }
-
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }

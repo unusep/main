@@ -22,7 +22,7 @@ public class TaskdueCommandTest extends DoerListGuiTest {
     @Test
     public void taskdue_emptyList(){
         commandBox.runCommand("clear");
-        assertTaskdueResult("taskdue 2016-10-07 12:00"); //no results
+        assertTaskdueResult("taskdue tomorrow"); //no results
     }
 
     @Test
