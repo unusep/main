@@ -15,15 +15,16 @@ public class TimeParser {
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public TimeParser() {}
-    public static String parse(String s) throws IllegalValueException {
+    
+    public String parse(String s) throws IllegalValueException {
         try {
             Parser parser = new Parser();
             List<DateGroup> dateGroups = parser.parse(s);
-            DateGroup group = dateGroups.get(0);
+            DateGroup group = dateGroups.get(dateGroups.size() - 1);
             List<Date> dateList = group.getDates();
-            Date firstDate = dateList.get(0);
+            Date lastDate = dateList.get(dateList.size() - 1);
 
-            return dateFormat.format(firstDate);
+            return dateFormat.format(lastDate);
         } catch (IndexOutOfBoundsException ire) {
             throw new IllegalValueException(TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         }

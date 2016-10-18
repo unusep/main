@@ -25,7 +25,7 @@ public class TodoTime {
     */
    public TodoTime(String rawTime) throws IllegalValueException {
        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_STANDARD_FORMAT);
-       String time = TimeParser.parse(rawTime);
+       String time = new TimeParser().parse(rawTime);
        value = DateTime.parse(time, formatter);
 
    }

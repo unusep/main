@@ -263,14 +263,14 @@ public class LogicManagerTest {
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8), 
-                        new DateTime().withHourOfDay(12)); // today
-        Task Next7Days1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1), 
-                        new DateTime().withHourOfDay(12).plusDays(1)); // tomorrow
-        Task Next7Days2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5), 
-                        new DateTime().withHourOfDay(12).plusDays(5)); // next 5 days
-        Task Next7Days3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7), 
-                        new DateTime().withHourOfDay(12).plusDays(7)); // next 7 days
+        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8).toString(), 
+                        new DateTime().withHourOfDay(12).toString()); // today
+        Task Next7Days1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(), 
+                        new DateTime().withHourOfDay(12).plusDays(1).toString()); // tomorrow
+        Task Next7Days2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(), 
+                        new DateTime().withHourOfDay(12).plusDays(5).toString()); // next 5 days
+        Task Next7Days3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(), 
+                        new DateTime().withHourOfDay(12).plusDays(7).toString()); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
@@ -606,7 +606,7 @@ public class LogicManagerTest {
          * @param endTime
          * @return
          */
-        Task generateTaskWithTime(int seed, DateTime startTime, DateTime endTime) {
+        Task generateTaskWithTime(int seed, String startTime, String endTime) {
             try {
                 return new Task(
                         new Title("Task " + seed),
