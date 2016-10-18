@@ -57,6 +57,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         Category toSelectCategory;
+        BuildInCategoryList.resetBuildInCategoryPredicate();
         Optional<Category> fromCategory = findNameInCategory(toSelectCategoryName);
         if (fromCategory.isPresent()) {
             toSelectCategory = fromCategory.get();

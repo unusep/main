@@ -38,11 +38,15 @@ public class TaskdueCommand extends Command {
             DateTime deadline = DateTime.parse(time, DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
             
             model.updateFilteredListToShowAll();
-            model.updateFilteredTaskList((ReadOnlyTask task) -> {
+            BuildInCategoryList.ALL.updatePredicate((ReadOnlyTask task) -> {
+                if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
+                    return false; // is not complete
+                }
                 return task.hasEndTime() && task.getEndTime().value.isBefore(deadline);
             });
-                 
-            return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+            EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
+            model.updateFilteredTaskList(BuildInCategoryList.ALL.getPredicate());
+            return new CommandResult(getMessageForTaskListShownSummary(BuildInCategoryList.ALL.getTasks().size()));
         } catch (IllegalValueException ive) {
             return new CommandResult(ive.getMessage());
         }

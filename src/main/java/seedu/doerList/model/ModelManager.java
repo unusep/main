@@ -83,7 +83,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
         doerList.replaceTask(i, task);
-        updateFilteredListToShowAll();
         indicateDoerListChanged();
     }
 
@@ -110,90 +109,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);
     }
 
-    @Override
-    public void updateFilteredTaskList(Set<String> keywords){
-        updateFilteredTaskList(new PredicateExpression(new TitleDescriptionQualifier(keywords)));
-    }
-
-    private void updateFilteredTaskList(Expression expression) {
-        filteredTasks.setPredicate(expression::satisfies);
-    }
     
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         filteredTasks.setPredicate(predicate);
-    }
-
-    //========== Inner classes/interfaces used for filtering ==================================================
-
-    interface Expression {
-        boolean satisfies(ReadOnlyTask task);
-        String toString();
-    }
-
-    private class PredicateExpression implements Expression {
-
-        private final Qualifier qualifier;
-
-        PredicateExpression(Qualifier qualifier) {
-            this.qualifier = qualifier;
-        }
-
-        @Override
-        public boolean satisfies(ReadOnlyTask task) {
-            return qualifier.run(task);
-        }
-
-        @Override
-        public String toString() {
-            return qualifier.toString();
-        }
-    }
-
-    interface Qualifier {
-        boolean run(ReadOnlyTask task);
-        String toString();
-    }
-
-    private class TitleDescriptionQualifier implements Qualifier {
-        private Set<String> titleDescriptionKeyWords;
-
-        TitleDescriptionQualifier(Set<String> titleKeyWords) {
-            this.titleDescriptionKeyWords = titleKeyWords;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            return titleDescriptionKeyWords.stream()
-                    .filter(keyword -> {
-                        return StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword) ||
-                                (task.hasDescription() && StringUtil.containsIgnoreCase(task.getDescription().value, keyword));
-                        })
-                    .findAny()
-                    .isPresent();
-        }
-
-        @Override
-        public String toString() {
-            return "title||description=" + String.join(", ", titleDescriptionKeyWords);
-        }
-    }
-
-    private class TaskdueQualifier implements Qualifier {
-        private TodoTime deadline;
-
-        TaskdueQualifier(TodoTime deadline) {
-            this.deadline = deadline;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            return task.getEndTime().isBefore(deadline);
-        }
-
-        @Override
-        public String toString() {
-            return "";
-        }
     }
 
 }

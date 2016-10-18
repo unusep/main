@@ -3,8 +3,10 @@ package seedu.doerList.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
+import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.*;
@@ -74,7 +76,7 @@ public class EditCommand extends Command {
         	    Task newTask = generateUpdatedTask(taskToEdit);
 
         	    model.replaceTask(targetIndex - 1, newTask);
-
+        	    
         	    return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, newTask));
         } catch (TaskNotFoundException pnfe) {
             return new CommandResult(Messages.MESSAGE_TASK_NOT_IN_DOERLIST);

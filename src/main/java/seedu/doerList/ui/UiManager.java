@@ -148,6 +148,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToCategoryEvent(JumpToCategoryEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCategorySideBar().refreshCategories();
         mainWindow.getCategorySideBar().categoryScrollTo(event.target);
     }
 

@@ -9,15 +9,21 @@ import seedu.doerList.testutil.TestTask;
 
 public class TaskdueCommandTest extends DoerListGuiTest {
 
-    //@Test
-    //public void taskdue_nonEmptyList() {
-    //    assertTaskdueResult("taskdue 2016-10-07 12:00"); //no results
-    //    assertTaskdueResult("taskdue 2016-10-07 12:00", td.alice, td.benson, td.carl, td.daniel, td.elle, td.fiona, td.george); //multiple results
+    @Test
+    public void taskdue_nonEmptyList() {
+        assertTaskdueResult("taskdue yesterday", td.task6, td.task7); //multiple results
+        assertTaskdueResult("taskdue today 23pm", td.task1, td.task6, td.task7); //one results
 
         //find after deleting one result
-     //   commandBox.runCommand("delete 1");
-    //    assertTaskdueResult("taskdue 2016-10-07 12:00", td.benson, td.carl, td.daniel, td.elle, td.fiona, td.george);
-    //}
+        commandBox.runCommand("delete 1");
+        commandBox.runCommand("delete 1");
+        commandBox.runCommand("delete 1");
+        assertTaskdueResult("taskdue today 23pm"); //no results
+        
+        //add one
+        commandBox.runCommand(td.task8.getAddCommand());
+        assertTaskdueResult("taskdue today 23pm", td.task8); //1 results
+    }
 
     @Test
     public void taskdue_emptyList(){

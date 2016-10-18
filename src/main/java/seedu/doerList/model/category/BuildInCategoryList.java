@@ -3,14 +3,11 @@ package seedu.doerList.model.category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.exceptions.DuplicateDataException;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.CollectionUtil;
 
 import java.util.*;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 /**
  * A list of categories that enforces no nulls and uniqueness between its elements.
@@ -68,6 +65,14 @@ public class BuildInCategoryList implements Iterable<Category> {
             // impossible
             throw new RuntimeException("Could not init class.", e);
         }
+    }
+    
+    public static void resetBuildInCategoryPredicate() {
+        ALL.setToDeafultPredicate();
+        TODAY.setToDeafultPredicate();
+        NEXT.setToDeafultPredicate();
+        INBOX.setToDeafultPredicate();
+        COMPLETE.setToDeafultPredicate();
     }
     
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
