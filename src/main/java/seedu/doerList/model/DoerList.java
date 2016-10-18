@@ -43,7 +43,6 @@ public class DoerList implements ReadOnlyDoerList {
                 }
             }
         };
-        buildInCategories.getInternalList().addListener(listener);
         categories.getInternalList().addListener(listener);
     }
 

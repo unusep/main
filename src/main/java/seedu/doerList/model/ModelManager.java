@@ -6,6 +6,7 @@ import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
@@ -40,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         doerList = new DoerList(src);
         filteredTasks = new FilteredList<>(doerList.getTasks());
+        BuildInCategoryList.setTasksSource(doerList.getTasks());
     }
 
     public ModelManager() {
@@ -49,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyDoerList initialData, UserPrefs userPrefs) {
         doerList = new DoerList(initialData);
         filteredTasks = new FilteredList<>(doerList.getTasks());
+        BuildInCategoryList.setTasksSource(doerList.getTasks());
     }
 
     @Override
