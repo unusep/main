@@ -100,7 +100,8 @@ public class TaskListPanel extends UiPart {
         // clear selection first
         TaskCard.clearSelection();
         
-        Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = categorizedByBuildInCategory(allTasks);
+        Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = 
+                categorizedByBuildInCategory(allTasks);
         
         int displayIndexStart = 1;
         sectionPanelControllers = new ArrayList<SectionPanel>();
@@ -247,16 +248,25 @@ public class TaskListPanel extends UiPart {
         }
         
         // offset for the second section and so on
-        if (sectionIndex > 0) {
-            y += sectionPanelControllers.get(sectionIndex - 1).getLayout().getBoundsInParent().getMaxY();
+        int k = sectionIndex;
+        while (k > 0) {
+            y += sectionPanelControllers.get(k - 1).getLayout().getHeight();
+            k--;
+        }
+        
+        // offset inside the section list
+        int i = 0;
+        while (!sectionPanelControllers.get(sectionIndex).getTaskControllers().get(i).equals(taskcard)) {
+            y += sectionPanelControllers.get(sectionIndex).getTaskControllers().get(i).getLayout().getHeight();
+            i++;
         }
         
         // offset for the last element
         if ((sectionIndex == sectionPanelControllers.size() - 1)
                 && (selectionIndex == section.getTaskControllers().size() - 1)) {
-            y += taskcard.getLayout().getHeight();
+            y = height;
         }
-
+        
         // scrolling values range from 0 to 1
         tasksScrollPane.setVvalue(y/height);
 
