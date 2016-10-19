@@ -48,6 +48,7 @@ public class BuildInCategoryList implements Iterable<Category> {
                         return task.getEndTime().value.isAfter(todayBegin) &&
                                 task.getEndTime().value.isBefore(todayEnd);
                     } else {
+                        // interval match
                         if (task.getEndTime().value.isAfter(todayBegin) 
                                 && task.getStartTime().value.isBefore(todayEnd)) {
                             return true;
@@ -61,8 +62,13 @@ public class BuildInCategoryList implements Iterable<Category> {
             });
             NEXT = new BuildInCategory("Next", (task) -> {
                 DateTime todayEnd = new DateTime().withTimeAtStartOfDay().plusDays(1);     
-                return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
-                        task.hasEndTime() && task.getEndTime().value.isAfter(todayEnd);
+                if (task.hasStartTime()) {
+                    return task.getStartTime().value.isAfter(todayEnd);
+                } else if (task.hasEndTime()) {
+                    return task.getEndTime().value.isAfter(todayEnd);
+                } else {
+                    return false;
+                }
             });
             DUE = new BuildInCategory("Overdue", (task) -> {
                 DateTime todayBegin = new DateTime().withTimeAtStartOfDay();     
