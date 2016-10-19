@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 
