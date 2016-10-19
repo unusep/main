@@ -9,6 +9,7 @@ import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
 
@@ -98,55 +99,6 @@ public class BuildInCategoryList implements Iterable<Category> {
         INBOX.setFilteredTaskList(observableList);
         COMPLETE.setFilteredTaskList(observableList);
         DUE.setFilteredTaskList(observableList);
-    }
-
-
-
-    /**
-     * Categorized tasks based on buildIn Category
-     * 
-     * @param tasks not modifiable
-     * @return Map contain buildInCategory to List of tasks
-     */
-    public static Map<BuildInCategory, List<ReadOnlyTask>> categorizedByBuildInCategory(
-        ObservableList<ReadOnlyTask> tasks, BuildInCategory ... categories) {
-        HashMap<BuildInCategory, List<ReadOnlyTask>> results = new HashMap<BuildInCategory, List<ReadOnlyTask>>();
-        for(BuildInCategory c : categories) {
-            List<ReadOnlyTask> filteredTasks = new ArrayList<ReadOnlyTask>(tasks.filtered(c.getPredicate()));
-            if (filteredTasks.size() > 0) {
-                // sort the list before put in
-                filteredTasks.sort((t1, t2) -> {
-                    if (t1.isFloatingTask() && t2.isFloatingTask()) {
-                        return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
-                    } else {
-                        DateTime t1_represent = t1.hasStartTime() ? t1.getStartTime().value : new DateTime();
-                        DateTime t2_represent = t2.hasStartTime() ? t2.getStartTime().value : new DateTime();
-                        t1_represent = t1.hasEndTime() ? t1.getEndTime().value : t1_represent;
-                        t2_represent = t2.hasEndTime() ? t2.getEndTime().value : t2_represent;
-                        return t1_represent.isBefore(t2_represent) ? -1 : 1;
-                    }
-                });
-                results.put(c, filteredTasks);
-            }
-        }
-        return results;
-    }
-    
-    public static ReadOnlyTask getTaskWhenCategorizedByBuildInCategory(int index, 
-            ObservableList<ReadOnlyTask> tasks, 
-            BuildInCategory ... categories) throws TaskNotFoundException {
-        Map<BuildInCategory, List<ReadOnlyTask>> results = categorizedByBuildInCategory(tasks, categories);
-        int i = 1;
-        for(BuildInCategory c : categories) {
-            if (results.get(c) == null) continue;
-            for(ReadOnlyTask t : results.get(c)) {
-                if (index == i) {
-                    return t;
-                }
-                i++;
-            }
-        }
-        throw new TaskNotFoundException();
     }
     
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();

@@ -111,6 +111,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleDoerListChangedEvent(DoerListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getTaskListPanel().displayTasks(); // redraw the task panel
         mainWindow.getCategorySideBar().refreshCategories(); // to update category count
     }
 

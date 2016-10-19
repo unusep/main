@@ -17,11 +17,16 @@ import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import org.joda.time.DateTime;
 
 /**
  * Panel containing the list of events.
@@ -91,12 +96,11 @@ public class TaskListPanel extends UiPart {
         });
     }
 
-    private void displayTasks() {
+    public void displayTasks() {
         // clear selection first
         TaskCard.clearSelection();
         
-        Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = BuildInCategoryList.categorizedByBuildInCategory(allTasks,
-                categorizedBy);
+        Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = categorizedByBuildInCategory(allTasks);
         
         int displayIndexStart = 1;
         sectionPanelControllers = new ArrayList<SectionPanel>();
@@ -258,6 +262,57 @@ public class TaskListPanel extends UiPart {
 
         // just for usability
         tasksScrollPane.requestFocus();
+    }
+    
+    /**
+     * Categorized tasks based on buildIn Category
+     * 
+     * @param tasks not modifiable
+     * @return Map contain buildInCategory to List of tasks
+     */
+    public static Map<BuildInCategory, List<ReadOnlyTask>> categorizedByBuildInCategory(
+        ObservableList<ReadOnlyTask> tasks) {
+        HashMap<BuildInCategory, List<ReadOnlyTask>> results = new HashMap<BuildInCategory, List<ReadOnlyTask>>();
+        for(BuildInCategory c : categorizedBy) {
+            List<ReadOnlyTask> filteredTasks = new ArrayList<ReadOnlyTask>(tasks.filtered(c.getPredicate()));
+            if (c != BuildInCategoryList.COMPLETE) {
+                filteredTasks = filteredTasks.stream().filter((task) -> { 
+                    return !BuildInCategoryList.COMPLETE.getPredicate().test(task);
+                            }).collect(Collectors.toList());
+            }
+            if (filteredTasks.size() > 0) {
+                // sort the list before put in
+                filteredTasks.sort((t1, t2) -> {
+                    if (t1.isFloatingTask() && t2.isFloatingTask()) {
+                        return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
+                    } else {
+                        DateTime t1_represent = t1.hasStartTime() ? t1.getStartTime().value : new DateTime();
+                        DateTime t2_represent = t2.hasStartTime() ? t2.getStartTime().value : new DateTime();
+                        t1_represent = t1.hasEndTime() ? t1.getEndTime().value : t1_represent;
+                        t2_represent = t2.hasEndTime() ? t2.getEndTime().value : t2_represent;
+                        return t1_represent.isBefore(t2_represent) ? -1 : 1;
+                    }
+                });
+                results.put(c, filteredTasks);
+            }
+        }
+        return results;
+    }
+    
+    public static ReadOnlyTask getTaskWhenCategorizedByBuildInCategory(int index, 
+            ObservableList<ReadOnlyTask> tasks) throws TaskNotFoundException {
+        Map<BuildInCategory, List<ReadOnlyTask>> results = categorizedByBuildInCategory(tasks);
+        int i = 1;
+        for(BuildInCategory c : categorizedBy) {
+            if (results.get(c) == null) continue;
+            for(ReadOnlyTask t : results.get(c)) {
+                if (index == i) {
+                    return t;
+                }
+                i++;
+            }
+        }
+        throw new TaskNotFoundException();
     }
 
 

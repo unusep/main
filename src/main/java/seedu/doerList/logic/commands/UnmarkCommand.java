@@ -34,7 +34,7 @@ public class UnmarkCommand extends Command {
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         try {
-            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            ReadOnlyTask target = TaskListPanel.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             model.unmarkTask(target);
             return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, target)); 
         } catch (TaskNotFoundException e) {

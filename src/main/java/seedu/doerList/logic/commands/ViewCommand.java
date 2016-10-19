@@ -32,7 +32,7 @@ public class ViewCommand extends Command {
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         try {
-            ReadOnlyTask target = BuildInCategoryList.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList, TaskListPanel.categorizedBy);
+            ReadOnlyTask target = TaskListPanel.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
             return new CommandResult(String.format(MESSAGE_VIEW_TASK_SUCCESS, target));
         } catch (TaskNotFoundException e) {
