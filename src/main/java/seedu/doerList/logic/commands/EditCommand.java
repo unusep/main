@@ -91,12 +91,14 @@ public class EditCommand extends Command {
      * @return Person with updated information
      */
     private Task generateUpdatedTask(ReadOnlyTask original) {
-        return new Task(
+        Task newTask = new Task(
                 toUpdateTitle != null ? toUpdateTitle : original.getTitle(),
                 toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
                 toUpdateStartTime != null ? toUpdateStartTime : original.getStartTime(),
                 toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),
                 toUpdateCategories != null ? toUpdateCategories : original.getCategories()
         );
+        newTask.setBuildInCategories(original.getBuildInCategories());
+        return newTask;
     }
 }
