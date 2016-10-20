@@ -41,9 +41,8 @@ public class CategoryCardHandle extends GuiHandle {
                 && getCategoryCount().equals(String.valueOf(category.expectedNumTasks));
     }
     
-    public boolean isSameCategory(Category category){
-        return getCategoryName().equals(category.categoryName)
-                && getCategoryCount().equals(String.valueOf(category.getTasks().size()));
+    public boolean isSameCategoryName(Category category){
+        return getCategoryName().equals(category.categoryName);
     }
 
     @Override

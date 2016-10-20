@@ -12,7 +12,8 @@ import seedu.doerList.ui.TaskCard;
  */
 public class TaskCardHandle extends GuiHandle {
     private static final String TITLE_FIELD_ID = "title";
-
+    private static final String INDEX_FIELD_ID = "index";
+    
     private Node node;
 
     public TaskCardHandle(GuiRobot guiRobot, Stage primaryStage, Node node){
@@ -32,6 +33,10 @@ public class TaskCardHandle extends GuiHandle {
         return getTextFromLabel("#" + TITLE_FIELD_ID);
     }
 
+    public String getDisplayIndex() {
+        return getTextFromLabel("#" + INDEX_FIELD_ID);
+    }
+    
     public String getDescription() {
         return getContentFromText("#" + TaskCard.DESCRIPTION_FIELD_ID);
     }

@@ -63,7 +63,7 @@ public class TaskCard extends UiPart {
     public void configure(int displayIndex) {
         taskPanel.setUserData(this); // store the controller
         title.setText(task.getTitle().fullTitle);
-        index.setText("#" + displayIndex);
+        index.setText(displayIndex + "");
         // don't display description by default
         // TODO need to parse to human readable time interval
         // TODO currently just support floating task

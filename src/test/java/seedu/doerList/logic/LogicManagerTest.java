@@ -421,11 +421,14 @@ public class LogicManagerTest {
     public void execute_edit_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
+        threeTasks.get(0).addBuildInCategory(BuildInCategoryList.COMPLETE); // mark the task as complete
+        threeTasks.get(2).addBuildInCategory(BuildInCategoryList.COMPLETE); // mark the task as complete
         helper.addToModel(model, threeTasks);
 
         DoerList expectedAB = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);
         Task editedTask = helper.generateTask(4);
+        editedTask.addBuildInCategory(BuildInCategoryList.COMPLETE);
         expectedAB.removeTask(taskToEdit);
         expectedAB.addTask(editedTask);
 

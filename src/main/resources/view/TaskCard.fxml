@@ -14,7 +14,7 @@
          <children>
             <HBox>
                <children>
-                  <Label fx:id="index" text="#1">
+                  <Label fx:id="index" text="1">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
