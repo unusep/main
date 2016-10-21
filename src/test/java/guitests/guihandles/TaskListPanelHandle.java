@@ -32,6 +32,7 @@ public class TaskListPanelHandle extends GuiHandle {
 
     public static final int NOT_FOUND = -1;
     public static final String SECTION_PANE_ID = "#sectionPanel";
+    public static final String TASK_PANE_ID = "#tasksScrollPane";
 
     public TaskListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
@@ -40,8 +41,8 @@ public class TaskListPanelHandle extends GuiHandle {
 //    /**
 //     * Clicks on the ListView.
 //     */
-//    public void clickOnListView() {
-//        Point2D point= TestUtil.getScreenMidPoint(getListView());
+//    public void clickOnTaskPanel() {
+//        Point2D point= TestUtil.getScreenMidPoint(guiRobot.lookup(TASK_PANE_ID).query());
 //        guiRobot.clickOn(point.getX(), point.getY());
 //    }
 
