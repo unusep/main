@@ -1,5 +1,7 @@
 package seedu.doerList.testutil;
 
+import seedu.doerList.logic.commands.AddCommand;
+import seedu.doerList.logic.commands.EditCommand;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
@@ -15,14 +17,11 @@ public class TestTask implements ReadOnlyTask {
     private Description description;
     private TodoTime startTime;
     private TodoTime endTime;
-    private UniqueCategoryList categories;
-    private BuildInCategoryList buildInCategories;
+    private UniqueCategoryList categories = new UniqueCategoryList();
+    private BuildInCategoryList buildInCategories = new BuildInCategoryList();
     
 
-    public TestTask() {
-        categories = new UniqueCategoryList();
-        buildInCategories = new BuildInCategoryList();
-    }
+    public TestTask() {}
 
     // copy constructor
     public TestTask(ReadOnlyTask source) {
@@ -31,6 +30,7 @@ public class TestTask implements ReadOnlyTask {
         this.startTime = source.getStartTime();
         this.endTime = source.getEndTime();
         this.categories = source.getCategories();
+        this.getBuildInCategories().replaceWith(source.getBuildInCategories());
     }
 
     public void setTitle(Title title) {
@@ -47,6 +47,10 @@ public class TestTask implements ReadOnlyTask {
 
     public void setEndTime(TodoTime endTime) {
         this.endTime = endTime;
+    }
+    
+    public void setCategories(UniqueCategoryList categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -98,7 +102,7 @@ public class TestTask implements ReadOnlyTask {
     public String getAddCommand() {
         StringBuffer cmd = new StringBuffer();
 
-        cmd.append("add ");
+        cmd.append(AddCommand.COMMAND_WORD);
         cmd.append("/t ").append(this.getTitle()).append(" ");
 
         if (this.hasDescription()) {
@@ -124,6 +128,10 @@ public class TestTask implements ReadOnlyTask {
         }
 
         return cmd.toString();
+    }
+    
+    public String getEditCommand(int index) {
+        return this.getAddCommand().replace(AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD + " " + index + " ");
     }
 
 
