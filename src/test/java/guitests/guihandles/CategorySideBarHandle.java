@@ -1,4 +1,7 @@
+//@@author A0147978E
 package guitests.guihandles;
+
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,19 +9,17 @@ import java.util.Set;
 
 import guitests.GuiRobot;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestUtil;
-import javafx.scene.control.ListView;
-
-
-import static org.junit.Assert.assertTrue;
 
 /**
- * Provides a handle to a task card in the task list panel.
+ * Provides a handle to all two category in the system.
  */
 public class CategorySideBarHandle extends GuiHandle {
+    /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
     private static final String BUILD_IN_CATEGORY_PLACEHOLDER_ID = "buildInCategoryListPanelPlaceholder";
     private static final String CATEGORY_PLACEHOLDER_ID = "categoryListPanelPlaceholder";
     private static final String CATEGORY_LIST_VIEW = "categoryListView";
@@ -39,6 +40,12 @@ public class CategorySideBarHandle extends GuiHandle {
                 .lookup("#" + CATEGORY_LIST_VIEW).query();
     }
 
+    /**
+     * Get current selection in the category, including BuildInCategory Listview and Category Listview.
+     * 
+     * @param categoryName
+     * @return CategoryCardHandle represent the selected category card
+     */
     public CategoryCardHandle getSelection(String categoryName) {
         List<Category> buildInCategoryList = getBuidInCategoryListView().getSelectionModel().getSelectedItems();
         List<Category> categoryList = getCategoryListView().getSelectionModel().getSelectedItems();
@@ -63,8 +70,10 @@ public class CategorySideBarHandle extends GuiHandle {
     
     /**
      * Returns true if the list is showing the category details correctly and in correct order.
+     * 
      * @param startPosition The starting position of the sub list.
      * @param persons A list of person in the correct order.
+     * @param boolean
      */
     public boolean isListMatching(ListView<Category> listView, int startPosition, List<TestCategory> categories) throws IllegalArgumentException {
         if (categories.size() + startPosition != listView.getItems().size()) {
@@ -77,7 +86,7 @@ public class CategorySideBarHandle extends GuiHandle {
         for (int i = 0; i < categories.size(); i++) {
             final int scrollTo = i;
             guiRobot.interact(() -> {
-                listView.scrollTo(scrollTo); // if the scrollbar is hidden, this will log error, but it doesn't matter 
+                listView.scrollTo(scrollTo); // if the scrollbar is hidden, this will be error in log, but it doesn't matter
             });
             guiRobot.sleep(200);
             if (!TestUtil.compareCardAndTestCategory(getCategoryCardHandleByName(listView, categories.get(i)), categories.get(i))) {
@@ -104,7 +113,13 @@ public class CategorySideBarHandle extends GuiHandle {
     }
     
     /**
-     * Returns true if the {@code categories} appear as the sub list (in that order) at position {@code startPosition}.
+     * Check whether the provided categories is in the same order 
+     * as the one in the listView from the startPosition.
+     * 
+     * @param listView
+     * @param startPosition
+     * @param categories
+     * @return boolean
      */
     public boolean containsInOrder(ListView<Category> listView, int startPosition, List<TestCategory> categories) {
         List<Category> categoriesInList = listView.getItems();

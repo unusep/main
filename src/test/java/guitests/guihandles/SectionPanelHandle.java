@@ -1,3 +1,4 @@
+//@@author A0147978E
 package guitests.guihandles;
 import java.util.List;
 import java.util.Optional;
@@ -5,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import guitests.GuiRobot;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import seedu.doerList.model.category.Category;
@@ -14,14 +14,14 @@ import seedu.doerList.testutil.TestTask;
 import seedu.doerList.ui.TaskListPanel;
 
 /**
- * Provides a handle to a task card in the task list panel.
+ * Provides a handle to section in the tasklist.
  */
 public class SectionPanelHandle extends GuiHandle {
-    private static final String SECTION_HEADER_ID = "titleField";
-    public static final String CARD_PANE_ID = "taskPanel";
-    
+    /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
+    public static final String SECTION_HEADER_ID = "titleField";
+    public static final String CARD_PANE_ID = "taskPanel";  
     public static final String TASK_LIST_SCROLLPANE = "tasksScrollPane";
-
+    
     private Node node;
 
     public SectionPanelHandle(GuiRobot guiRobot, Stage primaryStage, Node node){
@@ -37,6 +37,12 @@ public class SectionPanelHandle extends GuiHandle {
         return getTextFromLabel("#" + SECTION_HEADER_ID);
     }   
 
+    /**
+     * Determine whether this handle represents the same category as the parameter.
+     * 
+     * @param c the expected category
+     * @return boolean
+     */
     public boolean isSameCategory(Category c){
         return c.categoryName.equals(this.getHeaderTitle());
     }
@@ -56,6 +62,13 @@ public class SectionPanelHandle extends GuiHandle {
         }).findAny();
     }
 
+    /**
+     * Get the taskCardHandle which represents the parameter {@code task}.
+     * If the there is no such task in the current UI, the method will return {@code null}.
+     * 
+     * @param task
+     * @return TaskCardHandle
+     */
     public TaskCardHandle getTaskCardHandle(ReadOnlyTask task) {
         Set<Node> nodes = getAllCardNodes();
         Stream<Node> taskCardStream = nodes.stream()
@@ -70,9 +83,13 @@ public class SectionPanelHandle extends GuiHandle {
     
 
     /**
-     * Returns true if the list is showing the person details correctly and in correct order.
-     * @param startPosition The starting position of the sub list.
-     * @param persons A list of person in the correct order.
+     * Return true if the tasks displayed in UI is in the same order as the parameter {@code tasks}.
+     * {@code indexStart} indicates that the tasks should start from the index.
+     * 
+     * @param tasks
+     * @param indexStart
+     * @return boolean
+     * @throws IllegalArgumentException
      */
     public boolean isListMatching(List<TestTask> tasks, int indexStart) throws IllegalArgumentException {
         if (tasks.size() != getNumTaskNode()) {
@@ -118,6 +135,12 @@ public class SectionPanelHandle extends GuiHandle {
                 
     }
     
+    /**
+     * Get the controller of the TaskListPanel in the current UI.
+     * This is implemented by using {@code getUserData()} of a {@code node} in the UI.
+     * 
+     * @return TaskListPanel
+     */
     public TaskListPanel getTaskListPanelController() {
         TaskListPanel taskPaneController = (TaskListPanel)guiRobot.lookup("#" + TASK_LIST_SCROLLPANE).query().getUserData();
         return taskPaneController;

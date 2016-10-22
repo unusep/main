@@ -1,39 +1,27 @@
+//@@author A0147978E
 package guitests.guihandles;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import guitests.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.doerList.TestApp;
-import seedu.doerList.model.task.Task;
-import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
 import seedu.doerList.testutil.TestUtil;
-import seedu.doerList.ui.TaskCard;
-import seedu.doerList.ui.TaskListPanel;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * Provides a handle for the panel containing the person list.
  */
 public class TaskListPanelHandle extends GuiHandle {
-
-    public static final int NOT_FOUND = -1;
-    public static final String SECTION_PANE_ID = "#sectionPanel";
-    public static final String TASK_PANE_ID = "#tasksScrollPane";
+    /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
+    public static final String SECTION_PANE_ID = "sectionPanel";
+    public static final String TASK_PANE_ID = "tasksScrollPane";
 
     public TaskListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
@@ -43,19 +31,32 @@ public class TaskListPanelHandle extends GuiHandle {
      * Clicks on the ListView.
      */
     public void clickOnMidOfTaskPanel(int height) {
-        Point2D point= TestUtil.getScreenTopMidPoint(guiRobot.lookup(TASK_PANE_ID).query(), height);
+        Point2D point= TestUtil.getScreenTopMidPoint(guiRobot.lookup("#" + TASK_PANE_ID).query(), height);
         guiRobot.clickOn(point.getX(), point.getY());
         guiRobot.sleep(200);
     }
     
+    /**
+     * Press the {@code KeyCode.UP} key in the keyboard.
+     */
     public void useUpArrowKey() {
         guiRobot.type(KeyCode.UP).sleep(500);
     }
     
+    /**
+     * Press the {@code KeyCode.DOWN} key in the keyboard.
+     */
     public void useDownArrowKey() {
         guiRobot.type(KeyCode.DOWN).sleep(500);
     }
-
+    
+    /**
+     * Get a sectionPanelHandle that represents the given {@code targetCategory}.
+     * If there is not such {@code targetCategory} in current GUI, {@code null} will be returned.
+     * 
+     * @param targetCategory
+     * @return SectionPanelHandle
+     */
     public SectionPanelHandle getSectionPanelHandle(TestCategory targetCategory) {
         Set<Node> nodes = getAllSectionPanel();
         Stream<Node> sectionPanelStream = nodes.stream()
@@ -69,13 +70,20 @@ public class TaskListPanelHandle extends GuiHandle {
     }
     
     protected Set<Node> getAllSectionPanel() {
-        return guiRobot.lookup(SECTION_PANE_ID).queryAll();
+        return guiRobot.lookup("#" + SECTION_PANE_ID).queryAll();
     }
        
     public int getNumberOfSectionPanel() {
         return getAllSectionPanel().size();
     }
 
+    /**
+     * Check whether the tasks, which are categorized by BuildInCategory, 
+     * display in the same order as {@code expectedCategorized}.
+     * 
+     * @param expectedCategorized
+     * @return boolean
+     */
     public boolean isListMatching(List<TestCategory> expectedCategorized) {
         int indexStart = 1;
         for(TestCategory c : expectedCategorized) {
