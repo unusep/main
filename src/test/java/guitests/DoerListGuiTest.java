@@ -11,6 +11,7 @@ import org.testfx.api.FxToolkit;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.model.DoerList;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.testutil.TestCategory;
@@ -61,6 +62,9 @@ public abstract class DoerListGuiTest {
 
     @Before
     public void setup() throws Exception {
+        // reset category name
+        BuildInCategoryList.resetBuildInCategoryPredicate();
+        
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
@@ -75,6 +79,7 @@ public abstract class DoerListGuiTest {
         FxToolkit.showStage();
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
+        
     }
 
     /**

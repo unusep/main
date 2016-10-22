@@ -67,16 +67,12 @@ public class FindCommandTest extends DoerListGuiTest {
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList();
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 0),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0)
         );
-        List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
-        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList();
         assertFindResult("find CA", expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList); //no results
     }
 
