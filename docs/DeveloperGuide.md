@@ -85,6 +85,7 @@ The diagram below shows how the `EventsCenter` reacts to that event, which event
 
 The sections below give more details of each component.
 
+[//]: # (@@author A0147978E)
 ### UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
@@ -102,6 +103,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the application and updates the UI accordingly.
 
+[//]: # (@@author)
 ### Logic component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
@@ -117,6 +119,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
  API call.<br>
 <img src="images/DeletePersonSdForLogic.png" width="800"><br>
 
+[//]: # (@@author A0147978E)
 ### Model component
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
@@ -129,6 +132,7 @@ The `Model`,
 * exposes a `UnmodifiableObservableList<ReadOnlyPerson>` that can be 'observed' (E.g. the UI can be bound to this list) so that the UI automatically updates when the data in the list changes.
 * does not depend on any of the other three components.
 
+[//]: # (@@author)
 ### Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
@@ -228,6 +232,7 @@ A project often depends on third-party libraries. For example, Do-er List depend
 a. Include those libraries in the repository (this bloats the repo size)<br>
 b. Require developers to download the necessary libraries manually (this creates extra work for developers)<br>
 
+[//]: # (@@author A0147978E)
 ## Appendix A : User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
@@ -256,7 +261,7 @@ Priority | As a ... | I want to ... | So that I can...
 `*` | user | create recurring tasks | be reminded to do the same task at the same time interval
 `*` | user | view events in Google Calendar | have a better pictorial view of my schedule
 
-
+[//]: # (@@author)
 ## Appendix B : Use Cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
@@ -365,6 +370,7 @@ Use case ends.
 > 4a1. System indicates that the delete order was not carried out.
 > Use case resumes from step 1.
 
+[//]: # (@@author A0147978E)
 #### Use case: List task by category
 
 **MSS**
@@ -378,19 +384,20 @@ Use case ends.
 
 1a. User does not supply `CATEGORY`.
 
-> 1a1. System displays all the tasks.
+> 1a1. System displays all the tasks. <br>
 > Use case ends.
 
 1b. User does not supply `DATE`.
 
-> 1b1. System displays all the tasks.
+> 1b1. System displays all the tasks. <br>
 > Use case ends.
 
 2a. The category does not exist in the system.
 
-> 2a1. System indicates the error.
+> 2a1. System indicates the error. <br>
 > Use case ends.
 
+[//]: # (@@author)
 #### Use case: Undo Command
 
 **MSS**
@@ -446,11 +453,12 @@ Use case ends.
 > 1b1. System displays all the commands available with all the details.
 > Use case ends.
 
+[//]: # (@@author A0147978E)
 #### Use case: View a task
 
 **MSS**
 
-1. User types in the view command.
+1. User types in the view command. 
 2. System retrieves the task list based on the index parameter in the recent displayed list.
 3. System displays the detail of the task. <br>
 Use case ends.
@@ -459,14 +467,15 @@ Use case ends.
 
 2a. There is no recent displayed list.
 
-> 2a1. System indicates the errors to user.
+> 2a1. System indicates the errors to user. <br>
 > Use cases ends.
   
 2b. The index is not valid.
 
-> 2b1. System indicates the errors to user.
+> 2b1. System indicates the errors to user. <br>
 > Use cases ends.
 
+[//]: # (@@author A0147978E)
 #### Use case: Find keywords
 
 **MSS**
@@ -481,6 +490,7 @@ Use case ends.
 
 > Use case ends.
 
+[//]: # (@@author)
 #### Use case: Task Due Command
 
 **MSS**
@@ -576,6 +586,7 @@ Use case ends.
 
 ## Appendix E : Product Survey
 
+[//]: # (@@author A0147978E)
 ### Review of [TickTick](https://ticktick.com/):
 #### Strengths:
 - Desktop software is provided, so we can launch it quickly without using a browser.
@@ -588,6 +599,7 @@ Use case ends.
 - The `parser` for input text can only deal with simple command.  
 	- E.g. Adding the start time of event. If the command cannot be recognized, it will be automatically added as task title.
 
+[//]: # (@@author)
 ### Review of [WunderList](https://www.wunderlist.com/zh/):
 #### Strengths:
 - Ease of usage is the biggest strength. A user can easily add multiple items just by entering his desired items.
