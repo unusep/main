@@ -6,6 +6,7 @@ import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.StringUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
@@ -40,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         doerList = new DoerList(src);
         filteredTasks = new FilteredList<>(doerList.getTasks());
+        BuildInCategoryList.setTasksSource(doerList.getTasks());
     }
 
     public ModelManager() {
@@ -49,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyDoerList initialData, UserPrefs userPrefs) {
         doerList = new DoerList(initialData);
         filteredTasks = new FilteredList<>(doerList.getTasks());
+        BuildInCategoryList.setTasksSource(doerList.getTasks());
     }
 
     @Override
@@ -81,10 +84,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
-        doerList.replaceTask(i, task);
+    public synchronized void replaceTask(ReadOnlyTask prevTask, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
+        doerList.replaceTask(prevTask, task);
         indicateDoerListChanged();
     }
+
     
     @Override
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {
@@ -104,11 +108,13 @@ public class ModelManager extends ComponentManager implements Model {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
     
+    //@@author A0147978E
     @Override
     public UnmodifiableObservableList<Category> getBuildInCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getBuildInCategories());
     }
     
+     //@@author
     @Override
     public UnmodifiableObservableList<Category> getCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getCategories());
@@ -120,7 +126,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);
     }
 
-    
+    //@@author A0147978E
+    /**
+     * Update the predicate of the {@code filteredTasks}
+     */
+    @Override
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         filteredTasks.setPredicate(predicate);
     }

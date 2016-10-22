@@ -166,6 +166,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Listing tasks in a certain category : `list`
 Shows a list of all tasks in the Do*er*-list under the specific category.<br>
 Format: `list [CATEGORY]` or `list [DATE]`
@@ -251,6 +252,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author)
 #### Undo the most recent operation : `undo`
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`

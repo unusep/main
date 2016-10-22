@@ -27,12 +27,14 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
+    //@@author A0147978E
     private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("\\/t(?<title>[^\\/]+)");
     private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("\\/d(?<description>[^\\/]+)");
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
     private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
 
+    //@@author
     public Parser() {}
 
     /**
@@ -200,6 +202,7 @@ public class Parser {
         return new DeleteCommand(index.get());
     }
     
+    //@@author A0147978E
     /**
      * Parses arguments in the context of the category name.
      *
@@ -214,6 +217,7 @@ public class Parser {
         }
     }
 
+    //@@author A0147978E
     /**
      * Parses arguments in the context of the select task command.
      *
@@ -230,6 +234,7 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
+    //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.

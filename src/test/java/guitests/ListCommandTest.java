@@ -1,116 +1,167 @@
+//@@author A0147978E
 package guitests;
-
-import guitests.guihandles.CategoryCardHandle;
-import guitests.guihandles.TaskCardHandle;
-import org.junit.Test;
-import seedu.doerList.logic.commands.AddCommand;
-import seedu.doerList.model.category.BuildInCategory;
-import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.category.Category;
-import seedu.doerList.commons.core.Messages;
-import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
-import seedu.doerList.testutil.TestUtil;
-import seedu.doerList.testutil.TypicalTestTasks;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
+
+import com.google.common.collect.Lists;
+
+import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.logic.commands.ListCommand;
+import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.category.Category;
+import seedu.doerList.testutil.TestCategory;
 
 public class ListCommandTest extends DoerListGuiTest {
 
     @Test
     public void list() throws IllegalValueException {
-        TestTask[] currentList = td.getTypicalTasks();
-        TestCategory[] expectedBuildInCateogires = {
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 7),
+        // generate exptected result
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
-        };
-        TestCategory[] expectedCategories = td.getTypicalTestCategory();
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2),
+                new TestCategory("CS2103", 1),
+                new TestCategory("MA1101R", 1)
+        );
         
-        // list category CS2101
-        TestTask[] expectedList_c_1 = {TypicalTestTasks.task1, TypicalTestTasks.task6};
-        assertListSuccess(new TestCategory("CS2101", 2), 
-                expectedList_c_1, expectedBuildInCateogires, expectedCategories);
+        // list ALL
+        List<TestCategory> expected_ALL = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task4, td.task5, td.task8)
+        );
+        assertListSuccess(BuildInCategoryList.ALL, expected_ALL, expectedBuildInCategoryList, expectedCategoryList);
         
-        // list category CS2103
-        TestTask[] expectedList_c_2 = {TypicalTestTasks.task6};
-        assertListSuccess(new TestCategory("CS2103", 1), 
-                expectedList_c_2, expectedBuildInCateogires, expectedCategories);
+        // list Today
+        List<TestCategory> expected_TODAY = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4)
+        );
+        assertListSuccess(BuildInCategoryList.TODAY, expected_TODAY, expectedBuildInCategoryList, expectedCategoryList);
         
-        // add one task check all command
-        commandBox.runCommand(TypicalTestTasks.task8.getAddCommand());      
-        expectedBuildInCateogires[0].setExpectedNumTasks(8);
-        expectedBuildInCateogires[1].setExpectedNumTasks(3);
-        expectedCategories[1].setExpectedNumTasks(2);
-        ArrayList<TestTask> allTasks = new ArrayList<TestTask>(Arrays.asList(currentList));
-        allTasks.add(TypicalTestTasks.task8);
-        TestTask[] expectedList1 = new TestTask[allTasks.size()];
-        allTasks.toArray(expectedList1);
-        assertListSuccess(new TestCategory(BuildInCategoryList.ALL.categoryName, 8), 
-                expectedList1, expectedBuildInCateogires, expectedCategories);
-         
+        // list NEXT
+        List<TestCategory> expected_NEXT = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task5)
+        );
+        assertListSuccess(BuildInCategoryList.NEXT, expected_NEXT, expectedBuildInCategoryList, expectedCategoryList);
         
-        // today
-        TestTask[] expectedList2 = {TypicalTestTasks.task1, TypicalTestTasks.task2, TypicalTestTasks.task8};
-        assertListSuccess(new TestCategory(BuildInCategoryList.TODAY.categoryName, 3), 
-                expectedList2, expectedBuildInCateogires, expectedCategories);
+        // list INBOX
+        List<TestCategory> expected_INBOX = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task8)
+        );
+        assertListSuccess(BuildInCategoryList.INBOX, expected_INBOX, expectedBuildInCategoryList, expectedCategoryList);
         
+        // list COMPLETE
+        List<TestCategory> expected_COMPLETE = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task4, td.task5, td.task8)
+        );
+        assertListSuccess(BuildInCategoryList.COMPLETE, expected_COMPLETE, expectedBuildInCategoryList, expectedCategoryList);
         
-        // next7days
-        // add one task
-        commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
-        expectedBuildInCateogires[0].setExpectedNumTasks(9);
-        expectedBuildInCateogires[2].setExpectedNumTasks(3);
-        TestTask[] expectedList3 = {TypicalTestTasks.task3, TypicalTestTasks.task4, TypicalTestTasks.task9};
-        assertListSuccess(new TestCategory(BuildInCategoryList.NEXT.categoryName, 3), 
-                expectedList3, expectedBuildInCateogires, expectedCategories);
+        // list CS2101
+        List<TestCategory> expected_CS2101 = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3)
+        );
+        assertListSuccess(new Category("CS2101"), expected_CS2101, expectedBuildInCategoryList, expectedCategoryList);
         
+        // list CS2103
+        List<TestCategory> expected_CS2103 = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2)
+        );
+        assertListSuccess(new Category("CS2103"), expected_CS2103, expectedBuildInCategoryList, expectedCategoryList);
         
-        // Inbox
-        commandBox.runCommand(TypicalTestTasks.task10.getAddCommand());
-        expectedBuildInCateogires[0].setExpectedNumTasks(10);
-        expectedBuildInCateogires[3].setExpectedNumTasks(2);
-        // update category list
-        ArrayList<TestCategory> allCategories = new ArrayList<TestCategory>(Arrays.asList(expectedCategories));
-        allCategories.add(new TestCategory("Life", 1));
-        TestCategory[] expectedList4_c = new TestCategory[allCategories.size()];
-        allCategories.toArray(expectedList4_c);
-        TestTask[] expectedList4 = {TypicalTestTasks.task5, TypicalTestTasks.task10};
-        assertListSuccess(new TestCategory(BuildInCategoryList.INBOX.categoryName, 2), 
-                expectedList4, expectedBuildInCateogires, expectedList4_c);
-        
-        // list category Life
-        TestTask[] expectedList_c_3 = {TypicalTestTasks.task10};
-        assertListSuccess(new TestCategory("Life", 1), 
-                expectedList_c_3, expectedBuildInCateogires, expectedList4_c);
-        
-        // Complete
-        TestTask[] expectedList5 = {TypicalTestTasks.task2};
-        assertListSuccess(new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1), 
-                expectedList5, expectedBuildInCateogires, expectedList4_c);
+        // list MA1101R
+        List<TestCategory> expected_MA1101R = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4)
+        );
+        assertListSuccess(new Category("MA1101R"), expected_MA1101R, expectedBuildInCategoryList, expectedCategoryList);
+           
     }
-
-    private void assertListSuccess(TestCategory category, TestTask[] expectedList, 
-            TestCategory[] expectedBuildInCateogires, TestCategory[] expectedCateogires) {
-        commandBox.runCommand("list " + category.categoryName);
-        //confirm the category list select the desired category
-        CategoryCardHandle selectedCard = categorySideBar.getSelection(category.categoryName);
-        assertMatching(category, selectedCard);
-
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCateogires));
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCateogires));
+    
+    @Test
+    public void list_afterRunAddCommand() throws IllegalValueException {
+        // expected result
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2),
+                new TestCategory("CS2103", 1),
+                new TestCategory("MA1101R", 1)
+        );
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+        );
         
-        //confirm list view now show all desired tasks
-        assertTrue(taskListPanel.isListMatching(expectedList));
+        // list Today
+        List<TestCategory> expected_TODAY = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4)
+        );
+        assertListSuccess(BuildInCategoryList.TODAY, expected_TODAY, expectedBuildInCategoryList, expectedCategoryList);
+        
+        // add task that should belong to `Today` category
+        commandBox.runCommand(td.task10.getAddCommand());
+
+        // expected result
+        List<TestCategory> expectedBuildInCategoryList_after = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 9),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+        );
+        List<TestCategory> expectedCategoryList_after = Lists.newArrayList(
+                new TestCategory("CS2101", 2),
+                new TestCategory("CS2103", 2),
+                new TestCategory("MA1101R", 1)
+        );
+        // list Today again
+        List<TestCategory> expected_TODAY_after = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3, td.task10),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4)
+        );
+        assertListSuccess(BuildInCategoryList.TODAY, expected_TODAY_after, expectedBuildInCategoryList_after, expectedCategoryList_after);
+    }
+    
+    /**
+     * Validating the tasks under specific category have been listed
+     * Validating the rest of data has been updated accordingly
+     * 
+     * @param categoryToShow
+     * @param expectedDisplayTaskPanel
+     * @param expectedBuildInCategoryList
+     * @param expectedCategoryList
+     */
+    private void assertListSuccess(Category categoryToShow, 
+            List<TestCategory> expectedDisplayTaskPanel, 
+            List<TestCategory> expectedBuildInCategoryList, 
+            List<TestCategory> expectedCategoryList) {
+        
+        commandBox.runCommand("list " + categoryToShow.categoryName);
+        assertResultMessage(String.format(ListCommand.MESSAGE_SUCCESS, categoryToShow.categoryName));
+        
+        // confirm the list now contains accurate buildInCategory and count
+        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
+        // confirm the list now contains accurate category and count
+        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
+        
+        // confirm the list now contains all tasks
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));  
     }
 
 }

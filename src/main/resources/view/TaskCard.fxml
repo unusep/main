@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+@@author A0147978E
+-->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -14,7 +17,7 @@
          <children>
             <HBox>
                <children>
-                  <Label fx:id="index" text="#1">
+                  <Label fx:id="index" text="1">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>

@@ -26,6 +26,7 @@ public interface Logic {
     /** Returns the list of category */
     ObservableList<Category> getCategoryList();
     
+    //@@author A0147978E
     /** Returns the list of build-in category */
     ObservableList<Category> getBuildInCategoryList();
 

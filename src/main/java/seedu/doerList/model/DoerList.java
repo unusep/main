@@ -10,6 +10,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +33,11 @@ public class DoerList implements ReadOnlyDoerList {
         buildInCategories.addAllBuildInCategories();
     }
     
-    
+    //@@author A0147978E
+    /**
+     * Add listener to categoryList so that every time the category list get added,
+     * the {@code tasks} is added into the category.
+     */
     private void addListenerToCategoryList() {
         ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
             while (c.next()) {
@@ -43,7 +48,6 @@ public class DoerList implements ReadOnlyDoerList {
                 }
             }
         };
-        buildInCategories.getInternalList().addListener(listener);
         categories.getInternalList().addListener(listener);
     }
 
@@ -77,6 +81,7 @@ public class DoerList implements ReadOnlyDoerList {
         return categories.getInternalList();
     }
     
+    //@@author A0147978E
     public ObservableList<Category> getBuildInCategories() {
         return buildInCategories.getInternalList();
     }
@@ -143,10 +148,11 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    public void replaceTask(int i, Task t) throws DuplicateTaskException {
-        tasks.replace(i, t);
+    public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
+        tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
+
     
     public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
         if (tasks.contains(task)) {

@@ -1,26 +1,14 @@
 package seedu.doerList.logic;
 
-import com.google.common.eventbus.Subscribe;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
-import seedu.doerList.commons.core.EventsCenter;
-import seedu.doerList.commons.core.Messages;
-import seedu.doerList.commons.events.model.DoerListChangedEvent;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
-import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
-import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.logic.Logic;
-import seedu.doerList.logic.LogicManager;
-import seedu.doerList.logic.commands.*;
-import seedu.doerList.model.DoerList;
-import seedu.doerList.model.Model;
-import seedu.doerList.model.ModelManager;
-import seedu.doerList.model.ReadOnlyDoerList;
-import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.category.Category;
-import seedu.doerList.model.category.UniqueCategoryList;
-import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
-import seedu.doerList.model.task.*;
-import seedu.doerList.storage.StorageManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -30,15 +18,37 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.google.common.eventbus.Subscribe;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.doerList.commons.core.Messages.*;
+import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.events.model.DoerListChangedEvent;
+import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.logic.commands.AddCommand;
+import seedu.doerList.logic.commands.Command;
+import seedu.doerList.logic.commands.CommandResult;
+import seedu.doerList.logic.commands.DeleteCommand;
+import seedu.doerList.logic.commands.EditCommand;
+import seedu.doerList.logic.commands.FindCommand;
+import seedu.doerList.logic.commands.HelpCommand;
+import seedu.doerList.logic.commands.ListCommand;
+import seedu.doerList.logic.commands.MarkCommand;
+import seedu.doerList.logic.commands.TaskdueCommand;
+import seedu.doerList.logic.commands.UnmarkCommand;
+import seedu.doerList.logic.commands.ViewCommand;
+import seedu.doerList.model.DoerList;
+import seedu.doerList.model.Model;
+import seedu.doerList.model.ModelManager;
+import seedu.doerList.model.ReadOnlyDoerList;
+import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.category.Category;
+import seedu.doerList.model.category.UniqueCategoryList;
+import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.Title;
+import seedu.doerList.model.task.TodoTime;
+import seedu.doerList.storage.StorageManager;
 
 public class LogicManagerTest {
 
@@ -243,60 +253,54 @@ public class LogicManagerTest {
 
     }
 
-
+    //@@author A0147978E
     @Test
     public void execute_list_showsAllTasks() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        DoerList expectedAB = helper.generateDoerList(2);
-        List<? extends ReadOnlyTask> expectedList = expectedAB.getTaskList();
+        DoerList expectedDL = helper.generateDoerList(2);
+        List<? extends ReadOnlyTask> expectedList = expectedDL.getTaskList();
 
         // prepare doerList state
         helper.addToModel(model, 2);
 
         assertCommandBehavior("list",
                 String.format(ListCommand.MESSAGE_SUCCESS, "All"),
-                expectedAB,
+                expectedDL,
                 expectedList);
     }
     
+    //@@author A0147978E
     @Test
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8).toString(), 
                         new DateTime().withHourOfDay(12).toString()); // today
-        Task Next7Days1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(), 
+        Task Next1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(), 
                         new DateTime().withHourOfDay(12).plusDays(1).toString()); // tomorrow
-        Task Next7Days2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(), 
+        Task Next2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(), 
                         new DateTime().withHourOfDay(12).plusDays(5).toString()); // next 5 days
-        Task Next7Days3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(), 
+        Task Next3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(), 
                         new DateTime().withHourOfDay(12).plusDays(7).toString()); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
 
         // prepare doerList state
-        helper.addToModel(model, Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1));
+        helper.addToModel(model, Arrays.asList(Today1, Next1, Next2, Next3, Inbox1, Complete1));
 
         // Test ALL
-        assertBuildInCategoryListed(Arrays.asList(Today1, Next7Days1, Next7Days2, Next7Days3, Inbox1, Complete1),
-                        BuildInCategoryList.ALL
-                        );
+        assertBuildInCategoryListed(Arrays.asList(Today1, Next1, Next2, Next3, Inbox1, Complete1), BuildInCategoryList.ALL);
         // Test Next 7 Days
-        assertBuildInCategoryListed(Arrays.asList(Next7Days1, Next7Days2, Next7Days3),
-                        BuildInCategoryList.NEXT
-                        );
+        assertBuildInCategoryListed(Arrays.asList(Next1, Next2, Next3), BuildInCategoryList.NEXT);
         // Test Inbox
-        assertBuildInCategoryListed(Arrays.asList(Inbox1),
-                        BuildInCategoryList.INBOX
-                        );
+        assertBuildInCategoryListed(Arrays.asList(Inbox1), BuildInCategoryList.INBOX );
         // Test complete
-        assertBuildInCategoryListed(Arrays.asList(Complete1),
-                        BuildInCategoryList.COMPLETE
-                        );
+        assertBuildInCategoryListed(Arrays.asList(Complete1), BuildInCategoryList.COMPLETE);
     }
     
+    //@@author A0147978E
     @Test
     public void execute_list_category() throws Exception {
         // prepare expectations
@@ -316,35 +320,47 @@ public class LogicManagerTest {
         // list All
         //Execute the command
         result = logic.execute("list");
-        assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList());
-        
+        assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList()); 
         // List CA1
-        assertCategoryListed(Arrays.asList(task1, task2),
-                        "CA1"
-                        );
+        assertCategoryListed(Arrays.asList(task1, task2), "CA1");
         // list CA2
-        assertCategoryListed(Arrays.asList(task1, task3),
-                        "CA2"
-                        );
+        assertCategoryListed(Arrays.asList(task1, task3), "CA2");
     }
     
+    //@@author A0147978E
+    /**
+     * Execute the list command and validate the correct tasks {@code expected} under {@code category} are listed
+     * This is to validate buildInCategory
+     * 
+     * @param expected
+     * @param category
+     * @throws Exception
+     */
     private void assertBuildInCategoryListed(List<? extends ReadOnlyTask> expected, Category category) throws Exception {
         //Execute the command
         CommandResult result = logic.execute("list " + category.categoryName);
-        //Confirm the ui display elements should contain the right data
+        //Confirm the UI display elements, should contain the right data
         assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, category.categoryName), result.feedbackToUser);
         assertEquals(expected, category.getTasks());
     }
     
+    //@@author A0147978E
+    /**
+     * Execute the command and validate the correct tasks {@code expected} under {@code categoryName} are listed
+     * This is to validate normal category
+     * 
+     * @param expected
+     * @param categoryName
+     */
     private void assertCategoryListed(List<? extends ReadOnlyTask> expected, String categoryName) {
         //Execute the command
         CommandResult result = logic.execute("list " + categoryName);
-        //Confirm the ui display elements should contain the right data
+        //Confirm the UI display elements, should contain the right data
         assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, categoryName), result.feedbackToUser);
         assertEquals(expected, logic.getFilteredTaskList());
     }
 
-
+    //@@author   
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
      * targeting a single person in the shown list, using visible index.
@@ -377,31 +393,34 @@ public class LogicManagerTest {
         assertCommandBehavior(commandWord + " 3", expectedMessage, model.getDoerList(), taskList);
     }
 
+    //@@author
     @Test
     public void execute_viewInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("view", expectedMessage);
     }
 
+    //@@author
     @Test
     public void execute_viewIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("view");
     }
 
+    //@@author
     @Test
-    public void execute_select_jumpsToCorrectPerson() throws Exception {
+    public void execute_view_jumpsToCorrectTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        List<Task> threePersons = helper.generateTaskList(3);
+        List<Task> threeTasks = helper.generateTaskList(3);
 
-        DoerList expectedAB = helper.generateDoerList(threePersons);
-        helper.addToModel(model, threePersons);
+        DoerList expectedDL = helper.generateDoerList(threeTasks);
+        helper.addToModel(model, threeTasks);
 
         assertCommandBehavior("view 2",
-                String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, 2),
-                expectedAB,
-                expectedAB.getTaskList());
+                String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, threeTasks.get(1)),
+                expectedDL,
+                expectedDL.getTaskList());
         assertEquals(1, targetedJumpIndex);
-        assertEquals(model.getFilteredTaskList().get(1), threePersons.get(1));
+        assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
     }
 
     @Test
@@ -421,11 +440,14 @@ public class LogicManagerTest {
     public void execute_edit_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
+        threeTasks.get(0).addBuildInCategory(BuildInCategoryList.COMPLETE); // mark the task as complete
+        threeTasks.get(2).addBuildInCategory(BuildInCategoryList.COMPLETE); // mark the task as complete
         helper.addToModel(model, threeTasks);
 
         DoerList expectedAB = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);
         Task editedTask = helper.generateTask(4);
+        editedTask.addBuildInCategory(BuildInCategoryList.COMPLETE);
         expectedAB.removeTask(taskToEdit);
         expectedAB.addTask(editedTask);
 
@@ -626,11 +648,13 @@ public class LogicManagerTest {
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
 
+
     /**
      * A utility class to generate test data.
      */
     class TestDataHelper{
 
+        //@@author A0147978E
         /**
          * Generate a task with/without attribute
          *
@@ -664,9 +688,10 @@ public class LogicManagerTest {
             return new Task(title, description, startTime, endTime, categories);
         }
 
+        //@@author A0147978E
         /**
          * Generates a valid task using the given seed.
-         * Running this function with the same parameter values guarantees the returned person will have the same state.
+         * Running this function with the same parameter values guarantees the returned task will have the same state.
          * Each unique seed will generate a unique Task object.
          *
          * @param seed used to generate the task data field values
@@ -682,6 +707,7 @@ public class LogicManagerTest {
             );
         }
         
+        //@@author A0147978E
         /**
          * Generate Task with given seed, startTime and endTime
          * 
@@ -705,6 +731,7 @@ public class LogicManagerTest {
             return null;
         }
         
+        //@@author A0147978E
         /**
          * Generate task based on given seed and category
          * 
@@ -727,7 +754,28 @@ public class LogicManagerTest {
             }
             return null;
         }
+        
+        //@@author A0147978E
+        /**
+         * Generate task with title and description
+         * 
+         * @param title
+         * @param description
+         * @return generated Task
+         * @throws Exception
+         */
+        Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
+            Category category1 = new Category("CS2101");
+            Category category2 = new Category("CS2103T");
+            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
+            return new Task(new Title(title),
+                    new Description(description),
+                    new TodoTime("2016-10-03 14:00"),
+                    new TodoTime("2016-10-04 15:00"),
+                    categories);
+        }
 
+        //@@author A0147978E
         /** Generates the correct add command based on the task given */
         String generateAddCommand(Task r) {
             StringBuffer cmd = new StringBuffer();
@@ -760,6 +808,7 @@ public class LogicManagerTest {
             return cmd.toString();
         }
 
+        //@@author
         /**
          * Generates an DoerList with auto-generated tasks.
          */
@@ -812,17 +861,6 @@ public class LogicManagerTest {
             }
         }
 
-        Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
-            Category category1 = new Category("CS2101");
-            Category category2 = new Category("CS2103T");
-            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
-            return new Task(new Title(title),
-                    new Description(description),
-                    new TodoTime("2016-10-03 14:00"),
-                    new TodoTime("2016-10-04 15:00"),
-                    categories);
-        }
-
         /**
          * Generates a list of Tasks.
          */
@@ -833,12 +871,9 @@ public class LogicManagerTest {
             }
             return tasks;
         }
-
         List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
-
-
 
     }
 }

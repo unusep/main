@@ -1,17 +1,14 @@
+//@@author A0147978E
 package seedu.doerList.ui;
 
-import java.util.logging.Logger;
-import javafx.scene.Node;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.model.category.Category;
 
 public class CategoryListCard extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "CategoryListCard.fxml";
     private HBox root;
     Category category;
@@ -51,11 +48,11 @@ public class CategoryListCard extends UiPart {
         return FXML;
     }
     
-    
     public HBox getLayout() {
         return categoryCardPane;
     }
     
+    /** An Cell represents a category in the listView */
     static class CategoryListViewCell extends ListCell<Category> {
 
         public CategoryListViewCell() {

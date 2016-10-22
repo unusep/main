@@ -1,8 +1,8 @@
+//@@author A0147978E
 package guitests.guihandles;
 
 import guitests.GuiRobot;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.ui.TaskCard;
@@ -11,8 +11,10 @@ import seedu.doerList.ui.TaskCard;
  * Provides a handle to a task card in the task list panel.
  */
 public class TaskCardHandle extends GuiHandle {
+    /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
     private static final String TITLE_FIELD_ID = "title";
-
+    private static final String INDEX_FIELD_ID = "index";
+    
     private Node node;
 
     public TaskCardHandle(GuiRobot guiRobot, Stage primaryStage, Node node){
@@ -32,6 +34,10 @@ public class TaskCardHandle extends GuiHandle {
         return getTextFromLabel("#" + TITLE_FIELD_ID);
     }
 
+    public String getDisplayIndex() {
+        return getTextFromLabel("#" + INDEX_FIELD_ID);
+    }
+    
     public String getDescription() {
         return getContentFromText("#" + TaskCard.DESCRIPTION_FIELD_ID);
     }
@@ -40,7 +46,12 @@ public class TaskCardHandle extends GuiHandle {
         return getContentFromText("#" + TaskCard.TIME_FIELD_ID);
     }
     
-
+    /**
+     * Check whether the TaskCard represents the same task as it in the parameter {@code task}.
+     * 
+     * @param task
+     * @return boolean
+     */
     public boolean isSameTask(ReadOnlyTask task){
         return task.getTitle().fullTitle.equals(this.getFullTitle())
                 && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))

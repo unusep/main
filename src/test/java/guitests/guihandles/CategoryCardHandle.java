@@ -1,3 +1,4 @@
+//@@author A0147978E
 package guitests.guihandles;
 
 import guitests.GuiRobot;
@@ -7,9 +8,10 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.testutil.TestCategory;
 
 /**
- * Provides a handle to a task card in the task list panel.
+ * Provides a handle to a category card in the task list panel.
  */
 public class CategoryCardHandle extends GuiHandle {
+    /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
     private static final String CATEGORY_NAME_FIELD_ID = "categoryName";
     private static final String CATEGORY_COUNT_FIELD_ID = "categoryCount";
 
@@ -41,9 +43,8 @@ public class CategoryCardHandle extends GuiHandle {
                 && getCategoryCount().equals(String.valueOf(category.expectedNumTasks));
     }
     
-    public boolean isSameCategory(Category category){
-        return getCategoryName().equals(category.categoryName)
-                && getCategoryCount().equals(String.valueOf(category.getTasks().size()));
+    public boolean isSameCategoryName(Category category){
+        return getCategoryName().equals(category.categoryName);
     }
 
     @Override
@@ -58,7 +59,6 @@ public class CategoryCardHandle extends GuiHandle {
 
     @Override
     public String toString() {
-        return "[" + getCategoryName() + "]" + "(" + getCategoryCount() + ")";
-                
+        return "[" + getCategoryName() + "]" + "(" + getCategoryCount() + ")";             
     }
 }

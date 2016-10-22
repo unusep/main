@@ -1,6 +1,5 @@
 package seedu.doerList.storage;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
@@ -9,7 +8,7 @@ import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.task.TodoTime;
 
 /**
- * JAXB-friendly adapted version of the TimeInterval.
+ * JAXB-friendly adapted version of the Todo Time.
  */
 public class XmlAdaptedTodoTime {
 

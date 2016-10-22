@@ -6,8 +6,20 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 
 #### [Xiao Pu](https://github.com/xpdavid) <br>
 <img src="images/pic_xiaopu.jpg" width="150"><br>
-Role: Developer <br>
-Responsibilities: Logic
+
+- Components in charge of: [UI](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/DeveloperGuide.md#ui-component)
+- Aspects/tools in charge of: Testing, Integration, JavaFX
+- Features implemented:
+	- [List Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#listing-tasks-in-a-certain-category--list)
+	- [Find Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#finding-all-tasks-containing-any-keyword-in-their-name--find)
+	- [View Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#view-a-task--view)
+	- [Delete Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#deleting-a-task--delete)
+- Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0147978E.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0147978E.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0147978E.md)]
+- Other major contributions
+	- Design UI with [Yong Sheng](https://github.com/JasonScourge)
+	- Set up Gradle, Travis, Coveralls and Codacy
+	- Help other writing UI parts and GUI test cases for the features they implement.
+
 
 -----
 

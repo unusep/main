@@ -1,30 +1,30 @@
+//@@author A0147978E
 package seedu.doerList.model.category;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.joda.time.DateTime;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.util.CollectionUtil;
-
-import java.util.*;
-
-import org.joda.time.DateTime;
+import seedu.doerList.model.task.Task;
 
 /**
- * A list of categories that enforces no nulls and uniqueness between its elements.
- *
- * Supports minimal set of list operations for the app's features.
- *
- * @see Category#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * A list of buildinCategories.
+ * 
+ * @see BuildInCategory#equals(Object)
  */
-public class BuildInCategoryList implements Iterable<Category> {
-    
+public class BuildInCategoryList implements Iterable<Category> {  
     public static final BuildInCategory ALL;
     public static final BuildInCategory TODAY;
     public static final BuildInCategory NEXT;
     public static final BuildInCategory INBOX;
     public static final BuildInCategory COMPLETE;
+    public static final BuildInCategory DUE;
        
+    // predefined category
     static {
         try {
             ALL = new BuildInCategory("All", (task) -> {return true;});     
@@ -34,7 +34,7 @@ public class BuildInCategoryList implements Iterable<Category> {
             COMPLETE = new BuildInCategory("Complete", (task) -> {
                 return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
             });
-            TODAY = new BuildInCategory("Today", (task) -> {
+            TODAY = new BuildInCategory("Today", (task) -> {                
                 DateTime todayBegin = new DateTime().withTimeAtStartOfDay();
                 DateTime todayEnd = todayBegin.plusDays(1);  
                 if (!INBOX.getPredicate().test(task)) {
@@ -44,6 +44,7 @@ public class BuildInCategoryList implements Iterable<Category> {
                         return task.getEndTime().value.isAfter(todayBegin) &&
                                 task.getEndTime().value.isBefore(todayEnd);
                     } else {
+                        // interval match
                         if (task.getEndTime().value.isAfter(todayBegin) 
                                 && task.getStartTime().value.isBefore(todayEnd)) {
                             return true;
@@ -57,8 +58,18 @@ public class BuildInCategoryList implements Iterable<Category> {
             });
             NEXT = new BuildInCategory("Next", (task) -> {
                 DateTime todayEnd = new DateTime().withTimeAtStartOfDay().plusDays(1);     
-                return (!task.hasStartTime() || task.getStartTime().value.isAfter(todayEnd)) &&
-                        task.hasEndTime() && task.getEndTime().value.isAfter(todayEnd);
+                if (task.hasStartTime()) {
+                    return task.getStartTime().value.isAfter(todayEnd);
+                } else if (task.hasEndTime()) {
+                    return task.getEndTime().value.isAfter(todayEnd);
+                } else {
+                    return false;
+                }
+            });
+            DUE = new BuildInCategory("Overdue", (task) -> {
+                DateTime todayBegin = new DateTime().withTimeAtStartOfDay();     
+                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) &&
+                        task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,12 +78,30 @@ public class BuildInCategoryList implements Iterable<Category> {
         }
     }
     
+    /**
+     * Reset all predefined buildInCategories' predicates.
+     */
     public static void resetBuildInCategoryPredicate() {
         ALL.setToDeafultPredicate();
         TODAY.setToDeafultPredicate();
         NEXT.setToDeafultPredicate();
         INBOX.setToDeafultPredicate();
         COMPLETE.setToDeafultPredicate();
+        DUE.setToDeafultPredicate();
+    }
+    
+    /**
+     * Set the tasks source to the buildInCategories so that it can filter task.
+     * 
+     * @param observableList
+     */
+    public static void setTasksSource(ObservableList<Task> observableList) {
+        ALL.setFilteredTaskList(observableList);
+        TODAY.setFilteredTaskList(observableList);
+        NEXT.setFilteredTaskList(observableList);
+        INBOX.setFilteredTaskList(observableList);
+        COMPLETE.setFilteredTaskList(observableList);
+        DUE.setFilteredTaskList(observableList);
     }
     
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
@@ -85,7 +114,7 @@ public class BuildInCategoryList implements Iterable<Category> {
      * Constructs empty CategoryList.
      */
     public BuildInCategoryList() {}
-    
+      
     public BuildInCategoryList(Collection<Category> stroedList) {
         BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
         for(Category c : stroedList) {
@@ -98,8 +127,18 @@ public class BuildInCategoryList implements Iterable<Category> {
     }
     
     /**
-     * Add a BuildInCategory form list
-     * Restrict that can only BuildInCategory can be added
+     * Replace the data in current buildInCategories with the data in another buildInCategories.
+     * 
+     * @param buildInCategories
+     */
+    public void replaceWith(BuildInCategoryList buildInCategories) {
+        this.internalList.clear();
+        this.internalList.addAll(buildInCategories.internalList);
+    }
+    
+    /**
+     * Add a BuildInCategory to the list.
+     * Restriction: only BuildInCategory can be added.
      * 
      * @param category
      */
@@ -110,7 +149,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     }
     
     /**
-     * Remove a BuildInCategory form list
+     * Remove a BuildInCategory form list.
      * 
      * @param category
      */
@@ -143,12 +182,12 @@ public class BuildInCategoryList implements Iterable<Category> {
         }
     }
 
+    /**
+     * Returns {@code UnmodifiableObservableList} so that no one can modify.
+     * 
+     * @return
+     */
     public UnmodifiableObservableList<Category> getInternalList() {
         return new UnmodifiableObservableList<Category>(internalList);
-    }
-
-    public void replaceWith(BuildInCategoryList buildInCategories) {
-        this.internalList.clear();
-        this.internalList.addAll(buildInCategories.internalList);
     }
 }

@@ -28,19 +28,22 @@ public interface Model {
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    //@@author A0147978E
     /** Returns the build-in category list as an {@code UnmodifiableObservableList<Category>} */
     UnmodifiableObservableList<Category> getBuildInCategoryList();
     
+    //@@author
     /** Returns the user-created category list as an {@code UnmodifiableObservableList<Category>} **/
     UnmodifiableObservableList<Category> getCategoryList();
     
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
     
+    //@@author A0147978E
     /** Updates the filter of the filtered task list to filter by the given predicate*/
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
-    void replaceTask(int i, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
+    void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
     
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 

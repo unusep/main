@@ -1,5 +1,19 @@
 package seedu.doerList.testutil;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+
+import org.loadui.testfx.GuiTest;
+import org.testfx.api.FxToolkit;
+
 import com.google.common.io.Files;
 
 import guitests.guihandles.CategoryCardHandle;
@@ -12,8 +26,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import junit.framework.AssertionFailedError;
-import org.loadui.testfx.GuiTest;
-import org.testfx.api.FxToolkit;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.FileUtil;
@@ -21,19 +33,13 @@ import seedu.doerList.commons.util.XmlUtil;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
-import seedu.doerList.model.task.*;
+import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.Title;
+import seedu.doerList.model.task.TodoTime;
+import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.storage.XmlSerializableDoerList;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
 
 /**
  * A utility class for test cases.
@@ -228,13 +234,13 @@ public class TestUtil {
     }
 
     /**
-     * Gets mid point of a node relative to the screen.
+     * Gets top mid point of a node relative to the screen.
      * @param node
      * @return
      */
-    public static Point2D getScreenMidPoint(Node node) {
+    public static Point2D getScreenTopMidPoint(Node node, int heightOffset) {
         double x = getScreenPos(node).getMinX() + node.getLayoutBounds().getWidth() / 2;
-        double y = getScreenPos(node).getMinY() + node.getLayoutBounds().getHeight() / 2;
+        double y = getScreenPos(node).getMinY() + heightOffset;
         return new Point2D(x,y);
     }
 
@@ -331,8 +337,7 @@ public class TestUtil {
     public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
         return card.isSameTask(task);
     }
-    
-    
+      
     public static boolean compareCardAndTestCategory(CategoryCardHandle card, TestCategory category) {
         return card.isSameTestCategory(category);
     }

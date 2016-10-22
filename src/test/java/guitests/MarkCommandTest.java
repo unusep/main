@@ -2,6 +2,7 @@ package guitests;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
@@ -11,54 +12,69 @@ import seedu.doerList.testutil.TestTask;
 
 import org.junit.Test;
 
+import com.google.common.collect.Lists;
+
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 public class MarkCommandTest extends DoerListGuiTest {
 
     @Test
     public void mark() throws IllegalValueException {
-        TestCategory[] expectedBuildInCateogires = {
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 7),
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
-        };
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 7)
+        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2),
+                new TestCategory("CS2103", 1),
+                new TestCategory("MA1101R", 1)
+        );
         
-        //marks one task from top
-        TestTask[] currentList = td.getTypicalTasks();
-        int targetIndex = 1;
-        expectedBuildInCateogires[4].expectedNumTasks = 2;
-        assertMarkSuccess(targetIndex, expectedBuildInCateogires);
+        List<TestCategory> expectedPanel = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task2, td.task3,
+                        td.task4, td.task5, td.task6, td.task8)
+        );
         
-        //marks one task from middle
-        targetIndex = currentList.length;
-        expectedBuildInCateogires[4].expectedNumTasks = 3;
-        assertMarkSuccess(targetIndex / 2, expectedBuildInCateogires);
-        
-        //marks one task from end
-        targetIndex = currentList.length - 1;
-        expectedBuildInCateogires[4].expectedNumTasks = 4;
-        assertMarkSuccess(targetIndex, expectedBuildInCateogires);
-        
-        //marks invalid task
-        commandBox.runCommand("mark " + currentList.length + 1);
-        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        
+        commandBox.runCommand("mark " + 1);
+        commandBox.runCommand("mark " + 1);
+        assertMarkSuccess(1, td.task6, expectedPanel, expectedBuildInCategoryList, expectedCategoryList);
+              
     }
     
-    private void assertMarkSuccess(int indexToBeMarked, TestCategory[] expectedBuildInCateogires) {
-        commandBox.runCommand("mark " + indexToBeMarked);
+    @Test
+    public void mark_unsuccessful() {
+        //marks invalid task
+        commandBox.runCommand("mark " + 9);
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         
-        ReadOnlyTask taskToMark = taskListPanel.getTask(indexToBeMarked - 1);
+        //marks empty list
+        commandBox.runCommand("clear");
+        commandBox.runCommand("mark 1");
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+    
+    private void assertMarkSuccess(int index, TestTask taskToMark,
+            List<TestCategory> expectedDisplayTaskPanel, 
+            List<TestCategory> expectedBuildInCategoryList, 
+            List<TestCategory> expectedCategoryList) {
         
-        assertTrue(taskToMark.getBuildInCategories().contains(BuildInCategoryList.COMPLETE));
-        
+        commandBox.runCommand("mark " + index);
         assertResultMessage(String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, taskToMark));
         
         //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCateogires));
+        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
+        //confirm the list now contains accurate category and count
+        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
+        
+        //confirm the list now contains all previous persons plus the new person
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
+    
     }
-    
-    
+       
 }
