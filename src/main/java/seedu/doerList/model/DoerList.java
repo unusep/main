@@ -33,7 +33,11 @@ public class DoerList implements ReadOnlyDoerList {
         buildInCategories.addAllBuildInCategories();
     }
     
-    
+    //@@author A0147978E
+    /**
+     * Add listener to categoryList so that every time the category list get added,
+     * the {@code tasks} is added into the category.
+     */
     private void addListenerToCategoryList() {
         ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
             while (c.next()) {
@@ -77,6 +81,7 @@ public class DoerList implements ReadOnlyDoerList {
         return categories.getInternalList();
     }
     
+    //@@author A0147978E
     public ObservableList<Category> getBuildInCategories() {
         return buildInCategories.getInternalList();
     }

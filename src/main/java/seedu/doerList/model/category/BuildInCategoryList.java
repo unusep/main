@@ -1,28 +1,22 @@
+//@@author A0147978E
 package seedu.doerList.model.category;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.joda.time.DateTime;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.util.CollectionUtil;
-import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
-import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.joda.time.DateTime;
 
 /**
- * A list of categories that enforces no nulls and uniqueness between its elements.
- *
- * Supports minimal set of list operations for the app's features.
- *
- * @see Category#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * A list of buildinCategories.
+ * 
+ * @see BuildInCategory#equals(Object)
  */
-public class BuildInCategoryList implements Iterable<Category> {
-    
+public class BuildInCategoryList implements Iterable<Category> {  
     public static final BuildInCategory ALL;
     public static final BuildInCategory TODAY;
     public static final BuildInCategory NEXT;
@@ -30,6 +24,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     public static final BuildInCategory COMPLETE;
     public static final BuildInCategory DUE;
        
+    // predefined category
     static {
         try {
             ALL = new BuildInCategory("All", (task) -> {return true;});     
@@ -83,6 +78,9 @@ public class BuildInCategoryList implements Iterable<Category> {
         }
     }
     
+    /**
+     * Reset all predefined buildInCategories' predicates.
+     */
     public static void resetBuildInCategoryPredicate() {
         ALL.setToDeafultPredicate();
         TODAY.setToDeafultPredicate();
@@ -92,6 +90,11 @@ public class BuildInCategoryList implements Iterable<Category> {
         DUE.setToDeafultPredicate();
     }
     
+    /**
+     * Set the tasks source to the buildInCategories so that it can filter task.
+     * 
+     * @param observableList
+     */
     public static void setTasksSource(ObservableList<Task> observableList) {
         ALL.setFilteredTaskList(observableList);
         TODAY.setFilteredTaskList(observableList);
@@ -111,9 +114,7 @@ public class BuildInCategoryList implements Iterable<Category> {
      * Constructs empty CategoryList.
      */
     public BuildInCategoryList() {}
-    
-
-    
+      
     public BuildInCategoryList(Collection<Category> stroedList) {
         BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
         for(Category c : stroedList) {
@@ -126,8 +127,18 @@ public class BuildInCategoryList implements Iterable<Category> {
     }
     
     /**
-     * Add a BuildInCategory form list
-     * Restrict that can only BuildInCategory can be added
+     * Replace the data in current buildInCategories with the data in another buildInCategories.
+     * 
+     * @param buildInCategories
+     */
+    public void replaceWith(BuildInCategoryList buildInCategories) {
+        this.internalList.clear();
+        this.internalList.addAll(buildInCategories.internalList);
+    }
+    
+    /**
+     * Add a BuildInCategory to the list.
+     * Restriction: only BuildInCategory can be added.
      * 
      * @param category
      */
@@ -138,7 +149,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     }
     
     /**
-     * Remove a BuildInCategory form list
+     * Remove a BuildInCategory form list.
      * 
      * @param category
      */
@@ -171,12 +182,12 @@ public class BuildInCategoryList implements Iterable<Category> {
         }
     }
 
+    /**
+     * Returns {@code UnmodifiableObservableList} so that no one can modify.
+     * 
+     * @return
+     */
     public UnmodifiableObservableList<Category> getInternalList() {
         return new UnmodifiableObservableList<Category>(internalList);
-    }
-
-    public void replaceWith(BuildInCategoryList buildInCategories) {
-        this.internalList.clear();
-        this.internalList.addAll(buildInCategories.internalList);
     }
 }

@@ -73,8 +73,9 @@ public class Category {
         return '[' + categoryName + ']';
     }
     
+    //@@author A0147978E
     /**
-     * Return predicate to help filter tasks
+     * Return predicate of the category to filter tasks
      * @return predicate(lambda) expression to help filter tasks 
      */
     public Predicate<ReadOnlyTask> getPredicate() {
@@ -83,6 +84,7 @@ public class Category {
         };
     }
     
+    //@@author A0147978E
     public boolean isBuildIn() {
         return false;
     }

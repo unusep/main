@@ -1,14 +1,17 @@
+//@@author A0147978E
 package seedu.doerList.logic.commands;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
-import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
+/**
+ * View a specific task's detailed information
+ */
 public class ViewCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
@@ -28,9 +31,8 @@ public class ViewCommand extends Command {
     
     @Override
     public CommandResult execute() {
-
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
+        
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));

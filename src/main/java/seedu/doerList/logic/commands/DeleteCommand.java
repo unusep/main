@@ -1,16 +1,14 @@
+//@@author A0147978E
 package seedu.doerList.logic.commands;
 
-import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
-import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
 /**
- * Deletes a task identified using it's last displayed index from the doerList.
+ * Deletes a task identified using it's displayed index from the doerList.
  */
 public class DeleteCommand extends Command {
 

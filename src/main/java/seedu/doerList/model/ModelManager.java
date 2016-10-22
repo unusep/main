@@ -108,11 +108,13 @@ public class ModelManager extends ComponentManager implements Model {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
     
+    //@@author A0147978E
     @Override
     public UnmodifiableObservableList<Category> getBuildInCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getBuildInCategories());
     }
     
+     //@@author
     @Override
     public UnmodifiableObservableList<Category> getCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getCategories());
@@ -124,7 +126,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);
     }
 
-    
+    //@@author A0147978E
+    /**
+     * Update the predicate of the {@code filteredTasks}
+     */
+    @Override
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         filteredTasks.setPredicate(predicate);
     }

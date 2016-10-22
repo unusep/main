@@ -1,15 +1,15 @@
+//@@author A0147978E
 package seedu.doerList.logic.commands;
 
 import java.util.Optional;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 
 /**
- * Lists all persons in the doerList to the user.
+ * Lists all tasks in the doerList to the user.
  */
 public class ListCommand extends Command {
 
@@ -58,14 +58,17 @@ public class ListCommand extends Command {
     public CommandResult execute() {
         Category toSelectCategory;
         BuildInCategoryList.resetBuildInCategoryPredicate();
+        // find the category
         Optional<Category> fromCategory = findNameInCategory(toSelectCategoryName);
         if (fromCategory.isPresent()) {
             toSelectCategory = fromCategory.get();
         } else {
             return new CommandResult(MESSAGE_CATEGORY_NOT_EXISTS);
         }
+        // update the predicate in the model
         model.updateFilteredListToShowAll();
         model.updateFilteredTaskList(toSelectCategory.getPredicate());
+        
         EventsCenter.getInstance().post(new JumpToCategoryEvent(toSelectCategory));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSelectCategory.categoryName));
     }

@@ -46,11 +46,13 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getCategoryList();
     }
     
+    //@@author A0147978E
     @Override
     public ObservableList<Category> getBuildInCategoryList() {
         return model.getBuildInCategoryList();
     }
 
+    //@@author A0147978E
     @Override
     public void setPredicateForTaskList(Predicate<ReadOnlyTask> predicate) {
         model.updateFilteredTaskList(predicate);

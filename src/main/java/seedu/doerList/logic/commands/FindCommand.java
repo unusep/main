@@ -1,3 +1,4 @@
+//@@author A0147978E
 package seedu.doerList.logic.commands;
 
 import java.util.Set;
@@ -31,6 +32,7 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredListToShowAll();
         BuildInCategoryList.resetBuildInCategoryPredicate();
+        // update the filter for BuildInCategory All
         BuildInCategoryList.ALL.updatePredicate((ReadOnlyTask task) -> {
             return this.keywords.stream()
             .filter(keyword -> {
@@ -40,6 +42,7 @@ public class FindCommand extends Command {
             .findAny()
             .isPresent();
         });
+        // display ALL
         EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
         model.updateFilteredTaskList(BuildInCategoryList.ALL.getPredicate());
         return new CommandResult(getMessageForTaskListShownSummary(BuildInCategoryList.ALL.getTasks().size()));
