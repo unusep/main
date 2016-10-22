@@ -103,7 +103,7 @@ public class TestTask implements ReadOnlyTask {
         StringBuffer cmd = new StringBuffer();
 
         cmd.append(AddCommand.COMMAND_WORD);
-        cmd.append("/t ").append(this.getTitle()).append(" ");
+        cmd.append(" /t ").append(this.getTitle()).append(" ");
 
         if (this.hasDescription()) {
             cmd.append("/d ").append(this.getDescription()).append(" ");
