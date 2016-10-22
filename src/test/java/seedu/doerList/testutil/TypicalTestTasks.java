@@ -79,25 +79,6 @@ public class TypicalTestTasks {
         }
     }
 
-    public TestTask[] getTypicalTasks() {
-        return new TestTask[]{task1, task2, task3, task4, task5, task6, task7, task8};
-    }
-    
-    
-    /**
-     * The category name is associate with {@link getTypicalTasks()}
-     * 
-     * @return TestCategory[]
-     */
-    public TestCategory[] getTypicalTestCategory() {
-        try {
-            return new TestCategory[]{new TestCategory("CS2101", 2), new TestCategory("CS2103", 1)};
-        } catch (IllegalValueException e) {
-            // impossible
-            return null;
-        }
-    }
-
     public DoerList getTypicalDoerList(){
         DoerList ab = new DoerList();
         loadDoerListWithSampleData(ab);
