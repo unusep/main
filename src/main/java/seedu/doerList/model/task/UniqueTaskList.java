@@ -102,15 +102,6 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.set(i, toReplace);
     }
     
-    public void unmark(Task task) throws TaskNotFoundException {
-        assert task != null;
-        if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
-            task.removeBuildInCategory(BuildInCategoryList.COMPLETE);     
-        } else {
-            throw new TaskNotFoundException();
-        }
-    }
-    
     public ObservableList<Task> getInternalList() {
         return internalList;
     }

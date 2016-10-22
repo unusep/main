@@ -4,6 +4,7 @@ import guitests.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.doerList.TestApp;
@@ -38,15 +39,23 @@ public class TaskListPanelHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }   
     
-//    /**
-//     * Clicks on the ListView.
-//     */
-//    public void clickOnTaskPanel() {
-//        Point2D point= TestUtil.getScreenMidPoint(guiRobot.lookup(TASK_PANE_ID).query());
-//        guiRobot.clickOn(point.getX(), point.getY());
-//    }
-
+    /**
+     * Clicks on the ListView.
+     */
+    public void clickOnMidOfTaskPanel(int height) {
+        Point2D point= TestUtil.getScreenTopMidPoint(guiRobot.lookup(TASK_PANE_ID).query(), height);
+        guiRobot.clickOn(point.getX(), point.getY());
+        guiRobot.sleep(200);
+    }
     
+    public void useUpArrowKey() {
+        guiRobot.type(KeyCode.UP).sleep(500);
+    }
+    
+    public void useDownArrowKey() {
+        guiRobot.type(KeyCode.DOWN).sleep(500);
+    }
+
     public SectionPanelHandle getSectionPanelHandle(TestCategory targetCategory) {
         Set<Node> nodes = getAllSectionPanel();
         Stream<Node> sectionPanelStream = nodes.stream()

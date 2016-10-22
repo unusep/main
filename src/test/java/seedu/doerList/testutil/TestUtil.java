@@ -228,13 +228,13 @@ public class TestUtil {
     }
 
     /**
-     * Gets mid point of a node relative to the screen.
+     * Gets top mid point of a node relative to the screen.
      * @param node
      * @return
      */
-    public static Point2D getScreenMidPoint(Node node) {
+    public static Point2D getScreenTopMidPoint(Node node, int heightOffset) {
         double x = getScreenPos(node).getMinX() + node.getLayoutBounds().getWidth() / 2;
-        double y = getScreenPos(node).getMinY() + node.getLayoutBounds().getHeight() / 2;
+        double y = getScreenPos(node).getMinY() + heightOffset;
         return new Point2D(x,y);
     }
 

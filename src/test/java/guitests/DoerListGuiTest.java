@@ -19,6 +19,7 @@ import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
 import seedu.doerList.ui.CategoryListCard;
 import seedu.doerList.ui.CategorySideBar;
+import seedu.doerList.ui.TaskCard;
 
 import java.util.concurrent.TimeoutException;
 
@@ -64,6 +65,8 @@ public abstract class DoerListGuiTest {
     public void setup() throws Exception {
         // reset category name
         BuildInCategoryList.resetBuildInCategoryPredicate();
+        // reset selection
+        TaskCard.clearSelection();
         
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
