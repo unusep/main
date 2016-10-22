@@ -1,3 +1,4 @@
+//@@author A0147978E
 package guitests.guihandles;
 
 import guitests.GuiRobot;

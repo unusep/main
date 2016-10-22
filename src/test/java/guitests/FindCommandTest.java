@@ -1,4 +1,9 @@
+//@@author A0147978E
 package guitests;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -6,20 +11,15 @@ import com.google.common.collect.Lists;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
 
 public class FindCommandTest extends DoerListGuiTest {
 
     @Test
     public void find_nonEmptyList() throws IllegalValueException {
+        // find get multiple results
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
@@ -38,10 +38,11 @@ public class FindCommandTest extends DoerListGuiTest {
                 new TestCategory("CS2103", 1),
                 new TestCategory("MA1101R", 1)
         );
-        assertFindResult("find Math", expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList); //multiple results
+        assertFindResult("find Math", expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
+        // find and there is no result
         expectedBuildInCategoryList.get(0).setExpectedNumTasks(0);
-        assertFindResult("find Love", Lists.newArrayList(), expectedBuildInCategoryList, expectedCategoryList); //no results
+        assertFindResult("find Love", Lists.newArrayList(), expectedBuildInCategoryList, expectedCategoryList);
         
 
         //find after deleting one result
@@ -82,6 +83,15 @@ public class FindCommandTest extends DoerListGuiTest {
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
     
+    /**
+     * Validating the tasks with `keyword` have been listed
+     * Validating the rest of data has been updated accordingly
+     * 
+     * @param command
+     * @param expectedDisplayTaskPanel
+     * @param expectedBuildInCategoryList
+     * @param expectedCategoryList
+     */
     private void assertFindResult(String command, 
             List<TestCategory> expectedDisplayTaskPanel, 
             List<TestCategory> expectedBuildInCategoryList, 
@@ -91,13 +101,12 @@ public class FindCommandTest extends DoerListGuiTest {
         int numTasks = expectedDisplayTaskPanel.stream().mapToInt((c) -> c.getPreDefinedTasks().size()).sum();
         assertResultMessage(Command.getMessageForTaskListShownSummary(numTasks));
         
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate buildInCategory and count
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate category and count
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
         
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-    
+        // confirm the list now contains all tasks
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel)); 
     }
 }

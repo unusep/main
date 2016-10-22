@@ -1,4 +1,9 @@
+//@@author A0147978E
 package guitests;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -6,35 +11,29 @@ import com.google.common.collect.Lists;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.DeleteCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestTask;
-import seedu.doerList.testutil.TestUtil;
-import seedu.doerList.testutil.TypicalTestTasks;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
 
 public class DeleteCommandTest extends DoerListGuiTest {
 
     @Test
     public void delete() throws IllegalValueException {
 
-        //delete the first in the list
+        // delete the first in the list
         int targetIndex = 1;
         commandBox.runCommand("delete " + targetIndex);
 
-        //delete the last in the list
+        // delete the last in the list
         targetIndex = 7;
         commandBox.runCommand("delete " + targetIndex);
 
-        // add task in the middle
+        // add task
         commandBox.runCommand(td.task10.getAddCommand());
         
-        //delete from the middle of the list
+        // delete from the middle of the list
+        // generate expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3, td.task10),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
@@ -57,12 +56,22 @@ public class DeleteCommandTest extends DoerListGuiTest {
         assertDeleteSuccess(targetIndex, td.task1, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
 
-        //invalid index
+        // invalid index
         commandBox.runCommand("delete 7");
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
     }
     
+    /**
+     * Validating the given task has been successfully deleted.
+     * Validating the rest of data has been updated accordingly
+     * 
+     * @param targetIndexOneIndexed
+     * @param deletedTask
+     * @param expectedDisplayTaskPanel
+     * @param expectedBuildInCategoryList
+     * @param expectedCategoryList
+     */
     private void assertDeleteSuccess(int targetIndexOneIndexed, TestTask deletedTask,
             List<TestCategory> expectedDisplayTaskPanel, 
             List<TestCategory> expectedBuildInCategoryList, 
@@ -71,14 +80,13 @@ public class DeleteCommandTest extends DoerListGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
         assertResultMessage(String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, deletedTask));
         
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate buildInCategory and count
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate category and count
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
         
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-    
+        // confirm the list now contains all tasks
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));  
     }
 
 }

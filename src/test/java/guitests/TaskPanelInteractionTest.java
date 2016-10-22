@@ -1,61 +1,54 @@
+//@@author A0147978E
 package guitests;
 
-import guitests.guihandles.TaskCardHandle;
-import javafx.scene.input.KeyCode;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
-
-import static org.junit.Assert.assertNull;
-import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.List;
-
-import static org.junit.Assert.assertNotNull;
-import seedu.doerList.logic.commands.ViewCommand;
-import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
-import seedu.doerList.commons.core.Messages;
 import seedu.doerList.ui.TaskCard;
 
 public class TaskPanelInteractionTest extends DoerListGuiTest {
 
     @Test
-    public void arrowKeyPressed() {
-        // press down
+    public void press_arrowKey() {
+        // press down to `scroll down`
         taskListPanel.clickOnMidOfTaskPanel(10);
         for(int i = 1; i<=8; i++) {
             taskListPanel.useDownArrowKey();
             assertTaskSelected(i);
         }
        
-        // press down again no effect
+        // the last task is highlighted
+        // press down again and there is no effect
         taskListPanel.useDownArrowKey();
         assertTaskSelected(8);
         
-        // press up
+        // press up to `scroll up`
         for(int i = 7; i >= 1; i--) {
             taskListPanel.useUpArrowKey();
             assertTaskSelected(i);
         }
         
-        // press up again no effect
+        // the first task is highlighted
+        // press up again and there is no effect
         taskListPanel.useUpArrowKey();
         assertTaskSelected(1);
     }
     
     
     @Test
-    public void clickTaskCard() {
+    public void click_TaskCardUI() {
         // click the first one
         taskListPanel.clickOnMidOfTaskPanel(55);
         assertTaskSelected(1);
     }
     
+    /**
+     * Validating the displayIndex in selected task in UI is the same as parameter.
+     * 
+     * @param index
+     */
     private void assertTaskSelected(int index) {
         assertNotNull(TaskCard.getSeletedTaskCard());
         assertEquals(TaskCard.getSeletedTaskCard().getDisplayIndex(), index);

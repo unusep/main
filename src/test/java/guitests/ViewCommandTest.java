@@ -1,31 +1,30 @@
 package guitests;
 
-import guitests.guihandles.TaskCardHandle;
-
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.logic.commands.ViewCommand;
 import seedu.doerList.testutil.TestTask;
-import seedu.doerList.commons.core.Messages;
 import seedu.doerList.ui.TaskCard;
 
 public class ViewCommandTest extends DoerListGuiTest {
 
     @Test
     public void viewTask_invalidComamnd() {
-        //invalid view command
+        // invalid view command
         commandBox.runCommand("view");
         assertNoTaskSelected();
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
     }
     
     @Test
-    public void viewTask_nonEmptyList() {
-        //invalid index
+    public void viewTask_notEmptyList() {
+        // invalid index
         assertViewInvalid(10);
         assertNoTaskSelected();
         

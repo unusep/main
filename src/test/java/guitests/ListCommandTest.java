@@ -1,33 +1,25 @@
+//@@author A0147978E
 package guitests;
 
-import guitests.guihandles.CategoryCardHandle;
-import guitests.guihandles.TaskCardHandle;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
-import seedu.doerList.logic.commands.AddCommand;
+import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.commands.ListCommand;
-import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
-import seedu.doerList.commons.core.Messages;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
-import seedu.doerList.testutil.TestUtil;
-import seedu.doerList.testutil.TypicalTestTasks;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ListCommandTest extends DoerListGuiTest {
 
     @Test
     public void list() throws IllegalValueException {
+        // generate exptected result
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
@@ -100,7 +92,8 @@ public class ListCommandTest extends DoerListGuiTest {
     }
     
     @Test
-    public void list_add_list() throws IllegalValueException {
+    public void list_afterRunAddCommand() throws IllegalValueException {
+        // expected result
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
                 new TestCategory("CS2101", 2),
                 new TestCategory("CS2103", 1),
@@ -113,6 +106,7 @@ public class ListCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
         );
+        
         // list Today
         List<TestCategory> expected_TODAY = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
@@ -120,9 +114,10 @@ public class ListCommandTest extends DoerListGuiTest {
         );
         assertListSuccess(BuildInCategoryList.TODAY, expected_TODAY, expectedBuildInCategoryList, expectedCategoryList);
         
-        // add today task
+        // add task that should belong to `Today` category
         commandBox.runCommand(td.task10.getAddCommand());
 
+        // expected result
         List<TestCategory> expectedBuildInCategoryList_after = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.ALL.categoryName, 9),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
@@ -135,7 +130,7 @@ public class ListCommandTest extends DoerListGuiTest {
                 new TestCategory("CS2103", 2),
                 new TestCategory("MA1101R", 1)
         );
-        // list Today
+        // list Today again
         List<TestCategory> expected_TODAY_after = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3, td.task10),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4)
@@ -143,6 +138,15 @@ public class ListCommandTest extends DoerListGuiTest {
         assertListSuccess(BuildInCategoryList.TODAY, expected_TODAY_after, expectedBuildInCategoryList_after, expectedCategoryList_after);
     }
     
+    /**
+     * Validating the tasks under specific category have been listed
+     * Validating the rest of data has been updated accordingly
+     * 
+     * @param categoryToShow
+     * @param expectedDisplayTaskPanel
+     * @param expectedBuildInCategoryList
+     * @param expectedCategoryList
+     */
     private void assertListSuccess(Category categoryToShow, 
             List<TestCategory> expectedDisplayTaskPanel, 
             List<TestCategory> expectedBuildInCategoryList, 
@@ -151,14 +155,13 @@ public class ListCommandTest extends DoerListGuiTest {
         commandBox.runCommand("list " + categoryToShow.categoryName);
         assertResultMessage(String.format(ListCommand.MESSAGE_SUCCESS, categoryToShow.categoryName));
         
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate buildInCategory and count
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
+        // confirm the list now contains accurate category and count
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
         
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-    
+        // confirm the list now contains all tasks
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));  
     }
 
 }
