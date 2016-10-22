@@ -2,7 +2,12 @@ package guitests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
+
+import com.google.common.collect.Lists;
+
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.commands.Command;
@@ -14,44 +19,29 @@ public class TaskdueCommandTest extends DoerListGuiTest {
 
     @Test
     public void taskdue_nonEmptyList() throws IllegalValueException {
-        TestCategory[] expectedBuildInCateogires = {
-                new TestCategory("All (filtered)", 2),
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 1),
                 new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
-        };
-        TestCategory[] expectedCategories = td.getTypicalTestCategory();
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2),
+                new TestCategory("CS2103", 1),
+                new TestCategory("MA1101R", 1)
+        );
         
-        TestTask[] expected1 = {td.task6, td.task7};
-        TestTask[] expected2 = {td.task1, td.task6, td.task7};
-        assertTaskdueResult("taskdue yesterday 23pm", expected1, expectedBuildInCateogires, expectedCategories); //multiple results
-        expectedBuildInCateogires[0].expectedNumTasks = 3;
-        assertTaskdueResult("taskdue today 23pm", expected2, expectedBuildInCateogires, expectedCategories); //one results
-
-        //find after deleting one result
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        TestCategory[] expectedBuildInCateogires2 = {
-                new TestCategory("All (filtered)", 0),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 1),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
-        };
-        expectedCategories[0].expectedNumTasks = 0;
-        expectedCategories[1].expectedNumTasks = 0;
-        TestTask[] expected3 = {};
-        assertTaskdueResult("taskdue today 23pm", expected3, expectedBuildInCateogires2, expectedCategories); //no results
-        
-        //add one
-        commandBox.runCommand(td.task8.getAddCommand());
-        TestTask[] expected4 = {td.task8};
-        expectedBuildInCateogires2[0].expectedNumTasks = 1;
-        expectedBuildInCateogires2[1].expectedNumTasks = 2;
-        expectedCategories[1].expectedNumTasks = 1;
-        assertTaskdueResult("taskdue today 23pm", expected4, expectedBuildInCateogires2, expectedCategories); //1 results
+        // task due today
+        List<TestCategory> expectedDisplayTaskPanel_Today = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2)
+        );
+        assertTaskdueResult("taskdue today", expectedDisplayTaskPanel_Today, expectedBuildInCategoryList, expectedCategoryList);
+    
+        // task due empty list
+        List<TestCategory> expectedDisplayTaskPanel_LastWeek = Lists.newArrayList();
+        expectedBuildInCategoryList.get(0).setExpectedNumTasks(0);
+        assertTaskdueResult("taskdue last week", expectedDisplayTaskPanel_LastWeek, expectedBuildInCategoryList, expectedCategoryList);
     }
 
 
@@ -61,16 +51,22 @@ public class TaskdueCommandTest extends DoerListGuiTest {
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
 
-    private void assertTaskdueResult(String command, TestTask[] expectedHits, TestCategory[] expectedBuildInCateogires, TestCategory[] expectedCateogires ) {
+    private void assertTaskdueResult(String command, 
+            List<TestCategory> expectedDisplayTaskPanel, 
+            List<TestCategory> expectedBuildInCategoryList, 
+            List<TestCategory> expectedCategoryList) {
+        
         commandBox.runCommand(command);
-        assertListSize(expectedHits.length);
-        assertResultMessage(Command.getMessageForTaskListShownSummary(expectedHits.length));
+        int numTasks = expectedDisplayTaskPanel.stream().mapToInt((c) -> c.getPreDefinedTasks().size()).sum();
+        assertResultMessage(Command.getMessageForTaskListShownSummary(numTasks));
         
         //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCateogires));
+        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
         //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCateogires));
+        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
         
-        assertTrue(taskListPanel.isListMatching(expectedHits));
+        //confirm the list now contains all previous persons plus the new person
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
+    
     }
 }

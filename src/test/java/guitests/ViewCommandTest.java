@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNull;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static org.junit.Assert.assertNotNull;
 import seedu.doerList.logic.commands.ViewCommand;
+import seedu.doerList.testutil.TestTask;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.ui.TaskCard;
 
@@ -18,29 +19,28 @@ public class ViewCommandTest extends DoerListGuiTest {
     public void viewTask_invalidComamnd() {
         //invalid view command
         commandBox.runCommand("view");
+        assertNoTaskSelected();
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
     }
     
     @Test
     public void viewTask_nonEmptyList() {
-        assertViewInvalid(10); //invalid index
+        //invalid index
+        assertViewInvalid(10);
         assertNoTaskSelected();
+        
+        assertViewSuccess(1, td.task2); //first task in the list
+        assertViewSuccess(4, td.task7); //last last in the list
+        assertViewSuccess(8, td.task8); //a task in the middle of the list
 
-        assertViewSuccess(1); //first person in the list
-        int taskCount = td.getTypicalTasks().length;
-        assertViewSuccess(taskCount); //last person in the list
-        int middleIndex = taskCount / 2;
-        assertViewSuccess(middleIndex); //a person in the middle of the list
-
-        assertViewInvalid(taskCount + 1); //invalid index
-        assertTaskSelected(middleIndex); //assert previous selection remains
+        assertViewInvalid(9); //invalid index
+        assertTaskSelected(8); //assert previous selection remains
         /* Testing other invalid indexes such as -1 should be done when testing the ViewCommand */
     }
 
     @Test
     public void viewTask_emptyList() {
         commandBox.runCommand("clear");
-        assertListSize(0);
         assertViewInvalid(1); //invalid index
     }
 
@@ -49,9 +49,9 @@ public class ViewCommandTest extends DoerListGuiTest {
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
-    private void assertViewSuccess(int index) {
+    private void assertViewSuccess(int index, TestTask task) {
         commandBox.runCommand("view " + index);
-        assertResultMessage(String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, index));
+        assertResultMessage(String.format(ViewCommand.MESSAGE_VIEW_TASK_SUCCESS, task));
         assertTaskSelected(index);
     }
 
