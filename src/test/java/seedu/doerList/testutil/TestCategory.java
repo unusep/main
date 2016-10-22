@@ -1,21 +1,16 @@
+//@@author A0147978E
 package seedu.doerList.testutil;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import com.google.common.collect.Lists;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategory;
-import seedu.doerList.model.category.Category;
-import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
- * TestCategory for comparing the count
- * 
- * @author XP
- *
+ * TestCategory to compare the displayed data with actual data.
+ * Used in GUI test
  */
 public class TestCategory extends BuildInCategory {
     public List<TestTask> tasks;

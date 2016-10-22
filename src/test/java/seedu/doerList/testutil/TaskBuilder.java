@@ -1,3 +1,4 @@
+//@@author A0147978E
 package seedu.doerList.testutil;
 
 import org.joda.time.DateTime;
@@ -6,10 +7,12 @@ import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
-import seedu.doerList.model.task.*;
+import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.Title;
+import seedu.doerList.model.task.TodoTime;
 
 /**
- *
+ * TaskBuilder to helper build a task
  */
 public class TaskBuilder {
 
@@ -77,5 +80,4 @@ public class TaskBuilder {
     public TestTask build() {
         return this.task;
     }
-
 }

@@ -1,15 +1,19 @@
+//@@author A0147978E
 package seedu.doerList.logic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;
 import seedu.doerList.model.task.TodoTime;
 
+/** Test cases to validate the natural language time parser*/
 public class TimeParserTest {
     private TimeParser parser;
     private DateTimeFormatter formatter;
@@ -26,9 +30,19 @@ public class TimeParserTest {
     }
     
     @Test
+    public void parse_withImplicitTime_successful() throws IllegalValueException {
+        assertEquals(parser.parse("next 20 minutes"), new DateTime().plusMinutes(20).toString(formatter));
+        assertEquals(parser.parse("next 2 hours"), new DateTime().plusHours(2).toString(formatter));
+    }
+    
+    @Test
     public void parse_withImplicitDate_successful() throws IllegalValueException {
         assertEquals(parser.parse("today"), new DateTime().toString(formatter));
         assertEquals(parser.parse("tomorrow"), new DateTime().plusDays(1).toString(formatter));
+        assertEquals(parser.parse("next 2 days"), new DateTime().plusDays(2).toString(formatter));
+        assertEquals(parser.parse("next 2 months"), new DateTime().plusMonths(2).toString(formatter));
+        assertEquals(parser.parse("next week"), new DateTime().plusDays(7).toString(formatter));
+        assertEquals(parser.parse("next months"), new DateTime().plusMonths(1).toString(formatter));
     }
     
     @Test
@@ -41,12 +55,4 @@ public class TimeParserTest {
                 new DateTime().withHourOfDay(17).withMinuteOfHour(20).toString(formatter));
     }
     
-    @Test
-    public void parse_withImplicitTime_successful() throws IllegalValueException {
-        assertEquals(parser.parse("next 2 hours"), new DateTime().plusHours(2).toString(formatter));
-        assertEquals(parser.parse("next 2 days"), new DateTime().plusDays(2).toString(formatter));
-        assertEquals(parser.parse("next 2 months"), new DateTime().plusMonths(2).toString(formatter));
-        assertEquals(parser.parse("next week"), new DateTime().plusDays(7).toString(formatter));
-        assertEquals(parser.parse("next months"), new DateTime().plusMonths(1).toString(formatter));
-    }
 }
