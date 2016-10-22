@@ -1,5 +1,7 @@
-<!--@@author A0147978E-->
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+@@author A0147978E
+-->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>

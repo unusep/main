@@ -1,20 +1,15 @@
+//@@author A0147978E
 package seedu.doerList.ui;
 
-import java.util.logging.Logger;
-
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import seedu.doerList.commons.core.LogsCenter;
-import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
 import seedu.doerList.model.category.Category;
 
 public class CategorySideBar extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "CategorySideBar.fxml";
     private AnchorPane placeHolderPane;
     private VBox root;
@@ -72,19 +67,35 @@ public class CategorySideBar extends UiPart {
         return categoryListPanelPlaceholder;
     }
     
+    /**
+     * Scroll to the category specific by {@code target}.
+     * Both BuildInCategoryList and CategoryList be asked to scroll but the target
+     * only exist in one list
+     * 
+     * @param target
+     */
     public void categoryScrollTo(Category target) {
         categoryList.scrollTo(target);
         buildInCategoryList.scrollTo(target);  
     }
     
-    public void clearOtherSelectionExcept(Category selections) {
-        if (selections.isBuildIn()) {
+    /**
+     * Set the {@code selection} as active in the list and clear other selection.
+     * 
+     * @param selection
+     */
+    public void clearOtherSelectionExcept(Category selection) {
+        if (selection.isBuildIn()) {
             categoryList.clearSelection();
         } else {
             buildInCategoryList.clearSelection();
         }
     }
 
+    /**
+     * Refresh the displaying of the categories.
+     * This is used when the ObservableList has been updated.
+     */
     public void refreshCategories() {
         categoryList.redrawListView();
         buildInCategoryList.redrawListView();

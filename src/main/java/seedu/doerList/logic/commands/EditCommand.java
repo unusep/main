@@ -70,7 +70,7 @@ public class EditCommand extends Command {
 	    UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         try {
-            ReadOnlyTask target = TaskListPanel.getTaskWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
+            ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             Task newTask = generateUpdatedTask(target);
             
             model.replaceTask(target, newTask);

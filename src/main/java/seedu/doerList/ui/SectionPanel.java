@@ -1,33 +1,25 @@
+//@@author A0147978E
 package seedu.doerList.ui;
 
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.task.ReadOnlyTask;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 /**
- * Panel containing the list of events.
+ * Panel containing the list of sections.
  */
 public class SectionPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(SectionPanel.class);
     private static final String FXML = "SectionPanel.fxml";
     private VBox panel;
     private AnchorPane placeHolderPane;
-    private TaskListHeader header;
     
     private ArrayList<TaskCard> taskCardControllers;
 
@@ -60,7 +52,7 @@ public class SectionPanel extends UiPart {
     }
     
     public void setHeaderTitle(String headerName) {
-        header = TaskListHeader.load(primaryStage, sectionHeaderPlaceholder, headerName);
+        TaskListHeader.load(primaryStage, sectionHeaderPlaceholder, headerName);
     }
 
     public static SectionPanel load(Stage primaryStage, AnchorPane sectionPanelPlaceholder,
@@ -77,6 +69,12 @@ public class SectionPanel extends UiPart {
         addToPlaceholder();
     }
     
+    /**
+     * Set tasklist to the section and create TaskCard for each task.
+     * 
+     * @param taskList
+     * @param displayIndexStart
+     */
     private void setTaskList(List<ReadOnlyTask> taskList, int displayIndexStart) {
         taskCardControllers = new ArrayList<TaskCard>();
         int i = displayIndexStart;
@@ -98,11 +96,13 @@ public class SectionPanel extends UiPart {
     public ArrayList<TaskCard> getTaskControllers() {
         return taskCardControllers;
     }
-
-    public void scrollTo(int index) {
-        
-    }
     
+    /**
+     * Find the displayedIndex of a TaskCard.
+     * 
+     * @param target
+     * @return displayedIndex
+     */
     public int findSelectionIndex(TaskCard target) {
         int taskCardIndex = -1;
         for(TaskCard tc : this.getTaskControllers()) {
@@ -115,7 +115,12 @@ public class SectionPanel extends UiPart {
         return taskCardIndex;
     }
     
-    public void setActive(int index) {
+    /**
+     * Select the first Task and set it as active.
+     * 
+     * @param index the displayedIndex of the task
+     */
+    public void setFirstTaskToActive(int index) {
         if (index >= 0 && index < this.getTaskControllers().size()) {
             this.getTaskControllers().get(index).setActive();
             raise(new TaskPanelSelectionChangedEvent(this.getTaskControllers().get(index)));
