@@ -314,7 +314,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUndo(String args) {
-        if(args != null) {
+        if(!args.trim().equals("")) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
