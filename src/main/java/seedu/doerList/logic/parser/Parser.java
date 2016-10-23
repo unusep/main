@@ -93,6 +93,9 @@ public class Parser {
         case UndoCommand.COMMAND_WORD:
             return prepareUndo(arguments);
 
+        case RedoCommand.COMMAND_WORD:
+            return prepareRedo(arguments);
+
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
         }
@@ -320,6 +323,21 @@ public class Parser {
         }
 
         return new UndoCommand();
+    }
+
+    /**
+     * Parses arguments in the context of the redo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareRedo(String args) {
+        if(!args.trim().equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        }
+
+        return new RedoCommand();
     }
 
     /**

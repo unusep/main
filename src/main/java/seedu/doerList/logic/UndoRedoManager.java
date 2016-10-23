@@ -9,6 +9,7 @@ import seedu.doerList.model.ReadOnlyDoerList;
 public class UndoRedoManager {
 
     private DataPair toUndo;
+    private DataPair toRedo;
 
     /**
      * Update the state to be undone before a command that mutates data is called
@@ -20,7 +21,7 @@ public class UndoRedoManager {
     }
 
     /**
-     * return the sate to be undone
+     * return the state to be undone
      * @throws NotUndoableException
      */
     public DataPair getToUndo() throws NotUndoableException {
@@ -28,9 +29,27 @@ public class UndoRedoManager {
             throw new NotUndoableException();
         }
         DataPair getUndo = this.toUndo;
+        //update toRedo as at this stage, undo would have been called;
+        this.toRedo = getUndo;
         //clear the data as we only allow 1 undo
         this.toUndo = null;
         return getUndo;
+    }
+
+    /**
+     * return the state to be redone
+     * @throws NotUndoableException
+     */
+    public DataPair getToRedo() throws NotRedoableException {
+        if (toRedo == null) {
+            throw new NotRedoableException();
+        }
+        DataPair getRedo = this.toRedo;
+        //update toUndo as we can undo the redo as well;
+        this.toUndo = getRedo;
+        //clear the data as we only allow 1 undo
+        this.toUndo = null;
+        return getRedo;
     }
 
     /**
@@ -41,10 +60,13 @@ public class UndoRedoManager {
                command instanceof EditCommand ||
                command instanceof DeleteCommand ||
                command instanceof MarkCommand ||
-               command instanceof UnmarkCommand;
+               command instanceof UnmarkCommand ||
+               command instanceof RedoCommand;
     }
 
     public class NotUndoableException extends Exception{}
+
+    public class NotRedoableException extends Exception{}
 
     //===================================
     /**
