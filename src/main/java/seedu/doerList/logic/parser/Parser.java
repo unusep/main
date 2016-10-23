@@ -80,15 +80,18 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand(arguments.trim());
-        
+
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
-            
+
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -201,7 +204,7 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
-    
+
     //@@author A0147978E
     /**
      * Parses arguments in the context of the category name.
@@ -271,7 +274,7 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
-    
+
     /**
      * Parses arguments in the context of the unmark task command.
      *
@@ -303,7 +306,7 @@ public class Parser {
 
         return new MarkCommand(index.get());
     }
-    
+
     /**
      * Signals that the user input could not be parsed.
      */
