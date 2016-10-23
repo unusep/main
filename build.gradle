@@ -36,6 +36,8 @@ allprojects {
         testFxVersion = '4.0.+'
         monocleVersion = '1.8.0_20'
         jodatimeVersion = '2.9.4'
+        nattyTimeVersion = '0.12'
+        prettyTimeVersion = '3.2.7.Final'
 
         libDir = 'lib'
     }
@@ -54,7 +56,8 @@ allprojects {
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
         compile "joda-time:joda-time:$jodatimeVersion"
-        compile "com.joestelmach:natty:0.12"
+        compile "com.joestelmach:natty:$nattyTimeVersion"
+        compile "org.ocpsoft.prettytime:prettytime:$prettyTimeVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
