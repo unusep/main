@@ -43,7 +43,11 @@ public class TaskCardHandle extends GuiHandle {
     }
 
     public String getTime() {
-        return getContentFromText("#" + TaskCard.TIME_FIELD_ID);
+        return getTextFromLabel("#" + TaskCard.TIME_FIELD_ID);
+    }
+    
+    public String getCategory() {
+        return getTextFromLabel("#" + TaskCard.CATEGORY_FIELD_ID);
     }
     
     /**
@@ -55,7 +59,8 @@ public class TaskCardHandle extends GuiHandle {
     public boolean isSameTask(ReadOnlyTask task){
         return task.getTitle().fullTitle.equals(this.getFullTitle())
                 && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))
-                && (task.isFloatingTask() || task.getTime().equals(this.getTime()));
+                && (task.isFloatingTask() || task.getTime().equals(this.getTime()))
+                && (task.getCategories().isEmpty() || task.getCategories().toString().equals(this.getCategory()));
     }
 
     @Override

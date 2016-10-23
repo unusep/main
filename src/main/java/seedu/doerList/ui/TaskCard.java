@@ -19,7 +19,8 @@ import seedu.doerList.model.task.ReadOnlyTask;
 /** Card represents a specific task */
 public class TaskCard extends UiPart {
     public static final String DESCRIPTION_FIELD_ID = "description";
-    public static final String TIME_FIELD_ID = "time";
+    public static final String TIME_FIELD_ID = "taskTime";
+    public static final String CATEGORY_FIELD_ID = "taskCategory";
     public static final String ACTIVE_STATUS_BACKGROUND = "-fx-background-color: #deeff5;";
     public static final String INACTIVE_STATUS_BACKGROUD = "-fx-background-color: #e6e6e6;";
     
@@ -36,11 +37,15 @@ public class TaskCard extends UiPart {
     @FXML
     private AnchorPane descriptionPanel;
     @FXML
-    private AnchorPane timePanel;
-    @FXML
     private Label title;
     @FXML
     private Label index;
+    @FXML
+    private VBox rightBar; // hold taskCategory Label and taskTime Label
+    @FXML
+    private Label taskCategory;
+    @FXML
+    private Label taskTime;
 
     private ReadOnlyTask task;
     private AnchorPane placeHolderPane;
@@ -60,17 +65,43 @@ public class TaskCard extends UiPart {
 
     public void configure(int displayIndex) {
         taskPanel.setUserData(this); // store the controller
-        title.setText(task.getTitle().fullTitle);
-        index.setText(displayIndex + "");
-        // TODO should display description by default
-        // TODO need to parse to human readable time interval
-        // TODO need to find way to display category
+        displayTask(displayIndex);
         this.displayIndex = displayIndex;
         addToPlaceholder();
     }
+
+    private void displayTask(int displayIndex) {
+        title.setText(task.getTitle().fullTitle);
+        index.setText(displayIndex + "");
+        taskCategory.setText(task.getCategories().toString());
+        displayTime();
+        displayCategories();
+        // TODO need to parse to human readable time interval
+    }
     
-    private void addToPlaceholder() {
-        
+    /**
+     * Display the time of task, if the task is floating task, simply remove the node.
+     */
+    private void displayTime() {
+        if (task.isFloatingTask()) {
+            rightBar.getChildren().remove(taskTime);
+        } else {
+            taskTime.setText(task.getTime());
+        }
+    }
+    
+    /**
+     * Display the categories of task, if the task has no categories, simply remove the node.
+     */
+    private void displayCategories() {
+        if (task.getCategories().isEmpty()) {
+            rightBar.getChildren().remove(taskCategory);
+        } else {
+            taskCategory.setText(task.getCategories().toString());
+        }
+    }
+
+    private void addToPlaceholder() {       
         placeHolderPane.getChildren().add(rootPanel);
     }
 
@@ -125,7 +156,6 @@ public class TaskCard extends UiPart {
      */
     private void expandDetails() {
         showDescription();
-        showTime();
     }
     
     /**
@@ -133,7 +163,6 @@ public class TaskCard extends UiPart {
      */
     private void closeDetails() {
         hideDescription();
-        hideTime();
     }
     
     /**
@@ -154,27 +183,6 @@ public class TaskCard extends UiPart {
      */
     private void hideDescription() {
         descriptionPanel.getChildren().clear();
-    }
-    
-    /**
-     * Show associated time interval of task in UI.
-     */
-    private void showTime() {
-        String result = task.getTime();
-        if (result.length() != 0) {
-            Text timeField = new Text();
-            timeField.setId(TIME_FIELD_ID);
-            timeField.setText(result);
-            timePanel.getChildren().add(timeField);
-            FxViewUtil.applyAnchorBoundaryParameters(timeField, 0, 0, 0, 0);
-        }
-    }
-    
-    /**
-     * Hide associated time interval of task in UI.
-     */
-    private void hideTime() {
-        timePanel.getChildren().clear();
     }
     
     public int getDisplayIndex() {
@@ -198,7 +206,5 @@ public class TaskCard extends UiPart {
         logger.fine("Selection in task list panel changed to : '" + event.getSource() + "'");
         raise(new TaskPanelSelectionChangedEvent(this));
     }
-    
-    
-    
+      
 }

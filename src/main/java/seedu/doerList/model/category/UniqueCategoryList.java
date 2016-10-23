@@ -1,14 +1,18 @@
 package seedu.doerList.model.category;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.exceptions.DuplicateDataException;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.CollectionUtil;
 
-import java.util.*;
-
-import org.joda.time.DateTime;
 
 /**
  * A list of categories that enforces no nulls and uniqueness between its elements.
@@ -131,6 +135,10 @@ public class UniqueCategoryList implements Iterable<Category> {
     public ObservableList<Category> getInternalList() {
         return internalList;
     }
+    
+    public boolean isEmpty() {
+        return internalList.isEmpty();
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -148,6 +156,15 @@ public class UniqueCategoryList implements Iterable<Category> {
             
         return super.equals(other);
         
+    }
+    
+    @Override
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+        for(Category c : internalList) {
+            str.append(c.toString());
+        }
+        return str.toString();
     }
 
     @Override
