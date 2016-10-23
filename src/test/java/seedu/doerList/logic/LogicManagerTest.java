@@ -34,6 +34,7 @@ import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
+import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.logic.commands.ViewCommand;
 import seedu.doerList.model.DoerList;
@@ -269,19 +270,19 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedList);
     }
-    
+
     //@@author A0147978E
     @Test
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8).toString(), 
+        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8).toString(),
                         new DateTime().withHourOfDay(12).toString()); // today
-        Task Next1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(), 
+        Task Next1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(),
                         new DateTime().withHourOfDay(12).plusDays(1).toString()); // tomorrow
-        Task Next2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(), 
+        Task Next2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(),
                         new DateTime().withHourOfDay(12).plusDays(5).toString()); // next 5 days
-        Task Next3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(), 
+        Task Next3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(),
                         new DateTime().withHourOfDay(12).plusDays(7).toString()); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
@@ -299,7 +300,7 @@ public class LogicManagerTest {
         // Test complete
         assertBuildInCategoryListed(Arrays.asList(Complete1), BuildInCategoryList.COMPLETE);
     }
-    
+
     //@@author A0147978E
     @Test
     public void execute_list_category() throws Exception {
@@ -309,29 +310,29 @@ public class LogicManagerTest {
         Task task2 = helper.generateTaskWithCategory(2, new Category("CA1"));
         Task task3 = helper.generateTaskWithCategory(3, new Category("CA2"));
         Task task4 = helper.generateTaskWithCategory(4);
-        
+
         // prepare doerList state
         helper.addToModel(model, Arrays.asList(task1, task2, task3, task4));
 
         // list unknown category
         CommandResult result = logic.execute("list CA3");
         assertEquals(ListCommand.MESSAGE_CATEGORY_NOT_EXISTS, result.feedbackToUser);
-        
+
         // list All
         //Execute the command
         result = logic.execute("list");
-        assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList()); 
+        assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList());
         // List CA1
         assertCategoryListed(Arrays.asList(task1, task2), "CA1");
         // list CA2
         assertCategoryListed(Arrays.asList(task1, task3), "CA2");
     }
-    
+
     //@@author A0147978E
     /**
      * Execute the list command and validate the correct tasks {@code expected} under {@code category} are listed
      * This is to validate buildInCategory
-     * 
+     *
      * @param expected
      * @param category
      * @throws Exception
@@ -343,12 +344,12 @@ public class LogicManagerTest {
         assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, category.categoryName), result.feedbackToUser);
         assertEquals(expected, category.getTasks());
     }
-    
+
     //@@author A0147978E
     /**
      * Execute the command and validate the correct tasks {@code expected} under {@code categoryName} are listed
      * This is to validate normal category
-     * 
+     *
      * @param expected
      * @param categoryName
      */
@@ -360,7 +361,7 @@ public class LogicManagerTest {
         assertEquals(expected, logic.getFilteredTaskList());
     }
 
-    //@@author   
+    //@@author
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
      * targeting a single person in the shown list, using visible index.
@@ -563,13 +564,13 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
-    
+
     @Test
     public void execute_unmark_unmarkInvalidIndex() throws Exception {
-        assertIncorrectIndexFormatBehaviorForCommand("unmark ", 
+        assertIncorrectIndexFormatBehaviorForCommand("unmark ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
     }
-    
+
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -578,27 +579,27 @@ public class LogicManagerTest {
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(notComplete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
-        
+
         helper.addToModel(model, Arrays.asList(complete));
 
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
-                expectedAB, 
+        assertCommandBehavior("unmark 1",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete),
+                expectedAB,
                 expectedList);
-        
+
         // marking twice should be ok
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
-                expectedAB, 
-                expectedList);       
+        assertCommandBehavior("unmark 1",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete),
+                expectedAB,
+                expectedList);
     }
-    
+
     @Test
     public void exectue_mark_invalidIndex() throws Exception {
-        assertIncorrectIndexFormatBehaviorForCommand("mark ", 
+        assertIncorrectIndexFormatBehaviorForCommand("mark ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
     }
-    
+
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -607,19 +608,19 @@ public class LogicManagerTest {
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
-        
+
         helper.addToModel(model, Arrays.asList(notComplete));
 
-        assertCommandBehavior("mark 1", 
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
-                expectedAB, 
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
+                expectedAB,
                 expectedList);
-        
+
         // marking twice should be ok
-        assertCommandBehavior("mark 1", 
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
-                expectedAB, 
-                expectedList);       
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
+                expectedAB,
+                expectedList);
     }
 
     @Test
@@ -646,6 +647,56 @@ public class LogicManagerTest {
                 "taskdue ok ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+    }
+
+    @Test
+    public void execute_undo_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "undo 13123 ", expectedMessage);
+        assertCommandBehavior(
+                "undo 1231023213    ", expectedMessage);
+    }
+
+    @Test
+    public void execute_undo_successful_one_time_unsuccessful_otherwise() throws Exception {
+     // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(1);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+
+        // execute command and verify result (add in this case)
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB,
+                expectedAB.getTaskList());
+
+        //execute undo command 1 time and verify
+        expectedAB = new DoerList();
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedAB,
+                expectedAB.getTaskList());
+
+        //execute undo 2 times command and verify
+        //we do not ALLOW undo more than 1 times
+        expectedAB = new DoerList();
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_FAILURE,
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_undo_unsuccessful_no_undoable_command() throws Exception {
+        DoerList expectedAB = new DoerList();
+        logic.execute("wrong command");
+
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_FAILURE,
+                expectedAB,
+                expectedAB.getTaskList());
     }
 
 
@@ -706,11 +757,11 @@ public class LogicManagerTest {
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
-        
+
         //@@author A0147978E
         /**
          * Generate Task with given seed, startTime and endTime
-         * 
+         *
          * @param seed
          * @param startTime
          * @param endTime
@@ -730,11 +781,11 @@ public class LogicManagerTest {
             }
             return null;
         }
-        
+
         //@@author A0147978E
         /**
          * Generate task based on given seed and category
-         * 
+         *
          * @param seed
          * @param Category... c
          * @return task with given seed and category
@@ -754,11 +805,11 @@ public class LogicManagerTest {
             }
             return null;
         }
-        
+
         //@@author A0147978E
         /**
          * Generate task with title and description
-         * 
+         *
          * @param title
          * @param description
          * @return generated Task
