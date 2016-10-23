@@ -35,7 +35,11 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         Command command = parser.parseCommand(commandText);
         command.setData(model);
+
         undoRedoManager.storeToUndo(command, model);
+
+        //store this undoRedoManager to the command class, as command cannot access LogicManager directly
+        command.storeURM(undoRedoManager);
         return command.execute();
     }
 

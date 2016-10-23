@@ -3,6 +3,7 @@ package seedu.doerList.logic.commands;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.ui.IncorrectCommandAttemptedEvent;
+import seedu.doerList.logic.UndoRedoManager;
 import seedu.doerList.model.Model;
 
 /**
@@ -10,6 +11,7 @@ import seedu.doerList.model.Model;
  */
 public abstract class Command {
     protected Model model;
+    protected UndoRedoManager undoRedoManager;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of tasks.
@@ -42,5 +44,9 @@ public abstract class Command {
      */
     protected void indicateAttemptToExecuteIncorrectCommand() {
         EventsCenter.getInstance().post(new IncorrectCommandAttemptedEvent(this));
+    }
+
+    public void storeURM(UndoRedoManager undoRedoManager) {
+        this.undoRedoManager = undoRedoManager;
     }
 }
