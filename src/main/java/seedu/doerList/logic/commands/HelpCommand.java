@@ -52,8 +52,8 @@ public class HelpCommand extends Command {
         case DeleteCommand.COMMAND_WORD:
             return new CommandResult(DeleteCommand.MESSAGE_USAGE);
 
-        //case UndoCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_UNDO_MESSAGE);
+        case UndoCommand.COMMAND_WORD:
+            return new CommandResult(UndoCommand.MESSAGE_USAGE);
 
         //case RedoCommand.COMMAND_WORD:
         //    return new CommandResult(SHOWING_HELP_REDO_MESSAGE);
