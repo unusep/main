@@ -33,6 +33,7 @@ import seedu.doerList.logic.commands.FindCommand;
 import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
+import seedu.doerList.logic.commands.RedoCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
@@ -695,6 +696,56 @@ public class LogicManagerTest {
 
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_FAILURE,
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_redo_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "redo 13123 ", expectedMessage);
+        assertCommandBehavior(
+                "redo 1231023213    ", expectedMessage);
+    }
+
+    @Test
+    public void execute_redo_successful_() throws Exception {
+     // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(1);
+        DoerList expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+
+        // execute command and verify result (add in this case)
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB,
+                expectedAB.getTaskList());
+
+        //execute undo command 1 time and verify
+        expectedAB = new DoerList();
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedAB,
+                expectedAB.getTaskList());
+
+        //execute redo command after undo command
+        expectedAB = new DoerList();
+        expectedAB.addTask(toBeAdded);
+        assertCommandBehavior("redo",
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_redo_unsuccessful_no_redoable_command() throws Exception {
+        DoerList expectedAB = new DoerList();
+        logic.execute("wrong command");
+
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_FAILURE,
                 expectedAB,
                 expectedAB.getTaskList());
     }
