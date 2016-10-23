@@ -22,10 +22,12 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final Parser parser;
+    private UndoRedoManager undoRedoManager;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.parser = new Parser();
+        this.undoRedoManager = new UndoRedoManager();
     }
 
     @Override
@@ -33,6 +35,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         Command command = parser.parseCommand(commandText);
         command.setData(model);
+        undoRedoManager.storeToUndo(command, model);
         return command.execute();
     }
 
@@ -40,12 +43,12 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<ReadOnlyTask> getFilteredTaskList() {
         return model.getFilteredTaskList();
     }
-    
+
     @Override
     public ObservableList<Category> getCategoryList() {
         return model.getCategoryList();
     }
-    
+
     //@@author A0147978E
     @Override
     public ObservableList<Category> getBuildInCategoryList() {
