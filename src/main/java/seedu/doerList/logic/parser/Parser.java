@@ -91,7 +91,7 @@ public class Parser {
             return new TaskdueCommand(arguments.trim());
 
         case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
+            return prepareUndo(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -305,6 +305,21 @@ public class Parser {
         }
 
         return new MarkCommand(index.get());
+    }
+
+    /**
+     * Parses arguments in the context of the undo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUndo(String args) {
+        if(args != null) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+        }
+
+        return new UndoCommand();
     }
 
     /**
