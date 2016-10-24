@@ -1,10 +1,13 @@
 package seedu.doerList.testutil;
 
+import java.time.LocalDateTime;
+
 import org.joda.time.DateTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.task.DateTimeSetter;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
 
@@ -17,26 +20,26 @@ public class TypicalTestTasks {
     public TypicalTestTasks() {
         try {
             task1 = new TaskBuilder().withTitle("Lecture Quiz 1").withDescription("Do your homework 4")
-                    .withStartTime(new DateTime().withHourOfDay(8).withMinuteOfHour(0).minusDays(3))
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0).minusDays(3))
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(10).minusDays(3))
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).minusDays(3))
                     .withBuildInCategories(BuildInCategoryList.COMPLETE)
                     .build(); // task due several days complete
             task2 = new TaskBuilder().withTitle("Guide CA2").withDescription("Do your homework 2 Math")
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0).minusDays(1)) // task due yesterdays
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).minusDays(1)) // task due yesterdays
                     .withCategories("CS2101", "CS2103").build();
             task3 =  new TaskBuilder().withTitle("CA1 Guide").withDescription("Do your homework 1")
-                    .withStartTime(new DateTime().withHourOfDay(8).withMinuteOfHour(0))
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8))
                     .withCategories("CS2101").build(); // task today
             task4 = new TaskBuilder().withTitle("Lecture Quiz 2").withDescription("Do your homework 5")
-                    .withStartTime(new DateTime().withHourOfDay(8).withMinuteOfHour(0))
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0)).withCategories("MA1101R")
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8))
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12)).withCategories("MA1101R")
                     .withBuildInCategories(BuildInCategoryList.COMPLETE).build(); // task today complete
             task5 = new TaskBuilder().withTitle("Guide Tutorial")
-                    .withStartTime(new DateTime().withHourOfDay(8).withMinuteOfHour(0).plusDays(1))
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0).plusDays(1))
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1))
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1))
                     .withBuildInCategories(BuildInCategoryList.COMPLETE).build(); // task tomorrow complete
             task6 = new TaskBuilder().withTitle("Guide Math").withDescription("Do your homework 3")
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0).plusDays(3)).build(); // task next 7 days
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(3)).build(); // task next 7 days
             task7 = new TaskBuilder().withTitle("Math Test").withDescription("Hello").build(); // inbox
             task8 = new TaskBuilder().withTitle("Math Test 2")
                     .withBuildInCategories(BuildInCategoryList.COMPLETE)
@@ -44,14 +47,14 @@ public class TypicalTestTasks {
             
             //Manually added
             task9 = new TaskBuilder().withTitle("Lecture Quiz 0").withDescription("pre-course reflection")
-                    .withStartTime(new DateTime().withHourOfDay(8).withMinuteOfHour(0).minusDays(2))
-                    .withEndTime(new DateTime().withHourOfDay(12).withMinuteOfHour(0).minusDays(2)).withCategories("Urgent")
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).minusDays(2))
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).minusDays(2)).withCategories("Urgent")
                     .build(); // task due yesterday
             task10 = new TaskBuilder().withTitle("Do quiz 1").withDescription("quiz 1")
-                    .withEndTime(new DateTime().withHourOfDay(15).withMinuteOfHour(0))
+                    .withEndTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(15))
                     .withCategories("CS2103").build(); // task today
             task11 = new TaskBuilder().withTitle("Do quiz 2").withDescription("quiz 2")
-                    .withStartTime(new DateTime().withHourOfDay(16).withMinuteOfHour(0).plusDays(1)).build(); // task tomorrow
+                    .withStartTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(16).plusDays(1)).build(); // task tomorrow
             task12 = new TaskBuilder().withTitle("Hai Long's Birthday").withDescription("Bring Gift")
                     .withCategories("Life")
                     .build(); // inbox
