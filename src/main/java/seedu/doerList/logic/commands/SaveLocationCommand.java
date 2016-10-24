@@ -12,7 +12,9 @@ public class SaveLocationCommand extends Command {
             + " /st C:\\Documents\\MyDoerList /n MyNewDoerList";
 
     public static final String MESSAGE_SUCCESS = "Data saved under: %1$s \nName of file: %2$s";
-    public static final String MESSAGE_INVALID_SAVE_LOCATION = "The save location is not found.\n Please enter another location.";
+    public static final String MESSAGE_INVALID_SAVE_LOCATION = "The save location is not found.\n"
+            + "It is either protected or it does not exist.\n"
+            + "Please enter another location.";
     public static final String DEFAULT_SAVE_FILE_NAME = "MyDoerList";
     
     private final String saveLocation;
@@ -28,6 +30,7 @@ public class SaveLocationCommand extends Command {
         if (fileName == null)
             fileName = DEFAULT_SAVE_FILE_NAME;
         try {
+            storage.setSaveLocation(saveLocation);
             model.changeSaveLocation(saveLocation, fileName);
             return new CommandResult(String.format(MESSAGE_SUCCESS, (Object)(new String[] {saveLocation, fileName})));
         } catch (InvalidPathException e) {

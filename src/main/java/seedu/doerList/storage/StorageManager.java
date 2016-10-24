@@ -95,9 +95,11 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
     
-    @Override
+    public void setSaveLocation(String saveLocation) throws InvalidPathException {
+        this.doerListStorage.setDoerListFilePath(saveLocation);
+    }
+    
     public void changeSaveLocation(String saveLocation, String fileName) throws IOException, InvalidPathException {
-        this.doerListStorage = new XmlDoerListStorage(saveLocation);
         String filePath = saveLocation + "\\" + fileName + ".xml";
         File file = new File(filePath);
         FileUtil.createIfMissing(file);

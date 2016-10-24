@@ -27,6 +27,10 @@ public class XmlDoerListStorage implements DoerListStorage {
     public String getDoerListFilePath(){
         return filePath;
     }
+    
+    public void setDoerListFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
     /**
      * Similar to {@link #readDoerList()}
@@ -70,9 +74,5 @@ public class XmlDoerListStorage implements DoerListStorage {
     public void saveDoerList(ReadOnlyDoerList doerList) throws IOException {
         saveDoerList(doerList, filePath);
     }
-    
-    @Override
-    public void changeSaveLocation(String saveLocation, String fileName) {
-        
-    }
+
 }
