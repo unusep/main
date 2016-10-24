@@ -1,7 +1,7 @@
 //@@author A0147978E
 package seedu.doerList.testutil;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategory;
@@ -62,7 +62,7 @@ public class TaskBuilder {
         return this;
     }
     
-    public TaskBuilder withStartTime(DateTime startTime) throws IllegalValueException {
+    public TaskBuilder withStartTime(LocalDateTime startTime) throws IllegalValueException {
         this.task.setStartTime(new TodoTime(startTime));
         return this;
     }
@@ -72,7 +72,7 @@ public class TaskBuilder {
         return this;
     }
     
-    public TaskBuilder withEndTime(DateTime endTime) throws IllegalValueException {
+    public TaskBuilder withEndTime(LocalDateTime endTime) throws IllegalValueException {
         this.task.setEndTime(new TodoTime(endTime));
         return this;
     }

@@ -4,15 +4,16 @@ package guitests;
 import static org.junit.Assert.assertTrue;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.EditCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
@@ -31,8 +32,8 @@ public class EditCommandTest extends DoerListGuiTest {
         TestTask afterEdition = new TestTask(td.task2);
         afterEdition.setTitle(new Title("Test Task 2 Edit Title"));
         afterEdition.setDescription(new Description("Test Task 2 Edit Description"));
-        afterEdition.setStartTime(new TodoTime(new DateTime().withHourOfDay(10).withMinuteOfHour(0)));
-        afterEdition.setEndTime(new TodoTime(new DateTime().withHourOfDay(13).withMinuteOfHour(0)));
+        afterEdition.setStartTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(10).toString()));
+        afterEdition.setEndTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(13).toString()));
         afterEdition.setCategories(new UniqueCategoryList(new Category("CS2103")));
         
         // expected output

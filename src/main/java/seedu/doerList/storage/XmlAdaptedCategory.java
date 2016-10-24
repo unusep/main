@@ -3,7 +3,6 @@ package seedu.doerList.storage;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.commons.util.CollectionUtil;
 import seedu.doerList.model.category.Category;
 
 /**

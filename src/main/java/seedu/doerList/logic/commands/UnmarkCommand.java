@@ -1,14 +1,8 @@
+//@@author A0139168W
 package seedu.doerList.logic.commands;
 
-import java.util.Optional;
-
-import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
-import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.category.Category;
-import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;

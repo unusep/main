@@ -13,7 +13,6 @@ import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.commands.Command;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
 
 public class TaskdueCommandTest extends DoerListGuiTest {
 
