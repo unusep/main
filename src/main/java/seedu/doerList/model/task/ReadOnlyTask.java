@@ -34,17 +34,17 @@ public interface ReadOnlyTask {
         if (hasStartTime() && !hasEndTime()) {
             builder
             .append(" Begin At: ")
-            .append(getStartTime());
+            .append(getStartTime().toHumanReadableTime());
         }
         if (!hasStartTime() && hasEndTime()) {
             builder
             .append(" Due: ")
-            .append(getEndTime());
+            .append(getEndTime().toHumanReadableTime());
         }
         if (hasStartTime() && hasEndTime()) {
             builder
             .append(" Time: ")
-            .append(getStartTime() + "->" + getEndTime());
+            .append(getStartTime().toHumanReadableTime() + " -> " + getEndTime().toHumanReadableTime());
         }
         return builder.toString();
     }

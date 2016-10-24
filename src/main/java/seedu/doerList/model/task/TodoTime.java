@@ -1,7 +1,11 @@
 package seedu.doerList.model.task;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import org.ocpsoft.prettytime.PrettyTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;
@@ -11,6 +15,8 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class TodoTime {
+    public static final PrettyTime HumanReadableParser = new PrettyTime();
+    
 
     public final LocalDateTime value;
 
@@ -43,6 +49,15 @@ public class TodoTime {
    public String toString() {
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
        return value.format(formatter).toString();
+   }
+   
+   /**
+    * Parse the time to human readable version
+    * 
+    * @return String
+    */
+   public String toHumanReadableTime() {
+       return HumanReadableParser.format(Date.from(value.atZone(ZoneId.systemDefault()).toInstant()));
    }
 
    @Override
