@@ -1,7 +1,6 @@
 package seedu.doerList.storage;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategoryList;
@@ -9,7 +8,6 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

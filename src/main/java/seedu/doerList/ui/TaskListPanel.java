@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
@@ -336,8 +337,10 @@ public class TaskListPanel extends UiPart {
                     if (t1.isFloatingTask() && t2.isFloatingTask()) {
                         return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
                     } else {
-                        DateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : new DateTime().withCenturyOfEra(24);
-                        DateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : new DateTime().withCenturyOfEra(24);
+                        LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
+                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                        LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
+                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
                         t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
                         t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
                         return t1_represent.isBefore(t2_represent) ? -1 : 1;

@@ -2,7 +2,6 @@ package seedu.doerList.model.task;
 
 import java.util.Objects;
 
-import seedu.doerList.commons.util.CollectionUtil;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.UniqueCategoryList;

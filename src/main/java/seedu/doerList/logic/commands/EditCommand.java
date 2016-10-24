@@ -3,13 +3,9 @@ package seedu.doerList.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.*;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;

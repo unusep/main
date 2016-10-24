@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import seedu.doerList.commons.exceptions.DuplicateDataException;
 import seedu.doerList.commons.util.CollectionUtil;
 
-
 /**
  * A list of categories that enforces no nulls and uniqueness between its elements.
  *

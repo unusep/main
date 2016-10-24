@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,6 +24,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
 import seedu.doerList.logic.commands.CommandResult;
@@ -275,14 +276,14 @@ public class LogicManagerTest {
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, new DateTime().withHourOfDay(8).toString(), 
-                        new DateTime().withHourOfDay(12).toString()); // today
-        Task Next1 = helper.generateTaskWithTime(2, new DateTime().withHourOfDay(8).plusDays(1).toString(), 
-                        new DateTime().withHourOfDay(12).plusDays(1).toString()); // tomorrow
-        Task Next2 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(5).toString(), 
-                        new DateTime().withHourOfDay(12).plusDays(5).toString()); // next 5 days
-        Task Next3 = helper.generateTaskWithTime(3, new DateTime().withHourOfDay(8).plusDays(7).toString(), 
-                        new DateTime().withHourOfDay(12).plusDays(7).toString()); // next 7 days
+        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString()); // today
+        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString()); // tomorrow
+        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString()); // next 5 days
+        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString()); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
@@ -697,7 +698,8 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         Task generateTask(int seed) throws Exception {
-            DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+            LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
+                    DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
                     new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
@@ -741,7 +743,8 @@ public class LogicManagerTest {
          */
         Task generateTaskWithCategory(int seed, Category... c) {
             try {
-                DateTime sampleDate = DateTime.parse("2016-10-03 10:15", DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
+                LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
+                        DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
                 return new Task(
                         new Title("Task " + seed),
                         new Description("" + Math.abs(seed)),
