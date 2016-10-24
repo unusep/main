@@ -3,6 +3,8 @@ package seedu.doerList.storage;
 //import org.joda.time.DateTime;
 import java.time.LocalDateTime;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.task.TodoTime;
 
@@ -11,6 +13,7 @@ import seedu.doerList.model.task.TodoTime;
  */
 public class XmlAdaptedTodoTime {
 
+    @XmlJavaTypeAdapter(JavaTimeAdapter.class)
     private LocalDateTime value;
 
     /**
