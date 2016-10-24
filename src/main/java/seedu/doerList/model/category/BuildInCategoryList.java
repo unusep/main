@@ -10,7 +10,7 @@ import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.model.task.DateTimeSetter;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.model.task.Task;
 
 /**
@@ -37,8 +37,8 @@ public class BuildInCategoryList implements Iterable<Category> {
                 return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
             });
             TODAY = new BuildInCategory("Today", (task) -> {                
-                LocalDateTime todayBegin = DateTimeSetter.getStartOfDay(LocalDateTime.now());
-                LocalDateTime todayEnd = DateTimeSetter.getEndOfDay(LocalDateTime.now());    
+                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
+                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
                 if (!INBOX.getPredicate().test(task)) {
                     if (task.hasStartTime() && !task.hasEndTime()) {
                         return task.getStartTime().value.isBefore(todayEnd);
@@ -59,7 +59,7 @@ public class BuildInCategoryList implements Iterable<Category> {
                 }
             });
             NEXT = new BuildInCategory("Next", (task) -> {
-                LocalDateTime todayEnd = DateTimeSetter.getEndOfDay(LocalDateTime.now());  
+                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
                 if (task.hasStartTime()) {
                     return task.getStartTime().value.isAfter(todayEnd);
                 } else if (task.hasEndTime()) {
@@ -69,7 +69,7 @@ public class BuildInCategoryList implements Iterable<Category> {
                 }
             });
             DUE = new BuildInCategory("Overdue", (task) -> {
-                LocalDateTime todayBegin = DateTimeSetter.getStartOfDay(LocalDateTime.now());    
+                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
                 return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) &&
                         task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
             });

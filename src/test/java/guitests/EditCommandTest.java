@@ -7,18 +7,17 @@ import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMA
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.EditCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
-import seedu.doerList.model.task.DateTimeSetter;
 import seedu.doerList.model.task.Description;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
@@ -33,8 +32,8 @@ public class EditCommandTest extends DoerListGuiTest {
         TestTask afterEdition = new TestTask(td.task2);
         afterEdition.setTitle(new Title("Test Task 2 Edit Title"));
         afterEdition.setDescription(new Description("Test Task 2 Edit Description"));
-        afterEdition.setStartTime(new TodoTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(10).toString()));
-        afterEdition.setEndTime(new TodoTime(DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(13).toString()));
+        afterEdition.setStartTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(10).toString()));
+        afterEdition.setEndTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(13).toString()));
         afterEdition.setCategories(new UniqueCategoryList(new Category("CS2103")));
         
         // expected output

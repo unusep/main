@@ -10,8 +10,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-//import org.joda.time.DateTime;
-//import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +24,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
 import seedu.doerList.logic.commands.CommandResult;
@@ -45,7 +44,6 @@ import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
-import seedu.doerList.model.task.DateTimeSetter;
 import seedu.doerList.model.task.Description;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
@@ -278,14 +276,14 @@ public class LogicManagerTest {
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
-                DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).toString()); // today
-        Task Next1 = helper.generateTaskWithTime(2, DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
-                DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString()); // tomorrow
-        Task Next2 = helper.generateTaskWithTime(3, DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
-                DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString()); // next 5 days
-        Task Next3 = helper.generateTaskWithTime(3, DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
-                DateTimeSetter.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString()); // next 7 days
+        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString()); // today
+        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString()); // tomorrow
+        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString()); // next 5 days
+        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString()); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
