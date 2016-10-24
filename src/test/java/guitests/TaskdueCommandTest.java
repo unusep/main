@@ -19,16 +19,16 @@ public class TaskdueCommandTest extends DoerListGuiTest {
     @Test
     public void taskdue_nonEmptyList() throws IllegalValueException {
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 1),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 1, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         
         // task due today
@@ -40,6 +40,7 @@ public class TaskdueCommandTest extends DoerListGuiTest {
         // task due empty list
         List<TestCategory> expectedDisplayTaskPanel_LastWeek = Lists.newArrayList();
         expectedBuildInCategoryList.get(0).setExpectedNumTasks(0);
+        expectedBuildInCategoryList.get(0).setExpectedDueTasks(0);
         assertTaskdueResult("taskdue last week", expectedDisplayTaskPanel_LastWeek, expectedBuildInCategoryList, expectedCategoryList);
     }
 

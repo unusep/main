@@ -41,16 +41,16 @@ public class DeleteCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task4, td.task5)
         );
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 6),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 2)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 6, 0),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 1, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 2, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 1),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 1, 0),
+                new TestCategory("CS2103", 1, 0),
+                new TestCategory("MA1101R", 1, 0)
         );
         targetIndex = 5;
         assertDeleteSuccess(targetIndex, td.task1, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
