@@ -70,4 +70,9 @@ public class XmlDoerListStorage implements DoerListStorage {
     public void saveDoerList(ReadOnlyDoerList doerList) throws IOException {
         saveDoerList(doerList, filePath);
     }
+    
+    @Override
+    public void changeSaveLocation(String saveLocation, String fileName) {
+        
+    }
 }

@@ -5,6 +5,7 @@ import seedu.doerList.commons.core.ComponentManager;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
+import seedu.doerList.commons.events.storage.DataPathChangedEvent;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
@@ -96,6 +97,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.unmarkTask(task);
+        indicateDoerListChanged();
+    }
+    
+    @Override
+    public synchronized void changeSaveLocation(String saveLocation, String fileName) {
+        raise(new DataPathChangedEvent(saveLocation, fileName));
         indicateDoerListChanged();
     }
     //=========== Filtered Task List Accessors ===============================================================

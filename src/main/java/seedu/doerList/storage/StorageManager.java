@@ -3,15 +3,24 @@ package seedu.doerList.storage;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.ComponentManager;
+import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
+import seedu.doerList.commons.events.storage.DataPathChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.exceptions.DataConversionException;
+import seedu.doerList.commons.util.ConfigUtil;
+import seedu.doerList.commons.util.FileUtil;
 import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.UserPrefs;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -73,6 +82,31 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+    
+    @Override
+    @Subscribe
+    public void handleDataPathChangedEvent(DataPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data save location changing."));
+        try {
+            changeSaveLocation(event.getSaveLocation(), event.getFileName());
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+    
+    @Override
+    public void changeSaveLocation(String saveLocation, String fileName) throws IOException, InvalidPathException {
+        this.doerListStorage = new XmlDoerListStorage(saveLocation);
+        String filePath = saveLocation + "\\" + fileName + ".xml";
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        
+        Config config = new Config();
+        config.setDoerListName(fileName);
+        config.setDoerListFilePath(saveLocation);
+        
+        ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
     }
 
 }

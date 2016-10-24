@@ -30,5 +30,7 @@ public interface DoerListStorage {
      * @throws IOException if there was any problem writing to the file.
      */
     void saveDoerList(ReadOnlyDoerList doerList) throws IOException;
+    
+    void changeSaveLocation(String saveLocation, String fileName) throws IOException;
 
 }

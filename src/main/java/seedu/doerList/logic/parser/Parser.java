@@ -33,6 +33,8 @@ public class Parser {
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
     private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
+    private static final Pattern TASK_DATA_SAVE_LOCATION_FORMAT = Pattern.compile("\\/st(?<saveLocation>[^\\/]+)");
+    private static final Pattern TASK_DATA_SAVE_NAME_FORMAT = Pattern.compile("\\/n(?<fileName>[^\\/]+)");
 
     //@@author
     public Parser() {}
@@ -89,6 +91,9 @@ public class Parser {
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
+        
+        case SaveLocationCommand.COMMAND_WORD:
+            return prepareSaveLocation(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -302,6 +307,25 @@ public class Parser {
         }
 
         return new MarkCommand(index.get());
+    }
+    
+    /**
+     * Parses arguments in the context of the save location command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareSaveLocation(String args) {
+        final Matcher locationMatcher = TASK_DATA_SAVE_LOCATION_FORMAT.matcher(args.trim());
+        final Matcher nameMatcher = TASK_DATA_SAVE_NAME_FORMAT.matcher(args.trim());
+        
+        if (!locationMatcher.find()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveLocationCommand.MESSAGE_USAGE));
+        }
+        
+        return new SaveLocationCommand(
+                locationMatcher.group("saveLocation").trim(),
+                nameMatcher.find() ? nameMatcher.group("fileName").trim() : null);
     }
     
     /**
