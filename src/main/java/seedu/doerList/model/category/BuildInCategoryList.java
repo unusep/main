@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 
-//import org.joda.time.DateTime;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;

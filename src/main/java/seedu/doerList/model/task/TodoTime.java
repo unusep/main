@@ -1,14 +1,10 @@
 package seedu.doerList.model.task;
-//import org.joda.time.format.DateTimeFormat;
-//import org.joda.time.format.DateTimeFormatter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;
-
-//import org.joda.time.DateTime;
 
 /**
  * Represents an Task's time in the to-do List.

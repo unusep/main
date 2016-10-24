@@ -3,7 +3,6 @@ package seedu.doerList.logic.commands;
 
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;

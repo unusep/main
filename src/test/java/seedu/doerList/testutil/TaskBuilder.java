@@ -1,7 +1,6 @@
 //@@author A0147978E
 package seedu.doerList.testutil;
 
-//import org.joda.time.DateTime;
 import java.time.LocalDateTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
