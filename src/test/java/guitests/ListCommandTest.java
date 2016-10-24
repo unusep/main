@@ -17,6 +17,8 @@ import seedu.doerList.testutil.TestCategory;
 
 public class ListCommandTest extends DoerListGuiTest {
 
+    // case sensitive test is included in the logicManagerTest.java
+    
     @Test
     public void list() throws IllegalValueException {
         // generate exptected result

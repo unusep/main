@@ -24,6 +24,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
@@ -296,13 +297,17 @@ public class LogicManagerTest {
         helper.addToModel(model, Arrays.asList(Today1, Next1, Next2, Next3, Inbox1, Complete1));
 
         // Test ALL
-        assertBuildInCategoryListed(Arrays.asList(Today1, Next1, Next2, Next3, Inbox1, Complete1), BuildInCategoryList.ALL);
-        // Test Next 7 Days
-        assertBuildInCategoryListed(Arrays.asList(Next1, Next2, Next3), BuildInCategoryList.NEXT);
+        assertCategoryListed(Arrays.asList(Today1, Next1, Next2, Next3, Inbox1, Complete1), 
+                BuildInCategoryList.ALL, BuildInCategoryList.ALL.categoryName);
+        // Test Next
+        assertCategoryListed(Arrays.asList(Next1, Next2, Next3), 
+                BuildInCategoryList.NEXT, BuildInCategoryList.NEXT.categoryName);
         // Test Inbox
-        assertBuildInCategoryListed(Arrays.asList(Inbox1), BuildInCategoryList.INBOX );
+        assertCategoryListed(Arrays.asList(Inbox1), 
+                BuildInCategoryList.INBOX, BuildInCategoryList.INBOX.categoryName);
         // Test complete
-        assertBuildInCategoryListed(Arrays.asList(Complete1), BuildInCategoryList.COMPLETE);
+        assertCategoryListed(Arrays.asList(Complete1), 
+                BuildInCategoryList.COMPLETE, BuildInCategoryList.COMPLETE.categoryName);
     }
     
     //@@author A0147978E
@@ -327,41 +332,44 @@ public class LogicManagerTest {
         result = logic.execute("list");
         assertEquals(Arrays.asList(task1, task2, task3, task4), logic.getFilteredTaskList()); 
         // List CA1
-        assertCategoryListed(Arrays.asList(task1, task2), "CA1");
+        assertCategoryListed(Arrays.asList(task1, task2), new Category("CA1"), "CA1");
         // list CA2
-        assertCategoryListed(Arrays.asList(task1, task3), "CA2");
+        assertCategoryListed(Arrays.asList(task1, task3), new Category("CA2"), "CA2");
+    }
+    
+    //@@author A0147978E
+    @Test
+    public void execute_list_notCaseSensitive() throws Exception {
+     // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("UPpERloWer"), new Category("lower"));
+        task1.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        Task task2 = helper.generateTaskWithCategory(2, new Category("UPPER"), new Category("lower"));
+        Task task3 = helper.generateTaskWithCategory(3, new Category("UPpERloWer"));
+        
+        // prepare doerList state
+        helper.addToModel(model, Arrays.asList(task1, task2, task3));
+        //Execute the command
+        // not case sensitive
+        assertCategoryListed(Arrays.asList(task1, task3), new Category("UPpERloWer"), "upperlower");
+        assertCategoryListed(Arrays.asList(task1, task2), new Category("lower"), "LoWer");
+        assertCategoryListed(Arrays.asList(task2), new Category("UPPER"), "upper");
+        assertCategoryListed(Arrays.asList(task1), BuildInCategoryList.COMPLETE, "CompLeTE");
     }
     
     //@@author A0147978E
     /**
-     * Execute the list command and validate the correct tasks {@code expected} under {@code category} are listed
-     * This is to validate buildInCategory
+     * Execute the command and validate the correct tasks {@code expected} under {@code category} are listed
      * 
      * @param expected
      * @param category
-     * @throws Exception
+     * @param commandArg
      */
-    private void assertBuildInCategoryListed(List<? extends ReadOnlyTask> expected, Category category) throws Exception {
+    private void assertCategoryListed(List<? extends ReadOnlyTask> expected, Category category, String commandArg) {
         //Execute the command
-        CommandResult result = logic.execute("list " + category.categoryName);
+        CommandResult result = logic.execute("list " + commandArg);
         //Confirm the UI display elements, should contain the right data
         assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, category.categoryName), result.feedbackToUser);
-        assertEquals(expected, category.getTasks());
-    }
-    
-    //@@author A0147978E
-    /**
-     * Execute the command and validate the correct tasks {@code expected} under {@code categoryName} are listed
-     * This is to validate normal category
-     * 
-     * @param expected
-     * @param categoryName
-     */
-    private void assertCategoryListed(List<? extends ReadOnlyTask> expected, String categoryName) {
-        //Execute the command
-        CommandResult result = logic.execute("list " + categoryName);
-        //Confirm the UI display elements, should contain the right data
-        assertEquals(String.format(ListCommand.MESSAGE_SUCCESS, categoryName), result.feedbackToUser);
         assertEquals(expected, logic.getFilteredTaskList());
     }
 

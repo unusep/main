@@ -42,12 +42,12 @@ public class ListCommand extends Command {
             return Optional.of(BuildInCategoryList.ALL);
         }
         for(Category c : model.getBuildInCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.toLowerCase().equals(keyword.toLowerCase())) {
                 return Optional.of(c);
             }
         }
         for(Category c : model.getCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.toLowerCase().equals(keyword.toLowerCase())) {
                 return Optional.of(c);
             }
         }
