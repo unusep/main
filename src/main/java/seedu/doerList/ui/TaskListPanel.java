@@ -24,6 +24,7 @@ import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
 import seedu.doerList.commons.util.FxViewUtil;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.BuildInCategoryList;
+import seedu.doerList.model.task.DateTimeSetter;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
@@ -337,8 +338,10 @@ public class TaskListPanel extends UiPart {
                     if (t1.isFloatingTask() && t2.isFloatingTask()) {
                         return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
                     } else {
-                        LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : new DateTime().withCenturyOfEra(24);
-                        LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : new DateTime().withCenturyOfEra(24);
+                        LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
+                            DateTimeSetter.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                        LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
+                            DateTimeSetter.getEndOfDay(LocalDateTime.now()).plusYears(2000);
                         t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
                         t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
                         return t1_represent.isBefore(t2_represent) ? -1 : 1;
