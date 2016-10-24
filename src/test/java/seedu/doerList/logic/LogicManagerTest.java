@@ -202,14 +202,18 @@ public class LogicManagerTest {
 
     }
 
+    //@@author A0147978E
     @Test
     public void execute_add_invalidTaskData() throws Exception {
         assertCommandBehavior(
                 "add /t valid title /d valid description /s invalid format /e 2011-10-12 13:00 /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
                 "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "add /t valid title /d valid description /s 2011-10-12 12:00 /e 2011-10-11 12:00 /c valid_category", TodoTime.TIME_INTERVAL_CONSTRAIN);
     }
 
+    //@@author
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -423,7 +427,26 @@ public class LogicManagerTest {
         assertEquals(1, targetedJumpIndex);
         assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
     }
+    
+    //@@author A0147978E
+    @Test
+    public void execute_edit_invalidTaskData() throws Exception {
+        assertCommandBehavior(
+                "edit 1 /t valid title /d valid description /s invalid format /e 2011-10-12 13:00 /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        assertCommandBehavior(
+                "edit 1 /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
+        
+        // dummy date for test
+        TestDataHelper helper = new TestDataHelper();
+        DoerList expectedDL = helper.generateDoerList(3);
+        helper.addToModel(model, expectedDL.getTasks());
+        assertCommandBehavior("edit 2 /t valid title /d valid description /s 2011-10-12 12:00 /e 2011-10-11 12:00 /c valid_category",
+                TodoTime.TIME_INTERVAL_CONSTRAIN,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
 
+    //@@author
     @Test
     public void execute_editInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);

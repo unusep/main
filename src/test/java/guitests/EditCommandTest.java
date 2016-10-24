@@ -73,6 +73,7 @@ public class EditCommandTest extends DoerListGuiTest {
         // invalid command
         commandBox.runCommand("edit Do Homework");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        // other invalid command formats are tested in the logic test
     }
     
     /**

@@ -22,6 +22,7 @@ public class TodoTime {
 
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String TIME_INTERVAL_CONSTRAIN = "Start time must be before the end time";
 
     /**
     * Validates given rawTime.
@@ -66,5 +67,21 @@ public class TodoTime {
                || (other instanceof TodoTime // instanceof handles nulls
                && this.toString().equals(((TodoTime) other).toString())); // state check
    }
+   
+   //@@author A0147978E
+   /**
+    * Static method to validate that start time must be before the end time 
+    * 
+    * @param task candidate task to validate
+    * @throws IllegalValueException 
+    */
+   public static void validateTimeInterval(ReadOnlyTask task) throws IllegalValueException {
+       if (task.hasStartTime() && task.hasEndTime()) {
+           if (task.getEndTime().value.isBefore(task.getStartTime().value)) {
+               // startTime cannot be smaller than end time
+               throw new IllegalValueException(TIME_INTERVAL_CONSTRAIN);
+           }
+       }
+   } 
 
 }

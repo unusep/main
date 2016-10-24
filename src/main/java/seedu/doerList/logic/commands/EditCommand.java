@@ -68,6 +68,7 @@ public class EditCommand extends Command {
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             Task newTask = generateUpdatedTask(target);
+            TodoTime.validateTimeInterval(newTask);
             
             model.replaceTask(target, newTask);
             
@@ -76,6 +77,8 @@ public class EditCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
+        } catch (IllegalValueException e) {
+            return new CommandResult(e.getMessage());
         }
        
 	}

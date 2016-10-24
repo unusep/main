@@ -79,6 +79,7 @@ public class AddCommandTest extends DoerListGuiTest {
         // invalid command
         commandBox.runCommand("adds Do Homework");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
+        // other invalid command formats are tested in the logic test
     }
     
 

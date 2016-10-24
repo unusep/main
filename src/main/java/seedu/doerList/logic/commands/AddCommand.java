@@ -49,6 +49,8 @@ public class AddCommand extends Command {
         		endTime == null ? null : new TodoTime(endTime),
         		new UniqueCategoryList(categorySet)
         );
+        
+        TodoTime.validateTimeInterval(this.toAdd);
 
     }
     @Override
