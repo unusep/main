@@ -1,7 +1,7 @@
 package seedu.doerList.logic.commands;
 
-import seedu.doerList.logic.UndoRedoManager.DataPair;
-import seedu.doerList.logic.UndoRedoManager.NotRedoableException;
+import seedu.doerList.logic.HistoryManager.DataPair;
+import seedu.doerList.logic.HistoryManager.NotRedoableException;
 
 public class RedoCommand extends Command{
 
@@ -16,10 +16,10 @@ public class RedoCommand extends Command{
     @Override
     public CommandResult execute() {
         try {
-            DataPair data = undoRedoManager.getToRedo();
+            DataPair data = historyManager.getToRedo();
             Command command = data.getCommand();
-            //add the redo command to the undoRedoManager
-            undoRedoManager.storeToUndo(command, model);
+            //add the redo command to the historyManager
+            historyManager.storeToUndo(command, model);
             return command.execute();
         } catch (NotRedoableException nue) {
             return new CommandResult(MESSAGE_REDO_FAILURE);

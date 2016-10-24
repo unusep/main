@@ -6,7 +6,7 @@ import seedu.doerList.model.DoerList;
 import seedu.doerList.model.Model;
 import seedu.doerList.model.ReadOnlyDoerList;
 
-public class UndoRedoManager {
+public class HistoryManager {
 
     private DataPair toUndo;
     private DataPair toRedo;

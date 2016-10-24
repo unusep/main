@@ -1,7 +1,7 @@
 package seedu.doerList.logic.commands;
 
-import seedu.doerList.logic.UndoRedoManager.DataPair;
-import seedu.doerList.logic.UndoRedoManager.NotUndoableException;
+import seedu.doerList.logic.HistoryManager.DataPair;
+import seedu.doerList.logic.HistoryManager.NotUndoableException;
 
 public class UndoCommand extends Command{
 
@@ -17,7 +17,7 @@ public class UndoCommand extends Command{
     @Override
     public CommandResult execute() {
         try {
-            DataPair data = undoRedoManager.getToUndo();
+            DataPair data = historyManager.getToUndo();
             model.resetData(data.getList());
             model.updateFilteredListToShowAll();
             return new CommandResult(MESSAGE_UNDO_SUCCESS);

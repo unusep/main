@@ -22,12 +22,12 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final Parser parser;
-    private UndoRedoManager undoRedoManager;
+    private HistoryManager historyManager;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.parser = new Parser();
-        this.undoRedoManager = new UndoRedoManager();
+        this.historyManager = new HistoryManager();
     }
 
     @Override
@@ -36,10 +36,10 @@ public class LogicManager extends ComponentManager implements Logic {
         Command command = parser.parseCommand(commandText);
         command.setData(model);
 
-        undoRedoManager.storeToUndo(command, model);
+        historyManager.storeToUndo(command, model);
 
-        //store this undoRedoManager to the command class, as command cannot access LogicManager directly
-        command.storeURM(undoRedoManager);
+        //store this historyManager to the command class, as command cannot access LogicManager directly
+        command.storeURM(historyManager);
         return command.execute();
     }
 
