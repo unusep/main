@@ -82,8 +82,8 @@ public class EditCommand extends Command {
 	/**
      * Generate new task based on updated information
      *
-     * @param original original Person (Person before update)
-     * @return Person with updated information
+     * @param original original Task (Task before update)
+     * @return Task with updated information
      */
     private Task generateUpdatedTask(ReadOnlyTask original) {
         Task newTask = new Task(
