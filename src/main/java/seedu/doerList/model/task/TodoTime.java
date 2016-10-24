@@ -39,13 +39,6 @@ public class TodoTime {
        return value;
    }
 
-   /**
-    * Returns true if a given time is before the deadline
-    */
-   public boolean isBefore(TodoTime deadline) {
-       return this.value.isBefore(deadline.value);
-   }
-
    @Override
    public String toString() {
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
@@ -57,12 +50,6 @@ public class TodoTime {
        return other == this // short circuit if same object
                || (other instanceof TodoTime // instanceof handles nulls
                && this.toString().equals(((TodoTime) other).toString())); // state check
-   }
-
-
-   @Override
-   public int hashCode() {
-       return value.hashCode();
    }
 
 }
