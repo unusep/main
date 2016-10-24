@@ -36,6 +36,12 @@ public class Category {
         }
         this.categoryName = name;
     }
+    
+    // copy constructor
+    public Category(Category other) {
+        this.categoryName = other.categoryName;
+        this.filteredList = other.filteredList;
+    }
 
     /**
      * Returns true if a given string is a valid category name.

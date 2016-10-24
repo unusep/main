@@ -49,8 +49,8 @@ public class DeleteCommandTest extends DoerListGuiTest {
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
                 new TestCategory("CS2101", 1, 0),
-                new TestCategory("CS2103", 1, 0),
-                new TestCategory("MA1101R", 1, 0)
+                new TestCategory("MA1101R", 1, 0),
+                new TestCategory("CS2103", 1, 0)
         );
         targetIndex = 5;
         assertDeleteSuccess(targetIndex, td.task1, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);

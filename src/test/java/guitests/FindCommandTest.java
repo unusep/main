@@ -58,7 +58,6 @@ public class FindCommandTest extends DoerListGuiTest {
         );
         List<TestCategory> expectedCategoryList2 = Lists.newArrayList(
                 new TestCategory("CS2101", 1, 0),
-                new TestCategory("CS2103", 0, 0),
                 new TestCategory("MA1101R", 1, 0)
         );
         assertFindResult("find Math", expectedDisplayTaskPanel2, expectedBuildInCategoryList, expectedCategoryList2);

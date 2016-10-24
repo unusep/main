@@ -488,7 +488,26 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
+    
+    //@author A0147978E
+    @Test
+    public void execute_editTask_categoryWithZeroTask_removed() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("A"));
+        Task task2_before = helper.generateTaskWithCategory(2, new Category("A"), new Category("B"));
+        Task task2_after = helper.generateTaskWithCategory(2, new Category("A"));
+        
+        // prepare test data
+        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2_after));
+        helper.addToModel(model, Arrays.asList(task1, task2_before));
+        
+        assertCommandBehavior("edit 2 /c A",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, task2_before, task2_after),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
 
+    //@@author
     @Test
     public void execute_editResultInDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -529,8 +548,26 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
+    
+    //@author A0147978E
+    @Test
+    public void execute_delete_removesTask_categoryWithZeroTask_removed() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("A"));
+        Task task2 = helper.generateTaskWithCategory(2, new Category("A"), new Category("B"));
+        
+        // prepare test data
+        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
+        expectedAB.removeTask(task2);
+        helper.addToModel(model, Arrays.asList(task1, task2));
+        
+        assertCommandBehavior("delete 2",
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, task2),
+                expectedAB,
+                expectedAB.getTaskList());
+    }
 
-
+    //@author
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
