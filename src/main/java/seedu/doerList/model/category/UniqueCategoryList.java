@@ -139,6 +139,7 @@ public class UniqueCategoryList implements Iterable<Category> {
         return internalList.isEmpty();
     }
 
+    //@author A0147978E
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -146,17 +147,20 @@ public class UniqueCategoryList implements Iterable<Category> {
             return true;
         }
         if (other instanceof UniqueCategoryList) {
-            // doing set except
+            // doing set except (both sides)
             UniqueCategoryList otherObj = (UniqueCategoryList) other;
-            ArrayList<Category> compare = new ArrayList<Category>(this.internalList);
-            compare.removeAll(otherObj.internalList);
-            return compare.isEmpty();
+            ArrayList<Category> compare1 = new ArrayList<Category>(this.internalList);
+            compare1.removeAll(otherObj.internalList);
+            ArrayList<Category> compare2 = new ArrayList<Category>(otherObj.internalList);
+            compare2.removeAll(this.internalList);
+            return compare1.isEmpty() && compare2.isEmpty();
         }
             
         return super.equals(other);
         
     }
     
+    //@author
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();

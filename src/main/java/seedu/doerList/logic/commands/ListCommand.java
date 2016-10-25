@@ -24,36 +24,36 @@ public class ListCommand extends Command {
 
 
     public String toSelectCategoryName;
-    
+
     public ListCommand() {}
-    
+
     public ListCommand(String categoryName) {
         toSelectCategoryName = categoryName;
     }
-    
+
     /**
      * Try find category name that equals to keyword
-     * 
+     *
      * @param keyword
-     * @return Optional<Category> indicates whether find it or not 
+     * @return Optional<Category> indicates whether find it or not
      */
     public Optional<Category> findNameInCategory(String keyword) {
         if (keyword == null) {
             return Optional.of(BuildInCategoryList.ALL);
         }
         for(Category c : model.getBuildInCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.equalsIgnoreCase(keyword)) {
                 return Optional.of(c);
             }
         }
         for(Category c : model.getCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.equalsIgnoreCase(keyword)) {
                 return Optional.of(c);
             }
         }
         return Optional.empty();
     }
-   
+
     @Override
     public CommandResult execute() {
         Category toSelectCategory;
@@ -68,7 +68,7 @@ public class ListCommand extends Command {
         // update the predicate in the model
         model.updateFilteredListToShowAll();
         model.updateFilteredTaskList(toSelectCategory.getPredicate());
-        
+
         EventsCenter.getInstance().post(new JumpToCategoryEvent(toSelectCategory));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSelectCategory.categoryName));
     }

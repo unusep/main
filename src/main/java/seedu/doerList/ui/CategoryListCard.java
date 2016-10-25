@@ -6,11 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import seedu.doerList.model.category.Category;
 
 public class CategoryListCard extends UiPart {
     private static final String FXML = "CategoryListCard.fxml";
-    private HBox root;
     Category category;
     
     @FXML
@@ -21,6 +21,16 @@ public class CategoryListCard extends UiPart {
     
     @FXML
     private Label categoryCount;
+    
+    @FXML
+    private StackPane categoryAlertContainer;
+    
+    @FXML
+    private HBox categoryCardSideBar;
+    
+    @FXML
+    private Label categoryAlertCount;
+    
     
     public CategoryListCard() {
         super();
@@ -36,11 +46,18 @@ public class CategoryListCard extends UiPart {
     public void initialize() {
         categoryName.setText(category.categoryName);
         categoryCount.setText(category.getTasks().size() + "");
+        displayAlertCount();
     }
-       
-    @Override
-    public void setNode(Node node) {
-        root = (HBox) node;
+    
+    /**
+     * Display the alert count (red) based on number of tasks due
+     */
+    private void displayAlertCount() {
+        if (category.getOverdueTasks().size() > 0) {
+            categoryAlertCount.setText(category.getOverdueTasks().size() + "");
+        } else {
+            categoryCardSideBar.getChildren().remove(categoryAlertContainer);
+        }
     }
     
     @Override
@@ -69,6 +86,11 @@ public class CategoryListCard extends UiPart {
                 setGraphic(CategoryListCard.load(category).getLayout());
             }
         }
+    }
+
+    @Override
+    public void setNode(Node node) {
+        // no need
     }
     
 }

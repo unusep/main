@@ -16,10 +16,12 @@ public class TestCategory extends BuildInCategory {
     public List<TestTask> tasks;
     
     public int expectedNumTasks;
+    public int expectedDueTasks;
 
-    public TestCategory(String name, int expected) throws IllegalValueException {
+    public TestCategory(String name, int expected, int dueTasks) throws IllegalValueException {
         super(name, null);
         this.expectedNumTasks = expected;
+        expectedDueTasks = dueTasks;
     }
     
     public TestCategory(String name, TestTask... tasks) throws IllegalValueException {
@@ -30,6 +32,10 @@ public class TestCategory extends BuildInCategory {
     public void setExpectedNumTasks(int num) {
         expectedNumTasks = num;
     } 
+    
+    public void setExpectedDueTasks(int num) {
+        expectedDueTasks = num;
+    }
     
     public void setTasks(TestTask... tasks) {
         this.tasks = Lists.newArrayList(tasks);

@@ -17,20 +17,22 @@ import seedu.doerList.testutil.TestCategory;
 
 public class ListCommandTest extends DoerListGuiTest {
 
+    // case sensitive test is included in the logicManagerTest.java
+    
     @Test
     public void list() throws IllegalValueException {
         // generate exptected result
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         
         // list ALL
@@ -95,16 +97,16 @@ public class ListCommandTest extends DoerListGuiTest {
     public void list_afterRunAddCommand() throws IllegalValueException {
         // expected result
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         
         // list Today
@@ -119,16 +121,16 @@ public class ListCommandTest extends DoerListGuiTest {
 
         // expected result
         List<TestCategory> expectedBuildInCategoryList_after = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 9),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 9, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList_after = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 2),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 2, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         // list Today again
         List<TestCategory> expected_TODAY_after = Lists.newArrayList(

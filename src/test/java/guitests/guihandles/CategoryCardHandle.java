@@ -14,6 +14,7 @@ public class CategoryCardHandle extends GuiHandle {
     /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */
     private static final String CATEGORY_NAME_FIELD_ID = "categoryName";
     private static final String CATEGORY_COUNT_FIELD_ID = "categoryCount";
+    private static final String CATEGORY_ALERT_COUNT_FIELD_ID = "categoryAlertCount";
 
     private Node node;
 
@@ -38,9 +39,20 @@ public class CategoryCardHandle extends GuiHandle {
         return getTextFromLabel("#" + CATEGORY_COUNT_FIELD_ID);
     }
     
+    public String getCategoryAlertCount() {
+        return getTextFromLabel("#" + CATEGORY_ALERT_COUNT_FIELD_ID);
+    }
+    
+    public boolean isCategoryAlertCountExist() {
+        return guiRobot.from(node).lookup("#" + CATEGORY_ALERT_COUNT_FIELD_ID).tryQuery().isPresent();
+    }
+    
     public boolean isSameTestCategory(TestCategory category){
         return getCategoryName().equals(category.categoryName)
-                && getCategoryCount().equals(String.valueOf(category.expectedNumTasks));
+                && getCategoryCount().equals(String.valueOf(category.expectedNumTasks))
+                && ((!isCategoryAlertCountExist() && category.expectedDueTasks == 0) 
+                        || getCategoryAlertCount().equals(String.valueOf(category.expectedDueTasks))
+                        );
     }
     
     public boolean isSameCategoryName(Category category){
