@@ -52,6 +52,13 @@ public class HelpCommand extends Command {
     
             case DeleteCommand.COMMAND_WORD:
                 return new CommandResult(DeleteCommand.MESSAGE_USAGE);
+                
+            case RedoCommand.COMMAND_WORD:
+                return new CommandResult(RedoCommand.MESSAGE_USAGE);
+            
+            //@@author A0147978E    
+            case UndoCommand.COMMAND_WORD:
+                return new CommandResult(UndoCommand.MESSAGE_USAGE);
     
             case TaskdueCommand.COMMAND_WORD:
                 return new CommandResult(TaskdueCommand.MESSAGE_USAGE);

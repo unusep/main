@@ -178,6 +178,8 @@ public class LogicManagerTest {
         assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
         assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
     //@@author
@@ -570,7 +572,7 @@ public class LogicManagerTest {
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
         expectedAB.removeTask(task2);
         helper.addToModel(model, Arrays.asList(task1, task2));
-    //@@author
+        //@@author
 
         assertCommandBehavior("delete 2",
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, task2),
