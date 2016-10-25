@@ -100,6 +100,7 @@ public class LogicManagerTest {
         EventsCenter.clearSubscribers();
     }
 
+    //@@author A0139401N
     @Test
     public void execute_invalid() throws Exception {
         String invalidCommand = "       ";
@@ -138,20 +139,21 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, model.getDoerList());
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
-
-
+    
     @Test
     public void execute_unknownCommandWord() throws Exception {
         //String unknownCommand = "uicfhmowqewca";
         //assertCommandBehavior(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
     }
-
+    
+    //@@author A0139401N
     @Test
     public void execute_help_noArgs() throws Exception {
         assertCommandBehavior("help", HelpCommand.SHOWING_HELP_MESSAGE);
         assertTrue(helpShown);
     }
 
+    //@@author A0139401N
     @Test
     public void execute_help_invalidArgs() throws Exception {
         assertCommandBehavior("help sdfdsf", HelpCommand.INVALID_HELP_MESSAGE);
@@ -159,19 +161,18 @@ public class LogicManagerTest {
         assertCommandBehavior("help hmmm hahaha", HelpCommand.INVALID_HELP_MESSAGE);
     }
 
+  //@@author A0139401N
     @Test
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
         assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help unmark", UnMarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help unmark", UnmarkCommand.MESSAGE_USAGE);
         assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
         assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -188,7 +189,7 @@ public class LogicManagerTest {
 
         //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
-
+    
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -695,6 +696,8 @@ public class LogicManagerTest {
 
             return new Task(title, description, startTime, endTime, categories);
         }
+        
+
 
         //@@author A0147978E
         /**

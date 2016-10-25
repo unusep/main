@@ -1,4 +1,6 @@
-//@@author A0139401N - reused
+# A0139401N  reused
+###### /java/seedu/doerList/logic/commands/ClearCommand.java
+``` java
 package seedu.doerList.logic.commands;
 
 import seedu.doerList.commons.core.EventsCenter;
@@ -26,3 +28,4 @@ public class ClearCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
+```
