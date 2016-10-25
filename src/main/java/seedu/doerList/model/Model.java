@@ -45,8 +45,12 @@ public interface Model {
 
     void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
     
+    //@@author A0139168W
+    /* Marks the given task as undone */
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
+    //@@author A0139168W
+    /* Marks the given task as done */
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
 
 }

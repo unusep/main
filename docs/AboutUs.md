@@ -33,7 +33,13 @@ Responsibilities: UI
 #### [Benedict Chan](https://github.com/Bendistocratic)
 <img src="images/pic_benedict.jpg" width="150"><br>
 Role: Developer <br>
-Responsibilities: Storage
+- Components in charge of: Storage
+- Features implemented: 
+	- [Mark Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#mark-task-as-done--mark)
+	- [Unmark Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#unmark-task-as-done--unmark)
+- Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0139168W.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0139168W.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0139168W.md)]
+- Other major contributions
+	- Collating the UserGuide.md and DeveloperGuide.md with [Yong Sheng](https://github.com/JasonScourge)
 
 -----
 

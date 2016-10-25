@@ -256,7 +256,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
-[//]: # (@@author)
+[//]: # (@@author A0139168W)
 #### Undo the most recent operation : `undo`
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`
@@ -300,6 +300,7 @@ Examples:
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
+[//]: # (@@author)
 
 [Back To Top](#user-guide)
 
