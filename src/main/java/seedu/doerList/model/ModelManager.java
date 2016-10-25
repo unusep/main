@@ -59,6 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyDoerList newData) {
         undoManager.recordReset(this.doerList, newData);
+        undoManager.resetRedoStack();
         doerList.resetData(newData);
         indicateDoerListChanged();
     }
@@ -77,6 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         doerList.removeTask(target);
         undoManager.recordDelete(target);
+        undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
 
@@ -84,6 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         doerList.addTask(task);
         undoManager.recordAdd(task);
+        undoManager.resetRedoStack();
         updateFilteredListToShowAll();
         indicateDoerListChanged();
     }
@@ -92,6 +95,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void replaceTask(ReadOnlyTask prevTask, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
         doerList.replaceTask(prevTask, task);
         undoManager.recordEdit(prevTask, task);
+        undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
 
@@ -100,6 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.markTask(task);
         undoManager.recordMark(task);
+        undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
     
@@ -108,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.unmarkTask(task);
         undoManager.recordUnmark(task);
+        undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
     //@@author

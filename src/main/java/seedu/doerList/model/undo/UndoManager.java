@@ -71,6 +71,13 @@ public class UndoManager {
     }
     
     /**
+     * Reset the redo stack
+     */
+    public void resetRedoStack() {
+        redoStack.clear();
+    }
+    
+    /**
      * Pull the most recent undo operation in the undo stack
      * 
      * @return Operation

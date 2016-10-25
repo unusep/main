@@ -761,18 +761,18 @@ public class LogicManagerTest {
 
         // execute command
         logic.execute(helper.generateAddCommand(task1));
-        logic.execute(helper.generateAddCommand(task2));
-
-        // execute undo command 2 time and verify
         logic.execute("undo");
+        logic.execute(helper.generateAddCommand(task2));
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
+        // validate the results
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
                 expectedDL,
                 expectedDL.getTaskList());
 
-        // execute redo should give back 2 tasks
-        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
-        logic.execute("redo");
+        // execute redo should give back 1 tasks
+        helper.addToDoerList(expectedDL, Arrays.asList(task2));
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_SUCCESS,
                 expectedDL,
@@ -790,20 +790,22 @@ public class LogicManagerTest {
 
         // execute command
         logic.execute("delete 1");
-        logic.execute("delete 1");
-
-        // execute undo command 2 time and verify
-        DoerList expectedDL = new DoerList();
-        helper.addToDoerList(expectedDL, Arrays.asList(task2, task1)); // the order does matter
         logic.execute("undo");
+        logic.execute("delete 1");
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
+        
+        // execute undo command  and verify
+        DoerList expectedDL = new DoerList();
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2)); // the order does matter
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
                 expectedDL,
                 expectedDL.getTaskList());
 
-        // execute redo should give back 2 tasks
+        // execute redo should give back task
         expectedDL = new DoerList();
-        logic.execute("redo");
+        helper.addToDoerList(expectedDL, Arrays.asList(task1));
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_SUCCESS,
                 expectedDL,
@@ -823,8 +825,12 @@ public class LogicManagerTest {
         helper.addToDoerList(expectedDL, Arrays.asList(task1, task2_before));
 
         // execute command
+        logic.execute("edit 2 /c CA3");
+        logic.execute("undo");
         logic.execute("edit 2 /c CA2");
-
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
+        
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
@@ -848,22 +854,37 @@ public class LogicManagerTest {
         Task task2 = helper.generateTask(2);
         Task task2_mark = helper.generateTask(2); task2_mark.addBuildInCategory(BuildInCategoryList.COMPLETE);
         DoerList expectedDL = new DoerList(); // going to undo the add command
-        model.addTask(task1);
-        model.addTask(task2);
+        model.addTask(helper.generateTask(1));
+        model.addTask(helper.generateTask(2));
         helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
 
         // execute command
+        logic.execute("mark 1");
+        logic.execute("undo");
         logic.execute("mark 2");
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
 
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
                 expectedDL,
                 expectedDL.getTaskList());
-
-        // execute redo should give back the original tasks
-        expectedDL = new DoerList();
-        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2_mark));
+        logic.execute("redo");
+        
+        logic.execute("delete 2");
+        logic.execute("undo");
+        logic.execute("unmark 2");
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
+        // execute undo should give back the original tasks
+        DoerList expectedDL_mark = new DoerList();
+        helper.addToDoerList(expectedDL_mark, Arrays.asList(task1, task2_mark));
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL_mark,
+                expectedDL_mark.getTaskList());
+        
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_SUCCESS,
                 expectedDL,
@@ -880,11 +901,15 @@ public class LogicManagerTest {
         DoerList expectedDL = new DoerList(); // going to undo the add command
         model.addTask(task1);
         model.addTask(task2);
-        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
+        helper.addToDoerList(expectedDL, Arrays.asList(task2, task1));
 
         // execute command
+        logic.execute("delete 1");
+        logic.execute("undo");
         logic.execute("clear");
-
+        // cannot redo after operation
+        assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
+        
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
