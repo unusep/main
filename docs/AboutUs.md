@@ -26,7 +26,7 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 #### [Yong Sheng](https://github.com/JasonScourge)
 <img src="images/pic_jason.jpg" width="150"><br>
 - Components in charge of: [UI](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/DeveloperGuide.md#ui-component)
-- Aspects/tools in charge of: Testing, Integration, JavaFX
+- Aspects/tools in charge of: Guides, Balsamiq, Markdown
 - Features implemented:
 	- [Help Feautre](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
 	- [Exit Program](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#exiting-the-program--exit)
