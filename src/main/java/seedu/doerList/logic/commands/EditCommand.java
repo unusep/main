@@ -12,7 +12,7 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
 /**
- * Deletes a task identified using it's last displayed index from the doerList.
+ * Edits a task identified using it's last displayed index from the doerList.
  */
 public class EditCommand extends Command {
 
