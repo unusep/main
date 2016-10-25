@@ -11,8 +11,6 @@ public class UndoCommand extends Command{
     public static final String MESSAGE_UNDO_SUCCESS = "Undo the last operation successfully";
     public static final String MESSAGE_UNDO_FAILURE = "Undo operation is not available in this situation";
 
-    public UndoCommand() {}
-
     @Override
     public CommandResult execute() {
         try {

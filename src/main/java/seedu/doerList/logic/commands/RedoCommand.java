@@ -11,8 +11,6 @@ public class RedoCommand extends Command{
     public static final String MESSAGE_REDO_SUCCESS = "Redo the last operation successfully";
     public static final String MESSAGE_REDO_FAILURE = "Redo operation is not available in this situation";
 
-    public RedoCommand() {}
-
     @Override
     public CommandResult execute() {
         try {

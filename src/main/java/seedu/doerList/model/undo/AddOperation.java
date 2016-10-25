@@ -8,7 +8,7 @@ import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
  * Represents a add operation to the doreList
  */
 public class AddOperation extends Operation {
-    Task toAdd;
+    private Task toAdd;
     
     public AddOperation(Task toAdd) {
         this.toAdd = toAdd;

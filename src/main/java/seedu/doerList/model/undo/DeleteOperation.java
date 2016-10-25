@@ -9,7 +9,7 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class DeleteOperation extends Operation {
 
-    Task toDelete;
+    private Task toDelete;
     
     public DeleteOperation(Task toDelete) {
         this.toDelete = toDelete;

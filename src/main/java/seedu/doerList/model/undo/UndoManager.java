@@ -28,8 +28,6 @@ public class UndoManager {
             super(s);
         }
     }
-       
-    public UndoManager() {}
     
     /** ==== Record edition/addition/deletion/reset data to the model(doerList) and generate the reverse operation ====*/
     

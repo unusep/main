@@ -10,8 +10,8 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class EditOperation extends Operation {
 
-    Task toReplace;
-    Task replaceWith;
+    private Task toReplace;
+    private Task replaceWith;
     
     public EditOperation(Task toReplace, Task replaceWith) {
         this.toReplace = toReplace;

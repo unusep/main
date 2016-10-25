@@ -9,14 +9,11 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
-import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.RedoCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TestTask;
 import seedu.doerList.testutil.TypicalTestTasks;
 
 public class UndoRedoCommandTest extends DoerListGuiTest {
