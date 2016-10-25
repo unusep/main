@@ -35,7 +35,7 @@ public class TaskListPanel extends UiPart {
     public static final BuildInCategory[] categorizedBy = {
             BuildInCategoryList.DUE,
             BuildInCategoryList.TODAY, BuildInCategoryList.NEXT, BuildInCategoryList.INBOX,
-            BuildInCategoryList.COMPLETE
+            BuildInCategoryList.COMPLETE, BuildInCategoryList.RECURRING
     };
     
     private static final String FXML = "TaskListPanel.fxml";

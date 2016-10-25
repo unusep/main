@@ -169,6 +169,15 @@ public class DoerList implements ReadOnlyDoerList {
             throw new UniqueTaskList.TaskNotFoundException();
         }
     }
+    
+    //@@author A0139401N
+    public void recurTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.contains(task)) {
+            task.addBuildInCategory(BuildInCategoryList.RECURRING);
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
 
 //// category-level operations
 

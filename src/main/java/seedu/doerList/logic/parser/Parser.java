@@ -321,10 +321,10 @@ public class Parser {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecurCommand.MESSAGE_USAGE));
         }
 
-        return new MarkCommand(index.get());
+        return new RecurCommand(index.get());
     }
     
     /**

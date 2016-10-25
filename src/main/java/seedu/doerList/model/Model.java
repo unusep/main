@@ -48,5 +48,8 @@ public interface Model {
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
+ 
+    //@@author A0139401N
+    void recurTask(ReadOnlyTask task) throws TaskNotFoundException;
 
 }

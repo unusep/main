@@ -86,6 +86,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDoerListChanged();
     }
 
+    //@@author A0139401N
+    @Override
+    public synchronized void recurTask(ReadOnlyTask task) throws TaskNotFoundException {
+        doerList.recurTask(task);
+        indicateDoerListChanged();
+    }
     
     @Override
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {

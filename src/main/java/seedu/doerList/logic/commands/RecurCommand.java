@@ -15,9 +15,9 @@ public class RecurCommand extends Command {
     public static final String COMMAND_WORD = "recur";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": creates a recurring the task identified by the index number used in the last task listing.\n"
-            + "Parameters: INDEX (must be a positive integer) [/t TASK] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...\n"
-            + "Example: " + COMMAND_WORD + " 1 /t Go to lecture /d study";
+            + ": To mark this task as recurring.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_RECUR_TASK_SUCCESS = "recurring task: \nBefore: %1$s\nAfter: %2$s";
     public static final String MESSAGE_DUPLICATE_TASK = "The recurring task already exists in the Do-erlist";
@@ -35,7 +35,7 @@ public class RecurCommand extends Command {
         
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
-            model.markTask(target);
+            model.recurTask(target);
             return new CommandResult(String.format(MESSAGE_RECUR_TASK_SUCCESS, target));  
         } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
