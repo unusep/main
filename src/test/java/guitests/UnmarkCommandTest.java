@@ -1,3 +1,4 @@
+//@@author A0139168W
 package guitests;
 
 import seedu.doerList.commons.core.Messages;
@@ -77,6 +78,7 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         commandBox.runCommand("unmark 1");
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
+    //@@author
     
     private void assertUnmarkSuccess(int index, TestTask taskToUnmark,
             List<TestCategory> expectedDisplayTaskPanel, 

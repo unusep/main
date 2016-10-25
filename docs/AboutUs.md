@@ -33,7 +33,12 @@ Responsibilities: UI
 #### [Benedict Chan](https://github.com/Bendistocratic)
 <img src="images/pic_benedict.jpg" width="150"><br>
 Role: Developer <br>
-Responsibilities: Storage
+- Components in charge of: Storage
+- Features implemented: 
+	- Mark Task
+	- Unmark Task
+- Other major contributions
+	- Doing the UserGuide.md and DeveloperGuide.md with [Yong Sheng](https://github.com/JasonScourge)
 
 -----
 

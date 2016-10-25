@@ -1,3 +1,4 @@
+//@@author A0139168W
 package guitests;
 
 import seedu.doerList.commons.core.Messages;
@@ -47,7 +48,6 @@ public class MarkCommandTest extends DoerListGuiTest {
               
     }
     
-    //@@author A0139168W
     @Test
     public void mark_unsuccessful() {
         //marks invalid task
