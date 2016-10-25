@@ -614,7 +614,7 @@ Use case ends.
 - A constant network connection is required. If there is no network connection, the software cannot be opened.
 - Wunderlist lacks IFTTT integration compared to other to-do list applications.
 
-
+[//]: # (@@author A0139401N)
 ### Review of [Trello](https://trello.com/)
 #### Strengths:
 - Online/Cloud based program that allows it to be transferrable to other computers.
