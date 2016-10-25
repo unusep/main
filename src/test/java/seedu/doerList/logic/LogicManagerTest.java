@@ -35,7 +35,9 @@ import seedu.doerList.logic.commands.FindCommand;
 import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
+import seedu.doerList.logic.commands.RedoCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
+import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.logic.commands.ViewCommand;
 import seedu.doerList.model.DoerList;
@@ -708,7 +710,6 @@ public class LogicManagerTest {
 
     @Test
     public void execute_taskdue_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
         assertCommandBehavior(
                 "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
@@ -716,6 +717,135 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
+    
+    @Test
+    public void execute_undo_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "undo 13123 ", expectedMessage);
+        assertCommandBehavior(
+                "undo 1231023213    ", expectedMessage);
+    }
+ 
+    
+    @Test
+    public void execute_undo_redo_add_operation_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTask(1);
+        Task task2 = helper.generateTask(2);
+        DoerList expectedDL = new DoerList(); // going to undo the add command
+     
+        // execute command
+        logic.execute(helper.generateAddCommand(task1));
+        logic.execute(helper.generateAddCommand(task2));
+        
+        // execute undo command 2 time and verify
+        logic.execute("undo");
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+
+        // execute redo should give back 2 tasks
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
+        logic.execute("redo");
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_undo_redo_delete_operation_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTask(1);
+        Task task2 = helper.generateTask(2);
+        model.addTask(task1);
+        model.addTask(task2);
+     
+        // execute command
+        logic.execute("delete 1");
+        logic.execute("delete 1");
+        
+        // execute undo command 2 time and verify
+        DoerList expectedDL = new DoerList();
+        helper.addToDoerList(expectedDL, Arrays.asList(task2, task1)); // the order does matter
+        logic.execute("undo");
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+
+        // execute redo should give back 2 tasks
+        expectedDL = new DoerList();
+        logic.execute("redo");
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_undo_redo_edit_operation_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("CA1"), new Category("CA2"));
+        Task task2_before = helper.generateTaskWithCategory(2, new Category("CA1"));
+        Task task2_after = helper.generateTaskWithCategory(2, new Category("CA2"));
+        DoerList expectedDL = new DoerList(); // going to undo the add command
+        model.addTask(task1);
+        model.addTask(task2_before);
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2_before));
+     
+        // execute command
+        logic.execute("edit 2 /c CA2");
+        
+        // execute undo command 1 time and verify
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+
+        // execute redo should give back the origianl tasks
+        expectedDL.replaceTask(task2_before, task2_after);
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+    
+
+    @Test
+    public void execute_EmptyList_undo_redo_unsuccessful_no_undoable_command() throws Exception {
+        DoerList expectedAB = new DoerList();
+        logic.execute("wrong command");
+
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_FAILURE,
+                expectedAB,
+                expectedAB.getTaskList());
+        
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_FAILURE,
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_undo_redo_invalidArgsFormat() throws Exception {
+        assertCommandBehavior(
+                "redo 13123 ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        assertCommandBehavior(
+                "redo 1231023213    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        assertCommandBehavior(
+                "undo 334    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+        assertCommandBehavior(
+                "undo 1234    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+    }
+
+
 
 
     /**
