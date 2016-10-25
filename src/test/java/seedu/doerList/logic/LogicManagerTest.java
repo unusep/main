@@ -138,8 +138,7 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, model.getDoerList());
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
-
-
+    
     @Test
     public void execute_unknownCommandWord() throws Exception {
         //String unknownCommand = "uicfhmowqewca";
@@ -188,7 +187,29 @@ public class LogicManagerTest {
 
         //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
-
+    
+    //@@author A0139401N
+    @Test
+    public void execute_add_dateInEnglish() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] samples = {
+                helper.taskWithEnglishDateAttribute(true, true),
+                helper.taskWithEnglishDateAttribute(true, false),
+                helper.taskWithEnglishDateAttribute(false, true),
+                helper.taskWithEnglishDateAttribute(false, false)
+        };
+        for(Task toBeAdded : samples) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // execute command and verify result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
+    }
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -688,6 +709,38 @@ public class LogicManagerTest {
 
             return new Task(title, description, startTime, endTime, categories);
         }
+        
+      //@@author A0139401N
+        /**
+         * Generate a task with/without the date attribute in English or normal date format
+         *
+         * @param hasEnglishStartTime indicate whether to has the date attribute in English or normal date format
+         * @param hasEnglishEndTime indicate whether to has the date attribute in English or normal date format
+         * @return Task generated task
+         * @throws Exception
+         */
+        Task taskWithEnglishDateAttribute(boolean hasEnglishStartTime, boolean hasEnglishEndTime) throws Exception {
+            Title title = new Title("Sample Task");
+            Description description = new Description("Do my homework");
+            TodoTime startTime = null;
+            TodoTime endTime = null;
+            Category category1 = new Category("Compulsory");
+            Category category2 = new Category("Rawrs");
+            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
+            if (hasEnglishStartTime) {
+                startTime = new TodoTime("today 14:00");
+            } else {
+                startTime = new TodoTime("2011-10-12 10:00");
+            }
+            if (hasEnglishEndTime) {
+                endTime = new TodoTime("tomorrrow 15:00");
+            } else {
+                endTime = new TodoTime("2019-10-12 10:00");
+            }
+
+            return new Task(title, description, startTime, endTime, categories);
+        }
+
 
         //@@author A0147978E
         /**

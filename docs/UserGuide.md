@@ -1,5 +1,5 @@
 # User Guide
-
+[//]: # (@@author A0139401N)
 * [About Us](#about-us)
 * [Overiew](#overview)
 * [Getting Started](#getting-started)
@@ -21,17 +21,19 @@
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
+[//]: # (@@author A0139401N)
 ## About Us
-Living in the modern and fast-paced world nowadays, we are constantly bombarded with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
+Living in the modern and fast-paced world nowadays, we are constantly overwhelemed with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
 
 Do-er List is a task manager that is designed for students and office workers. It is a beginner-friendly desktop program that aids you in the planning and completion of your daily tasks.  It does not matter if you are planning a big birthday surprise event or recurring task of handling the laundry every now and then, Do-er List is here to resolve your problems.
 
 This user guide aims to allow any user to seamlessly use the product, as intended to. Just follow the instructions as stated and you will get the results you desire.
 
-Eager and excited? Then proceed!   
+Eager and excited? Then let us proceed!
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ## Overview
 
 <img src="../docs/images/UI_Guide/demo_labels.png" width="800">
@@ -96,6 +98,7 @@ Format: `help` or `help [COMMAND_NAME]`
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
 Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
@@ -121,6 +124,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Editing a task : `edit`
 Edit an existing task in the Do-*er* List<br>
 Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...`
@@ -138,6 +142,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Mark task as done : `mark`
 Marks a certain task as done in the Do*er*-list.<br>
 Format: `mark TASK_NUMBER`
@@ -152,6 +157,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Unmark task as done : `unmark`
 Marks a certain task as undone in the Do*er*-list.<br>
 Format: `unmark TASK_NUMBER`
@@ -304,6 +310,7 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
