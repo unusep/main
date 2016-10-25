@@ -34,9 +34,9 @@ public class Parser {
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
     private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
     //@@author A0139401N
-    private static final Pattern TASK_DATA_RECURRING_FORMAT = Pattern.compile(".*\\b/r\\b");
+    private static final Pattern TASK_DATA_RECURRING_FORMAT = Pattern.compile("\\/r(?<recurring>[^\\/]+)");
 
-    //@@author
+    //@@author 
     public Parser() {}
 
     /**
@@ -120,8 +120,8 @@ public class Parser {
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,        
-                    getTagsFromArgs(categoriesMatcher),
-                    recurringMatcher.find() ? recurringMatcher.group("/r").trim() : null
+                    getCategoriesFromArgs(categoriesMatcher),
+                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -129,10 +129,10 @@ public class Parser {
     }
 
     /**
-     * Extracts the new task's tags from the add command's tag arguments string.
+     * Extracts the new task's categories from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
-    private static Set<String> getTagsFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
+    private static Set<String> getCategoriesFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
         // replace first delimiter prefix, then split
         final Collection<String> tagStrings = new ArrayList<String>();
         while(categoriesMatcher.find()) {
@@ -164,7 +164,7 @@ public class Parser {
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher)
+                    getCategoriesFromArgs(categoriesMatcher)
                 );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -238,7 +238,7 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
-    //@@author
+    //@@author 
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.
