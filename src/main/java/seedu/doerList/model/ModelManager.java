@@ -95,18 +95,20 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDoerListChanged();
     }
 
-    
+    //@@author A0139168W
     @Override
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.markTask(task);
         indicateDoerListChanged();
     }
     
+    //@@author A0139168W
     @Override
     public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.unmarkTask(task);
         indicateDoerListChanged();
     }
+    //@@author
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override

@@ -35,6 +35,7 @@ import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.logic.commands.RedoCommand;
+import seedu.doerList.logic.commands.TaskdueCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.logic.commands.ViewCommand;
@@ -101,6 +102,7 @@ public class LogicManagerTest {
         EventsCenter.clearSubscribers();
     }
 
+    //@@author A0139401N
     @Test
     public void execute_invalid() throws Exception {
         String invalidCommand = "       ";
@@ -139,8 +141,7 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, model.getDoerList());
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
-
-
+    
     @Test
     public void execute_unknownCommandWord() throws Exception {
         //String unknownCommand = "uicfhmowqewca";
@@ -155,7 +156,8 @@ public class LogicManagerTest {
     }
     //@@author A0140905M
 
-    //@@author A0140905M
+
+    //@@author A0139401N
     @Test
     public void execute_help_invalidArgs() throws Exception {
         assertCommandBehavior("help sdfdsf", HelpCommand.INVALID_HELP_MESSAGE);
@@ -164,20 +166,19 @@ public class LogicManagerTest {
     }
     //@@author
 
+
     //@@author A0140905M
     @Test
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
         assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help unmark", UnMarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help unmark", UnmarkCommand.MESSAGE_USAGE);
         assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
         assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
     //@@author
 
@@ -195,7 +196,7 @@ public class LogicManagerTest {
 
         //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
-
+    
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -527,19 +528,22 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-
+    
+    //@@author A0139168W
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
         assertIncorrectIndexFormatBehaviorForCommand("delete a", expectedMessage);
     }
-
+    
+    //@@author A0139168W
     @Test
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
+    //@@author A0139168W
     @Test
     public void execute_delete_removesCorrectTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -555,6 +559,7 @@ public class LogicManagerTest {
                 expectedAB.getTaskList());
     }
 
+
     //@author A0147978E
     @Test
     public void execute_delete_removesTask_categoryWithZeroTask_removed() throws Exception {
@@ -566,6 +571,7 @@ public class LogicManagerTest {
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
         expectedAB.removeTask(task2);
         helper.addToModel(model, Arrays.asList(task1, task2));
+    //@@author
 
         assertCommandBehavior("delete 2",
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, task2),
@@ -639,12 +645,16 @@ public class LogicManagerTest {
                 expectedList);
     }
 
+    
+    //@@author A0139168W
     @Test
     public void execute_unmark_unmarkInvalidIndex() throws Exception {
         assertIncorrectIndexFormatBehaviorForCommand("unmark ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
     }
 
+    
+    //@@author A0139168W
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -668,12 +678,16 @@ public class LogicManagerTest {
                 expectedList);
     }
 
+    
+    //@@author A0139168W
     @Test
     public void exectue_mark_invalidIndex() throws Exception {
         assertIncorrectIndexFormatBehaviorForCommand("mark ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
     }
 
+    
+    //@@author A0139168W
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -696,6 +710,7 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedList);
     }
+    //@@author
 
     @Test
     public void execute_taskdue_successful() throws Exception {
@@ -921,6 +936,8 @@ public class LogicManagerTest {
 
             return new Task(title, description, startTime, endTime, categories);
         }
+        
+
 
         //@@author A0147978E
         /**

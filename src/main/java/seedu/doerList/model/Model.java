@@ -48,16 +48,20 @@ public interface Model {
     /** Replace a task with given task*/
     void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
     
-    /** Un mark a task as undone*/
+
+    //@@author A0139168W
+    /** Marks the given task as undone */
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
-    /** Mark a task as done*/
+    //@@author A0139168W
+    /** Marks the given task as done */
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
 
-     //@@author A0147978E
+    //@@author A0147978E
     /** Undo the recent addition/edition/deletion of task */
     void undo() throws UndoManager.OperationFailException;
     
+    //@@author A0147978E
     /** Redo the recent addition/edition/deletion of task */
     void redo() throws UndoManager.OperationFailException;
 }
