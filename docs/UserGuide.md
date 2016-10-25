@@ -96,6 +96,7 @@ Format: `help` or `help [COMMAND_NAME]`
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
 Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
@@ -119,6 +120,8 @@ Examples:
 * `add /t Daily Exercise and Workout!`<br>
 * `add /t Call Mum in Hanoi /d Limit chat timing for overseas charges /s tomorrow 8pm /e tomorrow 10pm /c Optional`
 
+[//]: # (@@author)
+
 [Back To Top](#user-guide)
 
 #### Editing a task : `edit`
@@ -135,6 +138,7 @@ Examples:
 * `edit 3 /s tomorrow 23 00`
 
 > Attributes that are not supplied will not be updated 
+
 
 [Back To Top](#user-guide)
 
