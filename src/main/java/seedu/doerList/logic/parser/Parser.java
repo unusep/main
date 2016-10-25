@@ -88,6 +88,9 @@ public class Parser {
             
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
+            
+        case RecurCommand.COMMAND_WORD:
+            return prepareRecur(arguments);
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
@@ -299,6 +302,22 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareMark(String args) {
+        Optional<Integer> index = parseIndex(args);
+        if(!index.isPresent()){
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+
+        return new MarkCommand(index.get());
+    }
+    
+    /**
+     * Parses arguments in the context of the Recur task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareRecur(String args) {
         Optional<Integer> index = parseIndex(args);
         if(!index.isPresent()){
             return new IncorrectCommand(

@@ -1,13 +1,8 @@
 //@@author A0139401N
 package seedu.doerList.logic.commands;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.model.category.*;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
@@ -30,50 +25,23 @@ public class RecurCommand extends Command {
 
     public final int targetIndex;
 
-    private UniqueCategoryList toUpdateCategories = null;
-
-    public RecurCommand(int targetIndex) throws IllegalValueException {
+    public RecurCommand(int targetIndex) {
         this.targetIndex = targetIndex;
-        final Set<Category> categorySet = new HashSet<>();
-        
-        categorySet.add(new Category(RECURRING_NAME));
-        this.toUpdateCategories = new UniqueCategoryList(categorySet);
     }
-
+    
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() {       
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
+        
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
-            Task newTask = generateUpdatedTask(target);
-
-            model.replaceTask(target, newTask);
-
-            return new CommandResult(String.format(MESSAGE_RECUR_TASK_SUCCESS, target, newTask));
-        } catch (TaskNotFoundException pnfe) {
+            model.markTask(target);
+            return new CommandResult(String.format(MESSAGE_RECUR_TASK_SUCCESS, target));  
+        } catch (TaskNotFoundException e) {
+            indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        } catch (UniqueTaskList.DuplicateTaskException dpe) {
-            return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
-
+          
     }
-
-    /**
-     * Generate new task based on updated information
-     *
-     * @param original original Task (Task before update)
-     * @return Task with updated information
-     */
-    private Task generateUpdatedTask(ReadOnlyTask original) {
-        Task newTask = new Task(
-                 original.getTitle(),
-                 original.getDescription(),
-                 original.getStartTime(),
-                 original.getEndTime(),
-                 toUpdateCategories
-                );
-        newTask.setBuildInCategories(original.getBuildInCategories());
-        return newTask;
-    }
+    
 }
