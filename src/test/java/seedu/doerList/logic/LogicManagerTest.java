@@ -147,19 +147,24 @@ public class LogicManagerTest {
         //assertCommandBehavior(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
     }
 
+    //@@author A0140905M
     @Test
     public void execute_help_noArgs() throws Exception {
         assertCommandBehavior("help", HelpCommand.SHOWING_HELP_MESSAGE);
         assertTrue(helpShown);
     }
+    //@@author A0140905M
 
+    //@@author A0140905M
     @Test
     public void execute_help_invalidArgs() throws Exception {
         assertCommandBehavior("help sdfdsf", HelpCommand.INVALID_HELP_MESSAGE);
         assertCommandBehavior("help 123", HelpCommand.INVALID_HELP_MESSAGE);
         assertCommandBehavior("help hmmm hahaha", HelpCommand.INVALID_HELP_MESSAGE);
     }
+    //@@author
 
+    //@@author A0140905M
     @Test
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
@@ -174,6 +179,7 @@ public class LogicManagerTest {
         //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
         //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
+    //@@author
 
     @Test
     public void execute_exit() throws Exception {
@@ -706,6 +712,7 @@ public class LogicManagerTest {
                 expectedList);
     }
 
+    //@@author A0140905M
     @Test
     public void execute_taskdue_invalidArgsFormat() throws Exception {
         assertCommandBehavior(
@@ -715,7 +722,9 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
-    
+    //@@author
+
+    //@@author A0140905M
     @Test
     public void execute_undo_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE);
@@ -724,8 +733,8 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "undo 1231023213    ", expectedMessage);
     }
- 
-    
+    //@@author
+
     @Test
     public void execute_undo_redo_add_operation_successful() throws Exception {
         // setup expectations
@@ -733,11 +742,11 @@ public class LogicManagerTest {
         Task task1 = helper.generateTask(1);
         Task task2 = helper.generateTask(2);
         DoerList expectedDL = new DoerList(); // going to undo the add command
-     
+
         // execute command
         logic.execute(helper.generateAddCommand(task1));
         logic.execute(helper.generateAddCommand(task2));
-        
+
         // execute undo command 2 time and verify
         logic.execute("undo");
         assertCommandBehavior("undo",
@@ -753,7 +762,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+
     @Test
     public void execute_undo_redo_delete_operation_successful() throws Exception {
         // setup expectations
@@ -762,11 +771,11 @@ public class LogicManagerTest {
         Task task2 = helper.generateTask(2);
         model.addTask(task1);
         model.addTask(task2);
-     
+
         // execute command
         logic.execute("delete 1");
         logic.execute("delete 1");
-        
+
         // execute undo command 2 time and verify
         DoerList expectedDL = new DoerList();
         helper.addToDoerList(expectedDL, Arrays.asList(task2, task1)); // the order does matter
@@ -784,7 +793,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+
     @Test
     public void execute_undo_redo_edit_operation_successful() throws Exception {
         // setup expectations
@@ -796,10 +805,10 @@ public class LogicManagerTest {
         model.addTask(task1);
         model.addTask(task2_before);
         helper.addToDoerList(expectedDL, Arrays.asList(task1, task2_before));
-     
+
         // execute command
         logic.execute("edit 2 /c CA2");
-        
+
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
@@ -813,7 +822,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+
     @Test
     public void execute_undo_redo_clear_operation_successful() throws Exception {
         // setup expectations
@@ -824,10 +833,10 @@ public class LogicManagerTest {
         model.addTask(task1);
         model.addTask(task2);
         helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
-     
+
         // execute command
         logic.execute("clear");
-        
+
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
@@ -841,7 +850,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+
 
     @Test
     public void execute_EmptyList_undo_redo_unsuccessful_no_undoable_command() throws Exception {
@@ -852,7 +861,7 @@ public class LogicManagerTest {
                 UndoCommand.MESSAGE_UNDO_FAILURE,
                 expectedAB,
                 expectedAB.getTaskList());
-        
+
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_FAILURE,
                 expectedAB,

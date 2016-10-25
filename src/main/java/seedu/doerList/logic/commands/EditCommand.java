@@ -1,3 +1,4 @@
+//@@author A0140905M
 package seedu.doerList.logic.commands;
 
 import java.util.HashSet;
@@ -69,9 +70,9 @@ public class EditCommand extends Command {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             Task newTask = generateUpdatedTask(target);
             TodoTime.validateTimeInterval(newTask);
-            
+
             model.replaceTask(target, newTask);
-            
+
             return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, target, newTask));
         } catch (TaskNotFoundException pnfe) {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
@@ -80,7 +81,7 @@ public class EditCommand extends Command {
         } catch (IllegalValueException e) {
             return new CommandResult(e.getMessage());
         }
-       
+
 	}
 
 	/**
