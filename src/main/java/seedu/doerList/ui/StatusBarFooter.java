@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.model.task.TodoTime;
 
 import org.controlsfx.control.StatusBar;
 
@@ -94,6 +95,6 @@ public class StatusBarFooter extends UiPart {
     public void handleDoerListChangedEvent(DoerListChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
-        setSyncStatus("Last Updated: " + lastUpdated);
+        setSyncStatus("Last Updated: " + TodoTime.HumanReadableParser.format(new Date()));
     }
 }
