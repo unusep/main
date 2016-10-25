@@ -1,3 +1,4 @@
+//@@author A0139168W
 package seedu.doerList.logic.commands;
 
 import java.nio.file.InvalidPathException;
@@ -32,7 +33,6 @@ public class SaveLocationCommand extends Command  {
     
     public CommandResult execute() {
         assert model != null;
-        assert storage != null;
         if (fileName == null)
             fileName = DEFAULT_SAVE_FILE_NAME;
         try {

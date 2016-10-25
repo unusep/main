@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.Before;
@@ -24,6 +26,7 @@ import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.util.FileUtil;
 import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
@@ -34,6 +37,7 @@ import seedu.doerList.logic.commands.FindCommand;
 import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
+import seedu.doerList.logic.commands.SaveLocationCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.logic.commands.ViewCommand;
@@ -105,6 +109,22 @@ public class LogicManagerTest {
         String invalidCommand = "       ";
         assertCommandBehavior(invalidCommand,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+    }
+    
+    /**
+     * Executes the command and confirms that the result message is correct and
+     * also checks if the new save location of data is correct.
+     */
+    private void assertCommandBehavior(String inputCommand, 
+                                       String expectedMessage,
+                                       String expectedFilePath) throws Exception {
+        
+        CommandResult result = logic.execute(inputCommand);
+        assertEquals(expectedMessage, result.feedbackToUser);
+        
+        File file = new File(expectedFilePath);
+        
+        assertEquals(file.exists() ? file.getPath() : false, expectedFilePath);
     }
 
     /**
@@ -640,7 +660,6 @@ public class LogicManagerTest {
 
     @Test
     public void execute_taskdue_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TaskdueCommand.MESSAGE_USAGE);
         assertCommandBehavior(
                 "taskdue", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
         assertCommandBehavior(
@@ -648,7 +667,39 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_successful_withFileName() throws Exception {
+        String path = saveFolder.getRoot().getPath();
+        String filePath = path + "\\MyDoerList.xml";
+        
+        assertCommandBehavior("saveto /st " + path + " /n MyDoerList", 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
+                filePath);
+    }
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_successful_noFileName() throws Exception {
+        String path = saveFolder.getRoot().getPath();
+        String filePath = path + "\\" + SaveLocationCommand.DEFAULT_SAVE_FILE_NAME + ".xml";
 
+        assertCommandBehavior("saveto /st " + path, 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path),
+                filePath);
+    }
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_invalidArgsFormat() throws Exception {
+        assertCommandBehavior("saveto C:\\",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveLocationCommand.MESSAGE_USAGE));
+        assertCommandBehavior("saveto     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveLocationCommand.MESSAGE_USAGE));
+        assertCommandBehavior("saveto /n   ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveLocationCommand.MESSAGE_USAGE));
+    }
 
     /**
      * A utility class to generate test data.
