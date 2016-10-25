@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.logic.commands;
 
 import java.util.HashSet;
@@ -20,12 +21,13 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
-            + "Parameters: /t TASK [/d DESCRIPTION] [/s START] [/e END] [/c [CATEGORY] ... \n"
+            + "Parameters: /t TASK [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r] ... \n"
             + "Example: " + COMMAND_WORD
-            + " /t Take lecture /s 2016-10-04 10:00 /e 2016-10-04 12:00 /c CS2102";
+            + " /t Take lecture /s 2016-10-04 10:00 /e 2016-10-04 12:00 /c CS2102 /r ";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
+    public static final String CATEGORY_RECCURING = "Recurring";
 
     private final Task toAdd;
 
@@ -35,13 +37,17 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String title, String description, String startTime, String endTime, Set<String> categories)
+    public AddCommand(String title, String description, String startTime, String endTime, 
+                      Set<String> categories, String enableRecurring)
     		throws IllegalValueException {
         final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
-
+        if (enableRecurring != null){
+            categorySet.add(new Category(CATEGORY_RECCURING));
+        }
+        
         this.toAdd = new Task(
         		new Title(title.trim()),
         		description == null ? null : new Description(description.trim()),

@@ -33,6 +33,8 @@ public class Parser {
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
     private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
+    //@@author A0139401N
+    private static final Pattern TASK_DATA_RECURRING_FORMAT = Pattern.compile(".*\\b/r\\b");
 
     //@@author
     public Parser() {}
@@ -107,6 +109,7 @@ public class Parser {
         final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
         final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
         final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
+        final Matcher recurringMatcher = TASK_DATA_RECURRING_FORMAT.matcher(args.trim());
         // Validate arg string format (can be only with title)
         if (!titleMatcher.find()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -116,8 +119,9 @@ public class Parser {
                     titleMatcher.group("title").trim(),
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher)
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,        
+                    getTagsFromArgs(categoriesMatcher),
+                    recurringMatcher.find() ? recurringMatcher.group("/r").trim() : null
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());

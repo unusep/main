@@ -22,6 +22,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     public static final BuildInCategory NEXT;
     public static final BuildInCategory INBOX;
     public static final BuildInCategory COMPLETE;
+    public static final BuildInCategory RECURRING;
     public static final BuildInCategory DUE;
        
     // predefined category
@@ -66,6 +67,16 @@ public class BuildInCategoryList implements Iterable<Category> {
                     return false;
                 }
             });
+            RECURRING = new BuildInCategory("Recurring", (task) -> {
+                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
+                if (task.hasStartTime()) {
+                    return task.getStartTime().value.isAfter(todayEnd);
+                } else if (task.hasEndTime()) {
+                    return task.getEndTime().value.isAfter(todayEnd);
+                } else {
+                    return false;
+                }
+            });
             DUE = new BuildInCategory("Overdue", (task) -> {
                 LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
                 return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) &&
@@ -87,6 +98,7 @@ public class BuildInCategoryList implements Iterable<Category> {
         NEXT.setToDeafultPredicate();
         INBOX.setToDeafultPredicate();
         COMPLETE.setToDeafultPredicate();
+        RECURRING.setToDeafultPredicate();
         DUE.setToDeafultPredicate();
     }
     
@@ -101,13 +113,14 @@ public class BuildInCategoryList implements Iterable<Category> {
         NEXT.setFilteredTaskList(observableList);
         INBOX.setFilteredTaskList(observableList);
         COMPLETE.setFilteredTaskList(observableList);
+        RECURRING.setFilteredTaskList(observableList);
         DUE.setFilteredTaskList(observableList);
     }
     
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
 
     public void addAllBuildInCategories() {
-        internalList.addAll(ALL, TODAY, NEXT, INBOX, COMPLETE);
+        internalList.addAll(ALL, TODAY, NEXT, INBOX, COMPLETE, RECURRING);
     }
        
     /**
@@ -116,7 +129,7 @@ public class BuildInCategoryList implements Iterable<Category> {
     public BuildInCategoryList() {}
       
     public BuildInCategoryList(Collection<Category> stroedList) {
-        BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
+        BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE, RECURRING};
         for(Category c : stroedList) {
             for(BuildInCategory bc : buildInCategories) {
                 if (c.categoryName.equals(bc.categoryName)) {
