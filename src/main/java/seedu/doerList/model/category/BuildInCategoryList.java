@@ -35,6 +35,9 @@ public class BuildInCategoryList implements Iterable<Category> {
             COMPLETE = new BuildInCategory("Complete", (task) -> {
                 return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
             });
+            RECURRING = new BuildInCategory("Recurring", (task) -> {
+                return task.getBuildInCategories().contains(BuildInCategoryList.RECURRING);
+            });
             TODAY = new BuildInCategory("Today", (task) -> {                
                 LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
                 LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
@@ -66,13 +69,11 @@ public class BuildInCategoryList implements Iterable<Category> {
                 } else {
                     return false;
                 }
-            });
-            RECURRING = new BuildInCategory("Recurring", (task) -> {
-                return task.getBuildInCategories().contains(BuildInCategoryList.RECURRING);
-            });
+            });         
             DUE = new BuildInCategory("Overdue", (task) -> {
                 LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
-                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) &&
+                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) && 
+                        
                         task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
             });
         } catch (Exception e) {

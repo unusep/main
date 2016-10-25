@@ -21,7 +21,6 @@ public class RecurCommand extends Command {
 
     public static final String MESSAGE_RECUR_TASK_SUCCESS = "recurring task: \nBefore: %1$s\nAfter: %2$s";
     public static final String MESSAGE_DUPLICATE_TASK = "The recurring task already exists in the Do-erlist";
-    public static final String RECURRING_NAME = "Recurring";
 
     public final int targetIndex;
 
