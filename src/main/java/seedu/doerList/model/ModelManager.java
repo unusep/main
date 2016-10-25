@@ -99,12 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
         doerList.unmarkTask(task);
         indicateDoerListChanged();
     }
-    
-    @Override
-    public synchronized void changeSaveLocation(String saveLocation, String fileName) {
-        raise(new DataPathChangedEvent(saveLocation, fileName));
-        indicateDoerListChanged();
-    }
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override

@@ -31,8 +31,6 @@ public interface Storage extends DoerListStorage, UserPrefsStorage {
 
     @Override
     void saveDoerList(ReadOnlyDoerList doerList) throws IOException;
-    
-    void setSaveLocation(String saveLocation) throws InvalidPathException;
 
     /**
      * Saves the current version of the doerList to the hard disk.

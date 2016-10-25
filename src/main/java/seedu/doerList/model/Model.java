@@ -48,7 +48,5 @@ public interface Model {
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
-    
-    void changeSaveLocation(String saveLocation, String fileName);
 
 }

@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private XmlDoerListStorage doerListStorage;
+    private static XmlDoerListStorage doerListStorage;
     private JsonUserPrefStorage userPrefStorage;
 
 
@@ -95,8 +95,8 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
     
-    public void setSaveLocation(String saveLocation) throws InvalidPathException {
-        this.doerListStorage.setDoerListFilePath(saveLocation);
+    public static void setSaveLocation(String saveLocation) throws InvalidPathException {
+        doerListStorage.setDoerListFilePath(saveLocation);
     }
     
     public void changeSaveLocation(String saveLocation, String fileName) throws IOException, InvalidPathException {
