@@ -266,6 +266,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+[//]: # (@@author A0139401N)
 #### Use case: Add task
 
 **MSS**
@@ -309,6 +310,7 @@ Use case ends.
 > 1f2. System indicates the error to user.
 > Use case resumes from steps 2.
   
+[//]: # (@@author A0139401N)
 #### Use case: Edit task
 
 **MSS**
@@ -343,6 +345,7 @@ Use case ends.
 > 1d2. System indicates the error to user.
 > Use case resumes from steps 2.
 
+[//]: # (@@author A0139401N)
 #### Use case: Delete task
 
 **MSS**

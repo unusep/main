@@ -25,8 +25,16 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 
 #### [Yong Sheng](https://github.com/JasonScourge)
 <img src="images/pic_jason.jpg" width="150"><br>
-Role: Developer <br>
-Responsibilities: UI
+- Components in charge of: [UI](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/DeveloperGuide.md#ui-component)
+- Aspects/tools in charge of: Testing, Integration, JavaFX
+- Features implemented:
+	- [Help Feautre](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
+	- [Exit Program](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#exiting-the-program--exit)
+- Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0139401N.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0139401N.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0139401N.md)]
+- Other major contributions
+	- Design UI with [Xiao Pu](https://github.com/xpdavid)
+	- Help to design and improve the program inteface and guides to be more user-friendly
+	- Also refactor and spot for errors in code and comments
 
 -----
 
