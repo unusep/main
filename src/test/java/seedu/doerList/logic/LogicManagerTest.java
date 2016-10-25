@@ -559,7 +559,6 @@ public class LogicManagerTest {
                 expectedAB.getTaskList());
     }
 
-
     //@author A0147978E
     @Test
     public void execute_delete_removesTask_categoryWithZeroTask_removed() throws Exception {
