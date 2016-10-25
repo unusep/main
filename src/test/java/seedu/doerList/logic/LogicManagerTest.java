@@ -808,8 +808,36 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
 
-        // execute redo should give back the origianl tasks
+        // execute redo should give back the original tasks
         expectedDL.replaceTask(task2_before, task2_after);
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_undo_redo_clear_operation_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTaskWithCategory(1, new Category("CA1"), new Category("CA2"));
+        Task task2 = helper.generateTaskWithCategory(2, new Category("CA1"));
+        DoerList expectedDL = new DoerList(); // going to undo the add command
+        model.addTask(task1);
+        model.addTask(task2);
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
+     
+        // execute command
+        logic.execute("clear");
+        
+        // execute undo command 1 time and verify
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+
+        // execute redo should give back the original tasks
+        expectedDL = new DoerList();
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_SUCCESS,
                 expectedDL,
