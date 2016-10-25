@@ -98,6 +98,7 @@ Format: `help` or `help [COMMAND_NAME]`
 
 [Back To Top](#user-guide)
 
+
 [//]: # (@@author A0139401N)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
@@ -122,6 +123,8 @@ Examples:
 * `add /t Daily Exercise and Workout!`<br>
 * `add /t Call Mum in Hanoi /d Limit chat timing for overseas charges /s tomorrow 8pm /e tomorrow 10pm /c Optional`
 
+[//]: # (@@author)
+
 [Back To Top](#user-guide)
 
 [//]: # (@@author A0139401N)
@@ -139,6 +142,7 @@ Examples:
 * `edit 3 /s tomorrow 23 00`
 
 > Attributes that are not supplied will not be updated 
+
 
 [Back To Top](#user-guide)
 
@@ -197,6 +201,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Finding all tasks containing any keyword in their name : `find`
 Finds tasks whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -217,6 +222,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### View a task : `view`
 Views the task identified by the index number used in the last task listing.<br>
 Format: `view INDEX`
@@ -235,6 +241,7 @@ Examples:
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
 
+[//]: # (@@author A0147978E)
 [Back To Top](#user-guide)
 
 #### Deleting a task : `delete`
@@ -258,7 +265,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
-[//]: # (@@author)
+[//]: # (@@author A0139168W)
 #### Undo the most recent operation : `undo`
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`
@@ -302,6 +309,7 @@ Examples:
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
+[//]: # (@@author)
 
 [Back To Top](#user-guide)
 

@@ -472,19 +472,22 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-
+    
+    //@@author A0139168W
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
         assertIncorrectIndexFormatBehaviorForCommand("delete a", expectedMessage);
     }
-
+    
+    //@@author A0139168W
     @Test
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
+    //@@author A0139168W
     @Test
     public void execute_delete_removesCorrectTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -499,7 +502,7 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-
+    //@@author
 
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
@@ -566,12 +569,14 @@ public class LogicManagerTest {
                 expectedList);
     }
     
+    //@@author A0139168W
     @Test
     public void execute_unmark_unmarkInvalidIndex() throws Exception {
         assertIncorrectIndexFormatBehaviorForCommand("unmark ", 
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
     }
     
+    //@@author A0139168W
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -594,13 +599,14 @@ public class LogicManagerTest {
                 expectedAB, 
                 expectedList);       
     }
-    
+    //@@author A0139168W
     @Test
     public void exectue_mark_invalidIndex() throws Exception {
         assertIncorrectIndexFormatBehaviorForCommand("mark ", 
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
     }
     
+    //@@author A0139168W
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -623,6 +629,7 @@ public class LogicManagerTest {
                 expectedAB, 
                 expectedList);       
     }
+    //@@author
 
     @Test
     public void execute_taskdue_successful() throws Exception {
