@@ -838,7 +838,39 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
+    
+    //@@author A0147978E
+    @Test
+    public void execute_undo_redo_mark_unmark_operation_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task task1 = helper.generateTask(1);
+        Task task2 = helper.generateTask(2);
+        Task task2_mark = helper.generateTask(2); task2_mark.addBuildInCategory(BuildInCategoryList.COMPLETE);
+        DoerList expectedDL = new DoerList(); // going to undo the add command
+        model.addTask(task1);
+        model.addTask(task2);
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2));
 
+        // execute command
+        logic.execute("mark 2");
+
+        // execute undo command 1 time and verify
+        assertCommandBehavior("undo",
+                UndoCommand.MESSAGE_UNDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+
+        // execute redo should give back the original tasks
+        expectedDL = new DoerList();
+        helper.addToDoerList(expectedDL, Arrays.asList(task1, task2_mark));
+        assertCommandBehavior("redo",
+                RedoCommand.MESSAGE_REDO_SUCCESS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+       
+    //@@author
     @Test
     public void execute_undo_redo_clear_operation_successful() throws Exception {
         // setup expectations

@@ -99,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void markTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.markTask(task);
+        undoManager.recordMark(task);
         indicateDoerListChanged();
     }
     
@@ -106,6 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
         doerList.unmarkTask(task);
+        undoManager.recordUnmark(task);
         indicateDoerListChanged();
     }
     //@@author

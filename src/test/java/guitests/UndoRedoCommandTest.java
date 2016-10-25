@@ -19,7 +19,7 @@ import seedu.doerList.testutil.TypicalTestTasks;
 public class UndoRedoCommandTest extends DoerListGuiTest {
 
     @Test
-    public void add_tasks_successful() throws IllegalValueException {
+    public void redo_undo_tasks_successful() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
@@ -128,6 +128,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 expectedBuildInCategoryList_delete, expectedCategoryList_delete);
         
         commandBox.runCommand("undo");
+        
         // clear task
         commandBox.runCommand("clear");
         assertUndoCommandSuccess(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
@@ -138,7 +139,60 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.INBOX.categoryName, 0, 0),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0, 0)
         );
-        assertRedoCommandSuccess(Lists.newArrayList(), expectedBuildInCategoryList_empty, Lists.newArrayList());
+        assertRedoCommandSuccess(Lists.newArrayList(), expectedBuildInCategoryList_empty, Lists.newArrayList());            
+    }
+    
+    @Test
+    public void redo_undo_mark_unmark_tasks_successful() throws IllegalValueException {
+        // define expected output
+        List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task4, td.task5, td.task8)
+        );
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
+        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
+        );
+        commandBox.runCommand("mark 1");
+        commandBox.runCommand("unmark 4");
+        
+        commandBox.runCommand("undo");
+        assertUndoCommandSuccess(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
+        
+        commandBox.runCommand("redo");
+        // define expected output
+        List<TestCategory> expectedDisplayTaskPanel_after = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task2, td.task4, td.task5, td.task8)
+        );
+        List<TestCategory> expectedBuildInCategoryList_after = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
+        );
+        List<TestCategory> expectedCategoryList_after = Lists.newArrayList(
+                new TestCategory("CS2101", 2, 0),
+                new TestCategory("CS2103", 1, 0),
+                new TestCategory("MA1101R", 1, 0)
+        );
+        assertRedoCommandSuccess(expectedDisplayTaskPanel_after, 
+                expectedBuildInCategoryList_after, expectedCategoryList_after);
     }
     
 

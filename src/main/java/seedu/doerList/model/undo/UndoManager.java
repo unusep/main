@@ -47,6 +47,14 @@ public class UndoManager {
         undoStack.push(new ResetOperation(replaceWith, toReplace));
     }
     
+    public void recordMark(ReadOnlyTask toMark) {
+        undoStack.push(new UnmarkOperation(toMark));
+    }
+    
+    public void recordUnmark(ReadOnlyTask toUnmark) {
+        undoStack.push(new MarkOperation(toUnmark));
+    }
+    
     /**
      * Pull the most recent redo operation from the redo stack
      * 
