@@ -32,6 +32,7 @@ public class EditCommand extends Command {
 	private Description toUpdateDescription = null;
 	private TodoTime toUpdateStartTime = null;
 	private TodoTime toUpdateEndTime = null;
+	private TodoTime toUpdateRecurring = null;
 	private UniqueCategoryList toUpdateCategories = null;
 
 	public EditCommand(int targetIndex, String title, String description,
@@ -91,6 +92,7 @@ public class EditCommand extends Command {
                 toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
                 toUpdateStartTime != null ? toUpdateStartTime : original.getStartTime(),
                 toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),
+                toUpdateRecurring != null ? toUpdateEndTime : original.getEndTime(),
                 toUpdateCategories != null ? toUpdateCategories : original.getCategories()
         );
         newTask.setBuildInCategories(original.getBuildInCategories());

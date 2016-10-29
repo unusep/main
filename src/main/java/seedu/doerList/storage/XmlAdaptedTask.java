@@ -24,6 +24,8 @@ public class XmlAdaptedTask {
     private XmlAdaptedTodoTime startTime;
     @XmlElement(required = false)
     private XmlAdaptedTodoTime endTime;
+    @XmlElement(required = false)
+    private String recurring;
 
 
     @XmlElement
@@ -82,6 +84,7 @@ public class XmlAdaptedTask {
         Description description = null;
         TodoTime startTime = null;
         TodoTime endTime = null;
+        Recurring recurring = null;
         if (this.description != null) {
             description = new Description(this.description);
         }
@@ -91,8 +94,11 @@ public class XmlAdaptedTask {
         if (this.endTime != null) {
             endTime = this.endTime.toModelType();
         }
+        if (this.recurring != null) {
+            recurring = new Recurring(this.recurring);
+        }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
-        Task newTask = new Task(title, description, startTime, endTime, categories);      
+        Task newTask = new Task(title, description, startTime, endTime, recurring, categories);      
         final BuildInCategoryList buildInCategories = new BuildInCategoryList(taskBuildInCategories);
         newTask.setBuildInCategories(buildInCategories);
         return newTask;

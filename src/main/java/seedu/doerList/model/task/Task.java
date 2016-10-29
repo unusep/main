@@ -16,6 +16,7 @@ public class Task implements ReadOnlyTask {
     private Description description;
     private TodoTime startTime;
     private TodoTime endTime;
+    private Recurring recurring;
 
     private UniqueCategoryList categories;
     private BuildInCategoryList buildInCategoires;
@@ -23,12 +24,13 @@ public class Task implements ReadOnlyTask {
     /**
      * Title must be presented.
      */
-    public Task(Title title, Description description, TodoTime startTime, TodoTime endTime, UniqueCategoryList categories) {
+    public Task(Title title, Description description, TodoTime startTime, TodoTime endTime, Recurring recurring, UniqueCategoryList categories) {
         assert title != null;
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.recurring = recurring;
         this.categories = new UniqueCategoryList(categories); // protect internal tags from changes in the arg list
         this.buildInCategoires = new BuildInCategoryList();
     }
@@ -41,6 +43,7 @@ public class Task implements ReadOnlyTask {
                 source.getDescription(), 
                 source.getStartTime(), 
                 source.getEndTime(), 
+                source.getRecurring(),
                 source.getCategories());
         buildInCategoires.replaceWith(source.getBuildInCategories());
     }
@@ -53,6 +56,11 @@ public class Task implements ReadOnlyTask {
     @Override
     public Description getDescription() {
         return description;
+    }
+
+    @Override
+    public Recurring getRecurring() {
+        return recurring;
     }
     
     @Override

@@ -12,6 +12,7 @@ public interface ReadOnlyTask {
 
     Title getTitle();
     Description getDescription();
+    Recurring getRecurring();
     default boolean hasDescription() {
         return getDescription() != null;
     }
