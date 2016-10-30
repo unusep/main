@@ -12,10 +12,12 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Recurring {
-    public final LocalDateTime value;
+    public final Time value;
     public boolean isRecurring = true;
+    // To update
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
+    
     public static final String NO_RECURRING = "";
     public static final String DEFAULT_TIME_INTERVAL = "2 hours";
  
@@ -35,7 +37,7 @@ public class Recurring {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
         String time = new TimeParser().parse(recurring);
-        this.value = LocalDateTime.parse(time, formatter);
+        //this.value = LocalDateTime.parse(time, formatter);
     }
     
     /**

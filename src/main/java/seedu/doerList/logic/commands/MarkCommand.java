@@ -35,7 +35,7 @@ public class MarkCommand extends Command {
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             if (target.hasRecurring()){ 
-                Task newTask = generateNewTask(target);
+                Task newTask = new Task(target);
                 updateRecurringTask(newTask);
                 model.changeTask(target, newTask);
                 return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
@@ -48,25 +48,6 @@ public class MarkCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-    }
-
-    /**
-     * Generate new task based on on read only task information
-     *
-     * @param original Task (ReadOnlyTask before update)
-     * @return the Task itself
-     */
-    private Task generateNewTask(ReadOnlyTask original) {
-        Task newTask = new Task(
-                original.getTitle(),
-                original.getDescription(),
-                original.getStartTime(),
-                original.getEndTime(),
-                original.getRecurring(),
-                original.getCategories()
-                );
-        newTask.setBuildInCategories(original.getBuildInCategories());
-        return newTask;
     }
 
     /**
@@ -106,7 +87,5 @@ public class MarkCommand extends Command {
         newTask.setBuildInCategories(original.getBuildInCategories());
         return newTask;
     }
-
-
 
 }

@@ -36,7 +36,7 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
-     * Copy constructor.
+     * Copy constructor that takes in a Read-Only Task.
      */
     public Task(ReadOnlyTask source) {
         this(source.getTitle(), 
