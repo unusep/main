@@ -36,7 +36,7 @@ public class EditCommand extends Command {
 	private UniqueCategoryList toUpdateCategories = null;
 
 	public EditCommand(int targetIndex, String title, String description,
-			String startTime, String endTime, Set<String> categories) throws IllegalValueException {
+			String startTime, String endTime, String recurring, Set<String> categories) throws IllegalValueException {
 		this.targetIndex = targetIndex;
 
         if (title != null) {
@@ -50,6 +50,9 @@ public class EditCommand extends Command {
         }
         if (endTime != null) {
             this.toUpdateEndTime = new TodoTime(endTime);
+        }
+        if (recurring != null) {
+            this.toUpdateRecurring = new TodoTime(recurring);
         }
 
         if (!categories.isEmpty()) {
@@ -92,7 +95,7 @@ public class EditCommand extends Command {
                 toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
                 toUpdateStartTime != null ? toUpdateStartTime : original.getStartTime(),
                 toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),
-                toUpdateRecurring != null ? toUpdateEndTime : original.getEndTime(),
+                toUpdateRecurring != null ? toUpdateRecurring : original.getRecurring(),
                 toUpdateCategories != null ? toUpdateCategories : original.getCategories()
         );
         newTask.setBuildInCategories(original.getBuildInCategories());

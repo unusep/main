@@ -38,13 +38,13 @@ public class AddCommand extends Command {
      * @throws IllegalValueException if any of the raw values are invalid
      */
     public AddCommand(String title, String description, String startTime, String endTime, 
-                      Set<String> categories, String enableRecurring)
+                      Set<String> categories, String isRecurring)
     		throws IllegalValueException {
         final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
-        if (enableRecurring != null){
+        if (isRecurring != null){
             categorySet.add(new Category(CATEGORY_RECCURING));
         }
         
@@ -53,6 +53,7 @@ public class AddCommand extends Command {
         		description == null ? null : new Description(description.trim()),
         		startTime == null ? null : new TodoTime(startTime),
         		endTime == null ? null : new TodoTime(endTime),
+        		isRecurring == null? null : new Recurring(isRecurring),
         		new UniqueCategoryList(categorySet)
         );
 
