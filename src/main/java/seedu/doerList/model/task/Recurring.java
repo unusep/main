@@ -13,18 +13,18 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Recurring {
-    public final long value;
+    public final LocalDateTime value;
     public boolean isRecurring = true;
     private String timeType;
     
-    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'daily', 'weekly'";
-    public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd' or natural language such as 'daily', 'weekly'";
+    public static final String TIME_STANDARD_FORMAT = "yy-MM-dd";
     public static final String DAYS = "daily";
     public static final String WEEKS = "weekly";
     public static final String MONTHS = "monthly";
-    public static final String YEARS = "yearly";
+    public static final String YEARS = "yearly"; // subtract 2000
     public static final String NO_RECURRING = "";
-    public static final String DEFAULT_TIME_INTERVAL = "2 hours";
+    public static final String DEFAULT_TIME_INTERVAL = "01-01-01";
  
     /**
      * Stores given interval. Validation of interval is done by TimeInterval class.
