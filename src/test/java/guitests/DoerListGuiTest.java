@@ -10,6 +10,7 @@ import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.util.FileUtil;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
@@ -21,6 +22,8 @@ import seedu.doerList.ui.CategoryListCard;
 import seedu.doerList.ui.CategorySideBar;
 import seedu.doerList.ui.TaskCard;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
@@ -101,6 +104,12 @@ public abstract class DoerListGuiTest {
      */
     protected String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+    
+    protected String getDataFileLocation(String path) throws IOException {
+        File filePath = new File(path);
+        FileUtil.createIfMissing(filePath);
+        return filePath.toString();
     }
 
     @After

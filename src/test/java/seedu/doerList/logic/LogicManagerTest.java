@@ -668,6 +668,17 @@ public class LogicManagerTest {
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
     
+  //@@author A0139168W
+    @Test
+    public void execute_saveLocation_successful_moreFilePath() throws Exception {
+        String path = saveFolder.getRoot().getPath();
+        String filePath = path + "\\Test\\MyDoerList.xml";
+        
+        assertCommandBehavior("saveto /st " + path + "\\Test /n MyDoerList", 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
+                filePath);
+    }
+    
     //@@author A0139168W
     @Test
     public void execute_saveLocation_successful_withFileName() throws Exception {

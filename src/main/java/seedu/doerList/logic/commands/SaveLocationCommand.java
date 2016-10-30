@@ -12,7 +12,9 @@ import seedu.doerList.storage.StorageManager;
 public class SaveLocationCommand extends Command  {
     public static final String COMMAND_WORD = "saveto";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Change the save location of your data. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + ": Change the save location of your data." 
+            + "If the drive is not specified, it will save under this DoerList parent folder."
             + "Parameters: /s SAVE_LOCATION [/n FILE_NAME] \n"
             + "Example: " + COMMAND_WORD
             + " /st C:\\Documents\\MyDoerList /n MyNewDoerList";
