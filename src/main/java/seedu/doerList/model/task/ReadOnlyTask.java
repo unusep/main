@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.model.task;
 
 import seedu.doerList.model.category.BuildInCategory;
@@ -81,12 +82,14 @@ public interface ReadOnlyTask {
                 && ((!other.hasEndTime() && !this.hasEndTime()) 
                         || (other.hasEndTime() && this.hasEndTime() 
                                 && other.getEndTime().equals(this.getEndTime())))
-                // change and add on the recurring
+                && ((!other.hasRecurring() && !this.hasRecurring()) 
+                        || (other.hasRecurring() && this.hasRecurring() 
+                                && other.getRecurring().equals(this.getRecurring())))
                 && this.getBuildInCategories().equals(other.getBuildInCategories()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the task as text, showing all the task details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
