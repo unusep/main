@@ -37,8 +37,8 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String title, String description, String startTime, String endTime, 
-                      Set<String> categories, String isRecurring)
+    public AddCommand(String title, String description, String startTime, String endTime, String isRecurring, 
+                      Set<String> categories)
     		throws IllegalValueException {
         final Set<Category> categorySet = new HashSet<>();
         for (String categoryName : categories) {

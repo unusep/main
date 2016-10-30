@@ -123,8 +123,9 @@ public class Parser {
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,        
-                    getCategoriesFromArgs(categoriesMatcher),
-                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null
+                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null,
+                    getCategoriesFromArgs(categoriesMatcher)
+                    
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -159,14 +160,16 @@ public class Parser {
             final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
             final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
             final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
+            final Matcher recurringMatcher = TASK_DATA_RECURRING_FORMAT.matcher(args.trim());
             final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
-
+            
             return new EditCommand(
                     targetIndex,
                     titleMatcher.find() ? titleMatcher.group("title").trim() : null,
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
+                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null,
                     getCategoriesFromArgs(categoriesMatcher)
                 );
         } catch (IllegalValueException ive) {
