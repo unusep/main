@@ -32,7 +32,7 @@ public class EditCommand extends Command {
 	private Description toUpdateDescription = null;
 	private TodoTime toUpdateStartTime = null;
 	private TodoTime toUpdateEndTime = null;
-	private TodoTime toUpdateRecurring = null;
+	private Recurring toUpdateRecurring = null;
 	private UniqueCategoryList toUpdateCategories = null;
 
 	public EditCommand(int targetIndex, String title, String description,
@@ -52,7 +52,7 @@ public class EditCommand extends Command {
             this.toUpdateEndTime = new TodoTime(endTime);
         }
         if (recurring != null) {
-            this.toUpdateRecurring = new TodoTime(recurring);
+            this.toUpdateRecurring = new Recurring(recurring);
         }
 
         if (!categories.isEmpty()) {

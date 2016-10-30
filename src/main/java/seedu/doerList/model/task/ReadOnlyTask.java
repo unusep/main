@@ -13,8 +13,13 @@ public interface ReadOnlyTask {
     Title getTitle();
     Description getDescription();
     Recurring getRecurring();
+    
     default boolean hasDescription() {
         return getDescription() != null;
+    }
+    
+    default boolean hasRecurring(){
+        return getRecurring() != null;
     }
     
     TodoTime getStartTime();
