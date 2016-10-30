@@ -117,7 +117,8 @@ public class LogicManagerTest {
      */
     private void assertCommandBehavior(String inputCommand, 
                                        String expectedMessage,
-                                       String expectedFilePath) throws Exception {
+                                       String expectedFilePath,
+                                       File tempFile) throws Exception {
         
         CommandResult result = logic.execute(inputCommand);
         assertEquals(expectedMessage, result.feedbackToUser);
@@ -125,6 +126,7 @@ public class LogicManagerTest {
         File file = new File(expectedFilePath);
         
         assertEquals(file.exists() ? file.getPath() : false, expectedFilePath);
+        assertEquals(file, tempFile);
     }
 
     /**
@@ -673,10 +675,12 @@ public class LogicManagerTest {
     public void execute_saveLocation_successful_moreFilePath() throws Exception {
         String path = saveFolder.getRoot().getPath();
         String filePath = path + "\\Test\\MyDoerList.xml";
+        File tempFile = new File(filePath);
         
         assertCommandBehavior("saveto /st " + path + "\\Test /n MyDoerList", 
-                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
-                filePath);
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path + "\\Test"), 
+                filePath,
+                tempFile);
     }
     
     //@@author A0139168W
@@ -684,10 +688,12 @@ public class LogicManagerTest {
     public void execute_saveLocation_successful_withFileName() throws Exception {
         String path = saveFolder.getRoot().getPath();
         String filePath = path + "\\MyDoerList.xml";
+        File tempFile = new File(filePath);
         
         assertCommandBehavior("saveto /st " + path + " /n MyDoerList", 
                 String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
-                filePath);
+                filePath,
+                tempFile);
     }
     
     //@@author A0139168W
@@ -695,10 +701,12 @@ public class LogicManagerTest {
     public void execute_saveLocation_successful_noFileName() throws Exception {
         String path = saveFolder.getRoot().getPath();
         String filePath = path + "\\" + SaveLocationCommand.DEFAULT_SAVE_FILE_NAME + ".xml";
-
+        File tempFile = new File(filePath);
+        
         assertCommandBehavior("saveto /st " + path, 
                 String.format(SaveLocationCommand.MESSAGE_SUCCESS, path),
-                filePath);
+                filePath,
+                tempFile);
     }
     
     //@@author A0139168W
