@@ -37,7 +37,7 @@ public class Recurring {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
         String time = new TimeParser().parse(recurring);
-        //this.value = LocalDateTime.parse(time, formatter);
+        this.value = LocalDateTime.parse(time, formatter);
     }
     
     /**

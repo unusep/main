@@ -38,6 +38,19 @@ public class TodoTime {
    public LocalDateTime getTime() {
        return value;
    }
+   
+   /**
+    * mutator method for value
+    */
+   public void setTime(int addition, String determinant){
+       if (determinant.equals("daily")){
+           this.value.plusDays(addition);
+       } else if (determinant.equals("monthly")){
+           this.value.plusMonths(addition);
+       } else if (determinant.equals("weekly")){
+           this.value.plusYears(addition);
+       }
+   }
 
    @Override
    public String toString() {
