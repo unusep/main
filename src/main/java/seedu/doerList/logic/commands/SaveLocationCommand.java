@@ -5,8 +5,6 @@ import java.nio.file.InvalidPathException;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.storage.DataPathChangedEvent;
-import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.storage.StorageManager;
 
 public class SaveLocationCommand extends Command  {

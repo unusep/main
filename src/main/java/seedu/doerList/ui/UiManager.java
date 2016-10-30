@@ -14,6 +14,7 @@ import seedu.doerList.commons.core.ComponentManager;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
+import seedu.doerList.commons.events.storage.DataPathChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
@@ -156,6 +157,14 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getCategorySideBar().refreshCategories(); // refresh categories UI
         mainWindow.getCategorySideBar().categoryScrollTo(event.target); // scroll to the category
+    }
+    
+    //@@author A0139168W
+    @Subscribe
+    private void handleDataPathChangedEvent(DataPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getTaskListPanel().displayTasks(); // redraw the task panel
+        mainWindow.getCategorySideBar().refreshCategories(); // to update category count
     }
 
 }
