@@ -12,7 +12,7 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Recurring {
-    public final Time value;
+    public final LocalDateTime value;
     public boolean isRecurring = true;
     // To update
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
