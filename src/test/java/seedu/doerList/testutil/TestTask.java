@@ -10,6 +10,7 @@ import seedu.doerList.model.task.Description;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
+import seedu.doerList.model.task.Recurring;
 
 /**
  * A mutable task object. For testing only.
@@ -20,6 +21,7 @@ public class TestTask implements ReadOnlyTask {
     private Description description;
     private TodoTime startTime;
     private TodoTime endTime;
+    private Recurring recurring;
     private UniqueCategoryList categories = new UniqueCategoryList();
     private BuildInCategoryList buildInCategories = new BuildInCategoryList();
 
@@ -34,6 +36,7 @@ public class TestTask implements ReadOnlyTask {
         this.startTime = source.getStartTime();
         this.endTime = source.getEndTime();
         this.categories = source.getCategories();
+        this.recurring = source.getRecurring();
         this.getBuildInCategories().replaceWith(source.getBuildInCategories());
     }
 
@@ -51,6 +54,10 @@ public class TestTask implements ReadOnlyTask {
 
     public void setEndTime(TodoTime endTime) {
         this.endTime = endTime;
+    }
+    
+    public void setRecurring(Recurring recurring) {
+        this.recurring = recurring;
     }
     
     public void setCategories(UniqueCategoryList categories) {
@@ -75,6 +82,11 @@ public class TestTask implements ReadOnlyTask {
     @Override
     public TodoTime getEndTime() {
         return this.endTime;
+    }
+    
+    @Override
+    public Recurring getRecurring(){
+        return this.recurring;
     }
 
 
@@ -125,6 +137,11 @@ public class TestTask implements ReadOnlyTask {
                 cmd.append("/e ");
                 cmd.append(this.getEndTime()).append(" ");
             }
+        }
+        
+        //@@author A0139401N
+        if (this.hasRecurring()) {
+            cmd.append("/r ").append(this.getRecurring()).append(" ");
         }
 
         UniqueCategoryList categories = this.getCategories();
