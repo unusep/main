@@ -12,7 +12,7 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Recurring {
-    public final LocalDateTime intervalValue;
+    public final LocalDateTime value;
     public boolean isRecurring = true;
     public static final String MESSAGE_TODOTIME_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'tomorrow', 'next week monday'";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
@@ -35,7 +35,14 @@ public class Recurring {
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
         String time = new TimeParser().parse(recurring);
-        this.intervalValue = LocalDateTime.parse(time, formatter);
+        this.value = LocalDateTime.parse(time, formatter);
+    }
+    
+    /**
+     * Generates the local date of the reccurance time interval
+     */
+    public LocalDateTime getValue(){
+        return this.value;
     }
 
 
@@ -45,7 +52,7 @@ public class Recurring {
             return NO_RECURRING;
         }else{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
-            return this.intervalValue.format(formatter).toString();
+            return this.value.format(formatter).toString();
         }
     }
 
