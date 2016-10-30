@@ -106,7 +106,7 @@ public class StorageManager extends ComponentManager implements Storage {
         
         Config config = new Config();
         config.setDoerListName(fileName);
-        config.setDoerListFilePath(saveLocation);
+        config.setDoerListFilePath(filePath);
         
         ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
     }
