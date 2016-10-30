@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
+import seedu.doerList.commons.events.storage.DataPathChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
 
 import org.controlsfx.control.StatusBar;
@@ -95,5 +96,16 @@ public class StatusBarFooter extends UiPart {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
+    }
+    
+    @Subscribe
+    public void handleDataPathChangedEvent(DataPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Status Bar Footer location is changing."));
+        changeSaveLocationPath(event.getSaveLocation(), event.getFileName());
+    }
+    
+    public void changeSaveLocationPath(String saveLocation, String fileName) {
+        setSaveLocation(saveLocation + "\\" + fileName + ".xml");
+        registerAsAnEventHandler(this);
     }
 }
