@@ -50,6 +50,6 @@ public interface Model {
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
  
     //@@author A0139401N
-    void recurTask(ReadOnlyTask task) throws TaskNotFoundException;
+    void changeTask(ReadOnlyTask toChange, Task task) throws TaskNotFoundException;
 
 }

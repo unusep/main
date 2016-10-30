@@ -85,11 +85,11 @@ public class ModelManager extends ComponentManager implements Model {
         doerList.replaceTask(prevTask, task);
         indicateDoerListChanged();
     }
-
+    
     //@@author A0139401N
     @Override
-    public synchronized void recurTask(ReadOnlyTask task) throws TaskNotFoundException {
-        doerList.recurTask(task);
+    public synchronized void changeTask(ReadOnlyTask prevTask, Task task) throws TaskNotFoundException {
+        doerList.changeTask(prevTask, task);
         indicateDoerListChanged();
     }
     
