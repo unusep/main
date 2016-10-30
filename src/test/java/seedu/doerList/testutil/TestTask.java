@@ -84,11 +84,11 @@ public class TestTask implements ReadOnlyTask {
         return this.endTime;
     }
     
+    //@@author A0139401N
     @Override
     public Recurring getRecurring(){
         return this.recurring;
     }
-
 
     @Override
     public UniqueCategoryList getCategories() {

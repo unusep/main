@@ -1,4 +1,6 @@
 //@@author A0139401N
+// Remove this when you are more or less wrapping up for the Recurring task
+// Can use this for reference in the meanwhile
 package seedu.doerList.logic.commands;
 
 import seedu.doerList.commons.core.Messages;

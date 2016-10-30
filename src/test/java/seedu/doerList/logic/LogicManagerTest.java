@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,6 +49,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
+import seedu.doerList.model.task.Recurring;
 import seedu.doerList.storage.StorageManager;
 
 public class LogicManagerTest {
@@ -711,20 +712,21 @@ public class LogicManagerTest {
         
         //@@author A0147978E
         /**
-         * Generate Task with given seed, startTime and endTime
+         * Generate Task with given seed, startTime, endTime and recurring
          * 
          * @param seed
          * @param startTime
          * @param endTime
          * @return
          */
-        Task generateTaskWithTime(int seed, String startTime, String endTime) {
+        Task generateTaskWithTime(int seed, String startTime, String endTime, String recurring) {
             try {
                 return new Task(
                         new Title("Task " + seed),
                         new Description("" + Math.abs(seed)),
                         startTime != null ? new TodoTime(startTime) : null,
                         endTime != null ? new TodoTime(endTime) : null,
+                        recurring != null ? new Recurring(recurring) : null,
                         new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
                 );
             } catch (Exception e) {

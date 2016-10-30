@@ -2,6 +2,7 @@ package seedu.doerList.model.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.sql.Time;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;

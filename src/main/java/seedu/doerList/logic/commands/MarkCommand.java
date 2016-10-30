@@ -16,9 +16,12 @@ public class MarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MARK_TASK_SUCCESS = "mark task: %1$s";
+    public static final String MESSAGE_MARK_TASK_SUCCESS = "marked task: %1$s";
+    public static final String MESSAGE_MARK_RECUR_TASK_SUCCESS = "marked recurring task: %1$s";
     
     private int targetIndex;
+    private TodoTime recurStartTime = null;
+    private TodoTime recurEndTime = null;
     
     public MarkCommand(int targetIndex) {
         this.targetIndex = targetIndex;
@@ -29,12 +32,20 @@ public class MarkCommand extends Command {
         
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
-            model.markTask(target);
-            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, target));  
+            if (target.hasRecurring()){ 
+                this.recurStartTime = target.getStartTime().plus(target.getRecurring());
+                this.recurEndTime = target.getEndTime().plus(target.getRecurring());
+                return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, target));  
+            } else {
+                model.markTask(target);
+                return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
+            }
         } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
           
     }
+
+    
 }

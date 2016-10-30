@@ -27,7 +27,6 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
-    public static final String CATEGORY_RECCURING = "Recurring";
 
     private final Task toAdd;
 
@@ -44,10 +43,7 @@ public class AddCommand extends Command {
         for (String categoryName : categories) {
             categorySet.add(new Category(categoryName));
         }
-        if (isRecurring != null){
-            categorySet.add(new Category(CATEGORY_RECCURING));
-        }
-        
+
         this.toAdd = new Task(
         		new Title(title.trim()),
         		description == null ? null : new Description(description.trim()),
@@ -58,6 +54,7 @@ public class AddCommand extends Command {
         );
 
     }
+    
     @Override
     public CommandResult execute() {
         assert model != null;
