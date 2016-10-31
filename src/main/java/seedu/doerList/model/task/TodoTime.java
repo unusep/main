@@ -39,7 +39,8 @@ public class TodoTime {
        return value;
    }
    
-   //@@author A0139401N
+   // I changed this method, where is this method used though? 
+   // Don't seem to see it anywhere
    /**
     * mutator method for value
     */
