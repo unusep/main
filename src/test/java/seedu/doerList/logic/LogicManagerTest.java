@@ -210,8 +210,7 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
-    
-    //@@author A0139401N
+        
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -312,14 +311,14 @@ public class LogicManagerTest {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString()); // today
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString(), null); // today
         Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString()); // tomorrow
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString(), null); // tomorrow
         Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString()); // next 5 days
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString(), null); // next 5 days
         Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString()); // next 7 days
-        Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString(), null); // next 7 days
+        Task Inbox1 = helper.generateTaskWithTime(4, null, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
 
