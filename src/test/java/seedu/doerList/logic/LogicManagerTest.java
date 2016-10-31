@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.After;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.Before;
@@ -117,15 +119,15 @@ public class LogicManagerTest {
      */
     private void assertCommandBehavior(String inputCommand, 
                                        String expectedMessage,
-                                       String expectedFilePath,
+                                       Path expectedFilePath,
                                        File tempFile) throws Exception {
         
         CommandResult result = logic.execute(inputCommand);
         assertEquals(expectedMessage, result.feedbackToUser);
         
-        File file = new File(expectedFilePath);
+        File file = new File(expectedFilePath.toString());
         
-        assertEquals(file.exists() ? file.getPath() : false, expectedFilePath);
+        assertEquals(file.exists() ? file.toPath() : false, expectedFilePath);
         assertEquals(file, tempFile);
     }
 
@@ -674,8 +676,8 @@ public class LogicManagerTest {
     @Test
     public void execute_saveLocation_successful_moreFilePath() throws Exception {
         String path = saveFolder.getRoot().getPath();
-        String filePath = path + "\\Test\\MyDoerList.xml";
-        File tempFile = new File(filePath);
+        Path filePath = Paths.get(path, "Test", "MyDoerList.xml");
+        File tempFile = new File(filePath.toString());
         
         assertCommandBehavior("saveto /st " + path + "\\Test /n MyDoerList", 
                 String.format(SaveLocationCommand.MESSAGE_SUCCESS, path + "\\Test"), 
@@ -687,8 +689,8 @@ public class LogicManagerTest {
     @Test
     public void execute_saveLocation_successful_withFileName() throws Exception {
         String path = saveFolder.getRoot().getPath();
-        String filePath = path + "\\MyDoerList.xml";
-        File tempFile = new File(filePath);
+        Path filePath = Paths.get(path, "MyDoerList.xml");
+        File tempFile = new File(filePath.toString());
         
         assertCommandBehavior("saveto /st " + path + " /n MyDoerList", 
                 String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
@@ -700,8 +702,8 @@ public class LogicManagerTest {
     @Test
     public void execute_saveLocation_successful_noFileName() throws Exception {
         String path = saveFolder.getRoot().getPath();
-        String filePath = path + "\\" + SaveLocationCommand.DEFAULT_SAVE_FILE_NAME + ".xml";
-        File tempFile = new File(filePath);
+        Path filePath = Paths.get(path, SaveLocationCommand.DEFAULT_SAVE_FILE_NAME + ".xml");
+        File tempFile = new File(filePath.toString());
         
         assertCommandBehavior("saveto /st " + path, 
                 String.format(SaveLocationCommand.MESSAGE_SUCCESS, path),
