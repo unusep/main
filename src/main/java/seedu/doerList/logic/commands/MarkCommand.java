@@ -36,7 +36,7 @@ public class MarkCommand extends Command {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             if (target.hasRecurring()){ 
                 Task newTask = new Task(target);
-                updateRecurringTask(newTask);
+                newTask = updateRecurringTask(newTask);
                 model.replaceTask(target, newTask, true);
                 return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
             } else {
@@ -64,8 +64,8 @@ public class MarkCommand extends Command {
         LocalDateTime withRecurStartTime = original.getStartTime().getTime();
         LocalDateTime withRecurEndTime = original.getEndTime().getTime();
         
-        TodoTime updatedStart = addingOnDate(withRecurStartTime, original);
-        TodoTime updatedEnd = addingOnDate(withRecurEndTime, original);
+        TodoTime updatedStart = new TodoTime(addingOnDate(withRecurStartTime, original));
+        TodoTime updatedEnd = new TodoTime(addingOnDate(withRecurEndTime, original));
 
         Task newTask = new Task(
                 original.getTitle(),
@@ -83,20 +83,21 @@ public class MarkCommand extends Command {
     /**
      * Update a date based on its 
      *
-     * @param Time LocalDateTime (to be updated) recurringInterval Task (values to update)
-     * @return TodoTime with updated information
+     * @param dateTime LocalDateTime (to be updated) recurringInterval Task (values to update)
+     * @return AddedDate with updated information
      */
-    public TodoTime addingOnDate(LocalDateTime Time, Task recurringInterval){
+    public LocalDateTime addingOnDate(LocalDateTime dateTime, Task recurringInterval){
         long days = recurringInterval.getRecurring().getValue().getDayOfYear();
         long months = recurringInterval.getRecurring().getValue().getMonthValue();
         long years = recurringInterval.getRecurring().getValue().getYear() - 2000;
         
-        Time.plusDays(days);
-        Time.plusMonths(months);
-        Time.plusYears(years);
-        TodoTime Updated = new TodoTime(Time);
+        // finally figured out why cannot update already
+        LocalDateTime AddedDate;
+        AddedDate = dateTime.plusDays(days);
+        AddedDate = dateTime.plusDays(months);        
+        AddedDate = dateTime.plusDays(years);
         
-        return Updated;
+        return AddedDate;
     }
 
 }
