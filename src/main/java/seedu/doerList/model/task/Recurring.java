@@ -21,6 +21,8 @@ public class Recurring {
     public static final String WEEKS = "weekly";
     public static final String MONTHS = "monthly";
     public static final String YEARS = "yearly"; 
+    public static final String NO_RECURRING = "";
+
  
     /**
      * Stores given interval. Validation of interval is done by TimeInterval class.
@@ -29,6 +31,10 @@ public class Recurring {
      */
     public Recurring(String recurring) throws IllegalValueException {
         recurring = recurring.trim();
+        
+        if (recurring.equals(NO_RECURRING) || recurring == null){
+            this.isRecurring = false;
+        }
         recurring = formattingNaturalLanguage(recurring);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
@@ -65,7 +71,7 @@ public class Recurring {
             return "00-01-00";
         } else if (checker.equals(YEARS)){
             return "01-00-00";
-        } else {
+        } else { // if value doesn't fit any of the above natural language, return original output
             return input;
         }
     }

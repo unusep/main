@@ -39,8 +39,9 @@ public class TodoTime {
        return value;
    }
    
-   // I changed this method, where is this method used though? 
-   // Don't seem to see it anywhere
+   
+   // TODO: ascertain this before adding/removing it
+   // I changed this method, where is this method used though?  Don't seem to see it being used anywhere
    /**
     * mutator method for value
     */

@@ -1,11 +1,8 @@
 //@@author A0139168W
 package seedu.doerList.logic.commands;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
@@ -20,7 +17,7 @@ public class MarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "marked task: %1$s";
-    public static final String MESSAGE_MARK_RECUR_TASK_SUCCESS = "marked recurring task: %1$s";
+    public static final String MESSAGE_MARK_RECUR_TASK_SUCCESS = "marked and updated recurring task: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "The recurring marked task already exists in the Do-erlist";
 
     private int targetIndex;
@@ -62,29 +59,29 @@ public class MarkCommand extends Command {
      */
     private Task updateRecurringTask(Task original) {
 
-        long updateDay = (long)original.getRecurring().getValue().getDayOfWeek().getValue();
-        long updateMonth = (long)original.getRecurring().getValue().getMonthValue();
-        long updateYear = (long)original.getRecurring().getValue().getYear();
-        TodoTime recurEndTime = original.getEndTime();
-        TodoTime recurStartTime = original.getStartTime();
+        int updateDay = original.getRecurring().getValue().getDayOfYear();
+        int updateMonth = original.getRecurring().getValue().getMonthValue();
+        int updateYear = original.getRecurring().getValue().getYear() - 2000;
+        TodoTime withRecurEndTime = original.getEndTime();
+        TodoTime withRecurStartTime = original.getStartTime();
 
         // Updating Day
-        recurEndTime.getTime().plusDays(updateDay);
-        recurStartTime.getTime().plusDays(updateDay);
+        withRecurEndTime.getTime().plusDays((long)updateDay);
+        withRecurStartTime.getTime().plusDays((long)updateDay);
 
         // Updating Month
-        recurEndTime.getTime().plusMonths(updateMonth);
-        recurStartTime.getTime().plusMonths(updateMonth);
+        withRecurEndTime.getTime().plusMonths((long)updateMonth);
+        withRecurStartTime.getTime().plusMonths((long)updateMonth);
 
         // Updating Year
-        recurEndTime.getTime().plusYears(updateYear);
-        recurStartTime.getTime().plusYears(updateYear);
+        withRecurEndTime.getTime().plusYears((long)updateYear);
+        withRecurStartTime.getTime().plusYears((long)updateYear);
 
         Task newTask = new Task(
                 original.getTitle(),
                 original.getDescription(),
-                recurStartTime,
-                recurEndTime,
+                withRecurStartTime,
+                withRecurEndTime,
                 original.getRecurring(),
                 original.getCategories()
                 );
