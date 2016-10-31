@@ -1,6 +1,8 @@
 //@@author A0139168W
 package seedu.doerList.logic.commands;
 
+import java.time.LocalDateTime;
+
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.model.task.*;
@@ -35,7 +37,7 @@ public class MarkCommand extends Command {
             if (target.hasRecurring()){ 
                 Task newTask = new Task(target);
                 updateRecurringTask(newTask);
-                model.replaceTask(target, newTask);
+                model.replaceTask(target, newTask, true);
                 return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
             } else {
                 model.markTask(target);
@@ -49,44 +51,52 @@ public class MarkCommand extends Command {
         }
 
     }
-
+    
+    
     //@@author A0139401N
     /**
      * Update a new task's start and end time based on their recurring values
      *
      * @param original Task (Task before update)
-     * @return Task with updated information
+     * @return newTask with updated information
      */
     private Task updateRecurringTask(Task original) {
-
-        int updateDay = original.getRecurring().getValue().getDayOfYear();
-        int updateMonth = original.getRecurring().getValue().getMonthValue();
-        int updateYear = original.getRecurring().getValue().getYear() - 2000;
-        TodoTime withRecurEndTime = original.getEndTime();
-        TodoTime withRecurStartTime = original.getStartTime();
-
-        // Updating Day
-        withRecurEndTime.getTime().plusDays((long)updateDay);
-        withRecurStartTime.getTime().plusDays((long)updateDay);
-
-        // Updating Month
-        withRecurEndTime.getTime().plusMonths((long)updateMonth);
-        withRecurStartTime.getTime().plusMonths((long)updateMonth);
-
-        // Updating Year
-        withRecurEndTime.getTime().plusYears((long)updateYear);
-        withRecurStartTime.getTime().plusYears((long)updateYear);
+        LocalDateTime withRecurStartTime = original.getStartTime().getTime();
+        LocalDateTime withRecurEndTime = original.getEndTime().getTime();
+        
+        TodoTime updatedStart = addingOnDate(withRecurStartTime, original);
+        TodoTime updatedEnd = addingOnDate(withRecurEndTime, original);
 
         Task newTask = new Task(
                 original.getTitle(),
                 original.getDescription(),
-                withRecurStartTime,
-                withRecurEndTime,
+                updatedStart,
+                updatedEnd,
                 original.getRecurring(),
                 original.getCategories()
                 );
         newTask.setBuildInCategories(original.getBuildInCategories());
         return newTask;
+    }
+    
+    //@@author A0139401N
+    /**
+     * Update a date based on its 
+     *
+     * @param Time LocalDateTime (to be updated) recurringInterval Task (values to update)
+     * @return TodoTime with updated information
+     */
+    public TodoTime addingOnDate(LocalDateTime Time, Task recurringInterval){
+        long days = recurringInterval.getRecurring().getValue().getDayOfYear();
+        long months = recurringInterval.getRecurring().getValue().getMonthValue();
+        long years = recurringInterval.getRecurring().getValue().getYear() - 2000;
+        
+        Time.plusDays(days);
+        Time.plusMonths(months);
+        Time.plusYears(years);
+        TodoTime Updated = new TodoTime(Time);
+        
+        return Updated;
     }
 
 }

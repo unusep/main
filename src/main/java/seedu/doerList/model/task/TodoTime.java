@@ -38,22 +38,6 @@ public class TodoTime {
    public LocalDateTime getTime() {
        return value;
    }
-   
-   
-   // TODO: ascertain this before adding/removing it
-   // I changed this method, where is this method used though?  Don't seem to see it being used anywhere
-   /**
-    * mutator method for value
-    */
-   public void setTime(int addition, String determinant){
-       if (determinant.equals("daily") || determinant.equals("weekly")){
-           this.value.plusDays(addition);
-       } else if (determinant.equals("monthly")){
-           this.value.plusMonths(addition);
-       } else if (determinant.equals("yearly")){
-           this.value.plusYears(addition);
-       }
-   }
 
    @Override
    public String toString() {

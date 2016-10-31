@@ -75,12 +75,13 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
+    //@@author A0139401N
     /**
      *
      * @return
      * @throws TaskNotFoundException, DuplicateTaskException
      */
-    public void replace(ReadOnlyTask prevTask, Task toReplace) throws DuplicateTaskException, TaskNotFoundException {
+    public void replace(ReadOnlyTask prevTask, Task toReplace, boolean isRecurring) throws DuplicateTaskException, TaskNotFoundException {
         assert toReplace != null && prevTask != null;
         int i = 0;
         // try to find the index of the task
@@ -94,35 +95,13 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new TaskNotFoundException();
         }
         Task original = internalList.get(i);
-        if (contains(toReplace) && 
-                !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
+        if (!isRecurring && contains(toReplace) && 
+            !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
             // is not just update categories
             throw new DuplicateTaskException();
         }
         internalList.set(i, toReplace);
     }
-    
-    /**
-    *
-    * @return
-    * @throws TaskNotFoundException, DuplicateTaskException
-    */
-   public void change(ReadOnlyTask prevTask, Task toReplace) throws TaskNotFoundException {
-       assert toReplace != null && prevTask != null;
-       int i = 0;
-       // try to find the index of the task
-       for(ReadOnlyTask t : internalList) {
-           if (t.equals(prevTask)) {
-               break;
-           }
-           i++;
-       }
-       if (i >= internalList.size()) {
-           throw new TaskNotFoundException();
-       }
-       Task original = internalList.get(i);
-       internalList.set(i, toReplace);
-   }
     
     public ObservableList<Task> getInternalList() {
         return internalList;

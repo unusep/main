@@ -15,8 +15,10 @@ public class Recurring {
     public final LocalDateTime value;
     public boolean isRecurring = true;
     
-    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-MM-dd' or natural language such as 'daily', 'weekly'";
-    public static final String TIME_STANDARD_FORMAT = "yy-MM-dd";
+    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'daily', 'weekly'";
+    public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String DEFAULT_YEARS = "20";
+    public static final String DEFAULT_TIME = " 12:00";
     public static final String DAYS = "daily";
     public static final String WEEKS = "weekly";
     public static final String MONTHS = "monthly";
@@ -29,16 +31,16 @@ public class Recurring {
      *
      * @throws IllegalValueException if given information string is invalid.
      */
-    public Recurring(String recurring) throws IllegalValueException {
-        recurring = recurring.trim();
+    public Recurring(String unformattedTime) throws IllegalValueException {
+        unformattedTime = unformattedTime.trim();
         
-        if (recurring.equals(NO_RECURRING) || recurring == null){
+        if (unformattedTime.equals(NO_RECURRING) || unformattedTime == null){
             this.isRecurring = false;
         }
-        recurring = formattingNaturalLanguage(recurring);
+        unformattedTime = formattingNaturalLanguage(unformattedTime);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
-        String time = new TimeParser().parse(recurring);
+        String time = new TimeParser().parse(unformattedTime);
         this.value = LocalDateTime.parse(time, formatter);
     }
     
@@ -64,15 +66,15 @@ public class Recurring {
         String checker = input.toLowerCase(); // to make it case insensitive 
         
         if (checker.equals(DAYS)){
-            return "00-00-01";
+            return DEFAULT_YEARS + "00-00-01" + DEFAULT_TIME;
         } else if (checker.equals(WEEKS)){
-            return "00-00-07";
+            return DEFAULT_YEARS + "00-00-07" + DEFAULT_TIME;
         } else if (checker.equals(MONTHS)){
-            return "00-01-00";
+            return DEFAULT_YEARS + "00-01-00" + DEFAULT_TIME;
         } else if (checker.equals(YEARS)){
-            return "01-00-00";
+            return DEFAULT_YEARS + "01-00-00" + DEFAULT_TIME;
         } else { // if value doesn't fit any of the above natural language, return original output
-            return input;
+            return DEFAULT_YEARS + input + DEFAULT_TIME;
         }
     }
     

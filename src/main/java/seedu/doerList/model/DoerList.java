@@ -34,7 +34,7 @@ public class DoerList implements ReadOnlyDoerList {
     }
     
     //@@author A0147978E
-    /**
+    /** 
      * Add listener to categoryList so that every time the category list get added,
      * the {@code tasks} is added into the category.
      */
@@ -148,8 +148,8 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
-        tasks.replace(prevTask, t);
+    public void replaceTask(ReadOnlyTask prevTask, Task t, boolean isRecurring) throws DuplicateTaskException, TaskNotFoundException {
+        tasks.replace(prevTask, t, isRecurring);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
     }
 
