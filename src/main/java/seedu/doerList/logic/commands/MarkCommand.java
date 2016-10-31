@@ -2,12 +2,9 @@
 package seedu.doerList.logic.commands;
 
 import java.time.LocalDateTime;
-import java.util.logging.Logger;
 
-import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.model.ModelManager;
 import seedu.doerList.model.task.*;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
@@ -83,28 +80,23 @@ public class MarkCommand extends Command {
         return newTask;
     }
     
+    
     //@@author A0139401N
     /**
      * Adds on the original date time with its recurring Interval
      *
      * @param dateTime TodoTime (to be updated) recurringInterval Task (values to update)
-     * @return updatedTime with updated information
+     * @return updatedTime with added on time
      */
     public TodoTime addingOnDate(LocalDateTime dateTime, Task recurringInterval){
         TodoTime updatedTime;
         long days = recurringInterval.getRecurring().getDays();
-        System.out.println("Recurring Days: " + days);
         long months = recurringInterval.getRecurring().getMonths();
-        System.out.println("Recurring Months: " + months);
         long years = recurringInterval.getRecurring().getYears();
-        System.out.println("Recurring Years: " + years);   
         
         updatedTime = new TodoTime(dateTime.plusDays(days));
-        System.out.println("AddedDate after adding on the DAYS: " + updatedTime.getTime());
         updatedTime = new TodoTime(updatedTime.getTime().plusMonths(months));     
-        System.out.println("AddedDate after adding on the MONTHS: " + updatedTime.getTime());
         updatedTime = new TodoTime(updatedTime.getTime().plusYears(years));  
-        System.out.println("AddedDate after adding on the YEARS: " + updatedTime.getTime());
         
         return updatedTime;
     }

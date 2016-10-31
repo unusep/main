@@ -1,13 +1,10 @@
 //@@author A0139401N
 package seedu.doerList.model.task;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
-import seedu.doerList.logic.parser.TimeParser;
 
 /**
  * Represents an Task's recurring time in the to-do List.
@@ -101,19 +98,6 @@ public class Recurring {
         return this.day;
     }
     
-
-    /*
-    @Override
-    public String toString() {
-        if(!isRecurring){
-            return NO_RECURRING;
-        } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RECUR_DATE_REGEX);
-            return this.value.format(formatter).toString();
-        }
-    }
-    */
-
 
     @Override
     public boolean equals(Object other) {
