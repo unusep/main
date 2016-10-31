@@ -97,17 +97,26 @@ public class StorageManager extends ComponentManager implements Storage {
     }
     
     public static void setSaveLocation(String saveLocation) throws InvalidPathException {
-        doerListStorage.setDoerListFilePath(saveLocation);
+        Path path = null;
+        try {
+            System.out.println(saveLocation);
+            path = Paths.get(saveLocation);
+            System.out.println(path.toString());
+        } catch (InvalidPathException e) {
+            throw new InvalidPathException(saveLocation, "Contains invalid path inputs");
+        }
+        doerListStorage.setDoerListFilePath(path.toString());
     }
     
-    public void changeSaveLocation(String saveLocation, String fileName) throws IOException, InvalidPathException {
-        String filePath = saveLocation + "\\" + fileName + ".xml";
-        File file = new File(filePath);
+    public void changeSaveLocation(String saveLocation, String fileName) throws IOException {
+        Path filePath = Paths.get(saveLocation, fileName + ".xml");
+        
+        File file = new File(filePath.toString());
         FileUtil.createIfMissing(file);
         
         Config config = new Config();
         config.setDoerListName(fileName);
-        config.setDoerListFilePath(filePath);
+        config.setDoerListFilePath(filePath.toString());
         
         ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
     }

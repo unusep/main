@@ -679,8 +679,8 @@ public class LogicManagerTest {
         Path filePath = Paths.get(path, "Test", "MyDoerList.xml");
         File tempFile = new File(filePath.toString());
         
-        assertCommandBehavior("saveto /st " + path + "\\Test /n MyDoerList", 
-                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path + "\\Test"), 
+        assertCommandBehavior("saveto /st " + path + "/Test /n MyDoerList", 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path + "/Test"), 
                 filePath,
                 tempFile);
     }

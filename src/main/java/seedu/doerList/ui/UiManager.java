@@ -162,6 +162,7 @@ public class UiManager extends ComponentManager implements Ui {
     //@@author A0139168W
     @Subscribe
     private void handleDataPathChangedEvent(DataPathChangedEvent event) {
+        assert event != null;
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().displayTasks(); // redraw the task panel
         mainWindow.getCategorySideBar().refreshCategories(); // to update category count

@@ -2,6 +2,8 @@
 package seedu.doerList.logic.commands;
 
 import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.storage.DataPathChangedEvent;
@@ -22,17 +24,16 @@ public class SaveLocationCommand extends Command  {
             + "It is either protected or it contains invalid inputs.\n"
             + "Please enter another location.";
     public static final String DEFAULT_SAVE_FILE_NAME = "MyDoerList";
-    
+
     private final String saveLocation;
     private String fileName;
-    
+
     public SaveLocationCommand(String saveLocation, String fileName) {
         this.saveLocation = saveLocation;
         this.fileName = fileName;
     }
-    
+
     public CommandResult execute() {
-        assert model != null;
         if (fileName == null)
             fileName = DEFAULT_SAVE_FILE_NAME;
         try {
@@ -42,6 +43,5 @@ public class SaveLocationCommand extends Command  {
         } catch (InvalidPathException e) {
             return new CommandResult(String.format(MESSAGE_INVALID_SAVE_LOCATION));
         }
-        
     }
 }

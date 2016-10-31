@@ -3,6 +3,7 @@ package seedu.doerList.storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -28,8 +29,12 @@ public class XmlDoerListStorage implements DoerListStorage {
         return filePath;
     }
     
-    public void setDoerListFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setDoerListFilePath(String filePath) throws InvalidPathException {
+        try {
+            this.filePath = filePath;
+        } catch (InvalidPathException e) {
+            throw new InvalidPathException(filePath, "Invalid Input");
+        }
     }
 
     /**
