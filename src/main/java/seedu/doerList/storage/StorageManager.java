@@ -87,7 +87,7 @@ public class StorageManager extends ComponentManager implements Storage {
     //@@author A0139168W
     @Override
     @Subscribe
-    public void handleDataPathChangedEvent(DataPathChangedEvent event) {
+    public void handleDataPathChangedEvent(DataPathChangedEvent event) throws DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data save location changing."));
         try {
             changeSaveLocation(event.getSaveLocation(), event.getFileName());
@@ -96,23 +96,22 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
     
-    public static void setSaveLocation(String saveLocation) throws InvalidPathException {
+    public static void setSaveLocation(String saveLocation, String fileName) throws InvalidPathException {
         Path path = null;
         try {
-            System.out.println(saveLocation);
-            path = Paths.get(saveLocation);
-            System.out.println(path.toString());
+            path = Paths.get(saveLocation, fileName + ".xml");
         } catch (InvalidPathException e) {
             throw new InvalidPathException(saveLocation, "Contains invalid path inputs");
         }
         doerListStorage.setDoerListFilePath(path.toString());
     }
     
-    public void changeSaveLocation(String saveLocation, String fileName) throws IOException {
+    public void changeSaveLocation(String saveLocation, String fileName) throws IOException, DataConversionException {
         Path filePath = Paths.get(saveLocation, fileName + ".xml");
         
         File file = new File(filePath.toString());
         FileUtil.createIfMissing(file);
+        doerListStorage.readDoerList(filePath.toString());
         
         Config config = new Config();
         config.setDoerListName(fileName);

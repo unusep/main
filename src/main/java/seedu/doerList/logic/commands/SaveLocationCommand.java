@@ -37,9 +37,9 @@ public class SaveLocationCommand extends Command  {
         if (fileName == null)
             fileName = DEFAULT_SAVE_FILE_NAME;
         try {
-            StorageManager.setSaveLocation(saveLocation);
+            StorageManager.setSaveLocation(saveLocation, fileName);
             EventsCenter.getInstance().post(new DataPathChangedEvent(saveLocation, fileName));
-            return new CommandResult(String.format(MESSAGE_SUCCESS, saveLocation));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, Paths.get(saveLocation, fileName + ".xml").toString()));
         } catch (InvalidPathException e) {
             return new CommandResult(String.format(MESSAGE_INVALID_SAVE_LOCATION));
         }

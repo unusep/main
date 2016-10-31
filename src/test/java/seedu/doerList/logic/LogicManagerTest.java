@@ -678,9 +678,10 @@ public class LogicManagerTest {
         String path = saveFolder.getRoot().getPath();
         Path filePath = Paths.get(path, "Test", "MyDoerList.xml");
         File tempFile = new File(filePath.toString());
+        Path extraFolder = Paths.get(path, "Test"); //to allow multi-platform usage
         
-        assertCommandBehavior("saveto /st " + path + "/Test /n MyDoerList", 
-                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path + "/Test"), 
+        assertCommandBehavior("saveto /st " + extraFolder.toString() + "/n MyDoerList", 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, filePath.toString()), 
                 filePath,
                 tempFile);
     }
@@ -693,7 +694,7 @@ public class LogicManagerTest {
         File tempFile = new File(filePath.toString());
         
         assertCommandBehavior("saveto /st " + path + " /n MyDoerList", 
-                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path), 
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, filePath.toString()), 
                 filePath,
                 tempFile);
     }
@@ -706,7 +707,7 @@ public class LogicManagerTest {
         File tempFile = new File(filePath.toString());
         
         assertCommandBehavior("saveto /st " + path, 
-                String.format(SaveLocationCommand.MESSAGE_SUCCESS, path),
+                String.format(SaveLocationCommand.MESSAGE_SUCCESS, filePath.toString()),
                 filePath,
                 tempFile);
     }
