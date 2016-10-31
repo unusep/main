@@ -18,6 +18,7 @@ public class Recurring {
 
     public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d{2}-\\d{2}-\\d{2}");
     public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily', 'weekly'";
+    public static final String NO_RECURRING_TASK = "";
     public static final String DAILY = "daily";
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
@@ -32,7 +33,12 @@ public class Recurring {
         unformattedTime = unformattedTime.trim();
         final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime);
         long[] processedTime = {0, 0, 0};
-        if (isNaturalLanguage(unformattedTime, processedTime)){
+        if (unformattedTime.equals(NO_RECURRING_TASK) || unformattedTime == null){
+            this.year = 0;
+            this.month = 0;
+            this.day = 0;
+            isRecurring = false;
+        } else if (isNaturalLanguage(unformattedTime, processedTime)){
             this.year = processedTime[0];
             this.month = processedTime[1];
             this.day = processedTime[2];

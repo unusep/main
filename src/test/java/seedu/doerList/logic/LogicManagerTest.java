@@ -736,7 +736,7 @@ public class LogicManagerTest {
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
-                    new Recurring(null),
+                    new Recurring("daily"),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
