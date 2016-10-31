@@ -148,6 +148,7 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
+    //TODO: Seek consultation on this one 
     public void replaceTask(ReadOnlyTask prevTask, Task t, boolean isRecurring) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t, isRecurring);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
