@@ -13,7 +13,7 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
 public class MarkCommand extends Command {
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    //private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     public static final String COMMAND_WORD = "mark";
 
@@ -92,19 +92,19 @@ public class MarkCommand extends Command {
      */
     public LocalDateTime addingOnDate(LocalDateTime dateTime, Task recurringInterval){
         long days = recurringInterval.getRecurring().getValue().getDayOfYear();
-        logger.fine("Recurring Days: " + days);
+        System.out.println("Recurring Days: " + days);
         long months = recurringInterval.getRecurring().getValue().getMonthValue();
-        logger.fine("Recurring Months: " + months);
-        long years = recurringInterval.getRecurring().getValue().getYear() - 2000;
-        logger.fine("Recurring Years: " + years);
+        System.out.println("Recurring Months: " + months);
+        long years = recurringInterval.getRecurring().getValue().getYear() - recurringInterval.getRecurring().YEAR_PARSER;
+        System.out.println("Recurring Years: " + years);
         
         LocalDateTime AddedDate;
         AddedDate = dateTime.plusDays(days);
-        logger.fine("AddedDate after adding on the DAYS: " + AddedDate.toString());
+        System.out.println("AddedDate after adding on the DAYS: " + AddedDate.toString());
         AddedDate = dateTime.plusMonths(months);       
-        logger.fine("AddedDate after adding on the MONTHS: " + AddedDate.toString());
+        System.out.println("AddedDate after adding on the MONTHS: " + AddedDate.toString());
         AddedDate = dateTime.plusYears(years);
-        logger.fine("AddedDate after adding on the YEARS: " + AddedDate.toString());
+        System.out.println("AddedDate after adding on the YEARS: " + AddedDate.toString());
         
         return AddedDate;
     }
