@@ -211,11 +211,16 @@ public class LogicManagerTest {
                 "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
     
+    //@@author A0139401N
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task[] inputs = {
+                helper.taskWithAttribute(true, true, true, false, true),
+                helper.taskWithAttribute(true, true, true, false, false),
+                helper.taskWithAttribute(true, true, false, false, false),
+                helper.taskWithAttribute(true, false, false, false, true),
                 helper.taskWithAttribute(true, false, false, false, false),
                 helper.taskWithAttribute(false, true, false, false, false),
                 helper.taskWithAttribute(false, false, true, false, false),
@@ -244,7 +249,7 @@ public class LogicManagerTest {
                 helper.taskWithAttribute(true, true, true, true, true),
                 helper.taskWithAttribute(true, true, true, true, false),
                 helper.taskWithAttribute(true, true, false, true, false),
-                helper.taskWithAttribute(true, false, false, true, true),
+                helper.taskWithAttribute(true, false, false, true, true),            
                 helper.taskWithAttribute(true, false, false, true, false),
                 helper.taskWithAttribute(false, true, false, true, false),
                 helper.taskWithAttribute(false, false, true, true, false),
