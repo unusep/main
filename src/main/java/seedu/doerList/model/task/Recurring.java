@@ -20,9 +20,7 @@ public class Recurring {
     public static final String DAYS = "daily";
     public static final String WEEKS = "weekly";
     public static final String MONTHS = "monthly";
-    public static final String YEARS = "yearly"; // subtract 2000
-    public static final String NO_RECURRING = "";
-    public static final String DEFAULT_TIME_INTERVAL = "01-01-01";
+    public static final String YEARS = "yearly"; 
  
     /**
      * Stores given interval. Validation of interval is done by TimeInterval class.
@@ -30,16 +28,9 @@ public class Recurring {
      * @throws IllegalValueException if given information string is invalid.
      */
     public Recurring(String recurring) throws IllegalValueException {
-        assert recurring != null;
         recurring = recurring.trim();
+        recurring = formattingNaturalLanguage(recurring);
 
-        if(recurring.equals(NO_RECURRING)){
-            isRecurring = false;
-            recurring = DEFAULT_TIME_INTERVAL;
-        } else {
-            recurring = formattingNaturalLanguage(recurring);
-        }
-        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
         String time = new TimeParser().parse(recurring);
         this.value = LocalDateTime.parse(time, formatter);
@@ -47,7 +38,7 @@ public class Recurring {
     
     
     /**
-     * Generates the local date of the reccurance time interval
+     * Generates the local date of the recurring time interval
      */
     public LocalDateTime getValue(){
         return this.value;
@@ -79,7 +70,7 @@ public class Recurring {
         }
     }
     
-    
+    // TODO: ascertain this before adding/removing it
     /**
      * mutator method for value
      */
