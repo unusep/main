@@ -211,5 +211,8 @@ public class MainWindow extends UiPart {
         return this.categorySideBar;
     }
 
+    public StatusBarFooter getStatusBarFooter() {
+        return statusBarFooter;
+    }
     
 }

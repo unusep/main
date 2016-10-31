@@ -98,12 +98,6 @@ public class StatusBarFooter extends UiPart {
         setSyncStatus("Last Updated: " + lastUpdated);
     }
     
-    @Subscribe
-    public void handleDataPathChangedEvent(DataPathChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Status Bar Footer location is changing."));
-        changeSaveLocationPath(event.getSaveLocation(), event.getFileName());
-    }
-    
     public void changeSaveLocationPath(String saveLocation, String fileName) {
         setSaveLocation(saveLocation + "\\" + fileName + ".xml");
         registerAsAnEventHandler(this);

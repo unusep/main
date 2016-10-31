@@ -165,6 +165,6 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().displayTasks(); // redraw the task panel
         mainWindow.getCategorySideBar().refreshCategories(); // to update category count
+        mainWindow.getStatusBarFooter().changeSaveLocationPath(event.getSaveLocation(), event.getFileName()); //update footerbar
     }
-
 }
