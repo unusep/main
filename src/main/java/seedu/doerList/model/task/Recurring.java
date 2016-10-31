@@ -3,6 +3,8 @@ package seedu.doerList.model.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;
@@ -12,19 +14,20 @@ import seedu.doerList.logic.parser.TimeParser;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Recurring {
-    public final LocalDateTime value;
-    
-    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'daily', 'weekly'";
-    public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
-    public static final String DEFAULT_YEARS = "20";
-    public static final String DEFAULT_TIME = " 12:00";
+    public final long day;
+    public final long month;
+    public final long year;
+    //public final String fullDate;
+    public boolean isRecurring = true;
+
+    public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d{2}-\\d{2}-\\d{2}");
+    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily', 'weekly'";
     public static final String DAILY = "daily";
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
     public static final String YEARLY = "yearly"; 
     public static final String NO_RECURRING = "";
 
- 
     /**
      * Stores given interval. Validation of interval is done by TimeInterval class.
      *
@@ -32,69 +35,91 @@ public class Recurring {
      */
     public Recurring(String unformattedTime) throws IllegalValueException {
         unformattedTime = unformattedTime.trim();
-        
-        /*
-        if (unformattedTime.equals(NO_RECURRING) || unformattedTime == null){
-            this.isRecurring = false;
+        final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime);
+        long[] processedTime = {0, 0, 0};
+        if (isNaturalLanguage(unformattedTime, processedTime)){
+            this.year = processedTime[0];
+            this.month = processedTime[1];
+            this.day = processedTime[2];
+        } else if (recurTitleMatcher.find()){
+            String[] parts = unformattedTime.split("-");
+            this.year = Long.parseLong(parts[0]);
+            this.month = Long.parseLong(parts[1]);
+            this.day = Long.parseLong(parts[2]);
+        } else {
+            throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
         }
-        */
-        String languageTime = formattingNaturalLanguage(unformattedTime);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
-        String time = new TimeParser().parse(languageTime);
-        this.value = LocalDateTime.parse(time, formatter);
     }
     
-    
+
     /**
-     * Generates the local date of the recurring time interval
+     * Checks the natural language and returns out the time equivalent.
+     * Processes the input if it matches into an array;
+     * Returns a boolean to indicate if it is a language or not.
      */
-    public LocalDateTime getValue(){
-        return this.value;
-    }
-    
-    
-    /**
-     * Checks the natural language and returns out the time equivalent
-     * 
-     * @throws IllegalValueException if given input string is invalid.
-     * 
-     * @param Original input in natural language (Time in English)
-     * @return Time in "yy-MM-dd" format
-     * 
-     */
-    public String formattingNaturalLanguage(String input) throws IllegalValueException{
+    public boolean isNaturalLanguage(String input, long[] processedTime ){
         String checker = input.toLowerCase(); // to make it case insensitive 
-        
         if (checker.equals(DAILY)){
-            return DEFAULT_YEARS + "00-00-01" + DEFAULT_TIME;
+            processedTime[2] = 1;
+            return true;
         } else if (checker.equals(WEEKLY)){
-            return DEFAULT_YEARS + "00-00-07" + DEFAULT_TIME;
+            processedTime[2] = 7;
+            return true;
         } else if (checker.equals(MONTHLY)){
-            return DEFAULT_YEARS + "00-01-00" + DEFAULT_TIME;
+            processedTime[1] = 1;
+            return true;
         } else if (checker.equals(YEARLY)){
-            return DEFAULT_YEARS + "01-00-00" + DEFAULT_TIME;
-        } else { // if value doesn't fit any of the above natural language, return original output
-            return DEFAULT_YEARS + input + DEFAULT_TIME;
+            processedTime[0] = 1;
+            return true;
+        } else { // if value doesn't fit any of the above natural language, return false
+            return false;
         }
     }
     
+    
+    /**
+     * Generates the local year of the recurring time interval
+     */
+    public long getYears(){
+        return this.year;
+    }
+    
+    
+    /**
+     * Generates the local month of the recurring time interval
+     */
+    public long getMonths(){
+        return this.month;
+    }
+
+    
+    /**
+     * Generates the local day of the recurring time interval
+     */
+    public long getDays(){
+        return this.day;
+    }
+    
+
+    /*
     @Override
     public String toString() {
         if(!isRecurring){
             return NO_RECURRING;
-        }else{
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(RECUR_DATE_REGEX);
             return this.value.format(formatter).toString();
         }
     }
+    */
 
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TodoTime // instanceof handles nulls
-                && this.toString().equals(((TodoTime) other).toString())); // state check
+                        && this.toString().equals(((TodoTime) other).toString())); // state check
     }
 
 }

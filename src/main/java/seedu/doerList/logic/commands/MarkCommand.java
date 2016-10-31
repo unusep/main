@@ -68,8 +68,8 @@ public class MarkCommand extends Command {
         LocalDateTime withRecurStartTime = original.getStartTime().getTime();
         LocalDateTime withRecurEndTime = original.getEndTime().getTime();
         
-        TodoTime updatedStart = new TodoTime(addingOnDate(withRecurStartTime, original));
-        TodoTime updatedEnd = new TodoTime(addingOnDate(withRecurEndTime, original));
+        TodoTime updatedStart = addingOnDate(withRecurStartTime, original);
+        TodoTime updatedEnd = addingOnDate(withRecurEndTime, original);
 
         Task newTask = new Task(
                 original.getTitle(),
@@ -87,26 +87,26 @@ public class MarkCommand extends Command {
     /**
      * Adds on the original date time with its recurring Interval
      *
-     * @param dateTime LocalDateTime (to be updated) recurringInterval Task (values to update)
-     * @return AddedDate with updated information
+     * @param dateTime TodoTime (to be updated) recurringInterval Task (values to update)
+     * @return updatedTime with updated information
      */
-    public LocalDateTime addingOnDate(LocalDateTime dateTime, Task recurringInterval){
-        long days = recurringInterval.getRecurring().getValue().getDayOfYear();
+    public TodoTime addingOnDate(LocalDateTime dateTime, Task recurringInterval){
+        TodoTime updatedTime;
+        long days = recurringInterval.getRecurring().getDays();
         System.out.println("Recurring Days: " + days);
-        long months = recurringInterval.getRecurring().getValue().getMonthValue();
+        long months = recurringInterval.getRecurring().getMonths();
         System.out.println("Recurring Months: " + months);
-        long years = recurringInterval.getRecurring().getValue().getYear() - recurringInterval.getRecurring().YEAR_PARSER;
-        System.out.println("Recurring Years: " + years);
+        long years = recurringInterval.getRecurring().getYears();
+        System.out.println("Recurring Years: " + years);   
         
-        LocalDateTime AddedDate;
-        AddedDate = dateTime.plusDays(days);
-        System.out.println("AddedDate after adding on the DAYS: " + AddedDate.toString());
-        AddedDate = dateTime.plusMonths(months);       
-        System.out.println("AddedDate after adding on the MONTHS: " + AddedDate.toString());
-        AddedDate = dateTime.plusYears(years);
-        System.out.println("AddedDate after adding on the YEARS: " + AddedDate.toString());
+        updatedTime = new TodoTime(dateTime.plusDays(days));
+        System.out.println("AddedDate after adding on the DAYS: " + updatedTime.getTime());
+        updatedTime = new TodoTime(updatedTime.getTime().plusMonths(months));     
+        System.out.println("AddedDate after adding on the MONTHS: " + updatedTime.getTime());
+        updatedTime = new TodoTime(updatedTime.getTime().plusYears(years));  
+        System.out.println("AddedDate after adding on the YEARS: " + updatedTime.getTime());
         
-        return AddedDate;
+        return updatedTime;
     }
 
 }
