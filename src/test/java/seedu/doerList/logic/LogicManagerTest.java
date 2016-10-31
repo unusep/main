@@ -210,18 +210,18 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add /t valid title /d valid description /s 2011-10-12 12:00 /e invalid format /c valid_category", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
-
+    
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task[] inputs = {
-                helper.taskWithAttribute(true, false, false, false),
-                helper.taskWithAttribute(false, true, false, false),
-                helper.taskWithAttribute(false, false, true, false),
-                helper.taskWithAttribute(false, false, false, true),
-                helper.taskWithAttribute(false, true, true, false),
-                helper.taskWithAttribute(false, false, false, false)
+                helper.taskWithAttribute(true, false, false, false, false),
+                helper.taskWithAttribute(false, true, false, false, false),
+                helper.taskWithAttribute(false, false, true, false, false),
+                helper.taskWithAttribute(false, false, false, false, true),
+                helper.taskWithAttribute(false, true, true, false, false),
+                helper.taskWithAttribute(false, false, false, false, false)
         };
         for(Task toBeAdded : inputs) {
             DoerList expectedAB = new DoerList();
@@ -235,6 +235,35 @@ public class LogicManagerTest {
         }
     }
 
+    //@@author A0139401N
+    @Test
+    public void execute_add_recurring_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.taskWithAttribute(true, true, true, true, true),
+                helper.taskWithAttribute(true, true, true, true, false),
+                helper.taskWithAttribute(true, true, false, true, false),
+                helper.taskWithAttribute(true, false, false, true, true),
+                helper.taskWithAttribute(true, false, false, true, false),
+                helper.taskWithAttribute(false, true, false, true, false),
+                helper.taskWithAttribute(false, false, true, true, false),
+                helper.taskWithAttribute(false, false, false, true, true),
+                helper.taskWithAttribute(false, true, true, true, false),
+                helper.taskWithAttribute(false, false, false, true, false)
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // executes the command and verifies the result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
+    }
+    
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -662,15 +691,17 @@ public class LogicManagerTest {
          *
          * @param hasDescription indicate whether to has the attribute
          * @param hasTimeInterval indicate whether to has the attribute
+         * @param hasRecurring indicate whether to has the attirbute
          * @param hasCategory indicate whether to has the attribute
          * @return Task generated task
          * @throws Exception
          */
-        Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasCategory) throws Exception {
+        Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasRecurring, boolean hasCategory) throws Exception {
             Title title = new Title("My Task");
             Description description = null;
             TodoTime startTime = null;
             TodoTime endTime = null;
+            Recurring recurring = null;
             UniqueCategoryList categories = new UniqueCategoryList();
             if (hasDescription) {
                 description = new Description("Do my homework");
@@ -681,13 +712,16 @@ public class LogicManagerTest {
             if (hasEndTime) {
                 endTime = new TodoTime("2016-10-04 15:00");
             }
+            if (hasRecurring){
+                recurring = new Recurring("daily");
+            }
             if (hasCategory) {
                 Category category1 = new Category("CS2101");
                 Category category2 = new Category("CS2103T");
                 categories = new UniqueCategoryList(category1, category2);
             }
 
-            return new Task(title, description, startTime, endTime, categories);
+            return new Task(title, description, startTime, endTime, recurring, categories);
         }
 
         //@@author A0147978E
@@ -706,6 +740,7 @@ public class LogicManagerTest {
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
+                    new Recurring(null),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -752,6 +787,7 @@ public class LogicManagerTest {
                         new Description("" + Math.abs(seed)),
                         new TodoTime(sampleDate),
                         new TodoTime(sampleDate.plusDays(seed)),
+                        new Recurring(null), 
                         new UniqueCategoryList(Arrays.asList(c))
                 );
             } catch (Exception e) {
@@ -777,6 +813,7 @@ public class LogicManagerTest {
                     new Description(description),
                     new TodoTime("2016-10-03 14:00"),
                     new TodoTime("2016-10-04 15:00"),
+                    new Recurring(null),
                     categories);
         }
 

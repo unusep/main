@@ -36,7 +36,6 @@ public class Parser {
     //@@author A0139401N
     private static final Pattern TASK_DATA_RECURRING_FORMAT = Pattern.compile("\\/r(?<recurring>[^\\/]+)");
 
-    //@@author 
     public Parser() {}
 
     /**
@@ -241,7 +240,6 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
-    //@@author 
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.

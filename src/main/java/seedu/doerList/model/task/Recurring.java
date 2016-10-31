@@ -14,7 +14,6 @@ public class Recurring {
     public final long day;
     public final long month;
     public final long year;
-    //public final String fullDate;
     public boolean isRecurring = true;
 
     public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d{2}-\\d{2}-\\d{2}");
@@ -23,7 +22,6 @@ public class Recurring {
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
     public static final String YEARLY = "yearly"; 
-    public static final String NO_RECURRING = "";
 
     /**
      * Stores given interval. Validation of interval is done by TimeInterval class.
@@ -46,7 +44,6 @@ public class Recurring {
         } else {
             throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
         }
-
     }
     
 
@@ -102,7 +99,7 @@ public class Recurring {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TodoTime // instanceof handles nulls
+                || (other instanceof TodoTime // instanceOf handles nulls
                         && this.toString().equals(((TodoTime) other).toString())); // state check
     }
 
