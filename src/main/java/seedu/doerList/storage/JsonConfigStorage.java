@@ -6,11 +6,10 @@ import java.util.Optional;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.exceptions.DataConversionException;
 import seedu.doerList.commons.util.ConfigUtil;
-import seedu.doerList.model.ReadOnlyDoerList;
 
 public class JsonConfigStorage implements ConfigStorage {
 
-    private String configFilePath;
+    public final String configFilePath;
      
     public JsonConfigStorage(String path) {
         this.configFilePath = path;

@@ -62,6 +62,7 @@ public class StatusBarFooter extends UiPart {
 
     private void addSaveLocation() {
         this.saveLocationStatus = new StatusBar();
+        this.saveLocationStatus.setId("saveLocationField");
         FxViewUtil.applyAnchorBoundaryParameters(saveLocationStatus, 0.0, 0.0, 0.0, 0.0);
         saveLocStatusBarPane.getChildren().add(saveLocationStatus);
     }

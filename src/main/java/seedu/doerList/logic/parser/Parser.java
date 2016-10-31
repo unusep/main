@@ -96,8 +96,8 @@ public class Parser {
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
             
-        case StoreCommand.COMMAND_WORD:
-            return new StoreCommand(arguments.trim());
+        case SaveCommand.COMMAND_WORD:
+            return new SaveCommand(arguments.trim());
              
 
         default:

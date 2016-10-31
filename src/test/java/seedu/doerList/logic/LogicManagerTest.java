@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.logic.commands.RedoCommand;
+import seedu.doerList.logic.commands.SaveCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
@@ -52,6 +54,7 @@ import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.storage.StorageManager;
+import seedu.doerList.storage.XmlFileStorage;
 
 public class LogicManagerTest {
 
@@ -952,6 +955,36 @@ public class LogicManagerTest {
                 "undo 334    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         assertCommandBehavior(
                 "undo 1234    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+    }
+    
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_successful_moreFilePath() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        DoerList expectedDL = helper.generateDoerList(10);
+        model.resetData(expectedDL);
+        
+        String validSavePath = "data/test2.xml";
+        
+        //Execute the command
+        CommandResult result = logic.execute("saveto " + validSavePath);
+
+        //Confirm the ui display elements should contain the right data
+        assertEquals(String.format(SaveCommand.MESSAGE_SUCCESS, validSavePath), 
+                result.feedbackToUser);
+    }
+    
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_invalidArgsFormat() throws Exception {
+        assertCommandBehavior("saveto",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
+        assertCommandBehavior("saveto     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
+        assertCommandBehavior("saveto /n   ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
     }
 
 
