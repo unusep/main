@@ -79,6 +79,20 @@ public class Recurring {
         }
     }
     
+    
+    /**
+     * mutator method for value
+     */
+    public void setRecurring(int addition, String determinant){
+        if (determinant.equals("daily") || determinant.equals("weekly")){
+            this.value.plusDays(addition);
+        } else if (determinant.equals("monthly")){
+            this.value.plusMonths(addition);
+        } else if (determinant.equals("yearly")){
+            this.value.plusYears(addition);
+        }
+    }
+    
 
     @Override
     public String toString() {
@@ -90,6 +104,7 @@ public class Recurring {
         }
     }
 
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

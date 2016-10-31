@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
             if (target.hasRecurring()){ 
                 Task newTask = new Task(target);
                 updateRecurringTask(newTask);
-                model.changeTask(target, newTask);
+                model.replaceTask(target, newTask);
                 return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
             } else {
                 model.markTask(target);
@@ -47,6 +47,8 @@ public class MarkCommand extends Command {
         } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        } catch (UniqueTaskList.DuplicateTaskException dpe) {
+            return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
 
     }

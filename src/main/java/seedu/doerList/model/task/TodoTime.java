@@ -39,15 +39,16 @@ public class TodoTime {
        return value;
    }
    
+   //@@author A0139401N
    /**
     * mutator method for value
     */
    public void setTime(int addition, String determinant){
-       if (determinant.equals("daily")){
+       if (determinant.equals("daily") || determinant.equals("weekly")){
            this.value.plusDays(addition);
        } else if (determinant.equals("monthly")){
            this.value.plusMonths(addition);
-       } else if (determinant.equals("weekly")){
+       } else if (determinant.equals("yearly")){
            this.value.plusYears(addition);
        }
    }
