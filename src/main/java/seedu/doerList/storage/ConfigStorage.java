@@ -7,7 +7,7 @@ import seedu.doerList.commons.exceptions.DataConversionException;
 
 public interface ConfigStorage { 
     
-    Config readConfig() throws DataConversionException, IOException;
+    Config readConfig() throws DataConversionException;
 
     void saveConfig(Config config) throws IOException;
 }

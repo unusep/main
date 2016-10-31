@@ -18,13 +18,9 @@ public class JsonConfigStorage implements ConfigStorage {
     }
 
     @Override
-    public Config readConfig() throws DataConversionException, IOException {
+    public Config readConfig() throws DataConversionException {
         Optional<Config> tryConfig = ConfigUtil.readConfig(this.configFilePath);
-        if (tryConfig.isPresent()) {
-            return tryConfig.get();
-        } else {
-            throw new IOException("File Path invalid");
-        }
+        return tryConfig.get();
     }
 
     @Override

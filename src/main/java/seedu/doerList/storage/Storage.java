@@ -38,5 +38,5 @@ public interface Storage extends DoerListStorage, UserPrefsStorage, ConfigStorag
      */
     void handleDoerListChangedEvent(DoerListChangedEvent abce);
     
-    void handleDataPathChangedEvent(StoragePathChangedEvent event) throws DataConversionException;
+    void handleStoragePathChangedEvent(StoragePathChangedEvent event) throws DataConversionException;
 }

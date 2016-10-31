@@ -51,7 +51,7 @@ public class StorageManager extends ComponentManager implements Storage {
     // ================ Config method ==============================
 
     @Override
-    public Config readConfig() throws DataConversionException, IOException {
+    public Config readConfig() throws DataConversionException {
         return configStorage.readConfig();
     }
 
@@ -98,7 +98,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     @Subscribe
-    public void handleDataPathChangedEvent(StoragePathChangedEvent event) throws DataConversionException {
+    public void handleStoragePathChangedEvent(StoragePathChangedEvent event) throws DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, 
                 "Data path changed, saving to file :" + event.getFilePath()));
         setDoerListFilePath(event.getFilePath());
