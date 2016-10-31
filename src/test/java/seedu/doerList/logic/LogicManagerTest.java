@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,10 +22,12 @@ import org.junit.rules.TemporaryFolder;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.util.ConfigUtil;
 import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
@@ -964,6 +967,9 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         DoerList expectedDL = helper.generateDoerList(10);
         model.resetData(expectedDL);
+        String tempConfig = saveFolder.getRoot().getPath() + "TempConfig.json";
+        //create temp config file
+        ConfigUtil.saveConfig(new Config(), tempConfig);
         
         String validSavePath = "data/test2.xml";
         
@@ -973,6 +979,15 @@ public class LogicManagerTest {
         //Confirm the ui display elements should contain the right data
         assertEquals(String.format(SaveCommand.MESSAGE_SUCCESS, validSavePath), 
                 result.feedbackToUser);
+        
+        // validate doer list content
+        ReadOnlyDoerList retrieve = XmlFileStorage.loadDataFromSaveFile(new File(validSavePath));
+        assertEquals(retrieve.getUniqueTaskList(), expectedDL.getUniqueTaskList());
+        assertEquals(retrieve.getUniqueCategoryList(), expectedDL.getUniqueCategoryList());
+        
+        // validate storage path
+        Optional<Config> configOptional = ConfigUtil.readConfig(tempConfig);
+        assertEquals(configOptional.get().getDoerListFilePath(), validSavePath);
     }
     
     

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.doerList.testutil.TypicalTestTasks;
+import seedu.doerList.commons.core.Config;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.UserPrefs;
@@ -55,6 +56,15 @@ public class StorageManagerTest {
         ReadOnlyDoerList retrieved = storageManager.readDoerList().get();
         assertEquals(original, new DoerList(retrieved));
         //More extensive testing of DoerList saving/reading is done in XmlDoerListStorageTest
+    }
+    
+    @Test
+    public void configReadSave() throws Exception {
+        Config orginal = new Config();
+        storageManager.saveConfig(orginal);
+        Config retrieved = storageManager.readConfig();
+        assertEquals(orginal, retrieved);
+        //More extensive testing of DoerList saving/reading is done in ConfigUtilTest
     }
 
 

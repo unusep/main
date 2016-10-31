@@ -59,12 +59,6 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveConfig(Config config) throws IOException {
         configStorage.saveConfig(config);
     }
-    
-    private void saveFilePathInConfig(String filePath) throws DataConversionException, IOException {
-        Config currentConfig = configStorage.readConfig();
-        currentConfig.setDoerListFilePath(filePath);
-        configStorage.saveConfig(currentConfig);
-    }
 
     // ================ DoerList methods ==============================
 
@@ -115,5 +109,11 @@ public class StorageManager extends ComponentManager implements Storage {
             // shouldn't happen here as we check the expection in save command
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+    
+    private void saveFilePathInConfig(String filePath) throws DataConversionException, IOException {
+        Config currentConfig = configStorage.readConfig();
+        currentConfig.setDoerListFilePath(filePath);
+        configStorage.saveConfig(currentConfig);
     }
 }
