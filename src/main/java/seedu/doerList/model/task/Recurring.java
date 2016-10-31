@@ -13,7 +13,6 @@ import seedu.doerList.logic.parser.TimeParser;
  */
 public class Recurring {
     public final LocalDateTime value;
-    public boolean isRecurring = true;
     
     public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd HH:mm' or natural language such as 'daily', 'weekly'";
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
@@ -34,9 +33,11 @@ public class Recurring {
     public Recurring(String unformattedTime) throws IllegalValueException {
         unformattedTime = unformattedTime.trim();
         
+        /*
         if (unformattedTime.equals(NO_RECURRING) || unformattedTime == null){
             this.isRecurring = false;
         }
+        */
         String languageTime = formattingNaturalLanguage(unformattedTime);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
