@@ -211,6 +211,7 @@ public class MainWindow extends UiPart {
         return this.categorySideBar;
     }
 
+    //@@author A0139168W
     public StatusBarFooter getStatusBarFooter() {
         return statusBarFooter;
     }
