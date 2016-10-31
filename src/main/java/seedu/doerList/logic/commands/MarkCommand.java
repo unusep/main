@@ -81,7 +81,7 @@ public class MarkCommand extends Command {
     
     //@@author A0139401N
     /**
-     * Update a date based on its 
+     * Adds on the original date time with its recurring Interval
      *
      * @param dateTime LocalDateTime (to be updated) recurringInterval Task (values to update)
      * @return AddedDate with updated information
@@ -94,8 +94,8 @@ public class MarkCommand extends Command {
         // finally figured out why cannot update already
         LocalDateTime AddedDate;
         AddedDate = dateTime.plusDays(days);
-        AddedDate = dateTime.plusDays(months);        
-        AddedDate = dateTime.plusDays(years);
+        AddedDate = dateTime.plusMonths(months);        
+        AddedDate = dateTime.plusYears(years);
         
         return AddedDate;
     }

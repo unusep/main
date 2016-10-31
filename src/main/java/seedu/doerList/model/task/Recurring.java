@@ -19,10 +19,10 @@ public class Recurring {
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm";
     public static final String DEFAULT_YEARS = "20";
     public static final String DEFAULT_TIME = " 12:00";
-    public static final String DAYS = "daily";
-    public static final String WEEKS = "weekly";
-    public static final String MONTHS = "monthly";
-    public static final String YEARS = "yearly"; 
+    public static final String DAILY = "daily";
+    public static final String WEEKLY = "weekly";
+    public static final String MONTHLY = "monthly";
+    public static final String YEARLY = "yearly"; 
     public static final String NO_RECURRING = "";
 
  
@@ -65,13 +65,13 @@ public class Recurring {
     public String formattingNaturalLanguage(String input) throws IllegalValueException{
         String checker = input.toLowerCase(); // to make it case insensitive 
         
-        if (checker.equals(DAYS)){
+        if (checker.equals(DAILY)){
             return DEFAULT_YEARS + "00-00-01" + DEFAULT_TIME;
-        } else if (checker.equals(WEEKS)){
+        } else if (checker.equals(WEEKLY)){
             return DEFAULT_YEARS + "00-00-07" + DEFAULT_TIME;
-        } else if (checker.equals(MONTHS)){
+        } else if (checker.equals(MONTHLY)){
             return DEFAULT_YEARS + "00-01-00" + DEFAULT_TIME;
-        } else if (checker.equals(YEARS)){
+        } else if (checker.equals(YEARLY)){
             return DEFAULT_YEARS + "01-00-00" + DEFAULT_TIME;
         } else { // if value doesn't fit any of the above natural language, return original output
             return DEFAULT_YEARS + input + DEFAULT_TIME;
