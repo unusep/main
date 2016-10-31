@@ -164,15 +164,13 @@ public class LogicManagerTest {
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
         assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help unmark", UnMarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help unmark", UnmarkCommand.MESSAGE_USAGE);
         assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
         assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -247,14 +245,8 @@ public class LogicManagerTest {
         Task[] inputs = {
                 helper.taskWithAttribute(true, true, true, true, true),
                 helper.taskWithAttribute(true, true, true, true, false),
-                helper.taskWithAttribute(true, true, false, true, false),
-                helper.taskWithAttribute(true, false, false, true, true),            
-                helper.taskWithAttribute(true, false, false, true, false),
-                helper.taskWithAttribute(false, true, false, true, false),
-                helper.taskWithAttribute(false, false, true, true, false),
-                helper.taskWithAttribute(false, false, false, true, true),
                 helper.taskWithAttribute(false, true, true, true, false),
-                helper.taskWithAttribute(false, false, false, true, false)
+                helper.taskWithAttribute(false, true, true, true, true)
         };
         for(Task toBeAdded : inputs) {
             DoerList expectedAB = new DoerList();
