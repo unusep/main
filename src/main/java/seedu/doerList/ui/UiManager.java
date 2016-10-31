@@ -161,7 +161,7 @@ public class UiManager extends ComponentManager implements Ui {
     
     //@@author A0139168W
     @Subscribe
-    private void handleDataPathChangedEvent(StoragePathChangedEvent event) {
+    private void handleStoragePathChangedEvent(StoragePathChangedEvent event) {
         assert event != null;
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().displayTasks(); // redraw the task panel

@@ -3,7 +3,6 @@ package guitests.guihandles;
 import org.controlsfx.control.StatusBar;
 
 import guitests.GuiRobot;
-import javafx.scene.Node;
 import javafx.stage.Stage;
 
 /**
