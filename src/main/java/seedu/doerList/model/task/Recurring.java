@@ -37,10 +37,10 @@ public class Recurring {
         if (unformattedTime.equals(NO_RECURRING) || unformattedTime == null){
             this.isRecurring = false;
         }
-        unformattedTime = formattingNaturalLanguage(unformattedTime);
+        String languageTime = formattingNaturalLanguage(unformattedTime);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
-        String time = new TimeParser().parse(unformattedTime);
+        String time = new TimeParser().parse(languageTime);
         this.value = LocalDateTime.parse(time, formatter);
     }
     
@@ -78,21 +78,6 @@ public class Recurring {
         }
     }
     
-    // TODO: ascertain this before adding/removing it
-    /**
-     * mutator method for value
-     */
-    public void setRecurring(int addition, String determinant){
-        if (determinant.equals("daily") || determinant.equals("weekly")){
-            this.value.plusDays(addition);
-        } else if (determinant.equals("monthly")){
-            this.value.plusMonths(addition);
-        } else if (determinant.equals("yearly")){
-            this.value.plusYears(addition);
-        }
-    }
-    
-
     @Override
     public String toString() {
         if(!isRecurring){
