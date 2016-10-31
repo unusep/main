@@ -145,7 +145,13 @@ public class MainWindow extends UiPart {
     public AnchorPane getCategorySideBarPlaceholder() {
         return categorySideBarPlaceholder;
     }
+    
+    //@@author A0139168W
+    public StatusBarFooter getStatusBarFooter() {
+        return statusBarFooter;
+    }
 
+    //@@author
     public void hide() {
         primaryStage.hide();
     }
