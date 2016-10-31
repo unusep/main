@@ -3,7 +3,6 @@ package seedu.doerList.model.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.sql.Time;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.logic.parser.TimeParser;
@@ -15,9 +14,8 @@ import seedu.doerList.logic.parser.TimeParser;
 public class Recurring {
     public final LocalDateTime value;
     public boolean isRecurring = true;
-    private String timeType;
     
-    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yyyy-MM-dd' or natural language such as 'daily', 'weekly'";
+    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-MM-dd' or natural language such as 'daily', 'weekly'";
     public static final String TIME_STANDARD_FORMAT = "yy-MM-dd";
     public static final String DAYS = "daily";
     public static final String WEEKS = "weekly";
@@ -38,14 +36,15 @@ public class Recurring {
         if(recurring.equals(NO_RECURRING)){
             isRecurring = false;
             recurring = DEFAULT_TIME_INTERVAL;
+        } else {
+            recurring = formattingNaturalLanguage(recurring);
         }
-        
-        
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_STANDARD_FORMAT);
         String time = new TimeParser().parse(recurring);
         this.value = LocalDateTime.parse(time, formatter);
     }
+    
     
     /**
      * Generates the local date of the reccurance time interval
@@ -54,36 +53,32 @@ public class Recurring {
         return this.value;
     }
     
-    /**
-     * Generates the local type of time of the reccurance time interval
-     */
-    public String getTimeType(){
-        return this.timeType;
-    }
     
     /**
-     * Checks the natural language and returns out the hours equivalent
+     * Checks the natural language and returns out the time equivalent
+     * 
+     * @throws IllegalValueException if given input string is invalid.
+     * 
+     * @param Original input in natural language (Time in English)
+     * @return Time in "yy-MM-dd" format
+     * 
      */
-    public long formattingNaturalLanguage(String input){
-        String checker = input.toLowerCase();
+    public String formattingNaturalLanguage(String input) throws IllegalValueException{
+        String checker = input.toLowerCase(); // to make it case insensitive 
         
         if (checker.equals(DAYS)){
-            this.timeType = DAYS;
-            return 24; 
+            return "00-00-01";
         } else if (checker.equals(WEEKS)){
-            this.timeType = DAYS;
-            return 24; 
+            return "00-00-07";
         } else if (checker.equals(MONTHS)){
-            this.timeType = DAYS;
-            return 24; 
+            return "00-01-00";
         } else if (checker.equals(YEARS)){
-            this.timeType = DAYS;
-            return 24; 
+            return "01-00-00";
         } else {
-            return -1;
+            return input;
         }
     }
-
+    
 
     @Override
     public String toString() {
