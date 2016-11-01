@@ -479,7 +479,7 @@ public class LogicManagerTest {
         expectedAB.removeTask(taskToEdit);
         expectedAB.addTask(editedTask);
 
-        assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
+        assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit "),
                 String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
                 expectedAB,
                 expectedAB.getTaskList());
@@ -488,8 +488,8 @@ public class LogicManagerTest {
     @Test
     public void execute_editResultInDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task task1 = helper.generateTaskWithTitleAndDescription("Task 1", "D 1");
-        Task task2 = helper.generateTaskWithTitleAndDescription("Task 1", "D 2");
+        Task task1 = helper.generateTaskTitleAndDescription("Task 1", "D 1");
+        Task task2 = helper.generateTaskTitleAndDescription("Task 1", "D 2");
         helper.addToModel(model, Arrays.asList(task1, task2));
 
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
@@ -537,11 +537,11 @@ public class LogicManagerTest {
     public void execute_find_onlyMatchesFullWords() throws Exception {
         // keywords in title or description
         TestDataHelper helper = new TestDataHelper();
-        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("dummy", "bla KEY bla bceofeia");
-        Task cTarget3 = helper.generateTaskWithTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
-        Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
-        Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
+        Task cTarget1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskTitleAndDescription("dummy", "bla KEY bla bceofeia");
+        Task cTarget3 = helper.generateTaskTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
+        Task c1 = helper.generateTaskTitleAndDescription("KE Y", "dummy");
+        Task c2 = helper.generateTaskTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
         List<Task> fiveTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2, cTarget3);
         DoerList expectedAB = helper.generateDoerList(fiveTasks);
@@ -557,10 +557,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_isNotCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task p1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task p2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
-        Task p3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
-        Task p4 = helper.generateTaskWithTitleAndDescription("KEy sduauo", "dummy");
+        Task p1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task p2 = helper.generateTaskTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task p3 = helper.generateTaskTitleAndDescription("key key", "dummy");
+        Task p4 = helper.generateTaskTitleAndDescription("KEy sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
         DoerList expectedAB = helper.generateDoerList(fourPersons);
@@ -576,10 +576,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla rAnDoM bla bceofeia", "dummy");
-        Task cTarget3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
-        Task c1 = helper.generateTaskWithTitleAndDescription("sduauo", "dummy");
+        Task cTarget1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskTitleAndDescription("bla rAnDoM bla bceofeia", "dummy");
+        Task cTarget3 = helper.generateTaskTitleAndDescription("key key", "dummy");
+        Task c1 = helper.generateTaskTitleAndDescription("sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
         DoerList expectedAB = helper.generateDoerList(fourPersons);
@@ -600,23 +600,23 @@ public class LogicManagerTest {
     
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task notComplete = helper.generateTask(5); // not complete
+        TestDataHelper helper = new TestDataHelper(); 
+        Task incomplete = helper.generateTask(5); // not complete
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        List<Task> expectedList = helper.generateTaskList(notComplete);
+        List<Task> expectedList = helper.generateTaskList(incomplete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
         
-        helper.addToModel(model, Arrays.asList(complete));
+        helper.addToModel(model, Arrays.asList(incomplete));
 
         assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
                 expectedAB, 
                 expectedList);
         
         // marking twice should be ok
         assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete), 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
                 expectedAB, 
                 expectedList);       
     }
@@ -630,13 +630,13 @@ public class LogicManagerTest {
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task notComplete = helper.generateTask(5); // not complete
+        Task incomplete = helper.generateTask(5); // not complete
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
         
-        helper.addToModel(model, Arrays.asList(notComplete));
+        helper.addToModel(model, Arrays.asList(incomplete));
 
         assertCommandBehavior("mark 1", 
                 String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
@@ -647,7 +647,7 @@ public class LogicManagerTest {
         assertCommandBehavior("mark 1", 
                 String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
                 expectedAB, 
-                expectedList);       
+                expectedList);
     }
 
     @Test
@@ -688,7 +688,7 @@ public class LogicManagerTest {
          *
          * @param hasDescription indicate whether to has the attribute
          * @param hasTimeInterval indicate whether to has the attribute
-         * @param hasRecurring indicate whether to has the attirbute
+         * @param hasRecurring indicate whether to has the attribute
          * @param hasCategory indicate whether to has the attribute
          * @return Task generated task
          * @throws Exception
@@ -737,7 +737,7 @@ public class LogicManagerTest {
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
-                    new Recurring("daily"),
+                    new Recurring(""),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -784,7 +784,7 @@ public class LogicManagerTest {
                         new Description("" + Math.abs(seed)),
                         new TodoTime(sampleDate),
                         new TodoTime(sampleDate.plusDays(seed)),
-                        new Recurring(null), 
+                        new Recurring(""), 
                         new UniqueCategoryList(Arrays.asList(c))
                 );
             } catch (Exception e) {
@@ -795,14 +795,14 @@ public class LogicManagerTest {
         
         //@@author A0147978E
         /**
-         * Generate task with title and description
+         * Generate task with title and description but without recurring tasks
          * 
          * @param title
          * @param description
          * @return generated Task
          * @throws Exception
          */
-        Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
+        Task generateTaskTitleAndDescription(String title, String description) throws Exception {
             Category category1 = new Category("CS2101");
             Category category2 = new Category("CS2103T");
             UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
@@ -810,7 +810,29 @@ public class LogicManagerTest {
                     new Description(description),
                     new TodoTime("2016-10-03 14:00"),
                     new TodoTime("2016-10-04 15:00"),
-                    new Recurring(null),
+                    new Recurring(""),
+                    categories);
+        }
+        
+        //@@author A0139401N
+        /**
+         * Generate task with title and description with recurring tasks
+         * 
+         * @param title
+         * @param description
+         * @param recurring
+         * @return generated Task
+         * @throws Exception
+         */
+        Task generateTaskWithTitleAndDescription(String title, String description, String recurring) throws Exception {
+            Category category1 = new Category("CS2101");
+            Category category2 = new Category("CS2103T");
+            UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
+            return new Task(new Title(title),
+                    new Description(description),
+                    new TodoTime("2016-10-03 14:00"),
+                    new TodoTime("2016-10-04 15:00"),
+                    new Recurring(recurring),
                     categories);
         }
 

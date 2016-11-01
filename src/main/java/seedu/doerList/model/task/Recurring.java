@@ -30,28 +30,30 @@ public class Recurring {
      * @throws IllegalValueException if given information string is invalid.
      */
     public Recurring(String unformattedTime) throws IllegalValueException {
-        unformattedTime = unformattedTime.trim();
-        final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime);
-        long[] processedTime = {0, 0, 0};
-        if (unformattedTime.equals(NO_RECURRING_TASK) || unformattedTime == null){
+        if (unformattedTime == null || unformattedTime.equals(NO_RECURRING_TASK)){
             this.year = 0;
             this.month = 0;
             this.day = 0;
             isRecurring = false;
-        } else if (isNaturalLanguage(unformattedTime, processedTime)){
-            this.year = processedTime[0];
-            this.month = processedTime[1];
-            this.day = processedTime[2];
-        } else if (recurTitleMatcher.find()){
-            String[] parts = unformattedTime.split("-");
-            this.year = Long.parseLong(parts[0]);
-            this.month = Long.parseLong(parts[1]);
-            this.day = Long.parseLong(parts[2]);
         } else {
-            throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
+            unformattedTime = unformattedTime.trim();
+            final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime);
+            long[] processedTime = {0, 0, 0};
+            if (isNaturalLanguage(unformattedTime, processedTime)){
+                this.year = processedTime[0];
+                this.month = processedTime[1];
+                this.day = processedTime[2];
+            } else if (recurTitleMatcher.find()){
+                String[] parts = unformattedTime.split("-");
+                this.year = Long.parseLong(parts[0]);
+                this.month = Long.parseLong(parts[1]);
+                this.day = Long.parseLong(parts[2]);
+            } else {
+                throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
+            }
         }
     }
-    
+
 
     /**
      * Checks the natural language and returns out the time equivalent.
@@ -76,16 +78,16 @@ public class Recurring {
             return false;
         }
     }
-    
-    
+
+
     /**
      * Generates the local year of the recurring time interval
      */
     public long getYears(){
         return this.year;
     }
-    
-    
+
+
     /**
      * Generates the local month of the recurring time interval
      */
@@ -93,14 +95,14 @@ public class Recurring {
         return this.month;
     }
 
-    
+
     /**
      * Generates the local day of the recurring time interval
      */
     public long getDays(){
         return this.day;
     }
-    
+
 
     @Override
     public boolean equals(Object other) {
