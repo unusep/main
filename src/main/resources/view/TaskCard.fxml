@@ -29,9 +29,9 @@
                               <Insets right="4.0" />
                            </HBox.margin>
                         </Label>
-                        <VBox alignment="CENTER">
+                        <VBox alignment="CENTER_LEFT">
                            <children>
-                              <Label fx:id="title" text="Task Name">
+                              <Label fx:id="title" minWidth="60.0" text="Task Name">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
