@@ -29,22 +29,26 @@ public class Recurring {
      *
      * @throws IllegalValueException if given information string is invalid.
      */
-    public Recurring(String unformattedTime) throws IllegalValueException {
-        long[] processedTime = {0, 0, 0};
-        final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime.trim());
-        if (recurTitleMatcher.find()){
-            String[] parts = unformattedTime.split("-");
-            this.year = Long.parseLong(parts[0]);
-            this.month = Long.parseLong(parts[1]);
-            this.day = Long.parseLong(parts[2]);
-        } else if( isNaturalLanguage(unformattedTime, processedTime)) {
-            this.year = processedTime[0];
-            this.month = processedTime[1];
-            this.day = processedTime[2];
+    public Recurring(String unformattedTime) {
+        if (unformattedTime == null || unformattedTime.equals(NO_RECURRING_TASK)){
+            this.year = 0; this.month = 0; this.day = 0;
+            isRecurring = false;
         } else {
-            throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
+            long[] processedTime = {0, 0, 0};
+            final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime.trim());
+            if (recurTitleMatcher.find()){
+                String[] parts = unformattedTime.split("-");
+                this.year = Long.parseLong(parts[0]);
+                this.month = Long.parseLong(parts[1]);
+                this.day = Long.parseLong(parts[2]);
+            } else {
+                isNaturalLanguage(unformattedTime, processedTime);
+                this.year = processedTime[0];
+                this.month = processedTime[1];
+                this.day = processedTime[2];
+            }
         }
- 
+        //throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
     }
 
     /**
@@ -52,22 +56,16 @@ public class Recurring {
      * Processes the input if it matches into an array;
      * Returns a boolean to indicate if it is a language or not.
      */
-    public boolean isNaturalLanguage(String input, long[] processedTime ){
+    public void isNaturalLanguage(String input, long[] processedTime ){
         String checker = input.toLowerCase(); // to make it case insensitive 
         if (checker.equals(DAILY)){
             processedTime[2] = 1;
-            return true;
         } else if (checker.equals(WEEKLY)){
             processedTime[2] = 7;
-            return true;
         } else if (checker.equals(MONTHLY)){
             processedTime[1] = 1;
-            return true;
         } else if (checker.equals(YEARLY)){
             processedTime[0] = 1;
-            return true;
-        } else { // if value doesn't fit any of the above natural language, return false
-            return false;
         }
     }
 

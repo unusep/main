@@ -601,8 +601,8 @@ public class LogicManagerTest {
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper(); 
-        Task incomplete = helper.generateTask(5); // not complete
-        Task complete = helper.generateTask(5);
+        Task incomplete = helper.generateRecurringTask(5); // not complete
+        Task complete = helper.generateRecurringTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(incomplete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
@@ -630,8 +630,8 @@ public class LogicManagerTest {
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task incomplete = helper.generateTask(5); // not complete
-        Task complete = helper.generateTask(5);
+        Task incomplete = helper.generateRecurringTask(5); // not complete
+        Task complete = helper.generateRecurringTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
         DoerList expectedAB = helper.generateDoerList(expectedList);
@@ -721,6 +721,27 @@ public class LogicManagerTest {
             return new Task(title, description, startTime, endTime, recurring, categories);
         }
 
+        //@@author A0139401N
+        /**
+         * Generates a valid recurring task using the given seed.
+         * Running this function with the same parameter values guarantees the returned task will have the same state.
+         * Each unique seed will generate a unique Task object.
+         *
+         * @param seed used to generate the task data field values
+         */
+        Task generateRecurringTask(int seed) throws Exception {
+            LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
+                    DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
+            return new Task(
+                    new Title("Task " + seed),
+                    new Description("" + Math.abs(seed)),
+                    new TodoTime(sampleDate),
+                    new TodoTime(sampleDate.plusDays(seed)),
+                    new Recurring("daily"),
+                    new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
+            );
+        }
+        
         //@@author A0147978E
         /**
          * Generates a valid task using the given seed.
@@ -737,10 +758,11 @@ public class LogicManagerTest {
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
-                    new Recurring(""),
+                    new Recurring(null),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
+        
         
         //@@author A0147978E
         /**
@@ -932,7 +954,7 @@ public class LogicManagerTest {
         List<Task> generateTaskList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
-                tasks.add(generateTask(i));
+                tasks.add(generateRecurringTask(i));
             }
             return tasks;
         }
