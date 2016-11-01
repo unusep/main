@@ -17,6 +17,7 @@ public class Recurring {
 
     public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d+-\\d+-\\d+");
     public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily', 'weekly'";
+    public static final String MESSAGE_RECURRING_STARTEND_CONSTRAINTS = "Start and end time should be specified before adding recurring task";
     public static final String DAILY = "daily";
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
@@ -126,6 +127,12 @@ public class Recurring {
         return other == this // short circuit if same object
                 || (other instanceof Recurring // instanceOf handles nulls
                         && this.equals(((Recurring) other))); // state check
+    }
+
+    public static void validateStartEndTime(Task toAdd) throws IllegalValueException {
+        if (toAdd.hasRecurring() && !toAdd.hasStartTime() && !toAdd.hasEndTime()) {
+            throw new IllegalValueException(MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
+        }
     }
 
 }

@@ -58,6 +58,7 @@ import seedu.doerList.model.task.Recurring;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
+import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
 import seedu.doerList.storage.StorageManager;
 import seedu.doerList.storage.XmlFileStorage;
 
@@ -265,9 +266,16 @@ public class LogicManagerTest {
         }
     }
     
+    @Test
+    public void execute_addRecurring_fail() throws DuplicateTaskException, Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toAdded = helper.taskWithAttribute(false, false, false, true, false);
+        assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
+    }
+    
     //@@author A0139401N
     @Test
-    public void execute_add_recurring_successful() throws Exception {
+    public void execute_addRecurring_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task[] inputs = {
@@ -539,7 +547,20 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_edit_recurring_successful() throws Exception {
+    public void execute_editRecurring_fail() throws DuplicateTaskException, Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toAdded = helper.taskWithAttribute(true, false, false, false, false);
+        model.addTask(toAdded);
+        DoerList expectedDL = new DoerList();
+        expectedDL.addTask(toAdded);
+        assertCommandBehavior("edit 1 /r daily",
+                Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS,
+                expectedDL,
+                expectedDL.getTaskList());
+    }
+    
+    @Test
+    public void execute_editRecurring_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);

@@ -54,7 +54,7 @@ public class AddCommand extends Command {
         );
 
         TodoTime.validateTimeInterval(this.toAdd);
-
+        Recurring.validateStartEndTime(this.toAdd);
     }
     
     @Override

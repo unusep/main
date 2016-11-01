@@ -73,7 +73,8 @@ public class EditCommand extends Command {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             Task newTask = generateUpdatedTask(target);
             TodoTime.validateTimeInterval(newTask);
-
+            Recurring.validateStartEndTime(newTask);
+            
             model.replaceTask(target, newTask);
 
             return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, target, newTask));
