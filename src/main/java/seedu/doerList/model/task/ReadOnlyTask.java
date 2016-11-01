@@ -99,7 +99,7 @@ public interface ReadOnlyTask {
         }
         builder.append(getTime());
         if (hasRecurring()) {
-            builder.append(" Recurring: " + getRecurring());
+            builder.append(" Recurring: " + getRecurring().toHumanReadable());
         }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");

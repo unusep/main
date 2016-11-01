@@ -9,11 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /** Card represents a specific task */
@@ -23,6 +25,7 @@ public class TaskCard extends UiPart {
     public static final String CATEGORY_FIELD_ID = "taskCategory";
     public static final String ACTIVE_STATUS_BACKGROUND = "-fx-background-color: #deeff5;";
     public static final String INACTIVE_STATUS_BACKGROUD = "-fx-background-color: #e6e6e6;";
+    public static final String COMPLETE_STATUS_FONT_COLOR = "#787878";
     
     public static TaskCard selectedTaskController;
     
@@ -76,6 +79,10 @@ public class TaskCard extends UiPart {
     private void displayTask(int displayIndex) {
         title.setText(task.getTitle().fullTitle);
         index.setText(displayIndex + "");
+        if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
+            title.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
+            index.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
+        }
         taskCategory.setText(task.getCategories().toString());
         displayTime();
         displayCategories();
@@ -208,6 +215,7 @@ public class TaskCard extends UiPart {
         }
         selectedTaskController = null;
     }
+    
     
     
     @FXML
