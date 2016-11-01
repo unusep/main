@@ -81,8 +81,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void replaceTask(ReadOnlyTask prevTask, Task task, boolean isRecurring) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
-        doerList.replaceTask(prevTask, task, isRecurring);
+    public synchronized void replaceTask(ReadOnlyTask prevTask, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
+        doerList.replaceTask(prevTask, task);
         indicateDoerListChanged();
     }
     

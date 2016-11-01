@@ -98,6 +98,9 @@ public interface ReadOnlyTask {
             builder.append(" Description: ").append(getDescription());
         }
         builder.append(getTime());
+        if (hasRecurring()) {
+            builder.append(" Recurring: " + getRecurring());
+        }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");
             getCategories().forEach(builder::append);

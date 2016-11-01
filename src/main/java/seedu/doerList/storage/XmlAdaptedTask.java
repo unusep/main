@@ -25,7 +25,7 @@ public class XmlAdaptedTask {
     @XmlElement(required = false)
     private XmlAdaptedTodoTime endTime;
     @XmlElement(required = false)
-    private String recurring;
+    private XmlAdaptedRecurring recurring;
 
 
     @XmlElement
@@ -54,6 +54,9 @@ public class XmlAdaptedTask {
         }
         if (source.hasEndTime()) {
             endTime = new XmlAdaptedTodoTime(source.getEndTime());
+        }
+        if (source.hasRecurring()) {
+            recurring = new XmlAdaptedRecurring(source.getRecurring());
         }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
@@ -95,7 +98,7 @@ public class XmlAdaptedTask {
             endTime = this.endTime.toModelType();
         }
         if (this.recurring != null) {
-            recurring = new Recurring(this.recurring);
+            recurring = this.recurring.toModelType();
         }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
         Task newTask = new Task(title, description, startTime, endTime, recurring, categories);      

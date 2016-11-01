@@ -75,13 +75,13 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
-    //@@author A0139401N
+
     /**
      *
      * @return
      * @throws TaskNotFoundException, DuplicateTaskException
      */
-    public void replace(ReadOnlyTask prevTask, Task toReplace, boolean isRecurring) throws DuplicateTaskException, TaskNotFoundException {
+    public void replace(ReadOnlyTask prevTask, Task toReplace) throws DuplicateTaskException, TaskNotFoundException {
         assert toReplace != null && prevTask != null;
         int i = 0;
         // try to find the index of the task
@@ -95,7 +95,7 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new TaskNotFoundException();
         }
         Task original = internalList.get(i);
-        if (!isRecurring && contains(toReplace) && 
+        if (contains(toReplace) && 
             !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
             // is not just update categories
             throw new DuplicateTaskException();

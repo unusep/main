@@ -10,7 +10,6 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
 public class MarkCommand extends Command {
-    //private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     public static final String COMMAND_WORD = "mark";
 
@@ -37,7 +36,7 @@ public class MarkCommand extends Command {
             if (target.hasRecurring()){ 
                 Task newTask = new Task(target);
                 newTask = updateRecurringTask(newTask);
-                model.replaceTask(target, newTask, true);
+                model.replaceTask(target, newTask);
             } else {
                 model.markTask(target);
             }
@@ -60,12 +59,17 @@ public class MarkCommand extends Command {
      * @return newTask with updated information
      */
     private Task updateRecurringTask(Task original) {
-        LocalDateTime withRecurStartTime = original.getStartTime().getTime();
-        LocalDateTime withRecurEndTime = original.getEndTime().getTime();
+        TodoTime updatedStart = null;
+        TodoTime updatedEnd = null;
+        if (original.hasStartTime()) {
+            LocalDateTime withRecurStartTime = original.getStartTime().getTime();
+            updatedStart = addingOnDate(withRecurStartTime, original);
+        }
+        if (original.hasEndTime()) {
+            LocalDateTime withRecurEndTime = original.getEndTime().getTime();
+            updatedEnd = addingOnDate(withRecurEndTime, original);
+        }
         
-        TodoTime updatedStart = addingOnDate(withRecurStartTime, original);
-        TodoTime updatedEnd = addingOnDate(withRecurEndTime, original);
-
         Task newTask = new Task(
                 original.getTitle(),
                 original.getDescription(),

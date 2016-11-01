@@ -20,7 +20,7 @@ public class EditCommand extends Command {
 
 	public static final String MESSAGE_USAGE = COMMAND_WORD
 			+ ": edit the task identified by the index number used in the last task listing.\n"
-			+ "Parameters: INDEX (must be a positive integer) [/t TASK] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r]...\n"
+			+ "Parameters: INDEX (must be a positive integer) [/t TASK] [/d DESCRIPTION] [/s START] [/e END] [/r PERIOD] [/c CATEGORY] ...\n"
 			+ "Example: " + COMMAND_WORD + " 1 /t Go to lecture /d study";
 
 	public static final String MESSAGE_EDIT_TASK_SUCCESS = "edit task: \nBefore: %1$s\nAfter: %2$s";
@@ -72,7 +72,7 @@ public class EditCommand extends Command {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
             Task newTask = generateUpdatedTask(target);
             
-            model.replaceTask(target, newTask, false);
+            model.replaceTask(target, newTask);
             
             return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, target, newTask));
         } catch (TaskNotFoundException pnfe) {

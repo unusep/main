@@ -14,11 +14,9 @@ public class Recurring {
     public final long day;
     public final long month;
     public final long year;
-    public boolean isRecurring = true;
 
-    public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d{2}-\\d{2}-\\d{2}");
+    public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d+-\\d+-\\d+");
     public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily', 'weekly'";
-    public static final String NO_RECURRING_TASK = "";
     public static final String DAILY = "daily";
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
@@ -29,10 +27,9 @@ public class Recurring {
      *
      * @throws IllegalValueException if given information string is invalid.
      */
-    public Recurring(String unformattedTime) {
-        if (unformattedTime == null || unformattedTime.equals(NO_RECURRING_TASK)){
-            this.year = 0; this.month = 0; this.day = 0;
-            isRecurring = false;
+    public Recurring(String unformattedTime) throws IllegalValueException {
+        if (unformattedTime == null || unformattedTime.isEmpty()){
+            throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
         } else {
             long[] processedTime = {0, 0, 0};
             final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime.trim());
@@ -48,7 +45,13 @@ public class Recurring {
                 this.day = processedTime[2];
             }
         }
-        //throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
+    }
+    
+    // copy constructor
+    public Recurring(long day, long month, long year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     /**
@@ -92,13 +95,23 @@ public class Recurring {
     public long getDays(){
         return this.day;
     }
-
+    
+    public boolean equals(Recurring other) {
+        return this.getDays() == other.getDays() &&
+                this.getMonths() == other.getMonths() &&
+                this.getYears() == other.getYears();
+    }
+    
+    @Override
+    public String toString() {
+        return this.getYears() + "-" + this.getMonths() + "-" + this.getDays();
+    }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof TodoTime // instanceOf handles nulls
-                        && this.toString().equals(((TodoTime) other).toString())); // state check
+                || (other instanceof Recurring // instanceOf handles nulls
+                        && this.equals(((Recurring) other))); // state check
     }
 
 }
