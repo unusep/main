@@ -20,7 +20,6 @@ public class MarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "marked task: %1$s";
-    public static final String MESSAGE_MARK_RECUR_TASK_SUCCESS = "marked and updated recurring task: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "The recurring marked task already exists in the Do-erlist";
 
     private int targetIndex;
@@ -39,11 +38,10 @@ public class MarkCommand extends Command {
                 Task newTask = new Task(target);
                 newTask = updateRecurringTask(newTask);
                 model.replaceTask(target, newTask, true);
-                return new CommandResult(String.format(MESSAGE_MARK_RECUR_TASK_SUCCESS, target));  
             } else {
                 model.markTask(target);
-                return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, target));  
             }
+            return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, target));
         } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
