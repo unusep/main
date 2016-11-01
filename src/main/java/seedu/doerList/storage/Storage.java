@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
+import seedu.doerList.commons.events.storage.StoragePathChangedEvent;
 import seedu.doerList.commons.exceptions.DataConversionException;
 import seedu.doerList.model.ReadOnlyDoerList;
 import seedu.doerList.model.UserPrefs;
@@ -13,7 +14,7 @@ import seedu.doerList.model.UserPrefs;
 /**
  * API of the Storage component
  */
-public interface Storage extends DoerListStorage, UserPrefsStorage {
+public interface Storage extends DoerListStorage, UserPrefsStorage, ConfigStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -36,4 +37,6 @@ public interface Storage extends DoerListStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleDoerListChangedEvent(DoerListChangedEvent abce);
+    
+    void handleStoragePathChangedEvent(StoragePathChangedEvent event) throws DataConversionException;
 }

@@ -30,18 +30,18 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task4, td.task5, td.task8)
         );
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 12),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 3),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 3),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 12, 2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 2),
-                new TestCategory("MA1101R", 1),
-                new TestCategory("Urgent", 1),
-                new TestCategory("Life", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 2, 1),
+                new TestCategory("MA1101R", 1, 0),
+                new TestCategory("Urgent", 1, 1),
+                new TestCategory("Life", 1, 0)
         );
         // add tasks at once
         commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
@@ -64,21 +64,22 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2)
         );
         List<TestCategory> expectedBuildInCategoryList2 = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 1),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 0),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 0),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 1, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0, 0)
         );
         List<TestCategory> expectedCategoryList2 = Lists.newArrayList(
-                new TestCategory("CS2101", 1),
-                new TestCategory("CS2103", 1)
+                new TestCategory("CS2101", 1, 1),
+                new TestCategory("CS2103", 1, 1)
         );
         assertAddSuccess(td.task2, expectedDisplayTaskPanel2, expectedBuildInCategoryList2, expectedCategoryList2);
               
         // invalid command
         commandBox.runCommand("adds Do Homework");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
+        // other invalid command formats are tested in the logic test
     }
     
 

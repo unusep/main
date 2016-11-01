@@ -15,6 +15,11 @@ public interface DoerListStorage {
      * Returns the file path of the data file.
      */
     String getDoerListFilePath();
+    
+    /**
+     * Set the file path of the data file.
+     */
+    void setDoerListFilePath(String filePath);
 
     /**
      * Returns DoerList data as a {@link ReadOnlyDoerList}.
@@ -31,4 +36,5 @@ public interface DoerListStorage {
      */
     void saveDoerList(ReadOnlyDoerList doerList) throws IOException;
 
+    
 }

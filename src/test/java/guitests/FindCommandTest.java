@@ -27,21 +27,22 @@ public class FindCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task8)
         );
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 4),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 4, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         assertFindResult("find Math", expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
         // find and there is no result
         expectedBuildInCategoryList.get(0).setExpectedNumTasks(0);
+        expectedBuildInCategoryList.get(0).setExpectedDueTasks(0);
         assertFindResult("find Love", Lists.newArrayList(), expectedBuildInCategoryList, expectedCategoryList);
         
 
@@ -49,15 +50,15 @@ public class FindCommandTest extends DoerListGuiTest {
         commandBox.runCommand("find Math");
         commandBox.runCommand("delete 1");
         expectedBuildInCategoryList.get(0).setExpectedNumTasks(3);
+        expectedBuildInCategoryList.get(0).setExpectedDueTasks(0);
         List<TestCategory> expectedDisplayTaskPanel2 = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
                 new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task8)
         );
         List<TestCategory> expectedCategoryList2 = Lists.newArrayList(
-                new TestCategory("CS2101", 1),
-                new TestCategory("CS2103", 0),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 1, 0),
+                new TestCategory("MA1101R", 1, 0)
         );
         assertFindResult("find Math", expectedDisplayTaskPanel2, expectedBuildInCategoryList, expectedCategoryList2);
     }
@@ -67,11 +68,11 @@ public class FindCommandTest extends DoerListGuiTest {
         commandBox.runCommand("clear");
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList();
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 0),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 0),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 0),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0)
+                new TestCategory(BuildInCategoryList.ALL.categoryName + " (filtered)", 0, 0),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList();
         assertFindResult("find CA", expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList); //no results

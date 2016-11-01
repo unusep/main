@@ -44,16 +44,16 @@ public class EditCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1, td.task4, td.task5, td.task8)
         );
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 0),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 3, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 1),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 1, 0),
+                new TestCategory("CS2103", 1, 0),
+                new TestCategory("MA1101R", 1, 0)
         );
         assertEditSuccess("edit 1 /t Test Task 2 Edit Title /d Test Task 2 Edit Description /s today 10am /e today 1pm /c CS2103", 
                 td.task2, afterEdition, expectedDisplayTaskPanel, 
@@ -73,6 +73,7 @@ public class EditCommandTest extends DoerListGuiTest {
         // invalid command
         commandBox.runCommand("edit Do Homework");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        // other invalid command formats are tested in the logic test
     }
     
     /**

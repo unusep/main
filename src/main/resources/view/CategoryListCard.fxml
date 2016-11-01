@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 @@author A0147978E
 -->
@@ -10,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <HBox id="categoryCardPane" fx:id="categoryCardPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -30,13 +32,25 @@
       <Region HBox.hgrow="ALWAYS" />
       <VBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
          <children>
-            <HBox alignment="CENTER">
+            <HBox fx:id="categoryCardSideBar" alignment="CENTER">
                <children>
+                  <StackPane fx:id="categoryAlertContainer">
+                     <children>
+                        <Circle fill="#e4e4e4" radius="12.0" stroke="#ffffff00" strokeType="INSIDE" style="-fx-fill: #ff8080;" />
+                        <Label fx:id="categoryAlertCount" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                     </children>
+                  </StackPane>
                   <StackPane>
                      <children>
                         <Circle fill="#e4e4e4" radius="14.0" stroke="WHITE" strokeType="INSIDE" />
                         <Label fx:id="categoryCount" text="0" />
                      </children>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
                   </StackPane>
                </children>
             </HBox>

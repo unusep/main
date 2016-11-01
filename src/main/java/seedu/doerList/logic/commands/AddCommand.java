@@ -53,6 +53,8 @@ public class AddCommand extends Command {
         		new UniqueCategoryList(categorySet)
         );
 
+        TodoTime.validateTimeInterval(this.toAdd);
+
     }
     
     @Override

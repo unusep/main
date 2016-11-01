@@ -1,3 +1,4 @@
+//@@author A0139168W
 package guitests;
 
 import seedu.doerList.commons.core.Messages;
@@ -24,16 +25,16 @@ public class UnmarkCommandTest extends DoerListGuiTest {
     @Test
     public void unmark() throws IllegalValueException {
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 1, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
         );
         
         List<TestCategory> expectedPanel_complete = Lists.newArrayList(
@@ -65,6 +66,7 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         assertTrue(taskListPanel.isListMatching(expectedPanel_all));
     }
     
+    //@@author A0139168W
     @Test
     public void mark_unsuccessful() {
         //marks invalid task
@@ -76,6 +78,7 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         commandBox.runCommand("unmark 1");
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
+    //@@author
     
     private void assertUnmarkSuccess(int index, TestTask taskToUnmark,
             List<TestCategory> expectedDisplayTaskPanel, 

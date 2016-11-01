@@ -87,6 +87,9 @@ public class DoerList implements ReadOnlyDoerList {
     }
 
     public void setTasks(List<Task> tasks) {
+        for(Task t : tasks) {
+            syncCategoriesWithMasterList(t);
+        }
         this.tasks.getInternalList().setAll(tasks);
     }
 
@@ -95,8 +98,8 @@ public class DoerList implements ReadOnlyDoerList {
     }
 
     public void resetData(Collection<? extends ReadOnlyTask> newTasks, Collection<Category> newCategories) {
-        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
-        setCategories(newCategories);
+        setCategories(newCategories.stream().map(Category::new).collect(Collectors.toList())); // the order matter
+        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList())); // set tasks must follow the set setCategories
     }
 
     public void resetData(ReadOnlyDoerList newData) {
@@ -139,9 +142,26 @@ public class DoerList implements ReadOnlyDoerList {
         }
         task.setCategories(new UniqueCategoryList(commonCategoryReferences));
     }
+    
+    //@@author A0147978E
+    /**
+     * Ensure that once the task {@code toRemove} is removed, categories of the task that have
+     * no task will be deleted.
+     * 
+     * @param toRemove
+     */
+    private void syncCategroiesMaterListAfterRemove(ReadOnlyTask toRemove) {
+        for(Category c : toRemove.getCategories()) {
+            if (c.getTasks().size() == 0) {
+                categories.getInternalList().remove(c);
+            } 
+        }
+    }
 
-    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.remove(key)) {
+    //@@author
+    public boolean removeTask(ReadOnlyTask toRemove) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.remove(toRemove)) {
+            syncCategroiesMaterListAfterRemove(toRemove);
             return true;
         } else {
             throw new UniqueTaskList.TaskNotFoundException();
@@ -152,8 +172,11 @@ public class DoerList implements ReadOnlyDoerList {
     public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
+        syncCategroiesMaterListAfterRemove(prevTask);
     }
 
+
+    //@@author A0139168W
     public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
         if (tasks.contains(task)) {
             task.removeBuildInCategory(BuildInCategoryList.COMPLETE);
@@ -169,7 +192,6 @@ public class DoerList implements ReadOnlyDoerList {
             throw new UniqueTaskList.TaskNotFoundException();
         }
     }
-    
 
 //// category-level operations
 

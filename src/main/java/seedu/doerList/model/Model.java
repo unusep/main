@@ -8,6 +8,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.doerList.model.undo.UndoManager;
 
 /**
  * The API of the Model component.
@@ -43,10 +44,24 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given predicate*/
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
+    //@@author
+    /** Replace a task with given task*/
     void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
     
+
+    //@@author A0139168W
+    /** Marks the given task as undone */
     void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException;
 
+    //@@author A0139168W
+    /** Marks the given task as done */
     void markTask(ReadOnlyTask task) throws TaskNotFoundException;
 
+    //@@author A0147978E
+    /** Undo the recent addition/edition/deletion of task */
+    void undo() throws UndoManager.OperationFailException;
+    
+    //@@author A0147978E
+    /** Redo the recent addition/edition/deletion of task */
+    void redo() throws UndoManager.OperationFailException;
 }

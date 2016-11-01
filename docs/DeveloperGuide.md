@@ -266,6 +266,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+[//]: # (@@author A0139401N)
 #### Use case: Add task
 
 **MSS**
@@ -309,6 +310,7 @@ Use case ends.
 > 1f2. System indicates the error to user.
 > Use case resumes from steps 2.
   
+[//]: # (@@author A0139401N)
 #### Use case: Edit task
 
 **MSS**
@@ -343,6 +345,7 @@ Use case ends.
 > 1d2. System indicates the error to user.
 > Use case resumes from steps 2.
 
+[//]: # (@@author A0139401N)
 #### Use case: Delete task
 
 **MSS**
@@ -490,7 +493,7 @@ Use case ends.
 
 > Use case ends.
 
-[//]: # (@@author)
+[//]: # (@@author A0139168W)
 #### Use case: Task Due Command
 
 **MSS**
@@ -556,6 +559,7 @@ Use case ends.
 
 2b. Task of `TASK_NUMBER` is already marked undone.
 > Use case ends.
+[//]: # (@@author)
 
 ## Appendix C : Non Functional Requirements
 
@@ -611,7 +615,7 @@ Use case ends.
 - A constant network connection is required. If there is no network connection, the software cannot be opened.
 - Wunderlist lacks IFTTT integration compared to other to-do list applications.
 
-
+[//]: # (@@author A0139401N)
 ### Review of [Trello](https://trello.com/)
 #### Strengths:
 - Online/Cloud based program that allows it to be transferrable to other computers.
@@ -622,6 +626,7 @@ Use case ends.
 - It cannot link up with other calendar software like Google calendar, which makes it hard to keep track of tasks done.
 - The free version is much more limited than the paid version, making certain customisation features difficult to accomplish.
 
+[//]: # (@@author A0139168W)
 ### Review of [Google Calendar](https://calendar.google.com/)
 #### Strengths:
 - Adds different kind of colouring to the schedule.
@@ -635,4 +640,5 @@ Use case ends.
 - Unable to view all deleted events or reminders.
 - It does not have command-line inputs to modify the calendar; most operations require a user to click, which can be time-consuming.
 - Only accessible via browsers; no desktop application available.
+[//]: # (@@author)
 

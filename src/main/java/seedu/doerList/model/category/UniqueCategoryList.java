@@ -1,11 +1,17 @@
 package seedu.doerList.model.category;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.exceptions.DuplicateDataException;
 import seedu.doerList.commons.util.CollectionUtil;
-
-import java.util.*;
 
 /**
  * A list of categories that enforces no nulls and uniqueness between its elements.
@@ -128,7 +134,12 @@ public class UniqueCategoryList implements Iterable<Category> {
     public ObservableList<Category> getInternalList() {
         return internalList;
     }
+    
+    public boolean isEmpty() {
+        return internalList.isEmpty();
+    }
 
+    //@author A0147978E
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -136,15 +147,27 @@ public class UniqueCategoryList implements Iterable<Category> {
             return true;
         }
         if (other instanceof UniqueCategoryList) {
-            // doing set except
+            // doing set except (both sides)
             UniqueCategoryList otherObj = (UniqueCategoryList) other;
-            ArrayList<Category> compare = new ArrayList<Category>(this.internalList);
-            compare.removeAll(otherObj.internalList);
-            return compare.isEmpty();
+            ArrayList<Category> compare1 = new ArrayList<Category>(this.internalList);
+            compare1.removeAll(otherObj.internalList);
+            ArrayList<Category> compare2 = new ArrayList<Category>(otherObj.internalList);
+            compare2.removeAll(this.internalList);
+            return compare1.isEmpty() && compare2.isEmpty();
         }
             
         return super.equals(other);
         
+    }
+    
+    //@author
+    @Override
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+        for(Category c : internalList) {
+            str.append(c.toString());
+        }
+        return str.toString();
     }
 
     @Override

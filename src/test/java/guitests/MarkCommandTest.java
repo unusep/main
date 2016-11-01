@@ -1,3 +1,4 @@
+//@@author A0139168W
 package guitests;
 
 import seedu.doerList.commons.core.Messages;
@@ -23,16 +24,16 @@ public class MarkCommandTest extends DoerListGuiTest {
     @Test
     public void mark() throws IllegalValueException {
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 8),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2),
-                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2),
-                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2),
-                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 7)
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 0),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 7, 0)
         );
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
-                new TestCategory("CS2101", 2),
-                new TestCategory("CS2103", 1),
-                new TestCategory("MA1101R", 1)
+                new TestCategory("CS2101", 2, 0),
+                new TestCategory("CS2103", 1, 0),
+                new TestCategory("MA1101R", 1, 0)
         );
         
         List<TestCategory> expectedPanel = Lists.newArrayList(

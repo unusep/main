@@ -1,5 +1,5 @@
 # User Guide
-
+[//]: # (@@author A0139401N)
 * [About Us](#about-us)
 * [Overiew](#overview)
 * [Getting Started](#getting-started)
@@ -21,14 +21,15 @@
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
+[//]: # (@@author A0139401N)
 ## About Us
-Living in the modern and fast-paced world nowadays, we are constantly bombarded with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
+Living in the modern and fast-paced world nowadays, we are constantly overwhelemed with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
 
 Do-er List is a task manager that is designed for students and office workers. It is a beginner-friendly desktop program that aids you in the planning and completion of your daily tasks.  It does not matter if you are planning a big birthday surprise event or recurring task of handling the laundry every now and then, Do-er List is here to resolve your problems.
 
 This user guide aims to allow any user to seamlessly use the product, as intended to. Just follow the instructions as stated and you will get the results you desire.
 
-Eager and excited? Then proceed!   
+Eager and excited? Then let us proceed!
 
 [Back To Top](#user-guide)
 
@@ -99,6 +100,7 @@ Format: `help` or `help [COMMAND_NAME]`
 
 [Back To Top](#user-guide)
 
+
 [//]: # (@@author A0139401N)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
@@ -123,6 +125,8 @@ Examples:
 * `add /t Daily Exercise and Workout!`<br>
 * `add /t Call Mum in Hanoi /d Limit chat timing for overseas charges /s tomorrow 8pm /e tomorrow 10pm /c Optional`
 
+[//]: # (@@author)
+
 [Back To Top](#user-guide)
 
 [//]: # (@@author A0139401N)
@@ -141,6 +145,7 @@ Examples:
 
 > Attributes that are not supplied will not be updated 
 
+
 [Back To Top](#user-guide)
 
 [//]: # (@@author A0139401N)
@@ -158,7 +163,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
-(@@author A0139401N)
+[//]: # (@@author A0139401N)
 #### Unmark task as done : `unmark`
 Marks a certain task as undone in the Do*er*-list.<br>
 Format: `unmark TASK_NUMBER`
@@ -198,6 +203,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Finding all tasks containing any keyword in their name : `find`
 Finds tasks whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -218,6 +224,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### View a task : `view`
 Views the task identified by the index number used in the last task listing.<br>
 Format: `view INDEX`
@@ -236,6 +243,7 @@ Examples:
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
 
+[//]: # (@@author A0147978E)
 [Back To Top](#user-guide)
 
 #### Deleting a task : `delete`
@@ -259,7 +267,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
-[//]: # (@@author)
+[//]: # (@@author A0139168W)
 #### Undo the most recent operation : `undo`
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`
@@ -303,16 +311,17 @@ Examples:
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
+[//]: # (@@author)
 
 [Back To Top](#user-guide)
 
-(@@author A0139401N)
+[//]: # (@@author A0139401N)
 ### Saving the data 
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 
 [Back To Top](#user-guide)
 
-(@@author A0139401N)
+[//]: # (@@author A0139401N)
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>

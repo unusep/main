@@ -36,6 +36,12 @@ public class Category {
         }
         this.categoryName = name;
     }
+    
+    // copy constructor
+    public Category(Category other) {
+        this.categoryName = other.categoryName;
+        this.filteredList = other.filteredList;
+    }
 
     /**
      * Returns true if a given string is a valid category name.
@@ -56,11 +62,19 @@ public class Category {
         filteredList = new UnmodifiableObservableList<>(theFilteredList);
     }
     
+    //@@author A0147978E
     public FilteredList<ReadOnlyTask> getTasks() {
         assert filteredList != null;
         return filteredList.filtered(this.getPredicate());
     }
+    
+    //@@author A0147978E
+    public FilteredList<ReadOnlyTask> getOverdueTasks() {
+        assert filteredList != null;
+        return this.getTasks().filtered(BuildInCategoryList.DUE.getPredicate());
+    }
 
+    //@@author
     @Override
     public int hashCode() {
         return categoryName.hashCode();

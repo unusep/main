@@ -49,6 +49,7 @@ public abstract class DoerListGuiTest {
     protected CategorySideBarHandle categorySideBar;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
+    protected StatusBarHandle statusBar;
     private Stage stage;
 
     @BeforeClass
@@ -75,6 +76,7 @@ public abstract class DoerListGuiTest {
             categorySideBar = mainGui.getCategorySideBar();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
+            statusBar = mainGui.getStatusBar();
             this.stage = stage;
         });
         EventsCenter.clearSubscribers();

@@ -75,6 +75,12 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return prepareList(arguments);
+            
+        case UndoCommand.COMMAND_WORD:
+            return prepareUndo(arguments);
+            
+        case RedoCommand.COMMAND_WORD:
+            return prepareRedo(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -90,6 +96,10 @@ public class Parser {
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
+            
+        case SaveCommand.COMMAND_WORD:
+            return new SaveCommand(arguments.trim());
+             
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -151,7 +161,6 @@ public class Parser {
     private Command prepareEdit(String args) {
         try {
             final int targetIndex = findDisplayedIndexInArgs(args);
-            final String removeArgsIndex = args.replaceFirst(String.valueOf(targetIndex), ""); // remove the index
             final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
             final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
             final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
@@ -277,6 +286,7 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
     
+    //@@author A0139168W
     /**
      * Parses arguments in the context of the unmark task command.
      *
@@ -292,7 +302,7 @@ public class Parser {
 
         return new UnmarkCommand(index.get());
     }
-
+    //@@author A0139168W
     /**
      * Parses arguments in the context of the mark task command.
      *
@@ -307,6 +317,37 @@ public class Parser {
         }
 
         return new MarkCommand(index.get());
+    }
+    //@@author
+    
+    /**
+     * Parses arguments in the context of the undo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUndo(String args) {
+        if(!args.trim().equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+        }
+
+        return new UndoCommand();
+    }
+
+    /**
+     * Parses arguments in the context of the redo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareRedo(String args) {
+        if(!args.trim().equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        }
+
+        return new RedoCommand();
     }
     
     /**

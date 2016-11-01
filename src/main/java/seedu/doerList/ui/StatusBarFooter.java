@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.model.task.TodoTime;
 
 import org.controlsfx.control.StatusBar;
 
@@ -55,12 +56,13 @@ public class StatusBarFooter extends UiPart {
         placeHolder.getChildren().add(mainPane);
     }
 
-    private void setSaveLocation(String location) {
+    public void setSaveLocation(String location) {
         this.saveLocationStatus.setText(location);
     }
 
     private void addSaveLocation() {
         this.saveLocationStatus = new StatusBar();
+        this.saveLocationStatus.setId("saveLocationField");
         FxViewUtil.applyAnchorBoundaryParameters(saveLocationStatus, 0.0, 0.0, 0.0, 0.0);
         saveLocStatusBarPane.getChildren().add(saveLocationStatus);
     }
@@ -94,6 +96,6 @@ public class StatusBarFooter extends UiPart {
     public void handleDoerListChangedEvent(DoerListChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
-        setSyncStatus("Last Updated: " + lastUpdated);
+        setSyncStatus("Last Updated: " + TodoTime.HumanReadableParser.format(new Date()));
     }
 }
