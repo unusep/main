@@ -1103,7 +1103,7 @@ public class LogicManagerTest {
          * @return Task generated task
          * @throws Exception
          */
-        Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasRecurring, boolean hasCategory) throws Exception {
+        public Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasRecurring, boolean hasCategory) throws Exception {
             Title title = new Title("My Task");
             Description description = null;
             TodoTime startTime = null;
@@ -1141,7 +1141,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the task data field values
          */
-        Task generateRecurringTask(int seed) throws Exception {
+        public Task generateRecurringTask(int seed) throws Exception {
             LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
@@ -1162,7 +1162,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        public Task generateTask(int seed) throws Exception {
             LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
@@ -1184,7 +1184,7 @@ public class LogicManagerTest {
          * @param endTime
          * @return
          */
-        Task generateTaskWithTime(int seed, String startTime, String endTime, String recurring) {
+        public Task generateTaskWithTime(int seed, String startTime, String endTime, String recurring) {
             try {
                 return new Task(
                         new Title("Task " + seed),
@@ -1208,7 +1208,7 @@ public class LogicManagerTest {
          * @param Category... c
          * @return task with given seed and category
          */
-        Task generateTaskWithCategory(int seed, Category... c) {
+        public Task generateTaskWithCategory(int seed, Category... c) {
             try {
                 LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                         DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
@@ -1228,19 +1228,14 @@ public class LogicManagerTest {
 
         //@@author A0147978E
         /**
-<<<<<<< HEAD
          * Generate task with title and description but without recurring tasks
          * 
-=======
-         * Generate task with title and description
-         *
->>>>>>> storage_re_implement
          * @param title
          * @param description
          * @return generated Task
          * @throws Exception
          */
-        Task generateTaskTitleAndDescription(String title, String description) throws Exception {
+        public Task generateTaskTitleAndDescription(String title, String description) throws Exception {
             Category category1 = new Category("CS2101");
             Category category2 = new Category("CS2103T");
             UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
@@ -1255,7 +1250,7 @@ public class LogicManagerTest {
 
         //@@author A0147978E
         /** Generates the correct add command based on the task given */
-        String generateAddCommand(Task r) {
+        public String generateAddCommand(Task r) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
@@ -1294,7 +1289,7 @@ public class LogicManagerTest {
         /**
          * Generates an DoerList with auto-generated tasks.
          */
-        DoerList generateDoerList(int numGenerated) throws Exception{
+        public DoerList generateDoerList(int numGenerated) throws Exception{
             DoerList doerList = new DoerList();
             addToDoerList(doerList, numGenerated);
             return doerList;
@@ -1303,7 +1298,7 @@ public class LogicManagerTest {
         /**
          * Generates an DoerList based on the list of Tasks given.
          */
-        DoerList generateDoerList(List<Task> tasks) throws Exception{
+        public DoerList generateDoerList(List<Task> tasks) throws Exception{
             DoerList doerList = new DoerList();
             addToDoerList(doerList, tasks);
             return doerList;
@@ -1313,14 +1308,14 @@ public class LogicManagerTest {
          * Adds auto-generated Person objects to the given DoerList
          * @param doerList The DoerList to which the Persons will be added
          */
-        void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
+        public void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
             addToDoerList(doerList, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given DoerList
          */
-        void addToDoerList(DoerList doerList, List<Task> tasksToAdd) throws Exception{
+        public void addToDoerList(DoerList doerList, List<Task> tasksToAdd) throws Exception{
             for(Task c: tasksToAdd){
                 doerList.addTask(c);
             }
@@ -1330,14 +1325,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Task will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        public void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+        public void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
             for(Task t: tasksToAdd){
                 model.addTask(t);
             }
@@ -1346,14 +1341,15 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks.
          */
-        List<Task> generateTaskList(int numGenerated) throws Exception{
+        public List<Task> generateTaskList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
                 tasks.add(generateTask(i));
             }
             return tasks;
         }
-        List<Task> generateTaskList(Task... tasks) {
+        
+        public List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
 
