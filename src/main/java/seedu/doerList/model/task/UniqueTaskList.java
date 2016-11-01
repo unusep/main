@@ -75,6 +75,7 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
+
     /**
      *
      * @return
@@ -95,7 +96,7 @@ public class UniqueTaskList implements Iterable<Task> {
         }
         Task original = internalList.get(i);
         if (contains(toReplace) && 
-                !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
+            !(original.equals(toReplace) && !toReplace.getCategories().equals(original.getCategories()))) {
             // is not just update categories
             throw new DuplicateTaskException();
         }

@@ -34,7 +34,7 @@ public class DoerList implements ReadOnlyDoerList {
     }
     
     //@@author A0147978E
-    /**
+    /** 
      * Add listener to categoryList so that every time the category list get added,
      * the {@code tasks} is added into the category.
      */
@@ -168,11 +168,13 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
+    //TODO: Seek consultation on this one 
     public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
         syncCategroiesMaterListAfterRemove(prevTask);
     }
+
 
     //@@author A0139168W
     public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
@@ -190,7 +192,6 @@ public class DoerList implements ReadOnlyDoerList {
             throw new UniqueTaskList.TaskNotFoundException();
         }
     }
-    //@@author
 
 //// category-level operations
 

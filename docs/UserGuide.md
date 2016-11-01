@@ -60,6 +60,7 @@ All commands start with a command words, followed by fields that are replaced by
 <br>
 *Please take note of the following:*
 
+[//]: # (@@author A0139401N)
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
    > This app will not work with earlier versions of Java 8.<br>
    
@@ -70,9 +71,9 @@ All commands start with a command words, followed by fields that are replaced by
 5. Type the command in the command box and press <kbd>Enter</kbd> to execute it.
    *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
 6. Some example commands you can try:
-   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` :
-     adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today`
-	 and ends` tomorrow` under the category `CS2103`.
+   * **`add`**` /t Do post-lecture quiz /s today 10:00 /e tomorrow 12:00 /c CS2103` :
+     adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today` at `10:00`
+	 and ends` tomorrow` at `13:00`  under the category `CS2103`.
 	* **`list`**` CS2103` : lists all tasks in **CS2103**
    * **`delete`**` 1` : deletes the 1st task shown in the current list
    * **`exit`** : exits the application
@@ -89,6 +90,7 @@ All commands start with a command words, followed by fields that are replaced by
 > * Items with `...` after them can have multiple instances.
 > * If a command has multiple parameters, the order of parameters doesn't matter.
 
+[//]: # (@@author A0139401N)
 #### Viewing help : `help`
 Format: `help` or `help [COMMAND_NAME]`
 
@@ -313,6 +315,7 @@ Format: `exit`
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ### Saving the data 
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 

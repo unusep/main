@@ -35,6 +35,7 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.Description;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Recurring;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
@@ -70,18 +71,21 @@ public class TestUtil {
 
     public static final Task[] sampleTaskData = getSampleTaskData();
 
+    //@@author 
     private static Task[] getSampleTaskData() {
         try {
             return new Task[]{
-                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TodoTime("2016-10-03 14:00"), new TodoTime("2016-10-04 14:23"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TodoTime("2016-10-02 14:00"), new TodoTime("2016-10-03 14:15"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 4"), null, null, null, new UniqueCategoryList()),
-                    new Task(new Title("T2A3"), new Description("Very good"), new TodoTime("2016-10-01 14:00"), new TodoTime("2016-10-02 14:20"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 6"), null, new TodoTime("2016-09-30 14:00"), new TodoTime("2016-10-01 14:30"), new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T tutorial 7"), null, null, null, new UniqueCategoryList()),
-                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TodoTime("2016-09-30 12:00"), new TodoTime("2016-10-01 14:40"), new UniqueCategoryList())
+                    new Task(new Title("Do CS2103T tutorial 1"), new Description("Very Hard to do it"), new TodoTime("2016-10-03 14:00"), new TodoTime("2016-10-04 14:23"), null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 2"), new Description("It is manageable"), null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 3"), new Description("No comment"), new TodoTime("2016-10-02 14:00"), new TodoTime("2016-10-03 14:15"), null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 4"), null, null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("T2A3"), new Description("Very good"), new TodoTime("2016-10-01 14:00"), new TodoTime("2016-10-02 14:20"), null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T QUIZ 5"), null, null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 6"), null, new TodoTime("2016-09-30 14:00"), new TodoTime("2016-10-01 14:30"), null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T tutorial 7"), null, null, null, null, new UniqueCategoryList()),
+                    new Task(new Title("Do CS2103T"), new Description("I love it"), new TodoTime("2016-09-30 12:00"), new TodoTime("2016-10-01 14:40"), null, new UniqueCategoryList()),
+                    new Task(new Title("Watch CS2103T Webcast Lectures"), new Description("I love it"), new TodoTime("2016-09-30 12:30"), new TodoTime("2016-10-05 15:40"), new Recurring("weekly"), new UniqueCategoryList()),
+                    new Task(new Title("Recite CS2103T Coding Principles"), null, new TodoTime("2016-09-30 12:30"), new TodoTime("2016-09-30 15:40"), new Recurring("daily"), new UniqueCategoryList())
             };
         } catch (IllegalValueException e) {
             assert false;

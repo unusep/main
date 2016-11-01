@@ -5,12 +5,14 @@ import static org.junit.Assert.assertTrue;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.doerList.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,10 +22,13 @@ import org.junit.rules.TemporaryFolder;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
+import seedu.doerList.commons.util.ConfigUtil;
 import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.logic.commands.Command;
@@ -35,6 +40,7 @@ import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
 import seedu.doerList.logic.commands.MarkCommand;
 import seedu.doerList.logic.commands.RedoCommand;
+import seedu.doerList.logic.commands.SaveCommand;
 import seedu.doerList.logic.commands.TaskdueCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.logic.commands.UnmarkCommand;
@@ -48,10 +54,12 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.Description;
 import seedu.doerList.model.task.ReadOnlyTask;
+import seedu.doerList.model.task.Recurring;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.storage.StorageManager;
+import seedu.doerList.storage.XmlFileStorage;
 
 public class LogicManagerTest {
 
@@ -89,7 +97,8 @@ public class LogicManagerTest {
         model = new ModelManager();
         String tempDoerListFile = saveFolder.getRoot().getPath() + "TempDoerList.xml";
         String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempDoerListFile, tempPreferencesFile));
+        String tempConfig = saveFolder.getRoot().getPath() + "TempConfig.json";
+        logic = new LogicManager(model, new StorageManager(tempDoerListFile, tempPreferencesFile, tempConfig));
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedDoerList = new DoerList(model.getDoerList()); // last saved assumed to be up to date before.
@@ -141,12 +150,14 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, model.getDoerList());
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
-    
+
+
+    //@@author A0139401N 
     @Test
-    public void execute_unknownCommandWord() throws Exception {
-        //String unknownCommand = "uicfhmowqewca";
-        //assertCommandBehavior(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
-    }
+    public void execute_unknownCommandWord() throws Exception { 
+        String unknownCommand = "uicfhmowqewca"; 
+        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);  
+    } 
 
     //@@author A0140905M
     @Test
@@ -181,6 +192,7 @@ public class LogicManagerTest {
         assertCommandBehavior("help redo", RedoCommand.MESSAGE_USAGE);
         assertCommandBehavior("help undo", UndoCommand.MESSAGE_USAGE);
         assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help saveto", SaveCommand.MESSAGE_USAGE);
     }
     //@@author
 
@@ -223,18 +235,23 @@ public class LogicManagerTest {
                 "add /t valid title /d valid description /s 2011-10-12 12:00 /e 2011-10-11 12:00 /c valid_category", TodoTime.TIME_INTERVAL_CONSTRAIN);
     }
 
+
     //@@author
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task[] inputs = {
-                helper.taskWithAttribute(true, false, false, false),
-                helper.taskWithAttribute(false, true, false, false),
-                helper.taskWithAttribute(false, false, true, false),
-                helper.taskWithAttribute(false, false, false, true),
-                helper.taskWithAttribute(false, true, true, false),
-                helper.taskWithAttribute(false, false, false, false)
+                helper.taskWithAttribute(true, true, true, false, true),
+                helper.taskWithAttribute(true, true, true, false, false),
+                helper.taskWithAttribute(true, true, false, false, false),
+                helper.taskWithAttribute(true, false, false, false, true),
+                helper.taskWithAttribute(true, false, false, false, false),
+                helper.taskWithAttribute(false, true, false, false, false),
+                helper.taskWithAttribute(false, false, true, false, false),
+                helper.taskWithAttribute(false, false, false, false, true),
+                helper.taskWithAttribute(false, true, true, false, false),
+                helper.taskWithAttribute(false, false, false, false, false)
         };
         for(Task toBeAdded : inputs) {
             DoerList expectedAB = new DoerList();
@@ -247,7 +264,30 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
-
+    
+    //@@author A0139401N
+    @Test
+    public void execute_add_recurring_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.taskWithAttribute(true, true, true, true, true),
+                helper.taskWithAttribute(true, true, true, true, false),
+                helper.taskWithAttribute(false, true, true, true, false),
+                helper.taskWithAttribute(false, true, true, true, true)
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // executes the command and verifies the result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
+    }
+    
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -258,7 +298,7 @@ public class LogicManagerTest {
 
         // setup starting state
         model.addTask(toBeAdded); // person already in internal doerList
-
+ 
         // execute command and verify result
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
@@ -290,15 +330,15 @@ public class LogicManagerTest {
     public void execute_list_buildInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(),
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString()); // today
-        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(),
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString()); // tomorrow
-        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(),
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString()); // next 5 days
-        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(),
-                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString()); // next 7 days
-        Task Inbox1 = helper.generateTaskWithTime(4, null, null); // inbox
+        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString(), null); // today
+        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString(), null); // tomorrow
+        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString(), null); // next 5 days
+        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
+                TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString(), null); // next 7 days
+        Task Inbox1 = helper.generateTaskWithTime(4, null, null, null); // inbox
         Task Complete1 = helper.generateTaskWithCategory(5); // complete
         Complete1.addBuildInCategory(BuildInCategoryList.COMPLETE);
 
@@ -497,6 +537,25 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
+    
+    @Test
+    public void execute_edit_recurring_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateTaskList(3);
+        helper.addToModel(model, threeTasks);
+        
+        DoerList expectedDL = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedDL.getTaskList().get(2);
+        Task editedTask = helper.generateRecurringTask(4);
+        expectedDL.removeTask(taskToEdit);
+        expectedDL.addTask(editedTask);
+        
+        assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
+                expectedDL,
+                expectedDL.getTaskList());
+    }
 
     //@author A0147978E
     @Test
@@ -520,8 +579,8 @@ public class LogicManagerTest {
     @Test
     public void execute_editResultInDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task task1 = helper.generateTaskWithTitleAndDescription("Task 1", "D 1");
-        Task task2 = helper.generateTaskWithTitleAndDescription("Task 1", "D 2");
+        Task task1 = helper.generateTaskTitleAndDescription("Task 1", "D 1");
+        Task task2 = helper.generateTaskTitleAndDescription("Task 1", "D 2");
         helper.addToModel(model, Arrays.asList(task1, task2));
 
         DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
@@ -591,11 +650,11 @@ public class LogicManagerTest {
     public void execute_find_onlyMatchesFullWords() throws Exception {
         // keywords in title or description
         TestDataHelper helper = new TestDataHelper();
-        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("dummy", "bla KEY bla bceofeia");
-        Task cTarget3 = helper.generateTaskWithTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
-        Task c1 = helper.generateTaskWithTitleAndDescription("KE Y", "dummy");
-        Task c2 = helper.generateTaskWithTitleAndDescription("KEYKEYKEY sduauo", "dummy");
+        Task cTarget1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskTitleAndDescription("dummy", "bla KEY bla bceofeia");
+        Task cTarget3 = helper.generateTaskTitleAndDescription("KEY bla", "bla KEY bla bceofeia");
+        Task c1 = helper.generateTaskTitleAndDescription("KE Y", "dummy");
+        Task c2 = helper.generateTaskTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
         List<Task> fiveTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2, cTarget3);
         DoerList expectedAB = helper.generateDoerList(fiveTasks);
@@ -611,10 +670,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_isNotCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task p1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task p2 = helper.generateTaskWithTitleAndDescription("bla KEY bla bceofeia", "dummy");
-        Task p3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
-        Task p4 = helper.generateTaskWithTitleAndDescription("KEy sduauo", "dummy");
+        Task p1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task p2 = helper.generateTaskTitleAndDescription("bla KEY bla bceofeia", "dummy");
+        Task p3 = helper.generateTaskTitleAndDescription("key key", "dummy");
+        Task p4 = helper.generateTaskTitleAndDescription("KEy sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
         DoerList expectedAB = helper.generateDoerList(fourPersons);
@@ -630,10 +689,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task cTarget1 = helper.generateTaskWithTitleAndDescription("bla bla KEY bla", "dummy");
-        Task cTarget2 = helper.generateTaskWithTitleAndDescription("bla rAnDoM bla bceofeia", "dummy");
-        Task cTarget3 = helper.generateTaskWithTitleAndDescription("key key", "dummy");
-        Task c1 = helper.generateTaskWithTitleAndDescription("sduauo", "dummy");
+        Task cTarget1 = helper.generateTaskTitleAndDescription("bla bla KEY bla", "dummy");
+        Task cTarget2 = helper.generateTaskTitleAndDescription("bla rAnDoM bla bceofeia", "dummy");
+        Task cTarget3 = helper.generateTaskTitleAndDescription("key key", "dummy");
+        Task c1 = helper.generateTaskTitleAndDescription("sduauo", "dummy");
 
         List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
         DoerList expectedAB = helper.generateDoerList(fourPersons);
@@ -657,26 +716,41 @@ public class LogicManagerTest {
     
     //@@author A0139168W
     @Test
-    public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
+    public void execute_unmarkRecurringTask_getUpdated() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task notComplete = helper.generateTask(5); // not complete
+        Task recurringTask = helper.generateTaskWithTime(5, "tomorrow 5pm", "tomorrow 6pm", "daily");
+        Task updatedRecurringTask = helper.generateTaskWithTime(5, "today 5pm", "today 6pm", "daily");     
+        helper.addToModel(model, Arrays.asList(recurringTask));
+        List<Task> expectedList = helper.generateTaskList(updatedRecurringTask);
+        DoerList expectedDL = helper.generateDoerList(expectedList);
+        
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, recurringTask), 
+                expectedDL, 
+                expectedList);
+    }
+    
+    @Test
+    public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper(); 
+        Task incomplete = helper.generateTask(5); // not complete
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        List<Task> expectedList = helper.generateTaskList(notComplete);
-        DoerList expectedAB = helper.generateDoerList(expectedList);
+        List<Task> expectedList = helper.generateTaskList(incomplete);
+        DoerList expectedDL = helper.generateDoerList(expectedList);
+        
+        helper.addToModel(model, Arrays.asList(incomplete));
 
-        helper.addToModel(model, Arrays.asList(complete));
-
-        assertCommandBehavior("unmark 1",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete),
-                expectedAB,
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
+                expectedDL, 
                 expectedList);
 
         // marking twice should be ok
-        assertCommandBehavior("unmark 1",
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, notComplete),
-                expectedAB,
-                expectedList);
+        assertCommandBehavior("unmark 1", 
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
+                expectedDL, 
+                expectedList);       
     }
 
     
@@ -690,25 +764,40 @@ public class LogicManagerTest {
     
     //@@author A0139168W
     @Test
+    public void execute_markRecurringTask_getUpdated() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task recurringTask = helper.generateTaskWithTime(5, "today 5pm", "today 6pm", "daily");
+        Task updatedRecurringTask = helper.generateTaskWithTime(5, "tomorrow 5pm", "tomorrow 6pm", "daily");
+        helper.addToModel(model, Arrays.asList(recurringTask));
+        List<Task> expectedList = helper.generateTaskList(updatedRecurringTask);
+        DoerList expectedDL = helper.generateDoerList(expectedList);
+        
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, recurringTask), 
+                expectedDL, 
+                expectedList);
+    }
+    
+    @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task notComplete = helper.generateTask(5); // not complete
+        Task incomplete = helper.generateTask(5); // not complete
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
-        DoerList expectedAB = helper.generateDoerList(expectedList);
+        DoerList expectedDL = helper.generateDoerList(expectedList);
+        
+        helper.addToModel(model, Arrays.asList(incomplete));
 
-        helper.addToModel(model, Arrays.asList(notComplete));
-
-        assertCommandBehavior("mark 1",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
-                expectedAB,
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
+                expectedDL, 
                 expectedList);
 
         // marking twice should be ok
-        assertCommandBehavior("mark 1",
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
-                expectedAB,
+        assertCommandBehavior("mark 1", 
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
+                expectedDL, 
                 expectedList);
     }
     //@@author
@@ -952,6 +1041,48 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "undo 1234    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
     }
+    
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_successful_moreFilePath() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        DoerList expectedDL = helper.generateDoerList(10);
+        model.resetData(expectedDL);
+        String tempConfig = saveFolder.getRoot().getPath() + "TempConfig.json";
+        //create temp config file
+        ConfigUtil.saveConfig(new Config(), tempConfig);
+        
+        String validSavePath = "data/test2.xml";
+        
+        //Execute the command
+        CommandResult result = logic.execute("saveto " + validSavePath);
+
+        //Confirm the ui display elements should contain the right data
+        assertEquals(String.format(SaveCommand.MESSAGE_SUCCESS, validSavePath), 
+                result.feedbackToUser);
+        
+        // validate doer list content
+        ReadOnlyDoerList retrieve = XmlFileStorage.loadDataFromSaveFile(new File(validSavePath));
+        assertEquals(retrieve.getUniqueTaskList(), expectedDL.getUniqueTaskList());
+        assertEquals(retrieve.getUniqueCategoryList(), expectedDL.getUniqueCategoryList());
+        
+        // validate storage path
+        Optional<Config> configOptional = ConfigUtil.readConfig(tempConfig);
+        assertEquals(configOptional.get().getDoerListFilePath(), validSavePath);
+    }
+    
+    
+    //@@author A0139168W
+    @Test
+    public void execute_saveLocation_invalidArgsFormat() throws Exception {
+        assertCommandBehavior("saveto",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
+        assertCommandBehavior("saveto     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
+        assertCommandBehavior("saveto /n   ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
+    }
 
 
 
@@ -967,15 +1098,17 @@ public class LogicManagerTest {
          *
          * @param hasDescription indicate whether to has the attribute
          * @param hasTimeInterval indicate whether to has the attribute
+         * @param hasRecurring indicate whether to has the attribute
          * @param hasCategory indicate whether to has the attribute
          * @return Task generated task
          * @throws Exception
          */
-        Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasCategory) throws Exception {
+        public Task taskWithAttribute(boolean hasDescription, boolean hasStartTime, boolean hasEndTime, boolean hasRecurring, boolean hasCategory) throws Exception {
             Title title = new Title("My Task");
             Description description = null;
             TodoTime startTime = null;
             TodoTime endTime = null;
+            Recurring recurring = null;
             UniqueCategoryList categories = new UniqueCategoryList();
             if (hasDescription) {
                 description = new Description("Do my homework");
@@ -986,17 +1119,41 @@ public class LogicManagerTest {
             if (hasEndTime) {
                 endTime = new TodoTime("2016-10-04 15:00");
             }
+            if (hasRecurring){
+                recurring = new Recurring("daily");
+            }
             if (hasCategory) {
                 Category category1 = new Category("CS2101");
                 Category category2 = new Category("CS2103T");
                 categories = new UniqueCategoryList(category1, category2);
             }
 
-            return new Task(title, description, startTime, endTime, categories);
+            return new Task(title, description, startTime, endTime, recurring, categories);
         }
         
 
 
+        //@@author A0139401N
+        /**
+         * Generates a valid recurring task using the given seed.
+         * Running this function with the same parameter values guarantees the returned task will have the same state.
+         * Each unique seed will generate a unique Task object.
+         *
+         * @param seed used to generate the task data field values
+         */
+        public Task generateRecurringTask(int seed) throws Exception {
+            LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
+                    DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
+            return new Task(
+                    new Title("Task " + seed),
+                    new Description("" + Math.abs(seed)),
+                    new TodoTime(sampleDate),
+                    new TodoTime(sampleDate.plusDays(seed)),
+                    new Recurring("daily"),
+                    new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
+            );
+        }
+        
         //@@author A0147978E
         /**
          * Generates a valid task using the given seed.
@@ -1005,7 +1162,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        public Task generateTask(int seed) throws Exception {
             LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
@@ -1013,26 +1170,28 @@ public class LogicManagerTest {
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
+                    null,
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
-
+                
         //@@author A0147978E
         /**
-         * Generate Task with given seed, startTime and endTime
-         *
+         * Generate Task with given seed, startTime, endTime and recurring
+         * 
          * @param seed
          * @param startTime
          * @param endTime
          * @return
          */
-        Task generateTaskWithTime(int seed, String startTime, String endTime) {
+        public Task generateTaskWithTime(int seed, String startTime, String endTime, String recurring) {
             try {
                 return new Task(
                         new Title("Task " + seed),
                         new Description("" + Math.abs(seed)),
                         startTime != null ? new TodoTime(startTime) : null,
                         endTime != null ? new TodoTime(endTime) : null,
+                        recurring != null ? new Recurring(recurring) : null,
                         new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
                 );
             } catch (Exception e) {
@@ -1049,7 +1208,7 @@ public class LogicManagerTest {
          * @param Category... c
          * @return task with given seed and category
          */
-        Task generateTaskWithCategory(int seed, Category... c) {
+        public Task generateTaskWithCategory(int seed, Category... c) {
             try {
                 LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                         DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
@@ -1058,6 +1217,7 @@ public class LogicManagerTest {
                         new Description("" + Math.abs(seed)),
                         new TodoTime(sampleDate),
                         new TodoTime(sampleDate.plusDays(seed)),
+                        null, 
                         new UniqueCategoryList(Arrays.asList(c))
                 );
             } catch (Exception e) {
@@ -1068,14 +1228,14 @@ public class LogicManagerTest {
 
         //@@author A0147978E
         /**
-         * Generate task with title and description
-         *
+         * Generate task with title and description but without recurring tasks
+         * 
          * @param title
          * @param description
          * @return generated Task
          * @throws Exception
          */
-        Task generateTaskWithTitleAndDescription(String title, String description) throws Exception {
+        public Task generateTaskTitleAndDescription(String title, String description) throws Exception {
             Category category1 = new Category("CS2101");
             Category category2 = new Category("CS2103T");
             UniqueCategoryList categories = new UniqueCategoryList(category1, category2);
@@ -1083,12 +1243,14 @@ public class LogicManagerTest {
                     new Description(description),
                     new TodoTime("2016-10-03 14:00"),
                     new TodoTime("2016-10-04 15:00"),
+                    null,
                     categories);
         }
+        
 
         //@@author A0147978E
         /** Generates the correct add command based on the task given */
-        String generateAddCommand(Task r) {
+        public String generateAddCommand(Task r) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
@@ -1108,7 +1270,11 @@ public class LogicManagerTest {
                     cmd.append(r.getEndTime() + " ");
                 }
             }
-
+            
+            if (r.hasRecurring()){
+                cmd.append("/r ").append(r.getRecurring()).append(" ");
+            }          
+            
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
                 for(Category c: categories){
@@ -1123,7 +1289,7 @@ public class LogicManagerTest {
         /**
          * Generates an DoerList with auto-generated tasks.
          */
-        DoerList generateDoerList(int numGenerated) throws Exception{
+        public DoerList generateDoerList(int numGenerated) throws Exception{
             DoerList doerList = new DoerList();
             addToDoerList(doerList, numGenerated);
             return doerList;
@@ -1132,7 +1298,7 @@ public class LogicManagerTest {
         /**
          * Generates an DoerList based on the list of Tasks given.
          */
-        DoerList generateDoerList(List<Task> tasks) throws Exception{
+        public DoerList generateDoerList(List<Task> tasks) throws Exception{
             DoerList doerList = new DoerList();
             addToDoerList(doerList, tasks);
             return doerList;
@@ -1142,14 +1308,14 @@ public class LogicManagerTest {
          * Adds auto-generated Person objects to the given DoerList
          * @param doerList The DoerList to which the Persons will be added
          */
-        void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
+        public void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
             addToDoerList(doerList, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given DoerList
          */
-        void addToDoerList(DoerList doerList, List<Task> tasksToAdd) throws Exception{
+        public void addToDoerList(DoerList doerList, List<Task> tasksToAdd) throws Exception{
             for(Task c: tasksToAdd){
                 doerList.addTask(c);
             }
@@ -1159,14 +1325,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Task will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        public void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+        public void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
             for(Task t: tasksToAdd){
                 model.addTask(t);
             }
@@ -1175,14 +1341,15 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks.
          */
-        List<Task> generateTaskList(int numGenerated) throws Exception{
+        public List<Task> generateTaskList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
                 tasks.add(generateTask(i));
             }
             return tasks;
         }
-        List<Task> generateTaskList(Task... tasks) {
+        
+        public List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
 

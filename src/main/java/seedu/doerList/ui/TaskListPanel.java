@@ -277,7 +277,7 @@ public class TaskListPanel extends UiPart {
      */
     private void ensureTaskVisible(TaskCard taskcard) {
         double height = tasksScrollPane.getContent().getBoundsInLocal().getHeight();
-        double y = taskcard.getLayout().getParent().getBoundsInParent().getMaxY();
+        double y = taskcard.getLayout().getHeight();
         int sectionIndex = findSelectionSection(taskcard);
         SectionPanel section = sectionPanelControllers.get(sectionIndex);
         int selectionIndex = section.findSelectionIndex(taskcard);
@@ -343,6 +343,9 @@ public class TaskListPanel extends UiPart {
                             TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
                         t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
                         t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
+                        if (t1_represent.equals(t2_represent)) {
+                            return 0;
+                        }
                         return t1_represent.isBefore(t2_represent) ? -1 : 1;
                     }
                 });

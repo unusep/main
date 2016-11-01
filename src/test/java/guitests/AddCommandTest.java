@@ -61,20 +61,19 @@ public class AddCommandTest extends DoerListGuiTest {
         // add to empty todo list
         commandBox.runCommand("clear");
         List<TestCategory> expectedDisplayTaskPanel2 = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2)
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, td.task3)
         );
         List<TestCategory> expectedBuildInCategoryList2 = Lists.newArrayList(
-                new TestCategory(BuildInCategoryList.ALL.categoryName, 1, 1),
-                new TestCategory(BuildInCategoryList.TODAY.categoryName, 0, 0),
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 1, 0),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 1, 0),
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, 0, 0),
                 new TestCategory(BuildInCategoryList.INBOX.categoryName, 0, 0),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 0, 0)
         );
         List<TestCategory> expectedCategoryList2 = Lists.newArrayList(
-                new TestCategory("CS2101", 1, 1),
-                new TestCategory("CS2103", 1, 1)
+                new TestCategory("CS2101", 1, 0)
         );
-        assertAddSuccess(td.task2, expectedDisplayTaskPanel2, expectedBuildInCategoryList2, expectedCategoryList2);
+        assertAddSuccess(td.task3, expectedDisplayTaskPanel2, expectedBuildInCategoryList2, expectedCategoryList2);
               
         // invalid command
         commandBox.runCommand("adds Do Homework");

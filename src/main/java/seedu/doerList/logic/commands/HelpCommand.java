@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.logic.commands;
 
 
@@ -62,6 +63,9 @@ public class HelpCommand extends Command {
     
             case TaskdueCommand.COMMAND_WORD:
                 return new CommandResult(TaskdueCommand.MESSAGE_USAGE);
+                
+            case SaveCommand.COMMAND_WORD:
+                return new CommandResult(SaveCommand.MESSAGE_USAGE);
     
             case "":
                 EventsCenter.getInstance().post(new ShowHelpRequestEvent());

@@ -13,8 +13,7 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
 
 /**
- * Deletes a person identified using it's last displayed index from the
- * doerList.
+ * Edits a task identified using it's last displayed index from the doerList.
  */
 public class EditCommand extends Command {
 
@@ -22,7 +21,7 @@ public class EditCommand extends Command {
 
 	public static final String MESSAGE_USAGE = COMMAND_WORD
 			+ ": edit the task identified by the index number used in the last task listing.\n"
-			+ "Parameters: INDEX (must be a positive integer) [/t TASK] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...\n"
+			+ "Parameters: INDEX (must be a positive integer) [/t TASK] [/d DESCRIPTION] [/s START] [/e END] [/r PERIOD] [/c CATEGORY] ...\n"
 			+ "Example: " + COMMAND_WORD + " 1 /t Go to lecture /d study";
 
 	public static final String MESSAGE_EDIT_TASK_SUCCESS = "edit task: \nBefore: %1$s\nAfter: %2$s";
@@ -34,10 +33,11 @@ public class EditCommand extends Command {
 	private Description toUpdateDescription = null;
 	private TodoTime toUpdateStartTime = null;
 	private TodoTime toUpdateEndTime = null;
+	private Recurring toUpdateRecurring = null;
 	private UniqueCategoryList toUpdateCategories = null;
 
 	public EditCommand(int targetIndex, String title, String description,
-			String startTime, String endTime, Set<String> categories) throws IllegalValueException {
+			String startTime, String endTime, String recurring, Set<String> categories) throws IllegalValueException {
 		this.targetIndex = targetIndex;
 
         if (title != null) {
@@ -51,6 +51,9 @@ public class EditCommand extends Command {
         }
         if (endTime != null) {
             this.toUpdateEndTime = new TodoTime(endTime);
+        }
+        if (recurring != null) {
+            this.toUpdateRecurring = new Recurring(recurring);
         }
 
         if (!categories.isEmpty()) {
@@ -87,8 +90,8 @@ public class EditCommand extends Command {
 	/**
      * Generate new task based on updated information
      *
-     * @param original original Person (Person before update)
-     * @return Person with updated information
+     * @param original Task (Task before update)
+     * @return Task with updated information
      */
     private Task generateUpdatedTask(ReadOnlyTask original) {
         Task newTask = new Task(
@@ -96,6 +99,7 @@ public class EditCommand extends Command {
                 toUpdateDescription != null ? toUpdateDescription : original.getDescription(),
                 toUpdateStartTime != null ? toUpdateStartTime : original.getStartTime(),
                 toUpdateEndTime != null ? toUpdateEndTime : original.getEndTime(),
+                toUpdateRecurring != null ? toUpdateRecurring : original.getRecurring(),
                 toUpdateCategories != null ? toUpdateCategories : original.getCategories()
         );
         newTask.setBuildInCategories(original.getBuildInCategories());

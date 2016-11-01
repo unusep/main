@@ -19,6 +19,7 @@ import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.Recurring;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.testutil.TestCategory;
@@ -35,6 +36,7 @@ public class EditCommandTest extends DoerListGuiTest {
         afterEdition.setStartTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(10).toString()));
         afterEdition.setEndTime(new TodoTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(13).toString()));
         afterEdition.setCategories(new UniqueCategoryList(new Category("CS2103")));
+        afterEdition.setRecurring(new Recurring("daily"));
         
         // expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
@@ -55,13 +57,17 @@ public class EditCommandTest extends DoerListGuiTest {
                 new TestCategory("CS2103", 1, 0),
                 new TestCategory("MA1101R", 1, 0)
         );
-        assertEditSuccess("edit 1 /t Test Task 2 Edit Title /d Test Task 2 Edit Description /s today 10am /e today 1pm /c CS2103", 
+        assertEditSuccess("edit 1 /t Test Task 2 Edit Title "
+                + "/d Test Task 2 Edit Description "
+                + "/s today 10am /e today 1pm "
+                + "/r daily"
+                + "/c CS2103", 
                 td.task2, afterEdition, expectedDisplayTaskPanel, 
                 expectedBuildInCategoryList, expectedCategoryList);
         
        
         // edit task result in duplicate
-        commandBox.runCommand(afterEdition.getEditCommand(1));
+        commandBox.runCommand(afterEdition.getEditCommand(3));
         assertResultMessage(EditCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
 

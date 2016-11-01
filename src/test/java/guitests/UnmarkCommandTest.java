@@ -9,6 +9,7 @@ import seedu.doerList.logic.commands.UnmarkCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
+import seedu.doerList.model.task.TodoTime;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestTask;
 
@@ -64,6 +65,35 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));       
         //confirm the list now contains all previous persons plus the new person
         assertTrue(taskListPanel.isListMatching(expectedPanel_all));
+    }
+    
+    @Test
+    public void unmark_taskGetUpdated() throws IllegalValueException {
+        TestTask updatedTask = new TestTask(td.task3); // task3 has only start time
+        updatedTask.setStartTime(new TodoTime(updatedTask.getStartTime().value.minusDays(1)));
+        List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, 2, 0),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, 4, 0)
+        );
+        List<TestCategory> expectedCategoryList = Lists.newArrayList(
+                new TestCategory("CS2101", 2, 1),
+                new TestCategory("CS2103", 1, 1),
+                new TestCategory("MA1101R", 1, 0)
+        );
+        
+        List<TestCategory> expectedPanel = Lists.newArrayList(
+                new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
+                new TestCategory(BuildInCategoryList.TODAY.categoryName, updatedTask),
+                new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task6),
+                new TestCategory(BuildInCategoryList.INBOX.categoryName, td.task7),
+                new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task1,
+                        td.task4, td.task5, td.task8)
+        );
+        
+        assertUnmarkSuccess(2, td.task3, expectedPanel, expectedBuildInCategoryList, expectedCategoryList);              
     }
     
     //@@author A0139168W

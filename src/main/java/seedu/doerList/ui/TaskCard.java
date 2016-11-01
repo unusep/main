@@ -31,6 +31,7 @@ public class TaskCard extends UiPart {
 
     private VBox rootPanel;
     private int displayIndex;
+    private TaskCardRecurringBar recurringBar;
     
     @FXML
     private VBox taskPanel;
@@ -46,6 +47,8 @@ public class TaskCard extends UiPart {
     private Label taskCategory;
     @FXML
     private Label taskTime;
+    @FXML
+    private AnchorPane recurringBarPlaceholder;
 
     private ReadOnlyTask task;
     private AnchorPane placeHolderPane;
@@ -76,7 +79,7 @@ public class TaskCard extends UiPart {
         taskCategory.setText(task.getCategories().toString());
         displayTime();
         displayCategories();
-        // TODO need to parse to human readable time interval
+        displayRecurringBar();
     }
     
     /**
@@ -98,6 +101,12 @@ public class TaskCard extends UiPart {
             rightBar.getChildren().remove(taskCategory);
         } else {
             taskCategory.setText(task.getCategories().toString());
+        }
+    }
+    
+    private void displayRecurringBar() {
+        if (task.hasRecurring()) {
+            recurringBar = TaskCardRecurringBar.load(getPrimaryStage(), recurringBarPlaceholder, task.getRecurring());
         }
     }
 
