@@ -29,11 +29,20 @@
                               <Insets right="4.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="title" text="Task Name">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Label>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="title" text="Task Name">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane fx:id="recurringBarPlaceholder">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                   <Region HBox.hgrow="ALWAYS" />

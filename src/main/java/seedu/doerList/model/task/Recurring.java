@@ -102,6 +102,20 @@ public class Recurring {
                 this.getYears() == other.getYears();
     }
     
+    public String toHumanReadable() {
+        StringBuilder builder = new StringBuilder(); 
+        if (this.getYears() != 0) {
+            builder.append(this.getYears() + " year ");
+        }
+        if (this.getMonths() != 0) {
+            builder.append(this.getMonths() + " month ");
+        }
+        if (this.getDays() != 0) {
+            builder.append(this.getDays() + " day ");
+        }
+        return builder.toString();
+    }
+    
     @Override
     public String toString() {
         return this.getYears() + "-" + this.getMonths() + "-" + this.getDays();
