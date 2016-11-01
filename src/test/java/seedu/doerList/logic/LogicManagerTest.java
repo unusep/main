@@ -21,6 +21,7 @@ import org.junit.rules.TemporaryFolder;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.doerList.commons.core.EventsCenter;
+import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
@@ -140,11 +141,11 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
 
-    //@@author
+    //@@author A0139401N
     @Test
     public void execute_unknownCommandWord() throws Exception {
-        //String unknownCommand = "uicfhmowqewca";
-        //assertCommandBehavior(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
+        String unknownCommand = "uicfhmowqewca";
+        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
     }
 
     @Test
@@ -164,13 +165,13 @@ public class LogicManagerTest {
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
         assertCommandBehavior("help edit", EditCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help unmark", UnmarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help mark", MarkCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help unmark", UnmarkCommand.MESSAGE_USAGE);
         assertCommandBehavior("help list", ListCommand.MESSAGE_USAGE);
         assertCommandBehavior("help find", FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("help view", ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("help delete", DeleteCommand.MESSAGE_USAGE);
-        //assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
+        assertCommandBehavior("help taskdue", TaskdueCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -835,7 +836,11 @@ public class LogicManagerTest {
                     cmd.append(r.getEndTime() + " ");
                 }
             }
-
+            
+            if (r.hasRecurring()){
+                cmd.append("/r ").append(r.getRecurring()).append(" ");
+            }          
+            
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
                 for(Category c: categories){

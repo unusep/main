@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.logic.commands;
 
 
@@ -30,36 +31,31 @@ public class HelpCommand extends Command {
 
         case AddCommand.COMMAND_WORD:
             return new CommandResult(AddCommand.MESSAGE_USAGE);
-
-        case EditCommand.COMMAND_WORD:
-            return new CommandResult(EditCommand.MESSAGE_USAGE);
-
-        //case MarkCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_MARK_MESSAGE);
-
-        //case UnmarkCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_UNMARK_MESSAGE);
-
-        case ListCommand.COMMAND_WORD:
-            return new CommandResult(ListCommand.MESSAGE_USAGE);
-
-        case FindCommand.COMMAND_WORD:
-            return new CommandResult(FindCommand.MESSAGE_USAGE);
-
-        case ViewCommand.COMMAND_WORD:
-            return new CommandResult(ViewCommand.MESSAGE_USAGE);
-
+            
         case DeleteCommand.COMMAND_WORD:
             return new CommandResult(DeleteCommand.MESSAGE_USAGE);
 
-        //case UndoCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_UNDO_MESSAGE);
+        case EditCommand.COMMAND_WORD:
+            return new CommandResult(EditCommand.MESSAGE_USAGE);
+            
+        case FindCommand.COMMAND_WORD:
+            return new CommandResult(FindCommand.MESSAGE_USAGE);
 
-        //case RedoCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_REDO_MESSAGE);
+        case ListCommand.COMMAND_WORD:
+            return new CommandResult(ListCommand.MESSAGE_USAGE);
+            
+        case MarkCommand.COMMAND_WORD:
+            return new CommandResult(MarkCommand.MESSAGE_USAGE);
+            
+        case TaskdueCommand.COMMAND_WORD:
+            return new CommandResult(TaskdueCommand.MESSAGE_USAGE);
 
-        //case TaskdueCommand.COMMAND_WORD:
-        //    return new CommandResult(SHOWING_HELP_TASKDUE_MESSAGE);
+        case UnmarkCommand.COMMAND_WORD:
+            return new CommandResult(UnmarkCommand.MESSAGE_USAGE);
+
+        case ViewCommand.COMMAND_WORD:
+            return new CommandResult(ViewCommand.MESSAGE_USAGE);
+       
 
         case "":
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
