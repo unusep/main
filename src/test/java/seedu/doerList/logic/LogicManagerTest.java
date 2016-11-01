@@ -141,12 +141,12 @@ public class LogicManagerTest {
         assertEquals(expectedDoerList, latestSavedDoerList);
     }
 
-    //@@author A0139401N
+    //@@author A0139401N 
     @Test
-    public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
-    }
+    public void execute_unknownCommandWord() throws Exception { 
+        String unknownCommand = "uicfhmowqewca"; 
+        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);  
+    } 
 
     @Test
     public void execute_help_noArgs() throws Exception {
