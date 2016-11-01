@@ -15,8 +15,6 @@ public class TimeParser {
 
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    public TimeParser() {}
-
     public String parse(String s) throws IllegalValueException {
         try {
             Parser parser = new Parser();

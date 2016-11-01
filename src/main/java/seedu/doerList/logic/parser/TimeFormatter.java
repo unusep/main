@@ -9,8 +9,6 @@ public class TimeFormatter {
     public static final DateTimeFormatter patternWithYear = DateTimeFormatter.ofPattern("Y-M-d HH:mm");
     public static final DateTimeFormatter patternWithoutYear = DateTimeFormatter.ofPattern("M-d HH:mm");
     public static final DateTimeFormatter patternHourMinute = DateTimeFormatter.ofPattern("HH:mm");
-    
-    public TimeFormatter() {}
 
     public String toHumanReadableTime(LocalDateTime time) {
         LocalDateTime now = LocalDateTime.now();
