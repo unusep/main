@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.ui.TaskCard;
+import seedu.doerList.ui.TaskCardRecurringBar;
 
 /**
  * Provides a handle to a task card in the task list panel.
@@ -46,6 +47,10 @@ public class TaskCardHandle extends GuiHandle {
         return getTextFromLabel("#" + TaskCard.TIME_FIELD_ID);
     }
     
+    public String getRecurringText() {
+        return getTextFromLabel("#" + TaskCardRecurringBar.INTERVAL_FIELD_ID);
+    }
+    
     public String getCategory() {
         return getTextFromLabel("#" + TaskCard.CATEGORY_FIELD_ID);
     }
@@ -60,7 +65,8 @@ public class TaskCardHandle extends GuiHandle {
         return task.getTitle().fullTitle.equals(this.getFullTitle())
                 && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))
                 && (task.isFloatingTask() || task.getTime().equals(this.getTime()))
-                && (task.getCategories().isEmpty() || task.getCategories().toString().equals(this.getCategory()));
+                && (task.getCategories().isEmpty() || task.getCategories().toString().equals(this.getCategory()))
+                && (!task.hasRecurring() || task.getRecurring().toHumanReadable().equals(this.getRecurringText()));
     }
 
     @Override

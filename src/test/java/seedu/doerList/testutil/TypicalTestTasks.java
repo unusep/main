@@ -27,7 +27,7 @@ public class TypicalTestTasks {
                     .withCategories("CS2101", "CS2103").build();
             task3 =  new TaskBuilder().withTitle("CA1 Guide").withDescription("Do your homework 1")
                     .withStartTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8))
-                    .withCategories("CS2101").build(); // task today
+                    .withCategories("CS2101").withRecurring("daily").build(); // task today recurring daily
             task4 = new TaskBuilder().withTitle("Lecture Quiz 2").withDescription("Do your homework 5")
                     .withStartTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8))
                     .withEndTime(TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12)).withCategories("MA1101R")

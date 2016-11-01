@@ -8,6 +8,7 @@ import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
 import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.Recurring;
 import seedu.doerList.model.task.Title;
 import seedu.doerList.model.task.TodoTime;
 
@@ -42,6 +43,11 @@ public class TaskBuilder {
                 // impossible
             };
         }
+        return this;
+    }
+    
+    public TaskBuilder withRecurring(String recurring) throws IllegalValueException {
+        task.setRecurring(new Recurring(recurring));
         return this;
     }
     
