@@ -84,12 +84,12 @@ public class BuildInCategoryList implements Iterable<Category> {
      * Reset all predefined buildInCategories' predicates.
      */
     public static void resetBuildInCategoryPredicate() {
-        ALL.setToDeafultPredicate();
-        TODAY.setToDeafultPredicate();
-        NEXT.setToDeafultPredicate();
-        INBOX.setToDeafultPredicate();
-        COMPLETE.setToDeafultPredicate();
-        DUE.setToDeafultPredicate();
+        ALL.setToDefaultPredicate();
+        TODAY.setToDefaultPredicate();
+        NEXT.setToDefaultPredicate();
+        INBOX.setToDefaultPredicate();
+        COMPLETE.setToDefaultPredicate();
+        DUE.setToDefaultPredicate();
     }
     
     /**

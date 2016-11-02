@@ -38,7 +38,7 @@ public class BuildInCategory extends Category {
     /**
      * Reset the buildInCategory to default predicate.
      */
-    public void setToDeafultPredicate() {
+    public void setToDefaultPredicate() {
         this.currentPredicate = this.defaultPredicate;
         this.categoryName = this.defaultCategoryName;
     }

@@ -39,7 +39,7 @@ public class FindCommand extends Command {
     }
 
     private void updateCategoryAllPredicate() {
-        BuildInCategoryList.ALL.setToDeafultPredicate();
+        BuildInCategoryList.ALL.setToDefaultPredicate();
         BuildInCategoryList.ALL.updatePredicate(generateTaskPredicate(this.keywords));
     }
 
