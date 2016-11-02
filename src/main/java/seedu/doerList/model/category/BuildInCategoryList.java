@@ -4,11 +4,13 @@ package seedu.doerList.model.category;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.util.TimeUtil;
+import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 
 /**
@@ -28,56 +30,70 @@ public class BuildInCategoryList implements Iterable<Category> {
     static {
         try {
             ALL = new BuildInCategory("All", (task) -> {return true;});     
-            INBOX = new BuildInCategory("Inbox", (task) -> {
-                return task.isFloatingTask();
-            });
-            COMPLETE = new BuildInCategory("Complete", (task) -> {
-                return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
-            });
-
-            TODAY = new BuildInCategory("Today", (task) -> {                
-                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
-                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
-                if (!INBOX.getPredicate().test(task)) {
-                    if (task.hasStartTime() && !task.hasEndTime()) {
-                        return task.getStartTime().value.isBefore(todayEnd);
-                    } else if (task.hasEndTime() && !task.hasStartTime()) {
-                        return task.getEndTime().value.isAfter(todayBegin) &&
-                                task.getEndTime().value.isBefore(todayEnd);
-                    } else {
-                        // interval match
-                        if (task.getEndTime().value.isAfter(todayBegin) 
-                                && task.getStartTime().value.isBefore(todayEnd)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                } else {
-                    return false;
-                }
-            });
-            NEXT = new BuildInCategory("Next", (task) -> {
-                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
-                if (task.hasStartTime()) {
-                    return task.getStartTime().value.isAfter(todayEnd);
-                } else if (task.hasEndTime()) {
-                    return task.getEndTime().value.isAfter(todayEnd);
-                } else {
-                    return false;
-                }
-            });         
-            DUE = new BuildInCategory("Overdue", (task) -> {
-                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
-                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) && 
-                        
-                        task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
-            });
+            INBOX = new BuildInCategory("Inbox", generateInboxPredicate());
+            COMPLETE = new BuildInCategory("Complete", generateComplatePredicate());
+            TODAY = new BuildInCategory("Today", generateTodayPredicate());
+            NEXT = new BuildInCategory("Next", generateNextPredicate());         
+            DUE = new BuildInCategory("Overdue", generateDuePredicate());
         } catch (Exception e) {
             e.printStackTrace();
             // impossible
             throw new RuntimeException("Could not init class.", e);
         }
+    }
+
+/** ======== Predicate generator for Build-in Category ========= **/
+    private static Predicate<ReadOnlyTask> generateInboxPredicate() {
+        return (task) -> {
+            return task.isFloatingTask();
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateComplatePredicate() {
+        return (task) -> {
+            return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
+        };
+    }
+    
+    private static Predicate<ReadOnlyTask> generateDuePredicate() {
+        return (task) -> {
+            LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
+            return !COMPLETE.getPredicate().test(task)
+                    && 
+                    task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateNextPredicate() {
+        return (task) -> {
+            LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
+            if (task.hasStartTime()) {
+                return task.getStartTime().value.isAfter(todayEnd);
+            } else if (task.hasEndTime()) {
+                return task.getEndTime().value.isAfter(todayEnd);
+            } else {
+                return false;
+            }
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateTodayPredicate() {
+        return (task) -> {                
+            LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
+            LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
+            if (task.isBeginAtTask()) {
+                return task.getStartTime().value.isBefore(todayEnd);
+            } else if (task.isDueTask()) {
+                return task.getEndTime().value.isAfter(todayBegin) &&
+                        task.getEndTime().value.isBefore(todayEnd);
+            } else if (task.isStartEndTask()){
+                //interval match
+                return task.getEndTime().value.isAfter(todayBegin) 
+                        && task.getStartTime().value.isBefore(todayEnd);
+            } else {
+                return false;
+            }
+        };
     }
     
     /**
@@ -105,6 +121,9 @@ public class BuildInCategoryList implements Iterable<Category> {
         COMPLETE.setFilteredTaskList(observableList);
         DUE.setFilteredTaskList(observableList);
     }
+    
+    
+/** ======== Logic for buildInCategoryList ========= **/
     
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
 
