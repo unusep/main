@@ -3,6 +3,7 @@ package seedu.doerList.model.category;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -137,13 +138,23 @@ public class BuildInCategoryList implements Iterable<Category> {
     public BuildInCategoryList() {}
       
     public BuildInCategoryList(Collection<Category> stroedList) {
-        BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
         for(Category c : stroedList) {
-            for(BuildInCategory bc : buildInCategories) {
-                if (c.categoryName.equals(bc.categoryName)) {
-                    internalList.add(bc);
-                }
-            }
+            syncBuildInCategoryWithMaster(c);
+        }
+    }
+    
+    /**
+     * Convert the buildInCategory from storage to map the static 
+     * buildInCategory in this class
+     * 
+     * @param buildInCategory
+     */
+    public void syncBuildInCategoryWithMaster(Category buildInCategory) {
+        HashMap<Category, BuildInCategory> master = new HashMap<Category, BuildInCategory>();
+        master.put(COMPLETE, COMPLETE); // currently only one stored buildInCategory
+        BuildInCategory match = master.get(buildInCategory);
+        if (match != null && !internalList.contains(match)) {
+            internalList.add(match);
         }
     }
     
