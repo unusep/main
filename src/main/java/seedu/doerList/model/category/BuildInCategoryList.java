@@ -137,12 +137,9 @@ public class BuildInCategoryList implements Iterable<Category> {
     public BuildInCategoryList() {}
       
     public BuildInCategoryList(Collection<Category> stroedList) {
-        BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
         for(Category c : stroedList) {
-            for(BuildInCategory bc : buildInCategories) {
-                if (c.categoryName.equals(bc.categoryName)) {
-                    internalList.add(bc);
-                }
+            if (c.isBuildIn() && !internalList.contains(c)) {
+                internalList.add(c);
             }
         }
     }
