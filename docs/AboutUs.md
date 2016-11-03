@@ -28,7 +28,8 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 - Components in charge of: [UI](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/DeveloperGuide.md#ui-component)
 - Aspects/tools in charge of: Guides, Balsamiq, Markdown
 - Features implemented:
-	- [Help Feautre](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
+	- [Add Recurring Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#adding-a-task--add)
+	- [Help Command](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
 	- [Exit Program](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#exiting-the-program--exit)
 - Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0139401N.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0139401N.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0139401N.md)]
 - Other major contributions
@@ -58,7 +59,7 @@ Role: Developer <br>
 - Features implemented:
 	- [Add Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#adding-a-task--add)
 	- [Edit Tasks](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#editing-a-task--edit)
-	- [Help](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
+	- [Help Function](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#viewing-help--help)
 	- [Task Due](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/docs/UserGuide.md#find-all-tasks-due--taskdue)
 - Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0140905M.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0140905M.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0140905M.md)]
 - Other major contributions
