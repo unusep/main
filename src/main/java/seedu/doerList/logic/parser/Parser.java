@@ -27,11 +27,14 @@ public class Parser {
     private static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
+    //@@author A0147978E
     private static final Pattern TASK_DATA_TITLE_FORMAT = Pattern.compile("\\/t(?<title>[^\\/]+)");
     private static final Pattern TASK_DATA_DESCRIPTION_FORMAT = Pattern.compile("\\/d(?<description>[^\\/]+)");
     private static final Pattern TASK_DATA_STARTTIME_FORMAT = Pattern.compile("\\/s(?<startTime>[^\\/]+)");
     private static final Pattern TASK_DATA_ENDTIME_FORMAT = Pattern.compile("\\/e(?<endTime>[^\\/]+)");
     private static final Pattern TASK_DATA_CATEGORIES_FORMAT = Pattern.compile("\\/c(?<categories>[^\\/]+)");
+    //@@author A0139401N
+    private static final Pattern TASK_DATA_RECURRING_FORMAT = Pattern.compile("\\/r(?<recurring>[^\\/]+)");
 
     public Parser() {}
 
@@ -72,6 +75,12 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return prepareList(arguments);
+            
+        case UndoCommand.COMMAND_WORD:
+            return prepareUndo(arguments);
+            
+        case RedoCommand.COMMAND_WORD:
+            return prepareRedo(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -87,6 +96,10 @@ public class Parser {
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
+            
+        case SaveCommand.COMMAND_WORD:
+            return new SaveCommand(arguments.trim());
+             
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
@@ -105,6 +118,7 @@ public class Parser {
         final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
         final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
         final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
+        final Matcher recurringMatcher = TASK_DATA_RECURRING_FORMAT.matcher(args.trim());
         // Validate arg string format (can be only with title)
         if (!titleMatcher.find()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -114,8 +128,10 @@ public class Parser {
                     titleMatcher.group("title").trim(),
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher)
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,        
+                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null,
+                    getCategoriesFromArgs(categoriesMatcher)
+                    
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -123,10 +139,10 @@ public class Parser {
     }
 
     /**
-     * Extracts the new task's tags from the add command's tag arguments string.
+     * Extracts the new task's categories from the add command's tag arguments string.
      * Merges duplicate tag strings.
      */
-    private static Set<String> getTagsFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
+    private static Set<String> getCategoriesFromArgs(Matcher categoriesMatcher) throws IllegalValueException {
         // replace first delimiter prefix, then split
         final Collection<String> tagStrings = new ArrayList<String>();
         while(categoriesMatcher.find()) {
@@ -145,20 +161,21 @@ public class Parser {
     private Command prepareEdit(String args) {
         try {
             final int targetIndex = findDisplayedIndexInArgs(args);
-            final String removeArgsIndex = args.replaceFirst(String.valueOf(targetIndex), ""); // remove the index
             final Matcher titleMatcher = TASK_DATA_TITLE_FORMAT.matcher(args.trim());
             final Matcher descriptionMatcher = TASK_DATA_DESCRIPTION_FORMAT.matcher(args.trim());
             final Matcher startTimeMatcher = TASK_DATA_STARTTIME_FORMAT.matcher(args.trim());
             final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
+            final Matcher recurringMatcher = TASK_DATA_RECURRING_FORMAT.matcher(args.trim());
             final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
-
+            
             return new EditCommand(
                     targetIndex,
                     titleMatcher.find() ? titleMatcher.group("title").trim() : null,
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
                     endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
-                    getTagsFromArgs(categoriesMatcher)
+                    recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null,
+                    getCategoriesFromArgs(categoriesMatcher)
                 );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
@@ -200,6 +217,7 @@ public class Parser {
         return new DeleteCommand(index.get());
     }
     
+    //@@author A0147978E
     /**
      * Parses arguments in the context of the category name.
      *
@@ -214,6 +232,7 @@ public class Parser {
         }
     }
 
+    //@@author A0147978E
     /**
      * Parses arguments in the context of the select task command.
      *
@@ -267,6 +286,7 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
     
+    //@@author A0139168W
     /**
      * Parses arguments in the context of the unmark task command.
      *
@@ -282,7 +302,7 @@ public class Parser {
 
         return new UnmarkCommand(index.get());
     }
-
+    //@@author A0139168W
     /**
      * Parses arguments in the context of the mark task command.
      *
@@ -297,6 +317,37 @@ public class Parser {
         }
 
         return new MarkCommand(index.get());
+    }
+    //@@author
+    
+    /**
+     * Parses arguments in the context of the undo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUndo(String args) {
+        if(!args.trim().equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+        }
+
+        return new UndoCommand();
+    }
+
+    /**
+     * Parses arguments in the context of the redo task command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareRedo(String args) {
+        if(!args.trim().equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        }
+
+        return new RedoCommand();
     }
     
     /**

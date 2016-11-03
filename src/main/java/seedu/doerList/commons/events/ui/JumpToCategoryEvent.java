@@ -1,10 +1,11 @@
+//@@author A0147978E
 package seedu.doerList.commons.events.ui;
 
 import seedu.doerList.commons.events.BaseEvent;
 import seedu.doerList.model.category.Category;
 
 /**
- * Indicates a request to jump to the category
+ * Indicates a request to jump to a category
  */
 public class JumpToCategoryEvent extends BaseEvent {
 

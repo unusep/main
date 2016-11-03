@@ -11,6 +11,7 @@ import seedu.doerList.commons.core.Version;
 import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
 import seedu.doerList.commons.exceptions.DataConversionException;
 import seedu.doerList.commons.util.ConfigUtil;
+import seedu.doerList.commons.util.FileUtil;
 import seedu.doerList.commons.util.StringUtil;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.logic.LogicManager;
@@ -20,6 +21,7 @@ import seedu.doerList.storage.StorageManager;
 import seedu.doerList.ui.Ui;
 import seedu.doerList.ui.UiManager;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
@@ -49,7 +51,9 @@ public class MainApp extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-        storage = new StorageManager(config.getDoerListFilePath(), config.getUserPrefsFilePath());
+        storage = new StorageManager(config.getDoerListFilePath(), 
+                config.getUserPrefsFilePath(), 
+                initConfigFilePath(getApplicationParameter("config")));
 
         userPrefs = initPrefs(config);
 
@@ -92,16 +96,27 @@ public class MainApp extends Application {
     private void initLogging(Config config) {
         LogsCenter.init(config);
     }
+    
+    protected String initConfigFilePath(String configFilePath) {
+        if (configFilePath == null) {
+            return Config.DEFAULT_CONFIG_FILE;
+        }
+        try {
+            FileUtil.createIfMissing(new File(configFilePath));
+            return configFilePath;
+        } catch (IOException e) {
+            return Config.DEFAULT_CONFIG_FILE;
+        }
+    }
 
     protected Config initConfig(String configFilePath) {
         Config initializedConfig;
         String configFilePathUsed;
 
-        configFilePathUsed = Config.DEFAULT_CONFIG_FILE;
+        configFilePathUsed = initConfigFilePath(configFilePath);
 
-        if(configFilePath != null) {
+        if(configFilePathUsed.equals(configFilePath)) {
             logger.info("Custom Config file specified " + configFilePath);
-            configFilePathUsed = configFilePath;
         }
 
         logger.info("Using config file : " + configFilePathUsed);

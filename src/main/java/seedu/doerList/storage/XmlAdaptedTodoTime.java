@@ -1,20 +1,20 @@
 package seedu.doerList.storage;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
-import org.joda.time.DateTime;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.task.TodoTime;
 
 /**
- * JAXB-friendly adapted version of the TimeInterval.
+ * JAXB-friendly adapted version of the Todo Time.
  */
 public class XmlAdaptedTodoTime {
 
-    @XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
-    private DateTime value;
+    @XmlJavaTypeAdapter(JavaTimeAdapter.class)
+    private LocalDateTime value;
 
     /**
      * No-arg constructor for JAXB use.

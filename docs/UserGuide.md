@@ -1,5 +1,5 @@
 # User Guide
-
+[//]: # (@@author A0139401N)
 * [About Us](#about-us)
 * [Overiew](#overview)
 * [Getting Started](#getting-started)
@@ -21,17 +21,19 @@
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
+[//]: # (@@author A0139401N)
 ## About Us
-Living in the modern and fast-paced world nowadays, we are constantly bombarded with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
+Living in the modern and fast-paced world nowadays, we are constantly overwhelemed with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
 
 Do-er List is a task manager that is designed for students and office workers. It is a beginner-friendly desktop program that aids you in the planning and completion of your daily tasks.  It does not matter if you are planning a big birthday surprise event or recurring task of handling the laundry every now and then, Do-er List is here to resolve your problems.
 
 This user guide aims to allow any user to seamlessly use the product, as intended to. Just follow the instructions as stated and you will get the results you desire.
 
-Eager and excited? Then proceed!   
+Eager and excited? Then let us proceed!
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ## Overview
 
 <img src="../docs/images/UI_Guide/demo_labels.png" width="800">
@@ -58,6 +60,7 @@ All commands start with a command words, followed by fields that are replaced by
 <br>
 *Please take note of the following:*
 
+[//]: # (@@author A0139401N)
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
    > This app will not work with earlier versions of Java 8.<br>
    
@@ -68,9 +71,9 @@ All commands start with a command words, followed by fields that are replaced by
 5. Type the command in the command box and press <kbd>Enter</kbd> to execute it.
    *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
 6. Some example commands you can try:
-   * **`add`**` -t Do post-lecture quiz <today->tomorrow> -c CS2103` :
-     adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today`
-	 and ends` tomorrow` under the category `CS2103`.
+   * **`add`**` /t Do post-lecture quiz /s today 10:00 /e tomorrow 12:00 /c CS2103` :
+     adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today` at `10:00`
+	 and ends` tomorrow` at `13:00`  under the category `CS2103`.
 	* **`list`**` CS2103` : lists all tasks in **CS2103**
    * **`delete`**` 1` : deletes the 1st task shown in the current list
    * **`exit`** : exits the application
@@ -87,6 +90,7 @@ All commands start with a command words, followed by fields that are replaced by
 > * Items with `...` after them can have multiple instances.
 > * If a command has multiple parameters, the order of parameters doesn't matter.
 
+[//]: # (@@author A0139401N)
 #### Viewing help : `help`
 Format: `help` or `help [COMMAND_NAME]`
 
@@ -96,6 +100,8 @@ Format: `help` or `help [COMMAND_NAME]`
 
 [Back To Top](#user-guide)
 
+
+[//]: # (@@author A0139401N)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
 Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
@@ -119,8 +125,11 @@ Examples:
 * `add /t Daily Exercise and Workout!`<br>
 * `add /t Call Mum in Hanoi /d Limit chat timing for overseas charges /s tomorrow 8pm /e tomorrow 10pm /c Optional`
 
+[//]: # (@@author)
+
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Editing a task : `edit`
 Edit an existing task in the Do-*er* List<br>
 Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...`
@@ -136,8 +145,10 @@ Examples:
 
 > Attributes that are not supplied will not be updated 
 
+
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Mark task as done : `mark`
 Marks a certain task as done in the Do*er*-list.<br>
 Format: `mark TASK_NUMBER`
@@ -152,6 +163,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 #### Unmark task as done : `unmark`
 Marks a certain task as undone in the Do*er*-list.<br>
 Format: `unmark TASK_NUMBER`
@@ -166,6 +178,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Listing tasks in a certain category : `list`
 Shows a list of all tasks in the Do*er*-list under the specific category.<br>
 Format: `list [CATEGORY]` or `list [DATE]`
@@ -190,6 +203,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### Finding all tasks containing any keyword in their name : `find`
 Finds tasks whose names contain any of the given keywords.<br>
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -210,6 +224,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0147978E)
 #### View a task : `view`
 Views the task identified by the index number used in the last task listing.<br>
 Format: `view INDEX`
@@ -228,6 +243,7 @@ Examples:
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
 
+[//]: # (@@author A0147978E)
 [Back To Top](#user-guide)
 
 #### Deleting a task : `delete`
@@ -251,6 +267,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139168W)
 #### Undo the most recent operation : `undo`
 Undo the most recent operation which modify the data in the Do*er*-list<br>
 Format: `undo`
@@ -294,14 +311,17 @@ Examples:
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
+[//]: # (@@author)
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ### Saving the data 
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0139401N)
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>

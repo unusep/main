@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.model.task;
 
 import seedu.doerList.model.category.BuildInCategory;
@@ -12,8 +13,14 @@ public interface ReadOnlyTask {
 
     Title getTitle();
     Description getDescription();
+    Recurring getRecurring();
+    
     default boolean hasDescription() {
         return getDescription() != null;
+    }
+    
+    default boolean hasRecurring(){
+        return getRecurring() != null;
     }
     
     TodoTime getStartTime();
@@ -34,24 +41,24 @@ public interface ReadOnlyTask {
         if (hasStartTime() && !hasEndTime()) {
             builder
             .append(" Begin At: ")
-            .append(getStartTime());
+            .append(getStartTime().toHumanReadableTime());
         }
         if (!hasStartTime() && hasEndTime()) {
             builder
             .append(" Due: ")
-            .append(getEndTime());
+            .append(getEndTime().toHumanReadableTime());
         }
         if (hasStartTime() && hasEndTime()) {
             builder
             .append(" Time: ")
-            .append(getStartTime() + "->" + getEndTime());
+            .append(getStartTime().toHumanReadableTime() + " -> " + getEndTime().toHumanReadableTime());
         }
         return builder.toString();
     }
 
     /**
-     * The returned TagList is a deep copy of the internal TagList,
-     * changes on the returned list will not affect the person's internal tags.
+     * The returned CategoryList is a deep copy of the internal CategoryList,
+     * changes on the returned list will not affect the person's internal categories.
      */
     UniqueCategoryList getCategories();
     
@@ -75,11 +82,14 @@ public interface ReadOnlyTask {
                 && ((!other.hasEndTime() && !this.hasEndTime()) 
                         || (other.hasEndTime() && this.hasEndTime() 
                                 && other.getEndTime().equals(this.getEndTime())))
+                && ((!other.hasRecurring() && !this.hasRecurring()) 
+                        || (other.hasRecurring() && this.hasRecurring() 
+                                && other.getRecurring().equals(this.getRecurring())))
                 && this.getBuildInCategories().equals(other.getBuildInCategories()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the task as text, showing all the task details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
@@ -88,24 +98,13 @@ public interface ReadOnlyTask {
             builder.append(" Description: ").append(getDescription());
         }
         builder.append(getTime());
+        if (hasRecurring()) {
+            builder.append(" Recurring: " + getRecurring().toHumanReadable());
+        }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");
             getCategories().forEach(builder::append);
         }
         return builder.toString();
-    }
-
-    /**
-     * Returns a string representation of this task's categories
-     */
-    default String categoriesString() {
-        final StringBuffer buffer = new StringBuffer();
-        final String separator = ", ";
-        getCategories().forEach(category -> buffer.append(category).append(separator));
-        if (buffer.length() == 0) {
-            return "";
-        } else {
-            return buffer.substring(0, buffer.length() - separator.length());
-        }
     }
 }

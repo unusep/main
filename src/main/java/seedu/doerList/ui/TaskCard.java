@@ -1,29 +1,31 @@
+//@@author A0147978E
 package seedu.doerList.ui;
-
 
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.LogsCenter;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
-import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.doerList.commons.util.FxViewUtil;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 
+/** Card represents a specific task */
 public class TaskCard extends UiPart {
     public static final String DESCRIPTION_FIELD_ID = "description";
-    public static final String TIME_FIELD_ID = "time";
+    public static final String TIME_FIELD_ID = "taskTime";
+    public static final String CATEGORY_FIELD_ID = "taskCategory";
+    public static final String ACTIVE_STATUS_BACKGROUND = "-fx-background-color: #deeff5;";
+    public static final String INACTIVE_STATUS_BACKGROUD = "-fx-background-color: #e6e6e6;";
+    public static final String COMPLETE_STATUS_FONT_COLOR = "#787878";
     
     public static TaskCard selectedTaskController;
     
@@ -32,17 +34,24 @@ public class TaskCard extends UiPart {
 
     private VBox rootPanel;
     private int displayIndex;
+    private TaskCardRecurringBar recurringBar;
     
     @FXML
     private VBox taskPanel;
     @FXML
     private AnchorPane descriptionPanel;
     @FXML
-    private AnchorPane timePanel;
-    @FXML
     private Label title;
     @FXML
     private Label index;
+    @FXML
+    private VBox rightBar; // hold taskCategory Label and taskTime Label
+    @FXML
+    private Label taskCategory;
+    @FXML
+    private Label taskTime;
+    @FXML
+    private AnchorPane recurringBarPlaceholder;
 
     private ReadOnlyTask task;
     private AnchorPane placeHolderPane;
@@ -62,18 +71,53 @@ public class TaskCard extends UiPart {
 
     public void configure(int displayIndex) {
         taskPanel.setUserData(this); // store the controller
-        title.setText(task.getTitle().fullTitle);
-        index.setText("#" + displayIndex);
-        // don't display description by default
-        // TODO need to parse to human readable time interval
-        // TODO currently just support floating task
-        // TODO need to find way to display category
+        displayTask(displayIndex);
         this.displayIndex = displayIndex;
         addToPlaceholder();
     }
+
+    private void displayTask(int displayIndex) {
+        title.setText(task.getTitle().fullTitle);
+        index.setText(displayIndex + "");
+        if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
+            title.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
+            index.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
+        }
+        taskCategory.setText(task.getCategories().toString());
+        displayTime();
+        displayCategories();
+        displayRecurringBar();
+    }
     
-    private void addToPlaceholder() {
-        
+    /**
+     * Display the time of task, if the task is floating task, simply remove the node.
+     */
+    private void displayTime() {
+        if (task.isFloatingTask()) {
+            rightBar.getChildren().remove(taskTime);
+        } else {
+            taskTime.setText(task.getTime());
+        }
+    }
+    
+    /**
+     * Display the categories of task, if the task has no categories, simply remove the node.
+     */
+    private void displayCategories() {
+        if (task.getCategories().isEmpty()) {
+            rightBar.getChildren().remove(taskCategory);
+        } else {
+            taskCategory.setText(task.getCategories().toString());
+        }
+    }
+    
+    private void displayRecurringBar() {
+        if (task.hasRecurring()) {
+            recurringBar = TaskCardRecurringBar.load(getPrimaryStage(), recurringBarPlaceholder, task.getRecurring());
+        }
+    }
+
+    private void addToPlaceholder() {       
         placeHolderPane.getChildren().add(rootPanel);
     }
 
@@ -100,31 +144,46 @@ public class TaskCard extends UiPart {
         return FXML;
     }
     
+    /**
+     * Set this TaskCard as being selected.
+     */
     public void setActive() {
         // to ensure that there is only one task activated
         if (selectedTaskController != null) {
             selectedTaskController.setInactive();
         }
-        taskPanel.setStyle("-fx-background-color: #deeff5;");
+        // change the background color
+        taskPanel.setStyle(ACTIVE_STATUS_BACKGROUND);
         selectedTaskController = this;
         expandDetails();
     }
     
+    /**
+     * Unselect this TaskCard.
+     */
     public void setInactive() {
-        taskPanel.setStyle("-fx-background-color: #e6e6e6;");
+        // change the background color
+        taskPanel.setStyle(INACTIVE_STATUS_BACKGROUD);
         closeDetails();
     }
     
+    /**
+     * Expend the details of the task in UI.
+     */
     private void expandDetails() {
         showDescription();
-        showTime();
     }
     
+    /**
+     * Hide the details of the task in UI.
+     */
     private void closeDetails() {
         hideDescription();
-        hideTime();
     }
     
+    /**
+     * Show the description of task in UI.
+     */
     private void showDescription() {
         if (task.hasDescription()) {
             Text descriptionField = new Text();
@@ -135,23 +194,11 @@ public class TaskCard extends UiPart {
         }
     }
     
+    /**
+     * Hide the description of task in UI.
+     */
     private void hideDescription() {
         descriptionPanel.getChildren().clear();
-    }
-    
-    private void showTime() {
-        String result = task.getTime();
-        if (result.length() != 0) {
-            Text timeField = new Text();
-            timeField.setId(TIME_FIELD_ID);
-            timeField.setText(result);
-            timePanel.getChildren().add(timeField);
-            FxViewUtil.applyAnchorBoundaryParameters(timeField, 0, 0, 0, 0);
-        }
-    }
-    
-    private void hideTime() {
-        timePanel.getChildren().clear();
     }
     
     public int getDisplayIndex() {
@@ -170,12 +217,11 @@ public class TaskCard extends UiPart {
     }
     
     
+    
     @FXML
     public void handleClickAction(MouseEvent event) {
         logger.fine("Selection in task list panel changed to : '" + event.getSource() + "'");
         raise(new TaskPanelSelectionChangedEvent(this));
     }
-    
-    
-    
+      
 }

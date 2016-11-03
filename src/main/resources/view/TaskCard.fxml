@@ -1,36 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+@@author A0147978E
+-->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.doerList.ui.TaskCard">
    <children>
-      <VBox fx:id="taskPanel" fillWidth="false" onMouseClicked="#handleClickAction" style="-fx-background-color: #e6e6e6;">
+      <VBox fx:id="taskPanel" fillWidth="true" onMouseClicked="#handleClickAction" style="-fx-background-color: #e6e6e6;">
          <children>
-            <HBox>
+            <HBox alignment="CENTER">
                <children>
-                  <Label fx:id="index" text="#1">
-                     <font>
-                        <Font name="System Bold" size="17.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="title" text="Task Name: ">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="index" text="1">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Label>
+                        <VBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="title" minWidth="60.0" text="Task Name">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane fx:id="recurringBarPlaceholder">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="rightBar" alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="taskTime" text="Task Time">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="taskCategory" text="[Category]">
+                           <font>
+                              <Font name="System Italic" size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
             <AnchorPane fx:id="descriptionPanel" />
-            <AnchorPane fx:id="timePanel" />
          </children>
          <padding>
             <Insets bottom="8.0" left="6.0" right="6.0" top="8.0" />

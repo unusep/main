@@ -1,8 +1,8 @@
+//@@author A0140905M
 package seedu.doerList.logic.commands;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
@@ -35,8 +35,8 @@ public class TaskdueCommand extends Command {
     public CommandResult execute() {
         try {
             String time = new TimeParser().parse(endTime);
-            DateTime deadline = DateTime.parse(time, DateTimeFormat.forPattern(TodoTime.TIME_STANDARD_FORMAT));
-            
+            LocalDateTime deadline = LocalDateTime.parse(time, DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
+
             model.updateFilteredListToShowAll();
             BuildInCategoryList.ALL.updatePredicate((ReadOnlyTask task) -> {
                 if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {

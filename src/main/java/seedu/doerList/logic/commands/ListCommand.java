@@ -1,15 +1,15 @@
+//@@author A0147978E
 package seedu.doerList.logic.commands;
 
 import java.util.Optional;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 
 /**
- * Lists all persons in the doerList to the user.
+ * Lists all tasks in the doerList to the user.
  */
 public class ListCommand extends Command {
 
@@ -24,48 +24,51 @@ public class ListCommand extends Command {
 
 
     public String toSelectCategoryName;
-    
+
     public ListCommand() {}
-    
+
     public ListCommand(String categoryName) {
         toSelectCategoryName = categoryName;
     }
-    
+
     /**
      * Try find category name that equals to keyword
-     * 
+     *
      * @param keyword
-     * @return Optional<Category> indicates whether find it or not 
+     * @return Optional<Category> indicates whether find it or not
      */
     public Optional<Category> findNameInCategory(String keyword) {
         if (keyword == null) {
             return Optional.of(BuildInCategoryList.ALL);
         }
         for(Category c : model.getBuildInCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.equalsIgnoreCase(keyword)) {
                 return Optional.of(c);
             }
         }
         for(Category c : model.getCategoryList()) {
-            if (c.categoryName.equals(keyword)) {
+            if (c.categoryName.equalsIgnoreCase(keyword)) {
                 return Optional.of(c);
             }
         }
         return Optional.empty();
     }
-   
+
     @Override
     public CommandResult execute() {
         Category toSelectCategory;
         BuildInCategoryList.resetBuildInCategoryPredicate();
+        // find the category
         Optional<Category> fromCategory = findNameInCategory(toSelectCategoryName);
         if (fromCategory.isPresent()) {
             toSelectCategory = fromCategory.get();
         } else {
             return new CommandResult(MESSAGE_CATEGORY_NOT_EXISTS);
         }
+        // update the predicate in the model
         model.updateFilteredListToShowAll();
         model.updateFilteredTaskList(toSelectCategory.getPredicate());
+
         EventsCenter.getInstance().post(new JumpToCategoryEvent(toSelectCategory));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSelectCategory.categoryName));
     }

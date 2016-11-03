@@ -11,6 +11,7 @@ import org.testfx.api.FxToolkit;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.model.DoerList;
+import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.testutil.TestCategory;
@@ -18,6 +19,7 @@ import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
 import seedu.doerList.ui.CategoryListCard;
 import seedu.doerList.ui.CategorySideBar;
+import seedu.doerList.ui.TaskCard;
 
 import java.util.concurrent.TimeoutException;
 
@@ -47,6 +49,7 @@ public abstract class DoerListGuiTest {
     protected CategorySideBarHandle categorySideBar;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
+    protected StatusBarHandle statusBar;
     private Stage stage;
 
     @BeforeClass
@@ -61,6 +64,11 @@ public abstract class DoerListGuiTest {
 
     @Before
     public void setup() throws Exception {
+        // reset category name
+        BuildInCategoryList.resetBuildInCategoryPredicate();
+        // reset selection
+        TaskCard.clearSelection();
+        
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
@@ -68,6 +76,7 @@ public abstract class DoerListGuiTest {
             categorySideBar = mainGui.getCategorySideBar();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
+            statusBar = mainGui.getStatusBar();
             this.stage = stage;
         });
         EventsCenter.clearSubscribers();
@@ -75,6 +84,7 @@ public abstract class DoerListGuiTest {
         FxToolkit.showStage();
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
+        
     }
 
     /**
@@ -101,7 +111,7 @@ public abstract class DoerListGuiTest {
     }
 
     /**
-     * Asserts the person shown in the card is same as the given person
+     * Asserts the task shown in the card is same as the given task
      */
     public void assertMatching(ReadOnlyTask person, TaskCardHandle card) {
         assertTrue(TestUtil.compareCardAndTask(card, person));
@@ -112,14 +122,6 @@ public abstract class DoerListGuiTest {
      */
     public void assertMatching(TestCategory category, CategoryCardHandle card) {
         assertTrue(TestUtil.compareCardAndTestCategory(card, category));
-    }
-
-    /**
-     * Asserts the size of the person list is equal to the given number.
-     */
-    protected void assertListSize(int size) {
-        int numberOfPeople = taskListPanel.getNumberOfTask();
-        assertEquals(size, numberOfPeople);
     }
 
     /**

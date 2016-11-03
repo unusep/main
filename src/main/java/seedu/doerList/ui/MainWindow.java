@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -28,8 +29,8 @@ public class MainWindow extends UiPart {
 
     private static final String ICON = "/images/doerList_32.png";
     private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 580;
-    public static final int MIN_WIDTH = 660;
+    public static final int MIN_HEIGHT = 480;
+    public static final int MIN_WIDTH = 640;
     public static final float DEFAULT_DIVIDER_POSITION = 0.3f;
 
     private Logic logic;
@@ -144,7 +145,13 @@ public class MainWindow extends UiPart {
     public AnchorPane getCategorySideBarPlaceholder() {
         return categorySideBarPlaceholder;
     }
+    
+    //@@author A0139168W
+    public StatusBarFooter getStatusBarFooter() {
+        return statusBarFooter;
+    }
 
+    //@@author
     public void hide() {
         primaryStage.hide();
     }

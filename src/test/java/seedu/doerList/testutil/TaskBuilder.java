@@ -1,15 +1,19 @@
+//@@author A0147978E
 package seedu.doerList.testutil;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategory;
 import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList.DuplicateCategoryException;
-import seedu.doerList.model.task.*;
+import seedu.doerList.model.task.Description;
+import seedu.doerList.model.task.Recurring;
+import seedu.doerList.model.task.Title;
+import seedu.doerList.model.task.TodoTime;
 
 /**
- *
+ * TaskBuilder to helper build a task
  */
 public class TaskBuilder {
 
@@ -42,6 +46,11 @@ public class TaskBuilder {
         return this;
     }
     
+    public TaskBuilder withRecurring(String recurring) throws IllegalValueException {
+        task.setRecurring(new Recurring(recurring));
+        return this;
+    }
+    
     public TaskBuilder withBuildInCategories(BuildInCategory ... categories) {
         for (BuildInCategory category: categories) {
             task.getBuildInCategories().add(category);
@@ -59,7 +68,7 @@ public class TaskBuilder {
         return this;
     }
     
-    public TaskBuilder withStartTime(DateTime startTime) throws IllegalValueException {
+    public TaskBuilder withStartTime(LocalDateTime startTime) throws IllegalValueException {
         this.task.setStartTime(new TodoTime(startTime));
         return this;
     }
@@ -69,7 +78,7 @@ public class TaskBuilder {
         return this;
     }
     
-    public TaskBuilder withEndTime(DateTime endTime) throws IllegalValueException {
+    public TaskBuilder withEndTime(LocalDateTime endTime) throws IllegalValueException {
         this.task.setEndTime(new TodoTime(endTime));
         return this;
     }
@@ -77,5 +86,4 @@ public class TaskBuilder {
     public TestTask build() {
         return this.task;
     }
-
 }

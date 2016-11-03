@@ -1,9 +1,10 @@
+//@@author A0147978E
 package seedu.doerList.commons.events.ui;
 
 import seedu.doerList.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of tasks
+ * Indicates a request to jump to the a task indicated by {@code targetIndex}
  */
 public class JumpToListRequestEvent extends BaseEvent {
 

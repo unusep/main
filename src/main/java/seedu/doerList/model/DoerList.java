@@ -10,6 +10,7 @@ import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 import seedu.doerList.model.task.UniqueTaskList;
 import seedu.doerList.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +33,11 @@ public class DoerList implements ReadOnlyDoerList {
         buildInCategories.addAllBuildInCategories();
     }
     
-    
+    //@@author A0147978E
+    /** 
+     * Add listener to categoryList so that every time the category list get added,
+     * the {@code tasks} is added into the category.
+     */
     private void addListenerToCategoryList() {
         ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
             while (c.next()) {
@@ -43,7 +48,6 @@ public class DoerList implements ReadOnlyDoerList {
                 }
             }
         };
-        buildInCategories.getInternalList().addListener(listener);
         categories.getInternalList().addListener(listener);
     }
 
@@ -77,11 +81,15 @@ public class DoerList implements ReadOnlyDoerList {
         return categories.getInternalList();
     }
     
+    //@@author A0147978E
     public ObservableList<Category> getBuildInCategories() {
         return buildInCategories.getInternalList();
     }
 
     public void setTasks(List<Task> tasks) {
+        for(Task t : tasks) {
+            syncCategoriesWithMasterList(t);
+        }
         this.tasks.getInternalList().setAll(tasks);
     }
 
@@ -90,8 +98,8 @@ public class DoerList implements ReadOnlyDoerList {
     }
 
     public void resetData(Collection<? extends ReadOnlyTask> newTasks, Collection<Category> newCategories) {
-        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));
-        setCategories(newCategories);
+        setCategories(newCategories.stream().map(Category::new).collect(Collectors.toList())); // the order matter
+        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList())); // set tasks must follow the set setCategories
     }
 
     public void resetData(ReadOnlyDoerList newData) {
@@ -134,20 +142,41 @@ public class DoerList implements ReadOnlyDoerList {
         }
         task.setCategories(new UniqueCategoryList(commonCategoryReferences));
     }
+    
+    //@@author A0147978E
+    /**
+     * Ensure that once the task {@code toRemove} is removed, categories of the task that have
+     * no task will be deleted.
+     * 
+     * @param toRemove
+     */
+    private void syncCategroiesMaterListAfterRemove(ReadOnlyTask toRemove) {
+        for(Category c : toRemove.getCategories()) {
+            if (c.getTasks().size() == 0) {
+                categories.getInternalList().remove(c);
+            } 
+        }
+    }
 
-    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.remove(key)) {
+    //@@author
+    public boolean removeTask(ReadOnlyTask toRemove) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.remove(toRemove)) {
+            syncCategroiesMaterListAfterRemove(toRemove);
             return true;
         } else {
             throw new UniqueTaskList.TaskNotFoundException();
         }
     }
 
-    public void replaceTask(int i, Task t) throws DuplicateTaskException {
-        tasks.replace(i, t);
+    //TODO: Seek consultation on this one 
+    public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
+        tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
+        syncCategroiesMaterListAfterRemove(prevTask);
     }
-    
+
+
+    //@@author A0139168W
     public void unmarkTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException {
         if (tasks.contains(task)) {
             task.removeBuildInCategory(BuildInCategoryList.COMPLETE);

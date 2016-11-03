@@ -1,7 +1,6 @@
 package seedu.doerList.storage;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import seedu.doerList.commons.exceptions.IllegalValueException;
 import seedu.doerList.model.category.BuildInCategoryList;
@@ -9,7 +8,6 @@ import seedu.doerList.model.category.Category;
 import seedu.doerList.model.category.UniqueCategoryList;
 import seedu.doerList.model.task.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +24,8 @@ public class XmlAdaptedTask {
     private XmlAdaptedTodoTime startTime;
     @XmlElement(required = false)
     private XmlAdaptedTodoTime endTime;
+    @XmlElement(required = false)
+    private XmlAdaptedRecurring recurring;
 
 
     @XmlElement
@@ -54,6 +54,9 @@ public class XmlAdaptedTask {
         }
         if (source.hasEndTime()) {
             endTime = new XmlAdaptedTodoTime(source.getEndTime());
+        }
+        if (source.hasRecurring()) {
+            recurring = new XmlAdaptedRecurring(source.getRecurring());
         }
         categorized = new ArrayList<>();
         for (Category category : source.getCategories()) {
@@ -84,6 +87,7 @@ public class XmlAdaptedTask {
         Description description = null;
         TodoTime startTime = null;
         TodoTime endTime = null;
+        Recurring recurring = null;
         if (this.description != null) {
             description = new Description(this.description);
         }
@@ -93,8 +97,11 @@ public class XmlAdaptedTask {
         if (this.endTime != null) {
             endTime = this.endTime.toModelType();
         }
+        if (this.recurring != null) {
+            recurring = this.recurring.toModelType();
+        }
         final UniqueCategoryList categories = new UniqueCategoryList(taskCategories);
-        Task newTask = new Task(title, description, startTime, endTime, categories);      
+        Task newTask = new Task(title, description, startTime, endTime, recurring, categories);      
         final BuildInCategoryList buildInCategories = new BuildInCategoryList(taskBuildInCategories);
         newTask.setBuildInCategories(buildInCategories);
         return newTask;

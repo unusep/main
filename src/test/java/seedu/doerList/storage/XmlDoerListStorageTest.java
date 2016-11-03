@@ -73,7 +73,7 @@ public class XmlDoerListStorageTest {
         assertEquals(original, new DoerList(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addTask(new Task(TypicalTestTasks.task8));
+        original.addTask(new Task(TypicalTestTasks.task10));
         original.removeTask(new Task(TypicalTestTasks.task2));
         xmlDoerListStorage.saveDoerList(original, filePath);
         readBack = xmlDoerListStorage.readDoerList(filePath).get();
