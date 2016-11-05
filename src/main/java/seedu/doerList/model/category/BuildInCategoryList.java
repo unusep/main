@@ -146,7 +146,7 @@ public class BuildInCategoryList implements Iterable<Category> {
      */
     public void syncBuildInCategoryWithMaster(Category buildInCategory) {
         HashMap<Category, BuildInCategory> master = new HashMap<Category, BuildInCategory>();
-        master.put(COMPLETE, COMPLETE); // currently only one stored buildInCategory
+        master.put(COMPLETE, COMPLETE); // currently only COMPLETE stored in buildInCategoryList for every task
         BuildInCategory match = master.get(buildInCategory);
         if (match != null && !internalList.contains(match)) {
             internalList.add(match);
