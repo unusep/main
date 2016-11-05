@@ -15,7 +15,6 @@ import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestTask;
-import seedu.doerList.testutil.TypicalTestTasks;
 
 public class AddCommandTest extends DoerListGuiTest {
 

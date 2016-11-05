@@ -1,30 +1,36 @@
 package guitests;
 
-import guitests.guihandles.*;
-import javafx.stage.Stage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.concurrent.TimeoutException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.CategoryCardHandle;
+import guitests.guihandles.CategorySideBarHandle;
+import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.MainGuiHandle;
+import guitests.guihandles.MainMenuHandle;
+import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.StatusBarHandle;
+import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
+import javafx.stage.Stage;
 import seedu.doerList.TestApp;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.model.DoerList;
 import seedu.doerList.model.category.BuildInCategoryList;
-import seedu.doerList.model.category.Category;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestUtil;
 import seedu.doerList.testutil.TypicalTestTasks;
-import seedu.doerList.ui.CategoryListCard;
-import seedu.doerList.ui.CategorySideBar;
 import seedu.doerList.ui.TaskCard;
-
-import java.util.concurrent.TimeoutException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * A GUI Test class for DoerList.

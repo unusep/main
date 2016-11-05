@@ -14,7 +14,6 @@ import seedu.doerList.logic.commands.RedoCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TypicalTestTasks;
 
 public class UndoRedoCommandTest extends DoerListGuiTest {
 
