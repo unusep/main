@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doerList>
+    <tasks>
+        <title>Submit Assignment 5</title>
+        <description>Ray-tracing, start early</description>
+        <startTime>
+            <value>2016-10-27 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-16 23:59</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+    </tasks>
+    <tasks>
+        <title>Submit Assignment 4</title>
+        <description>Bezier's Curve</description>
+        <startTime>
+            <value>2016-10-19 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-10-26 23:59</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+        <buildInCategorized>Complete</buildInCategorized>
+    </tasks>
+    <tasks>
+        <title>Submit Assignment 3</title>
+        <description>RSA</description>
+        <startTime>
+            <value>2016-10-27 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-03 23:59</value>
+        </endTime>
+        <categorized>CS2105</categorized>
+    </tasks>
+    <tasks>
+        <title>Walk Cookie!</title>
+        <description>My dog</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Project Meeting</title>
+        <description>Update the guides</description>
+        <endTime>
+            <value>2016-11-06 23:59</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Project Meeting</title>
+        <description>Update the guides</description>
+        <endTime>
+            <value>2016-11-07 23:59</value>
+        </endTime>
+        <categorized>CS2101</categorized>
+    </tasks>
+    <tasks>
+        <title>Do tutorial</title>
+        <description>Dynamic Programming</description>
+        <startTime>
+            <value>2016-10-28 02:39</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-01 02:39</value>
+        </endTime>
+        <categorized>CS2010</categorized>
+    </tasks>
+    <tasks>
+        <title>Do tutorial</title>
+        <description>Lecture 10</description>
+        <startTime>
+            <value>2016-10-28 02:39</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-01 02:39</value>
+        </endTime>
+        <categorized>CS2105</categorized>
+        <buildInCategorized>Complete</buildInCategorized>
+    </tasks>
+    <tasks>
+        <title>Written Quiz 2</title>
+        <description>Can bring laptop and use internet</description>
+        <startTime>
+            <value>2016-11-02 09:50</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-02 12:00</value>
+        </endTime>
+        <categorized>CS2010</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals</description>
+        <startTime>
+            <value>2016-11-26 13:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-26 15:00</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals - 2-in-1 day #sadlife</description>
+        <startTime>
+            <value>2016-11-28 09:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-28 11:00</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals - 2-in-1 day #sadlife</description>
+        <startTime>
+            <value>2016-11-28 17:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-28 19:00</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals</description>
+        <startTime>
+            <value>2016-11-30 13:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-30 15:00</value>
+        </endTime>
+        <categorized>CS2105</categorized>
+    </tasks>
+    <tasks>
+        <title>Family Dinner</title>
+        <startTime>
+            <value>2016-11-05 12:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-05 15:00</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Brother's Birthday</title>
+        <description>Buy present and cake, don't forget!</description>
+        <startTime>
+            <value>2016-10-20 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-10-20 23:59</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy Shampoo</title>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy Laptop Stickers</title>
+    </tasks>
+    <tasks>
+        <title>Go home earlier</title>
+        <description>family going out for dinner</description>
+        <startTime>
+            <value>2016-11-04 17:00</value>
+        </startTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Sleep Early</title>
+        <description>You are sick</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+    </tasks>
+    <tasks>
+        <title>Date with girl girl &lt;3</title>
+        <description>Still got who?</description>
+        <startTime>
+            <value>2016-11-06 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-06 23:59</value>
+        </endTime>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Tough times don't last, but tough people do</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Motivating messages</categorized>
+    </tasks>
+    <tasks>
+        <title>It doesn't matter where you go, it only matters where you land do</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Motivating messages</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy present for her</title>
+        <description>Don't forget hor</description>
+        <startTime>
+            <value>2016-12-25 02:40</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Collect Welfare Pack</title>
+        <endTime>
+            <value>2016-11-02 02:40</value>
+        </endTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Go collect mail</title>
+        <description>Letterbox</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Print</title>
+        <description>All of the required</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Halloween</title>
+        <description>Phototaking</description>
+        <startTime>
+            <value>2016-10-31 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-10-31 23:59</value>
+        </endTime>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Return money</title>
+        <description>to Albert - $5</description>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Get money</title>
+        <description>from HuiQi - $2</description>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Money for present</title>
+        <description>to Shi Yuan $1.70</description>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Always believe in yourself!</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Motivating messages</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy snacks</title>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Bring extra towel</title>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Sports</title>
+        <description>Badminton @ UTown</description>
+        <startTime>
+            <value>2016-11-01 08:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-01 10:00</value>
+        </endTime>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Sports</title>
+        <description>Tennis with friends</description>
+        <startTime>
+            <value>2016-11-03 17:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-03 19:00</value>
+        </endTime>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Phone Bill</title>
+        <description>Tell Daddy if have</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Wash Blanket</title>
+        <recurring>
+            <day>7</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Clean your room</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Clean your room 2</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Go out with friends 1</title>
+        <description>Sec school friends</description>
+        <startTime>
+            <value>2016-11-12 17:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-12 23:59</value>
+        </endTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Go out with friends 2</title>
+        <description>JC friends</description>
+        <startTime>
+            <value>2016-11-13 16:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-13 23:59</value>
+        </endTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Go out with friends 3</title>
+        <description>Uni friends</description>
+        <startTime>
+            <value>2016-11-11 19:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-11 23:59</value>
+        </endTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy mozzie repellant</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Drink 1.5L a day</title>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+    </tasks>
+    <tasks>
+        <title>Movie with her</title>
+        <description>Doctor Strange</description>
+        <startTime>
+            <value>2016-11-15 19:20</value>
+        </startTime>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Dinner with her</title>
+        <description>Poulet Chicken</description>
+        <startTime>
+            <value>2016-11-16 19:00</value>
+        </startTime>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Do laundry</title>
+        <description>don't forget your towel</description>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Do survey</title>
+        <description>For NTUC voucher</description>
+        <endTime>
+            <value>2016-11-04 02:44</value>
+        </endTime>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Take care of Pepper and Cookie</title>
+        <description>Both dogs because overseas</description>
+        <endTime>
+            <value>2016-11-07 23:59</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy lunch for sis</title>
+        <description>Lazy</description>
+        <endTime>
+            <value>2016-11-09 12:00</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <categories>
+        <categoryName>CS3241</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2105</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Home</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2103T</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2101</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2010</categoryName>
+    </categories>
+    <categories>
+        <categoryName>PGP</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Special</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Motivating messages</categoryName>
+    </categories>
+    <categories>
+        <categoryName>#SoC</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Friends</categoryName>
+    </categories>
+</doerList>
