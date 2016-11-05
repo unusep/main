@@ -2,6 +2,7 @@
 package seedu.doerList.ui;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -375,30 +376,39 @@ public class TaskListPanel extends UiPart {
             if (c != BuildInCategoryList.COMPLETE) {
                 filteredTasks = filteredTasks.stream().filter((task) -> { 
                     return !BuildInCategoryList.COMPLETE.getPredicate().test(task);
-                            }).collect(Collectors.toList());
+                }).collect(Collectors.toList());
             }
             if (filteredTasks.size() > 0) {
                 // sort the list before put in
-                filteredTasks.sort((t1, t2) -> {
-                    if (t1.isFloatingTask() && t2.isFloatingTask()) {
-                        return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
-                    } else {
-                        LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
-                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
-                        LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
-                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
-                        t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
-                        t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
-                        if (t1_represent.equals(t2_represent)) {
-                            return 0;
-                        }
-                        return t1_represent.isBefore(t2_represent) ? -1 : 1;
-                    }
-                });
+                filteredTasks.sort(getTaskComparator());
                 results.put(c, filteredTasks);
             }
         }
         return results;
+    }
+
+    /**
+     * Get comparator for task
+     * 
+     * @return
+     */
+    private static Comparator<? super ReadOnlyTask> getTaskComparator() {
+        return (t1, t2) -> {
+            if (t1.isFloatingTask() && t2.isFloatingTask()) {
+                return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
+            } else {
+                LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
+                    TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
+                    TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
+                t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
+                if (t1_represent.equals(t2_represent)) {
+                    return 0;
+                }
+                return t1_represent.isBefore(t2_represent) ? -1 : 1;
+            }
+        };
     }
     
     /**
