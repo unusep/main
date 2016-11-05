@@ -382,7 +382,7 @@ public class LogicManagerTest {
 
         // list unknown category
         CommandResult result = logic.execute("list CA3");
-        assertEquals(ListCommand.MESSAGE_CATEGORY_NOT_EXISTS, result.feedbackToUser);
+        assertEquals(Messages.MESSAGE_CATEGORY_NOT_EXISTS, result.feedbackToUser);
 
         // list All
         //Execute the command
