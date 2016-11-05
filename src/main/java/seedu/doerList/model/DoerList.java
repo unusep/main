@@ -53,6 +53,7 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
     
+    //@@author
     public DoerList() {}
 
     /**
