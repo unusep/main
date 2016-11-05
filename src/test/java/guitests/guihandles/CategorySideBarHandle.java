@@ -71,14 +71,16 @@ public class CategorySideBarHandle extends GuiHandle {
     /**
      * Returns true if the list is showing the category details correctly and in correct order.
      * 
-     * @param startPosition The starting position of the sub list.
-     * @param persons A list of person in the correct order.
-     * @param boolean
+     * @param listView
+     * @param startPosition
+     * @param categories
+     * @return
+     * @throws IllegalArgumentException
      */
     public boolean isListMatching(ListView<Category> listView, int startPosition, List<TestCategory> categories) throws IllegalArgumentException {
         if (categories.size() + startPosition != listView.getItems().size()) {
             throw new IllegalArgumentException("List size mismatched\n" +
-                    "Expected " + (listView.getItems().size() - 1) + " persons");
+                    "Expected " + (listView.getItems().size() - 1) + " categories");
         }
         // verify binding data contains in order
         assertTrue(this.containsInOrder(listView, startPosition, categories));
@@ -98,11 +100,11 @@ public class CategorySideBarHandle extends GuiHandle {
     
     public CategoryCardHandle getCategoryCardHandleByName(ListView<Category> listView, Category category) {
         Set<Node> nodes = getAllCardNodesFrom(listView);
-        Optional<Node> personCardNode = nodes.stream()
+        Optional<Node> categoryCardNode = nodes.stream()
                 .filter(n -> new CategoryCardHandle(guiRobot, primaryStage, n).isSameCategoryName(category))
                 .findFirst();
-        if (personCardNode.isPresent()) {
-            return new CategoryCardHandle(guiRobot, primaryStage, personCardNode.get());
+        if (categoryCardNode.isPresent()) {
+            return new CategoryCardHandle(guiRobot, primaryStage, categoryCardNode.get());
         } else {
             return null;
         }
