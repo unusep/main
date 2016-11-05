@@ -348,7 +348,7 @@ public class TestUtil {
 
     public static Category[] getCategoryList(String categories) {
 
-        if (categories.equals("")) {
+        if (categories.isEmpty()) {
             return new Category[]{};
         }
 

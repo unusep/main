@@ -3,12 +3,15 @@ package seedu.doerList.model.category;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
 import seedu.doerList.commons.util.TimeUtil;
+import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.Task;
 
 /**
@@ -17,79 +20,88 @@ import seedu.doerList.model.task.Task;
  * @see BuildInCategory#equals(Object)
  */
 public class BuildInCategoryList implements Iterable<Category> {  
-    public static final BuildInCategory ALL;
-    public static final BuildInCategory TODAY;
-    public static final BuildInCategory NEXT;
-    public static final BuildInCategory INBOX;
-    public static final BuildInCategory COMPLETE;
-    public static final BuildInCategory DUE;
+    public static final BuildInCategory ALL, TODAY, NEXT, INBOX, COMPLETE, DUE;
        
     // predefined category
     static {
         try {
             ALL = new BuildInCategory("All", (task) -> {return true;});     
-            INBOX = new BuildInCategory("Inbox", (task) -> {
-                return task.isFloatingTask();
-            });
-            COMPLETE = new BuildInCategory("Complete", (task) -> {
-                return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
-            });
-
-            TODAY = new BuildInCategory("Today", (task) -> {                
-                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
-                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
-                if (!INBOX.getPredicate().test(task)) {
-                    if (task.hasStartTime() && !task.hasEndTime()) {
-                        return task.getStartTime().value.isBefore(todayEnd);
-                    } else if (task.hasEndTime() && !task.hasStartTime()) {
-                        return task.getEndTime().value.isAfter(todayBegin) &&
-                                task.getEndTime().value.isBefore(todayEnd);
-                    } else {
-                        // interval match
-                        if (task.getEndTime().value.isAfter(todayBegin) 
-                                && task.getStartTime().value.isBefore(todayEnd)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                } else {
-                    return false;
-                }
-            });
-            NEXT = new BuildInCategory("Next", (task) -> {
-                LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
-                if (task.hasStartTime()) {
-                    return task.getStartTime().value.isAfter(todayEnd);
-                } else if (task.hasEndTime()) {
-                    return task.getEndTime().value.isAfter(todayEnd);
-                } else {
-                    return false;
-                }
-            });         
-            DUE = new BuildInCategory("Overdue", (task) -> {
-                LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
-                return !task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE) && 
-                        
-                        task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
-            });
+            INBOX = new BuildInCategory("Inbox", generateInboxPredicate());
+            COMPLETE = new BuildInCategory("Complete", generateComplatePredicate());
+            TODAY = new BuildInCategory("Today", generateTodayPredicate());
+            NEXT = new BuildInCategory("Next", generateNextPredicate());         
+            DUE = new BuildInCategory("Overdue", generateDuePredicate());
         } catch (Exception e) {
             e.printStackTrace();
             // impossible
             throw new RuntimeException("Could not init class.", e);
         }
     }
+
+/** ======== Predicate generator for Build-in Category ========= **/
+    private static Predicate<ReadOnlyTask> generateInboxPredicate() {
+        return (task) -> {
+            return task.isFloatingTask();
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateComplatePredicate() {
+        return (task) -> {
+            return task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE);
+        };
+    }
+    
+    private static Predicate<ReadOnlyTask> generateDuePredicate() {
+        return (task) -> {
+            LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());    
+            return !COMPLETE.getPredicate().test(task)
+                    && 
+                    task.hasEndTime() && task.getEndTime().value.isBefore(todayBegin);
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateNextPredicate() {
+        return (task) -> {
+            LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());  
+            if (task.hasStartTime()) {
+                return task.getStartTime().value.isAfter(todayEnd);
+            } else if (task.hasEndTime()) {
+                return task.getEndTime().value.isAfter(todayEnd);
+            } else {
+                return false;
+            }
+        };
+    }
+
+    private static Predicate<ReadOnlyTask> generateTodayPredicate() {
+        return (task) -> {                
+            LocalDateTime todayBegin = TimeUtil.getStartOfDay(LocalDateTime.now());
+            LocalDateTime todayEnd = TimeUtil.getEndOfDay(LocalDateTime.now());    
+            if (task.isBeginAtTask()) {
+                return task.getStartTime().value.isBefore(todayEnd);
+            } else if (task.isDueTask()) {
+                return task.getEndTime().value.isAfter(todayBegin) &&
+                        task.getEndTime().value.isBefore(todayEnd);
+            } else if (task.isStartEndTask()){
+                //interval match
+                return task.getEndTime().value.isAfter(todayBegin) 
+                        && task.getStartTime().value.isBefore(todayEnd);
+            } else {
+                return false;
+            }
+        };
+    }
     
     /**
      * Reset all predefined buildInCategories' predicates.
      */
     public static void resetBuildInCategoryPredicate() {
-        ALL.setToDeafultPredicate();
-        TODAY.setToDeafultPredicate();
-        NEXT.setToDeafultPredicate();
-        INBOX.setToDeafultPredicate();
-        COMPLETE.setToDeafultPredicate();
-        DUE.setToDeafultPredicate();
+        ALL.setToDefaultPredicate();
+        TODAY.setToDefaultPredicate();
+        NEXT.setToDefaultPredicate();
+        INBOX.setToDefaultPredicate();
+        COMPLETE.setToDefaultPredicate();
+        DUE.setToDefaultPredicate();
     }
     
     /**
@@ -106,6 +118,9 @@ public class BuildInCategoryList implements Iterable<Category> {
         DUE.setFilteredTaskList(observableList);
     }
     
+    
+/** ======== Logic for buildInCategoryList ========= **/
+    
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
 
     public void addAllBuildInCategories() {
@@ -118,13 +133,23 @@ public class BuildInCategoryList implements Iterable<Category> {
     public BuildInCategoryList() {}
       
     public BuildInCategoryList(Collection<Category> stroedList) {
-        BuildInCategory[] buildInCategories = {ALL, TODAY, NEXT, INBOX, COMPLETE};
         for(Category c : stroedList) {
-            for(BuildInCategory bc : buildInCategories) {
-                if (c.categoryName.equals(bc.categoryName)) {
-                    internalList.add(bc);
-                }
-            }
+            syncBuildInCategoryWithMaster(c);
+        }
+    }
+    
+    /**
+     * Convert the buildInCategory from storage to map the static 
+     * buildInCategory in this class
+     * 
+     * @param buildInCategory
+     */
+    public void syncBuildInCategoryWithMaster(Category buildInCategory) {
+        HashMap<Category, BuildInCategory> master = new HashMap<Category, BuildInCategory>();
+        master.put(COMPLETE, COMPLETE); // currently only COMPLETE stored in buildInCategoryList for every task
+        BuildInCategory match = master.get(buildInCategory);
+        if (match != null && !internalList.contains(match)) {
+            internalList.add(match);
         }
     }
     

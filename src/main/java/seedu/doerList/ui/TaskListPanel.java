@@ -2,6 +2,7 @@
 package seedu.doerList.ui;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,11 @@ public class TaskListPanel extends UiPart {
         remapArrowKeysForScrollPane();
     }
     
+    /**
+     * Add listener to {@code taskList}, when taskList changed, UI will be refreshed
+     * 
+     * @param taskList
+     */
     private void addListener(ObservableList<ReadOnlyTask> taskList) {
         taskList.addListener((ListChangeListener.Change<? extends ReadOnlyTask> c) -> {
             displayTasks();
@@ -96,14 +102,25 @@ public class TaskListPanel extends UiPart {
     public void displayTasks() {
         // clear selection first
         TaskCard.clearSelection();
-        
+        // categorized task based on `categorizedBy`
         Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks = 
                 categorizedByBuildInCategory(allTasks);
-        
-        // categorized task based on `categorizedBy`
-        int displayIndexStart = 1;
+        // prepare
         sectionPanelControllers = new ArrayList<SectionPanel>();
         sectionList.getChildren().clear();
+        // generate new UI
+        generateSectionsUI(categorized_tasks);
+    }
+    
+    /**
+     * Generate and draw different sections UI according to the 
+     * {@code Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks}
+     * 
+     * @param categorized_tasks
+     * @param displayIndexStart
+     */
+    private void generateSectionsUI(Map<BuildInCategory, List<ReadOnlyTask>> categorized_tasks) {
+        int displayIndexStart = 1;
         for(BuildInCategory c : categorizedBy) {  
             if (categorized_tasks.get(c) == null) continue;
             // create new sections
@@ -135,6 +152,8 @@ public class TaskListPanel extends UiPart {
             case DOWN:
                 selectionMoveDown();
                 break;
+            default:
+                break;
         }
     }
     
@@ -142,25 +161,37 @@ public class TaskListPanel extends UiPart {
      * Move down the selection.
      */
     private void selectionMoveDown() {
-        if (TaskCard.getSeletedTaskCard() == null) {
-            if (sectionPanelControllers.size() > 0) {
-                sectionPanelControllers.get(0).setFirstTaskToActive(0);
-            }
+        if (TaskCard.getSeletedTaskCard() == null && sectionPanelControllers.size() > 0) {
+            // no selection currently, thus select the first task
+            sectionPanelControllers.get(0).setTaskToActive(0);
         } else {
-            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
-            int sectionIndex = findSelectionSection(orginalSelection);
+            TaskCard originalSelection = TaskCard.getSeletedTaskCard();
+            int sectionIndex = findSelectionSection(originalSelection);
             if (sectionIndex != -1) {
-                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
-                int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
-                if (targetIndex == selectedSection.getTaskControllers().size() - 1) {
-                    // last item in section
-                    if (sectionIndex != sectionPanelControllers.size() - 1) {
-                        sectionPanelControllers.get(sectionIndex + 1).setFirstTaskToActive(0); 
-                    }
-                } else {
-                    selectedSection.setFirstTaskToActive(targetIndex + 1);
-                }
+                selectNextTaskCard(originalSelection, sectionIndex);
             }
+        }
+    }
+
+    /**
+     * Select next task card according to the {@code originaSelection} and {@code sectionIndex}
+     * 
+     * @param originalSelection
+     * @param sectionIndex
+     */
+    private void selectNextTaskCard(TaskCard originalSelection, int sectionIndex) {
+        assert sectionIndex < sectionPanelControllers.size();
+        assert originalSelection != null;
+        
+        SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
+        int targetIndex = selectedSection.findSelectionIndex(originalSelection);
+        
+        if (targetIndex == selectedSection.getTaskControllers().size() - 1
+                && sectionIndex != sectionPanelControllers.size() - 1) {
+            // current selection is the last item in section
+            sectionPanelControllers.get(sectionIndex + 1).setTaskToActive(0); 
+        } else {
+            selectedSection.setTaskToActive(targetIndex + 1);
         }
     }
     
@@ -168,26 +199,36 @@ public class TaskListPanel extends UiPart {
      * Move up the selection.
      */
     private void selectionMoveUp() {
-        if (TaskCard.getSeletedTaskCard() == null) {
-            if (sectionPanelControllers.size() > 0) {
-                sectionPanelControllers.get(0).setFirstTaskToActive(0);
-            }
+        if (TaskCard.getSeletedTaskCard() == null 
+                && sectionPanelControllers.size() > 0) {
+            // no selection currently, thus select the first task
+            sectionPanelControllers.get(0).setTaskToActive(0);
         } else {
-            TaskCard orginalSelection = TaskCard.getSeletedTaskCard();
-            int sectionIndex = findSelectionSection(orginalSelection);
+            TaskCard originalSelection = TaskCard.getSeletedTaskCard();
+            int sectionIndex = findSelectionSection(originalSelection);
             if (sectionIndex != -1) {
-                SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
-                int targetIndex = selectedSection.findSelectionIndex(orginalSelection);
-                if (targetIndex == 0) {
-                    // first item in section
-                    if (sectionIndex != 0) {
-                        SectionPanel previousSection = sectionPanelControllers.get(sectionIndex - 1);
-                        previousSection.setFirstTaskToActive(previousSection.getTaskControllers().size() - 1); 
-                    }
-                } else {
-                    selectedSection.setFirstTaskToActive(targetIndex - 1);
-                }
+                selectPrevTaskCard(originalSelection, sectionIndex);
             }
+        }
+    }
+
+    /**
+     * Select previous task card according to the {@code originaSelection} and {@code sectionIndex}
+     * 
+     * @param originalSelection
+     * @param sectionIndex
+     */
+    private void selectPrevTaskCard(TaskCard originalSelection, int sectionIndex) {
+        assert sectionIndex < sectionPanelControllers.size();
+        assert originalSelection != null;
+        
+        SectionPanel selectedSection = sectionPanelControllers.get(sectionIndex);
+        int targetIndex = selectedSection.findSelectionIndex(originalSelection);
+        if (targetIndex == 0 && sectionIndex != 0) {
+            SectionPanel previousSection = sectionPanelControllers.get(sectionIndex - 1);
+            previousSection.setTaskToActive(previousSection.getTaskControllers().size() - 1); 
+        } else {
+            selectedSection.setTaskToActive(targetIndex - 1);
         }
     }
     
@@ -234,19 +275,27 @@ public class TaskListPanel extends UiPart {
         tasksScrollPane.addEventFilter(KeyEvent.ANY, (KeyEvent event) -> {
             event.consume();
             if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                switch (event.getCode()) {
-                    case UP:
-                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
-                        break;
-                    case DOWN:
-                        raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
+                responseArrowKeysEvent(event);
+            }           
         });
+    }
+
+    /**
+     * Raise {@code TaskPanelArrowKeyPressEvent} according to different arrow key pressed
+     * 
+     * @param event
+     */
+    private void responseArrowKeysEvent(KeyEvent event) {
+        switch (event.getCode()) {
+            case UP:
+                raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.UP));
+                break;
+            case DOWN:
+                raise(new TaskPanelArrowKeyPressEvent(TaskPanelArrowKeyPressEvent.Direction.DOWN));
+                break;
+            default:
+                break;
+        }
     }
     
     /**
@@ -329,30 +378,39 @@ public class TaskListPanel extends UiPart {
             if (c != BuildInCategoryList.COMPLETE) {
                 filteredTasks = filteredTasks.stream().filter((task) -> { 
                     return !BuildInCategoryList.COMPLETE.getPredicate().test(task);
-                            }).collect(Collectors.toList());
+                }).collect(Collectors.toList());
             }
             if (filteredTasks.size() > 0) {
                 // sort the list before put in
-                filteredTasks.sort((t1, t2) -> {
-                    if (t1.isFloatingTask() && t2.isFloatingTask()) {
-                        return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
-                    } else {
-                        LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
-                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
-                        LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
-                            TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
-                        t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
-                        t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
-                        if (t1_represent.equals(t2_represent)) {
-                            return 0;
-                        }
-                        return t1_represent.isBefore(t2_represent) ? -1 : 1;
-                    }
-                });
+                filteredTasks.sort(getTaskComparator());
                 results.put(c, filteredTasks);
             }
         }
         return results;
+    }
+
+    /**
+     * Get comparator for task
+     * 
+     * @return
+     */
+    private static Comparator<? super ReadOnlyTask> getTaskComparator() {
+        return (t1, t2) -> {
+            if (t1.isFloatingTask() && t2.isFloatingTask()) {
+                return t1.getTitle().fullTitle.compareTo(t2.getTitle().fullTitle);
+            } else {
+                LocalDateTime t1_represent = t1.hasEndTime() ? t1.getEndTime().value : 
+                    TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                LocalDateTime t2_represent = t2.hasEndTime() ? t2.getEndTime().value : 
+                    TimeUtil.getEndOfDay(LocalDateTime.now()).plusYears(2000);
+                t1_represent = t1.hasStartTime() ? t1.getStartTime().value : t1_represent;
+                t2_represent = t2.hasStartTime() ? t2.getStartTime().value : t2_represent;
+                if (t1_represent.equals(t2_represent)) {
+                    return 0;
+                }
+                return t1_represent.isBefore(t2_represent) ? -1 : 1;
+            }
+        };
     }
     
     /**
@@ -364,7 +422,7 @@ public class TaskListPanel extends UiPart {
      * @return
      * @throws TaskNotFoundException
      */
-    public static ReadOnlyTask getDisplayedIndexWhenCategorizedByBuildInCategory(int index, 
+    public static ReadOnlyTask getDisplayedIndexInUI(int index, 
             ObservableList<ReadOnlyTask> tasks) throws TaskNotFoundException {
         Map<BuildInCategory, List<ReadOnlyTask>> results = categorizedByBuildInCategory(tasks);
         int i = 1;

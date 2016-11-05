@@ -15,12 +15,11 @@ import seedu.doerList.logic.commands.AddCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestTask;
-import seedu.doerList.testutil.TypicalTestTasks;
 
 public class AddCommandTest extends DoerListGuiTest {
 
     @Test
-    public void add_tasks_successful() throws IllegalValueException {
+    public void add_tasksAndDuplicateTask_successfulAndErrorMessage() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task9, td.task2),
@@ -44,20 +43,23 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory("Life", 1, 0)
         );
         // add tasks at once
-        commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
-        commandBox.runCommand(TypicalTestTasks.task10.getAddCommand());
-        commandBox.runCommand(TypicalTestTasks.task11.getAddCommand());
-        TestTask taskToAdd = TypicalTestTasks.task12;
+        commandBox.runCommand(td.task9.getAddCommand());
+        commandBox.runCommand(td.task10.getAddCommand());
+        commandBox.runCommand(td.task11.getAddCommand());
+        TestTask taskToAdd = td.task12;
         assertAddSuccess(taskToAdd, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
 
 
         // add duplicate task no change
-        commandBox.runCommand(TypicalTestTasks.task3.getAddCommand());
+        commandBox.runCommand(td.task3.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));             
+    }
+    
+    @Test
+    public void add_emptyList_successful() throws IllegalValueException {
         // add to empty todo list
         commandBox.runCommand("clear");
         List<TestCategory> expectedDisplayTaskPanel2 = Lists.newArrayList(
@@ -74,7 +76,10 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory("CS2101", 1, 0)
         );
         assertAddSuccess(td.task3, expectedDisplayTaskPanel2, expectedBuildInCategoryList2, expectedCategoryList2);
-              
+    }
+    
+    @Test
+    public void add_invalidArgs_errorMessage() {
         // invalid command
         commandBox.runCommand("adds Do Homework");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);

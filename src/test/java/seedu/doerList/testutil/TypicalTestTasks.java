@@ -12,7 +12,7 @@ import seedu.doerList.model.task.UniqueTaskList;
 /** Class to provide typical test data for test cases*/
 public class TypicalTestTasks {
    
-    public static TestTask task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12;
+    public TestTask task1, task2, task3, task4, task5, task6, task7, task8, task9, task10, task11, task12;
 
     //@@author A0147978E
     public TypicalTestTasks() {
@@ -63,7 +63,7 @@ public class TypicalTestTasks {
         }
     }
 
-    public static void loadDoerListWithSampleData(DoerList ab) {
+    public void loadDoerListWithSampleData(DoerList ab) {
         try {
             ab.addTask(new Task(task1));
             ab.addTask(new Task(task2));

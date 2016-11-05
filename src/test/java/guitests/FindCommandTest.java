@@ -18,7 +18,7 @@ import seedu.doerList.testutil.TestCategory;
 public class FindCommandTest extends DoerListGuiTest {
 
     @Test
-    public void find_nonEmptyList() throws IllegalValueException {
+    public void find_nonEmptyList_successful() throws IllegalValueException {
         // find get multiple results
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
@@ -45,7 +45,6 @@ public class FindCommandTest extends DoerListGuiTest {
         expectedBuildInCategoryList.get(0).setExpectedDueTasks(0);
         assertFindResult("find Love", Lists.newArrayList(), expectedBuildInCategoryList, expectedCategoryList);
         
-
         //find after deleting one result
         commandBox.runCommand("find Math");
         commandBox.runCommand("delete 1");
@@ -64,7 +63,7 @@ public class FindCommandTest extends DoerListGuiTest {
     }
 
     @Test
-    public void find_emptyList() throws IllegalValueException{
+    public void find_emptyList_noTaskFound() throws IllegalValueException{
         commandBox.runCommand("clear");
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList();
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
@@ -79,7 +78,7 @@ public class FindCommandTest extends DoerListGuiTest {
     }
 
     @Test
-    public void find_invalidCommand_fail() throws IllegalValueException {
+    public void find_invalidCommand_errorMessage() throws IllegalValueException {
         commandBox.runCommand("findgeorge");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }

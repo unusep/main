@@ -40,17 +40,20 @@ public class DoerList implements ReadOnlyDoerList {
      */
     private void addListenerToCategoryList() {
         ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
-            while (c.next()) {
-                if (c.wasAdded()) {
-                    for(Category addedCategory : c.getAddedSubList()) {
-                        addedCategory.setFilteredTaskList(getTasks());
-                    }
-                }
+            while (c.next() && c.wasAdded()) {
+                addTaskListToCategory(c.getAddedSubList());
             }
         };
         categories.getInternalList().addListener(listener);
     }
 
+    private void addTaskListToCategory(List<? extends Category> category) {
+        for(Category addedCategory : category) {
+            addedCategory.setFilteredTaskList(getTasks());
+        }
+    }
+    
+    //@@author
     public DoerList() {}
 
     /**
@@ -71,8 +74,6 @@ public class DoerList implements ReadOnlyDoerList {
         return new DoerList();
     }
 
-//// list overwrite operations
-
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
     }
@@ -86,6 +87,7 @@ public class DoerList implements ReadOnlyDoerList {
         return buildInCategories.getInternalList();
     }
 
+    //@@author
     public void setTasks(List<Task> tasks) {
         for(Task t : tasks) {
             syncCategoriesWithMasterList(t);
@@ -168,7 +170,7 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    //TODO: Seek consultation on this one 
+    
     public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed

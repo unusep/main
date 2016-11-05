@@ -18,9 +18,9 @@ public class Title {
      *
      * @throws IllegalValueException if given title string is invalid.
      */
-    public Title(String title) throws IllegalValueException {
-        assert title != null;
-        title = title.trim();
+    public Title(String theTitle) throws IllegalValueException {
+        assert theTitle != null;
+        String title = theTitle.trim();
         if (!isValidTitle(title)) {
             throw new IllegalValueException(MESSAGE_TITLE_CONSTRAINTS);
         }

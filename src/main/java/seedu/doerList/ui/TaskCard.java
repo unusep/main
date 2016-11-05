@@ -79,14 +79,20 @@ public class TaskCard extends UiPart {
     private void displayTask(int displayIndex) {
         title.setText(task.getTitle().fullTitle);
         index.setText(displayIndex + "");
+        displayCompleteStatus();
+        displayTime();
+        displayCategories();
+        displayRecurringBar();
+    }
+
+    /**
+     * Change font color according to the status of the task (complete / incomplete)
+     */
+    private void displayCompleteStatus() {
         if (task.getBuildInCategories().contains(BuildInCategoryList.COMPLETE)) {
             title.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
             index.setTextFill(Paint.valueOf(COMPLETE_STATUS_FONT_COLOR));
         }
-        taskCategory.setText(task.getCategories().toString());
-        displayTime();
-        displayCategories();
-        displayRecurringBar();
     }
     
     /**

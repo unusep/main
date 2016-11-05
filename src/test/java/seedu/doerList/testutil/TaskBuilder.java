@@ -41,7 +41,7 @@ public class TaskBuilder {
                 task.getCategories().add(category);
             } catch (DuplicateCategoryException e) {
                 // impossible
-            };
+            }
         }
         return this;
     }

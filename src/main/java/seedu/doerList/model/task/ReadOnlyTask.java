@@ -36,6 +36,19 @@ public interface ReadOnlyTask {
     default boolean isFloatingTask() {
         return !hasStartTime() && !hasEndTime();
     }
+    
+    default boolean isDueTask() {
+        return !hasStartTime() && hasEndTime();
+    }
+    
+    default boolean isBeginAtTask() {
+        return hasStartTime() && !hasEndTime();
+    }
+    
+    default boolean isStartEndTask() {
+        return hasStartTime() && hasEndTime();
+    }
+    
     default String getTime() {
         final StringBuilder builder = new StringBuilder();
         if (hasStartTime() && !hasEndTime()) {

@@ -28,7 +28,7 @@ import seedu.doerList.testutil.TestTask;
 public class EditCommandTest extends DoerListGuiTest {
 
     @Test
-    public void edit() throws IllegalValueException {
+    public void edit_task_successful() throws IllegalValueException {
         // edit the first one in the list
         TestTask afterEdition = new TestTask(td.task2);
         afterEdition.setTitle(new Title("Test Task 2 Edit Title"));
@@ -70,12 +70,23 @@ public class EditCommandTest extends DoerListGuiTest {
         commandBox.runCommand(afterEdition.getEditCommand(3));
         assertResultMessage(EditCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-
+    }
+    
+    @Test
+    public void edit_emptyTaskList_errorMessage() {
         // edit to empty list
         commandBox.runCommand("clear");
         commandBox.runCommand(td.task8.getEditCommand(1));
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-
+    }
+    
+    @Test
+    public void edit_invalidArgs_errorMessage() {
+        // edit to empty list
+        commandBox.runCommand("clear");
+        commandBox.runCommand(td.task8.getEditCommand(1));
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        
         // invalid command
         commandBox.runCommand("edit Do Homework");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));

@@ -14,12 +14,11 @@ import seedu.doerList.logic.commands.RedoCommand;
 import seedu.doerList.logic.commands.UndoCommand;
 import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.testutil.TestCategory;
-import seedu.doerList.testutil.TypicalTestTasks;
 
 public class UndoRedoCommandTest extends DoerListGuiTest {
 
     @Test
-    public void redo_undo_tasks_successful() throws IllegalValueException {
+    public void redoUndo_addEditDeleteClear_successful() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
@@ -41,7 +40,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 new TestCategory("MA1101R", 1, 0)
         );
         // add task
-        commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
+        commandBox.runCommand(td.task9.getAddCommand());
         assertUndoCommandSuccess(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
         // redo add task
@@ -96,7 +95,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 new TestCategory("MA1101R", 1, 0),
                 new TestCategory("CS2103", 1, 1)
         );
-        commandBox.runCommand(TypicalTestTasks.task9.getEditCommand(1));
+        commandBox.runCommand(td.task9.getEditCommand(1));
         assertUndoCommandSuccess(expectedDisplayTaskPanel, 
                 expectedBuildInCategoryList, expectedCategoryList);
         assertRedoCommandSuccess(expectedDisplayTaskPanel_edit, 
@@ -143,7 +142,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
     }
     
     @Test
-    public void redo_undo_mark_unmark_tasks_successful() throws IllegalValueException {
+    public void redoUndo_markUnmark_successful() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
