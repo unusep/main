@@ -64,7 +64,6 @@ All commands start with a command words, followed by fields that are replaced by
 [//]: # (@@author A0139401N)
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
    > This app will not work with earlier versions of Java 8.<br>
-   
 2. Download the latest `doerlist.jar` from the [releases](../../../releases) tab.
 3. Copy the file to the folder you want to use as the home folder for the Do-*er*List.
 4. Double-click the file to start the app. The GUI should appear in a few seconds. <br>
@@ -85,7 +84,7 @@ All commands start with a command words, followed by fields that are replaced by
 ## Features
 
 > **Command Format**
-> 
+>
 > * Words in `UPPER_CASE` are the parameters.
 > * Items in `SQUARE_BRACKETS` are optional.
 > * Items with `...` after them can have multiple instances.
@@ -105,26 +104,32 @@ Format: `help` or `help [COMMAND_NAME]`
 [//]: # (@@author A0139401N)
 #### Adding a task : `add`
 Adds a task to the Do-*er*List<br>
-Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
+Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING]...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
 > * A task can have any number of categories (including 0).
-> * The START or END parameter can be in natural language*.
-> * If the START date is missing, the Do*er*-List set it to today by default.
-> * If there is no START or END parameters, the Do*er*-list will create task without start date and end date and move it to `Inbox` built-in category.
-<br>
-> * Supported list for natural language*:
+> * The `START` or `END` parameter can be in natural language.
+> * `RECURRING` intervals can also be added in and can be in natural language.
+> * If the `START` date is missing, the Do*er*-List set it to today by default.
+> * If there is no `START` or `END` parameters, the Do*er*-list will create task without start date and end date and move it to `Inbox` built-in category.
+> * Supported list for natural language for `START` and `END`:
 >  * next X hours / days / weeks / months
 >    * *X* can be any number: 1, 2, 3, ...
 >  * today
 >  * tomorrow
 >  * next week / month
+> * Supported list for natural language for `RECURRING`:
+>  * daily
+>  * weekly
+>  * monthly
+>  * yearly
 
-Examples: 
+Examples:
 
 * `add /t Weekly Laundry /s 2016-11-23 21:00 /c Chores`<br>
 * `add /t Daily Exercise and Workout!`<br>
 * `add /t Call Mum in Hanoi /d Limit chat timing for overseas charges /s tomorrow 8pm /e tomorrow 10pm /c Optional`
+* `add /t Check Email /s tomorrow 8pm /e tomorrow 10pm /r daily`
 
 [//]: # (@@author)
 
@@ -133,18 +138,18 @@ Examples:
 [//]: # (@@author A0139401N)
 #### Editing a task : `edit`
 Edit an existing task in the Do-*er* List<br>
-Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY]...`
+Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING]...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
 > Edit an existing task by calling its index. The task's title, description, start date, end date and category can be edited.
-  
+
 Examples:
 
 * `edit 2 /t Daily Laundry /c Chores /c Daily`
 * `edit 3 /c Do Homework`
 * `edit 3 /s tomorrow 23 00`
 
-> Attributes that are not supplied will not be updated 
+> Attributes that are not supplied will not be updated
 
 
 [Back To Top](#user-guide)
@@ -326,7 +331,13 @@ Exits the program.<br>
 Format: `exit`  
 [//]: # (@@author)
 
+[//]: # (@@author A0139401N)
+#### Changing your save location : `saveto`
+To be edited.<br>
+Format: `exit`  
+
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 ### Saving the data 
@@ -342,20 +353,20 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 <br>
 
 **Q**: Running "doerlist.jar" gives and error or does not seem to work.<br>
-**A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/download/help/download_options.xml). 
+**A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/download/help/download_options.xml).
 <br>
 
 **Q**: Where is the save button for me to save my schedule in this program? <br>
 **A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#saving-the-data) in the guide. There is no need for you to save it manually.
 
-       
+
 ## Command Summary
 
-Command | Format  
--------- | :-------- 
+Command | Format
+-------- | :--------
 Help | `help [COMMAND]`
-Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
-Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] ...`
+Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
+Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
 List | `list [CATEGORY]`
