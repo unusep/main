@@ -364,7 +364,7 @@ public class TaskListPanel extends UiPart {
      * @return
      * @throws TaskNotFoundException
      */
-    public static ReadOnlyTask getDisplayedIndexWhenCategorizedByBuildInCategory(int index, 
+    public static ReadOnlyTask getDisplayedIndexInUI(int index, 
             ObservableList<ReadOnlyTask> tasks) throws TaskNotFoundException {
         Map<BuildInCategory, List<ReadOnlyTask>> results = categorizedByBuildInCategory(tasks);
         int i = 1;

@@ -33,7 +33,7 @@ public class DeleteCommand extends Command {
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         try {
-            ReadOnlyTask target = TaskListPanel.getDisplayedIndexWhenCategorizedByBuildInCategory(targetIndex, lastShownList);
+            ReadOnlyTask target = TaskListPanel.getDisplayedIndexInUI(targetIndex, lastShownList);
             model.deleteTask(target);
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, target));
         } catch (TaskNotFoundException e) {
