@@ -80,7 +80,6 @@ public class TaskCard extends UiPart {
         title.setText(task.getTitle().fullTitle);
         index.setText(displayIndex + "");
         displayCompleteStatus();
-        taskCategory.setText(task.getCategories().toString());
         displayTime();
         displayCategories();
         displayRecurringBar();
