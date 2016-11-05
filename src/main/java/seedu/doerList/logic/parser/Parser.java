@@ -249,6 +249,7 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
+    //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      * Returns an {@code Optional.empty()} otherwise.
@@ -267,6 +268,7 @@ public class Parser {
 
     }
 
+    //@@author A0147978E
     /**
      * Parses arguments in the context of the find task command.
      *
