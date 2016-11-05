@@ -1,8 +1,6 @@
 //@@author A0139168W
 package guitests;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -95,13 +93,8 @@ public class MarkCommandTest extends DoerListGuiTest {
         commandBox.runCommand("mark " + index);
         assertResultMessage(String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, taskToMark));
         
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
     
     }
        

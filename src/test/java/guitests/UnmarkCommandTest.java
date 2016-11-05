@@ -1,8 +1,6 @@
 //@@author A0139168W
 package guitests;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -55,12 +53,8 @@ public class UnmarkCommandTest extends DoerListGuiTest {
                 new TestCategory(BuildInCategoryList.NEXT.categoryName, td.task5, td.task6),
                 new TestCategory(BuildInCategoryList.COMPLETE.categoryName, td.task8)
         );
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));       
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedPanel_all));
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedPanel_all, expectedBuildInCategoryList, expectedCategoryList);
     }
     
     @Test
@@ -114,13 +108,8 @@ public class UnmarkCommandTest extends DoerListGuiTest {
         commandBox.runCommand("unmark " + index);
         assertResultMessage(String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, taskToUnmark));
         
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        //confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        
-        //confirm the list now contains all previous persons plus the new person
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
     
     }
        

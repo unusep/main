@@ -111,7 +111,7 @@ public class MainWindow extends UiPart {
     }
     
 
-    void fillInnerParts() {
+    public void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
         categorySideBar = CategorySideBar.load(primaryStage, getCategorySideBarPlaceholder(), 
                 logic.getBuildInCategoryList(), logic.getCategoryList());

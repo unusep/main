@@ -31,10 +31,12 @@ import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.util.ConfigUtil;
 import seedu.doerList.commons.util.TimeUtil;
 import seedu.doerList.logic.commands.AddCommand;
+import seedu.doerList.logic.commands.ClearCommand;
 import seedu.doerList.logic.commands.Command;
 import seedu.doerList.logic.commands.CommandResult;
 import seedu.doerList.logic.commands.DeleteCommand;
 import seedu.doerList.logic.commands.EditCommand;
+import seedu.doerList.logic.commands.ExitCommand;
 import seedu.doerList.logic.commands.FindCommand;
 import seedu.doerList.logic.commands.HelpCommand;
 import seedu.doerList.logic.commands.ListCommand;
@@ -199,17 +201,17 @@ public class LogicManagerTest {
 
     @Test
     public void execute_exit() throws Exception {
-        //assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
+        assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
     @Test
     public void execute_clear() throws Exception {
-        //TestDataHelper helper = new TestDataHelper();
-        //model.addPerson(helper.generateTask(1));
-        //model.addPerson(helper.generateTask(2));
-        //model.addPerson(helper.generateTask(3));
+        TestDataHelper helper = new TestDataHelper();
+        model.addTask(helper.generateTask(1));
+        model.addTask(helper.generateTask(2));
+        model.addTask(helper.generateTask(3));
 
-        //assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
+        assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
     
 
