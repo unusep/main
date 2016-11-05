@@ -93,7 +93,7 @@ public abstract class DoerListGuiTest {
      */
     protected DoerList getInitialData() {
         DoerList ab = TestUtil.generateEmptyDoerList();
-        TypicalTestTasks.loadDoerListWithSampleData(ab);
+        td.loadDoerListWithSampleData(ab);
         return ab;
     }
 

@@ -41,7 +41,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 new TestCategory("MA1101R", 1, 0)
         );
         // add task
-        commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
+        commandBox.runCommand(td.task9.getAddCommand());
         assertUndoCommandSuccess(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
         // redo add task
@@ -96,7 +96,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
                 new TestCategory("MA1101R", 1, 0),
                 new TestCategory("CS2103", 1, 1)
         );
-        commandBox.runCommand(TypicalTestTasks.task9.getEditCommand(1));
+        commandBox.runCommand(td.task9.getEditCommand(1));
         assertUndoCommandSuccess(expectedDisplayTaskPanel, 
                 expectedBuildInCategoryList, expectedCategoryList);
         assertRedoCommandSuccess(expectedDisplayTaskPanel_edit, 

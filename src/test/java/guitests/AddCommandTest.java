@@ -44,15 +44,15 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory("Life", 1, 0)
         );
         // add tasks at once
-        commandBox.runCommand(TypicalTestTasks.task9.getAddCommand());
-        commandBox.runCommand(TypicalTestTasks.task10.getAddCommand());
-        commandBox.runCommand(TypicalTestTasks.task11.getAddCommand());
-        TestTask taskToAdd = TypicalTestTasks.task12;
+        commandBox.runCommand(td.task9.getAddCommand());
+        commandBox.runCommand(td.task10.getAddCommand());
+        commandBox.runCommand(td.task11.getAddCommand());
+        TestTask taskToAdd = td.task12;
         assertAddSuccess(taskToAdd, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
 
 
         // add duplicate task no change
-        commandBox.runCommand(TypicalTestTasks.task3.getAddCommand());
+        commandBox.runCommand(td.task3.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
