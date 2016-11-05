@@ -112,13 +112,8 @@ public class EditCommandTest extends DoerListGuiTest {
         commandBox.runCommand(command);
         assertResultMessage(String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, toEdit, afterEdit));
         
-        // confirm the list now contains accurate buildInCategory and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        // confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        
-        // confirm the list now contains all tasks
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));  
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
     }
 
 }
