@@ -20,12 +20,7 @@ import seedu.doerList.model.task.Task;
  * @see BuildInCategory#equals(Object)
  */
 public class BuildInCategoryList implements Iterable<Category> {  
-    public static final BuildInCategory ALL;
-    public static final BuildInCategory TODAY;
-    public static final BuildInCategory NEXT;
-    public static final BuildInCategory INBOX;
-    public static final BuildInCategory COMPLETE;
-    public static final BuildInCategory DUE;
+    public static final BuildInCategory ALL, TODAY, NEXT, INBOX, COMPLETE, DUE;
        
     // predefined category
     static {
