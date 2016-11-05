@@ -40,17 +40,19 @@ public class DoerList implements ReadOnlyDoerList {
      */
     private void addListenerToCategoryList() {
         ListChangeListener<? super Category> listener = (ListChangeListener.Change<? extends Category> c) -> {
-            while (c.next()) {
-                if (c.wasAdded()) {
-                    for(Category addedCategory : c.getAddedSubList()) {
-                        addedCategory.setFilteredTaskList(getTasks());
-                    }
-                }
+            while (c.next() && c.wasAdded()) {
+                addTaskListToCategory(c.getAddedSubList());
             }
         };
         categories.getInternalList().addListener(listener);
     }
 
+    private void addTaskListToCategory(List<? extends Category> category) {
+        for(Category addedCategory : category) {
+            addedCategory.setFilteredTaskList(getTasks());
+        }
+    }
+    
     public DoerList() {}
 
     /**
