@@ -16,6 +16,7 @@
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
+    * [Save](#save-the-data-to-a-new-locatiob--saveto)
     * [Exit](#exiting-the-program--exit)
     * [Saving the data](#saving-the-data)
 * [FAQ](#faq)
@@ -313,6 +314,18 @@ Examples:
 
 [Back To Top](#user-guide)
 
+#### Save the data to a new location: `saveto`
+Save the data into a new file<br>
+Format: `saveto NEW_LOCATION`
+
+<img src="../docs/images/UI_Guide/saveto_command.png" width="600">
+
+Examples:
+
+* `saveto data/newsampledata.xml`
+
+[Back To Top](#user-guide)
+
 #### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
@@ -363,4 +376,5 @@ Delete | `delete INDEX`
 Undo | `undo`
 Redo | `redo`
 Task Due | `taskdue END_DATE`
+Save | `saveto NEW_LOCATION`
 Exit | `exit`
