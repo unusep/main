@@ -559,6 +559,68 @@
         </endTime>
         <categorized>CS2103T</categorized>
     </tasks>
+    <tasks>
+        <title>Buy Christmas present</title>
+        <description>for gift exchange</description>
+        <startTime>
+            <value>2016-12-22 19:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-12-22 23:00</value>
+        </endTime>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Pet Project</title>
+        <description>Habpet</description>
+        <startTime>
+            <value>2016-12-01 19:46</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Overseas!</title>
+        <description>Thailand</description>
+        <startTime>
+            <value>2016-12-03 08:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-12-10 21:00</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy book</title>
+        <description>Metro 2035 - English release</description>
+        <startTime>
+            <value>2016-12-15 07:00</value>
+        </startTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Set up linux server</title>
+        <description>Old dell laptop (screen broken)</description>
+        <startTime>
+            <value>2016-12-04 19:58</value>
+        </startTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>USS</title>
+        <description>Sec school</description>
+        <startTime>
+            <value>2016-12-16 09:00</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Plan overseas trip</title>
+        <description>Japan with friends</description>
+        <startTime>
+            <value>2016-12-01 09:00</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
     <categories>
         <categoryName>CS3241</categoryName>
     </categories>
