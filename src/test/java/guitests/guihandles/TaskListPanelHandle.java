@@ -16,7 +16,7 @@ import seedu.doerList.testutil.TestCategory;
 import seedu.doerList.testutil.TestUtil;
 
 /**
- * Provides a handle for the panel containing the person list.
+ * Provides a handle for the panel containing the task list.
  */
 public class TaskListPanelHandle extends GuiHandle {
     /** Some fields id in the UI. These IDs can be find in {@code /src/main/resources/view/*.fxml} */

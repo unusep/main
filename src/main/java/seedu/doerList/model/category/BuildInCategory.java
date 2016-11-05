@@ -10,10 +10,10 @@ public class BuildInCategory extends Category {
     
     public static String CATEGORY_FILTERED_BADGE = " (filtered)";
     
-    Predicate<ReadOnlyTask> defaultPredicate;
-    String defaultCategoryName;
+    private Predicate<ReadOnlyTask> defaultPredicate;
+    private String defaultCategoryName;
     
-    Predicate<ReadOnlyTask> currentPredicate;
+    private Predicate<ReadOnlyTask> currentPredicate;
     
     public BuildInCategory(String name, Predicate<ReadOnlyTask> thePredicate) throws IllegalValueException {
         super(name);
@@ -38,7 +38,7 @@ public class BuildInCategory extends Category {
     /**
      * Reset the buildInCategory to default predicate.
      */
-    public void setToDeafultPredicate() {
+    public void setToDefaultPredicate() {
         this.currentPredicate = this.defaultPredicate;
         this.categoryName = this.defaultCategoryName;
     }

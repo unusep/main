@@ -4,22 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.GuiSettings;
 import seedu.doerList.commons.events.ui.ExitAppRequestEvent;
-import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.logic.Logic;
 import seedu.doerList.model.UserPrefs;
-import seedu.doerList.model.category.Category;
-import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing

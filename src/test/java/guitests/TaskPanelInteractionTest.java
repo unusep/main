@@ -11,7 +11,7 @@ import seedu.doerList.ui.TaskCard;
 public class TaskPanelInteractionTest extends DoerListGuiTest {
 
     @Test
-    public void press_arrowKey() {
+    public void press_arrowKey_selectionMoved() {
         // press down to `scroll down`
         taskListPanel.clickOnMidOfTaskPanel(10);
         for(int i = 1; i<=8; i++) {
@@ -38,7 +38,7 @@ public class TaskPanelInteractionTest extends DoerListGuiTest {
     
     
     @Test
-    public void click_TaskCardUI() {
+    public void click_taskCard_taskSelected() {
         // click the first one
         taskListPanel.clickOnMidOfTaskPanel(55);
         assertTaskSelected(1);

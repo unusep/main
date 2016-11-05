@@ -11,7 +11,7 @@ import seedu.doerList.model.category.Category;
 
 public class CategoryListCard extends UiPart {
     private static final String FXML = "CategoryListCard.fxml";
-    Category category;
+    private Category category;
     
     @FXML
     private HBox categoryCardPane;

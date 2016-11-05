@@ -106,7 +106,7 @@ public class SectionPanel extends UiPart {
     public int findSelectionIndex(TaskCard target) {
         int taskCardIndex = -1;
         for(TaskCard tc : this.getTaskControllers()) {
-            if (tc == target) {
+            if (tc.equals(target)) {
                 taskCardIndex++;
                 break;
             }
@@ -116,11 +116,11 @@ public class SectionPanel extends UiPart {
     }
     
     /**
-     * Select the first Task and set it as active.
+     * Select the indexed Task and set it as active.
      * 
      * @param index the displayedIndex of the task
      */
-    public void setFirstTaskToActive(int index) {
+    public void setTaskToActive(int index) {
         if (index >= 0 && index < this.getTaskControllers().size()) {
             this.getTaskControllers().get(index).setActive();
             raise(new TaskPanelSelectionChangedEvent(this.getTaskControllers().get(index)));

@@ -19,7 +19,7 @@ import seedu.doerList.testutil.TestTask;
 public class DeleteCommandTest extends DoerListGuiTest {
 
     @Test
-    public void delete() throws IllegalValueException {
+    public void delete_task_successful() throws IllegalValueException {
 
         // delete the first in the list
         int targetIndex = 1;
@@ -55,11 +55,13 @@ public class DeleteCommandTest extends DoerListGuiTest {
         targetIndex = 5;
         assertDeleteSuccess(targetIndex, td.task1, expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
         
-
+    }
+    
+    @Test
+    public void delete_invalidArgs_errorMessage() {
         // invalid index
-        commandBox.runCommand("delete 7");
+        commandBox.runCommand("delete 12");
         assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-
     }
     
     /**

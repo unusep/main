@@ -2,6 +2,7 @@
 package seedu.doerList.logic.commands;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
@@ -10,8 +11,8 @@ import seedu.doerList.model.category.BuildInCategoryList;
 import seedu.doerList.model.task.ReadOnlyTask;
 
 /**
- * Finds and lists all tasks in doerList whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all tasks in doerList whose name or description contains any of the argument keywords.
+ * Keyword matching is not case sensitive.
  */
 public class FindCommand extends Command {
 
@@ -31,21 +32,45 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredListToShowAll();
-        BuildInCategoryList.resetBuildInCategoryPredicate();
-        // update the filter for BuildInCategory All
-        BuildInCategoryList.ALL.updatePredicate((ReadOnlyTask task) -> {
-            return this.keywords.stream()
-            .filter(keyword -> {
-                return StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword) ||
-                        (task.hasDescription() && StringUtil.containsIgnoreCase(task.getDescription().value, keyword));
-                })
-            .findAny()
-            .isPresent();
-        });
-        // display ALL
-        EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
+        updateCategoryAllPredicate();
         model.updateFilteredTaskList(BuildInCategoryList.ALL.getPredicate());
+        EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
         return new CommandResult(getMessageForTaskListShownSummary(BuildInCategoryList.ALL.getTasks().size()));
+    }
+
+    private void updateCategoryAllPredicate() {
+        BuildInCategoryList.ALL.setToDefaultPredicate();
+        BuildInCategoryList.ALL.updatePredicate(generateTaskPredicate(this.keywords));
+    }
+
+    /**
+     * Generate a predicate to check whether a task's title or description
+     * contain the given set of keywords
+     * 
+     * @param keywords A set of keywords
+     * @return
+     */
+    private Predicate<ReadOnlyTask> generateTaskPredicate(Set<String> keywords) {
+        return (ReadOnlyTask task) -> {
+            return keywords.stream()
+                    .filter(generateStringFilter(task))
+                    .findAny().isPresent();
+        };
+    }
+    
+    /**
+     * Generate a String predicate to check whether a string is contained
+     * in the task's title and description
+     * 
+     * @param task Given task
+     * @return
+     */
+    private Predicate<? super String> generateStringFilter(ReadOnlyTask task) {
+        Predicate<? super String> predicate = (keyword -> {
+                return StringUtil.containsIgnoreCase(task.getTitle().fullTitle, keyword) ||
+                    (task.hasDescription() && StringUtil.containsIgnoreCase(task.getDescription().value, keyword));
+            });
+        return predicate;
     }
 
 }
