@@ -73,8 +73,6 @@ public class DoerList implements ReadOnlyDoerList {
         return new DoerList();
     }
 
-//// list overwrite operations
-
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
     }
