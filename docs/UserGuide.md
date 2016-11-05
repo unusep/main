@@ -331,19 +331,6 @@ Exits the program.<br>
 Format: `exit`  
 [//]: # (@@author)
 
-[//]: # (@@author A0139401N)
-#### Changing your save location : `saveto`
-To be edited.<br>
-Format: `exit`  
-
-[Back To Top](#user-guide)
-[//]: # (@@author)
-
-[//]: # (@@author A0139401N)
-### Saving the data 
-The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
-
-[Back To Top](#user-guide)
 
 [//]: # (@@author A0139401N)
 ## FAQ
