@@ -3,6 +3,7 @@ package guitests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.After;
@@ -136,5 +137,23 @@ public abstract class DoerListGuiTest {
      */
     protected void assertResultMessage(String expected) {
         assertEquals(expected, resultDisplay.getText());
+    }
+    
+    /**
+     * To check whether the UI match the given data
+     * 
+     * @param expectedDisplayTaskPanel
+     * @param expectedBuildInCategoryList
+     * @param expectedCategoryList
+     */
+    protected void checkUiMatching(List<TestCategory> expectedDisplayTaskPanel,
+            List<TestCategory> expectedBuildInCategoryList, List<TestCategory> expectedCategoryList) {
+        // confirm the list now contains accurate buildInCategory and count
+        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
+        // confirm the list now contains accurate category and count
+        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
+        
+        // confirm the list now contains all tasks
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
     }
 }

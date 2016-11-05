@@ -1,8 +1,6 @@
 //@@author A0147978E
 package guitests;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -82,13 +80,8 @@ public class DeleteCommandTest extends DoerListGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
         assertResultMessage(String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, deletedTask));
         
-        // confirm the list now contains accurate buildInCategory and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        // confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        
-        // confirm the list now contains all tasks
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));  
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
     }
 
 }

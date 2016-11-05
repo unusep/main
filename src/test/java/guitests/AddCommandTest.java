@@ -1,8 +1,6 @@
 //@@author A0147978E 
 package guitests;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -53,9 +51,8 @@ public class AddCommandTest extends DoerListGuiTest {
         // add duplicate task no change
         commandBox.runCommand(td.task3.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));             
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);           
     }
     
     @Test
@@ -104,13 +101,8 @@ public class AddCommandTest extends DoerListGuiTest {
         commandBox.runCommand(taskToAdd.getAddCommand());
         assertResultMessage(String.format(AddCommand.MESSAGE_SUCCESS, taskToAdd));
         
-        // confirm the list now contains accurate buildInCategory and count
-        assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
-        // confirm the list now contains accurate category and count
-        assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        
-        // confirm the list now contains all tasks
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
+        // check whether the UI contains the desired data
+        checkUiMatching(expectedDisplayTaskPanel, expectedBuildInCategoryList, expectedCategoryList);
     }
 
 }
