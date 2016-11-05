@@ -28,9 +28,9 @@ public class Category {
      *
      * @throws IllegalValueException if the given category name string is invalid.
      */
-    public Category(String name) throws IllegalValueException {
-        assert name != null;
-        name = name.trim();
+    public Category(String theName) throws IllegalValueException {
+        assert theName != null;
+        String name = theName.trim();
         if (!isValidCategoryName(name)) {
             throw new IllegalValueException(MESSAGE_CATEGORY_CONSTRAINTS);
         }

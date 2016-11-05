@@ -152,6 +152,8 @@ public class TaskListPanel extends UiPart {
             case DOWN:
                 selectionMoveDown();
                 break;
+            default:
+                break;
         }
     }
     
