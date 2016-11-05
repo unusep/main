@@ -106,7 +106,7 @@ public class SectionPanel extends UiPart {
     public int findSelectionIndex(TaskCard target) {
         int taskCardIndex = -1;
         for(TaskCard tc : this.getTaskControllers()) {
-            if (tc == target) {
+            if (tc.equals(target)) {
                 taskCardIndex++;
                 break;
             }
