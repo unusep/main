@@ -20,7 +20,7 @@ import seedu.doerList.testutil.TypicalTestTasks;
 public class AddCommandTest extends DoerListGuiTest {
 
     @Test
-    public void add_tasks_successful() throws IllegalValueException {
+    public void add_tasksAndDuplicateTask_successfulAndErrorMessage() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task9, td.task2),
@@ -56,8 +56,11 @@ public class AddCommandTest extends DoerListGuiTest {
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(categorySideBar.isBuildInCategoryListMatching(expectedBuildInCategoryList));
         assertTrue(categorySideBar.categoryListMatching(expectedCategoryList));
-        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));
-
+        assertTrue(taskListPanel.isListMatching(expectedDisplayTaskPanel));             
+    }
+    
+    @Test
+    public void add_emptyList_successful() throws IllegalValueException {
         // add to empty todo list
         commandBox.runCommand("clear");
         List<TestCategory> expectedDisplayTaskPanel2 = Lists.newArrayList(
@@ -74,7 +77,10 @@ public class AddCommandTest extends DoerListGuiTest {
                 new TestCategory("CS2101", 1, 0)
         );
         assertAddSuccess(td.task3, expectedDisplayTaskPanel2, expectedBuildInCategoryList2, expectedCategoryList2);
-              
+    }
+    
+    @Test
+    public void add_invalidArgs_errorMessage() {
         // invalid command
         commandBox.runCommand("adds Do Homework");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);

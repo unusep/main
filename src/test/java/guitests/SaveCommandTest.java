@@ -12,13 +12,13 @@ import seedu.doerList.logic.commands.SaveCommand;
 public class SaveCommandTest extends DoerListGuiTest {
 
     @Test
-    public void save() throws IllegalValueException {
+    public void save_validPath_successful() throws IllegalValueException {
         String validPath = "data/test1.xml";
         assertSaveSuccess(validPath);          
     }
     
     @Test
-    public void save_invalid_path() throws IllegalValueException {      
+    public void save_invalidPath_errorMessage() throws IllegalValueException {      
         commandBox.runCommand("saveto ");
         assertResultMessage(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, SaveCommand.MESSAGE_INVALID_SAVE_LOCATION));
     }

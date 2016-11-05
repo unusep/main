@@ -20,7 +20,7 @@ public class ListCommandTest extends DoerListGuiTest {
     // case sensitive test is included in the logicManagerTest.java
     
     @Test
-    public void list() throws IllegalValueException {
+    public void list_category_taskShown() throws IllegalValueException {
         // generate exptected result
         List<TestCategory> expectedBuildInCategoryList = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.ALL.categoryName, 8, 1),
@@ -94,7 +94,7 @@ public class ListCommandTest extends DoerListGuiTest {
     }
     
     @Test
-    public void list_afterRunAddCommand() throws IllegalValueException {
+    public void list_afterRunAddCommand_successful() throws IllegalValueException {
         // expected result
         List<TestCategory> expectedCategoryList = Lists.newArrayList(
                 new TestCategory("CS2101", 2, 1),

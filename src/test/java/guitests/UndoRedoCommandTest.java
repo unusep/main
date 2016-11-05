@@ -19,7 +19,7 @@ import seedu.doerList.testutil.TypicalTestTasks;
 public class UndoRedoCommandTest extends DoerListGuiTest {
 
     @Test
-    public void redo_undo_tasks_successful() throws IllegalValueException {
+    public void redoUndo_addEditDeleteClear_successful() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
@@ -143,7 +143,7 @@ public class UndoRedoCommandTest extends DoerListGuiTest {
     }
     
     @Test
-    public void redo_undo_mark_unmark_tasks_successful() throws IllegalValueException {
+    public void redoUndo_markUnmark_successful() throws IllegalValueException {
         // define expected output
         List<TestCategory> expectedDisplayTaskPanel = Lists.newArrayList(
                 new TestCategory(BuildInCategoryList.DUE.categoryName, td.task2),
