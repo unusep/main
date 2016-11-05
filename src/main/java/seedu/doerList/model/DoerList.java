@@ -87,6 +87,7 @@ public class DoerList implements ReadOnlyDoerList {
         return buildInCategories.getInternalList();
     }
 
+    //@@author
     public void setTasks(List<Task> tasks) {
         for(Task t : tasks) {
             syncCategoriesWithMasterList(t);
@@ -169,7 +170,7 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    //TODO: Seek consultation on this one 
+    
     public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
