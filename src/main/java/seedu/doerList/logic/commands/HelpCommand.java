@@ -1,3 +1,4 @@
+//@@author A0139401N
 package seedu.doerList.logic.commands;
 
 
@@ -14,7 +15,7 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    public static final String SHOWING_HELP_MESSAGE = "Opened help window to User Guide.";
 
     public static final String INVALID_HELP_MESSAGE = "Invalid Command Name after 'help' - type 'help' to bring up the User Guide";
 
@@ -23,6 +24,7 @@ public class HelpCommand extends Command {
     public HelpCommand(String command) {
         this.command = command;
     }
+  //@@author
 
     @Override
     public CommandResult execute() {

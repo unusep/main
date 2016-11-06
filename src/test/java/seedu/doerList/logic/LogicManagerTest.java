@@ -266,7 +266,7 @@ public class LogicManagerTest {
     public void execute_addRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toAdded = helper.taskWithAttribute(false, false, false, true, false);
-        assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
+        assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_START_END_CONSTRAINTS);
     }
 
     //@@author A0139401N
@@ -550,7 +550,7 @@ public class LogicManagerTest {
         DoerList expectedDL = new DoerList();
         expectedDL.addTask(toAdded);
         assertCommandBehavior("edit 1 /r daily",
-                Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS,
+                Recurring.MESSAGE_RECURRING_START_END_CONSTRAINTS,
                 expectedDL,
                 expectedDL.getTaskList());
     }
