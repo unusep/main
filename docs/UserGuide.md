@@ -331,10 +331,7 @@ Exits the program.<br>
 Format: `exit`  
 [//]: # (@@author)
 
-[//]: # (@@author A0139401N)
-#### Changing your save location : `saveto`
-To be edited.<br>
-Format: `exit`  
+
 
 [Back To Top](#user-guide)
 [//]: # (@@author)
