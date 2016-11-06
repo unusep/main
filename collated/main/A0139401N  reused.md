@@ -1,5 +1,5 @@
 # A0139401N  reused
-###### /java/seedu/doerList/logic/commands/ClearCommand.java
+###### \java\seedu\doerList\logic\commands\ClearCommand.java
 ``` java
 package seedu.doerList.logic.commands;
 

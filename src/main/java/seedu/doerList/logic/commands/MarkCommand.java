@@ -28,7 +28,6 @@ public class MarkCommand extends Command {
     }
     
 
-    //@@author A0139401N
     public CommandResult execute() {       
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
