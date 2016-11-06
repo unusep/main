@@ -314,6 +314,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0140905M)
 #### Save the data to a new location: `saveto`
 Save the data into a new file<br>
 Format: `saveto NEW_LOCATION`
@@ -328,10 +329,7 @@ Examples:
 
 #### Exiting the program : `exit`
 Exits the program.<br>
-Format: `exit`  
-[//]: # (@@author)
-
-
+Format: `exit`
 
 [Back To Top](#user-guide)
 [//]: # (@@author)

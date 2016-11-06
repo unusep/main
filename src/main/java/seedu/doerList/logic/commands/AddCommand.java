@@ -1,4 +1,4 @@
-//@@author A0139401N
+//@@author A0140905M
 package seedu.doerList.logic.commands;
 
 import java.util.HashSet;
@@ -27,16 +27,15 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the Do-erlist";
 
-    private final Task toAdd;
+    private final Task newTask;
 
 
-    //@@author A0139401N 
     /**
-     * Add a floating task (task with no start time and DeadLine)
+     * Add a task
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String title, String description, String startTime, String endTime, String isRecurring, 
+    public AddCommand(String title, String description, String startTime, String endTime, String isRecurring,
                       Set<String> categories)
     		throws IllegalValueException {
         final Set<Category> categorySet = new HashSet<>();
@@ -44,7 +43,7 @@ public class AddCommand extends Command {
             categorySet.add(new Category(categoryName));
         }
 
-        this.toAdd = new Task(
+        this.newTask = new Task(
         		new Title(title.trim()),
         		description == null ? null : new Description(description.trim()),
         		startTime == null ? null : new TodoTime(startTime),
@@ -53,18 +52,18 @@ public class AddCommand extends Command {
         		new UniqueCategoryList(categorySet)
         );
 
-        TodoTime.validateTimeInterval(this.toAdd);
-        Recurring.validateStartEndTime(this.toAdd);
+        TodoTime.validateTimeInterval(this.newTask);
+        Recurring.validateStartEndTime(this.newTask);
     }
-    
+
     @Override
     public CommandResult execute() {
         assert model != null;
         try {
-            model.addTask(toAdd);
+            model.addTask(newTask);
             BuildInCategoryList.resetBuildInCategoryPredicate();
             EventsCenter.getInstance().post(new JumpToCategoryEvent(BuildInCategoryList.ALL));
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, newTask));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }

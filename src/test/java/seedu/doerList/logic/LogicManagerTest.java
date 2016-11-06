@@ -155,12 +155,12 @@ public class LogicManagerTest {
     }
 
 
-    //@@author A0139401N 
+    //@@author A0139401N
     @Test
-    public void execute_unknownCommandWord() throws Exception { 
-        String unknownCommand = "uicfhmowqewca"; 
-        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);  
-    } 
+    public void execute_unknownCommandWord() throws Exception {
+        String unknownCommand = "uicfhmowqewca";
+        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+    }
 
     //@@author A0140905M
     @Test
@@ -168,20 +168,14 @@ public class LogicManagerTest {
         assertCommandBehavior("help", HelpCommand.SHOWING_HELP_MESSAGE);
         assertTrue(helpShown);
     }
-    //@@author A0140905M
 
-
-    //@@author A0139401N
     @Test
     public void execute_help_invalidArgs() throws Exception {
         assertCommandBehavior("help sdfdsf", HelpCommand.INVALID_HELP_MESSAGE);
         assertCommandBehavior("help 123", HelpCommand.INVALID_HELP_MESSAGE);
         assertCommandBehavior("help hmmm hahaha", HelpCommand.INVALID_HELP_MESSAGE);
     }
-    //@@author
 
-
-    //@@author A0140905M
     @Test
     public void execute_help_correctArgs() throws Exception {
         assertCommandBehavior("help add", AddCommand.MESSAGE_USAGE);
@@ -213,7 +207,7 @@ public class LogicManagerTest {
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
-    
+
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -267,14 +261,14 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
-    
+
     @Test
     public void execute_addRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toAdded = helper.taskWithAttribute(false, false, false, true, false);
         assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
     }
-    
+
     //@@author A0139401N
     @Test
     public void execute_addRecurring_successful() throws Exception {
@@ -297,7 +291,7 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
-    
+
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -308,7 +302,7 @@ public class LogicManagerTest {
 
         // setup starting state
         model.addTask(toBeAdded); // person already in internal doerList
- 
+
         // execute command and verify result
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
@@ -340,13 +334,13 @@ public class LogicManagerTest {
     public void execute_list_buildInCategory_showTaskInCategory() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(), 
+        Task Today1 = helper.generateTaskWithTime(1, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).toString(),
                 TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).toString(), null);
-        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(), 
+        Task Next1 = helper.generateTaskWithTime(2, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(1).toString(),
                 TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(1).toString(), null); // tomorrow
-        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(), 
+        Task Next2 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(5).toString(),
                 TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(5).toString(), null); // next 5 days
-        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(), 
+        Task Next3 = helper.generateTaskWithTime(3, TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(8).plusDays(7).toString(),
                 TimeUtil.getStartOfDay(LocalDateTime.now()).plusHours(12).plusDays(7).toString(), null); // next 7 days
         Task Inbox1 = helper.generateTaskWithTime(4, null, null, null);
         Task Complete1 = helper.generateTaskWithCategory(5);
@@ -547,7 +541,7 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-    
+
     @Test
     public void execute_editRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -560,20 +554,20 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+
     @Test
     public void execute_editRecurring_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
         helper.addToModel(model, threeTasks);
-        
+
         DoerList expectedDL = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedDL.getTaskList().get(2);
         Task editedTask = helper.generateRecurringTask(4);
         expectedDL.removeTask(taskToEdit);
         expectedDL.addTask(editedTask);
-        
+
         assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
                 String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
                 expectedDL,
@@ -612,7 +606,7 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-    
+
     //@@author A0139168W
     @Test
     public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
@@ -620,7 +614,7 @@ public class LogicManagerTest {
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
         assertIncorrectIndexFormatBehaviorForCommand("delete a", expectedMessage);
     }
-    
+
     //@@author A0139168W
     @Test
     public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
@@ -727,7 +721,7 @@ public class LogicManagerTest {
                 expectedList);
     }
 
-    
+
     //@@author A0139168W
     @Test
     public void execute_unmark_unmarkInvalidIndex() throws Exception {
@@ -735,47 +729,47 @@ public class LogicManagerTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE));
     }
 
-    
+
     //@@author A0139168W
     @Test
     public void execute_unmarkRecurringTask_getUpdated() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task recurringTask = helper.generateTaskWithTime(5, "tomorrow 5pm", "tomorrow 6pm", "daily");
-        Task updatedRecurringTask = helper.generateTaskWithTime(5, "today 5pm", "today 6pm", "daily");     
+        Task updatedRecurringTask = helper.generateTaskWithTime(5, "today 5pm", "today 6pm", "daily");
         helper.addToModel(model, Arrays.asList(recurringTask));
         List<Task> expectedList = helper.generateTaskList(updatedRecurringTask);
         DoerList expectedDL = helper.generateDoerList(expectedList);
-        
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, recurringTask), 
-                expectedDL, 
+
+        assertCommandBehavior("unmark 1",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, recurringTask),
+                expectedDL,
                 expectedList);
     }
-    
+
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
-        TestDataHelper helper = new TestDataHelper(); 
+        TestDataHelper helper = new TestDataHelper();
         Task incomplete = helper.generateTask(5); // not complete
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(incomplete);
         DoerList expectedDL = helper.generateDoerList(expectedList);
-        
+
         helper.addToModel(model, Arrays.asList(incomplete));
 
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
-                expectedDL, 
+        assertCommandBehavior("unmark 1",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete),
+                expectedDL,
                 expectedList);
 
         // marking twice should be ok
-        assertCommandBehavior("unmark 1", 
-                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete), 
-                expectedDL, 
-                expectedList);       
+        assertCommandBehavior("unmark 1",
+                String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete),
+                expectedDL,
+                expectedList);
     }
 
-    
+
     //@@author A0139168W
     @Test
     public void exectue_mark_invalidIndex() throws Exception {
@@ -783,7 +777,7 @@ public class LogicManagerTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
     }
 
-    
+
     //@@author A0139168W
     @Test
     public void execute_markRecurringTask_getUpdated() throws Exception {
@@ -793,13 +787,13 @@ public class LogicManagerTest {
         helper.addToModel(model, Arrays.asList(recurringTask));
         List<Task> expectedList = helper.generateTaskList(updatedRecurringTask);
         DoerList expectedDL = helper.generateDoerList(expectedList);
-        
-        assertCommandBehavior("mark 1", 
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, recurringTask), 
-                expectedDL, 
+
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, recurringTask),
+                expectedDL,
                 expectedList);
     }
-    
+
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -808,22 +802,23 @@ public class LogicManagerTest {
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
         DoerList expectedDL = helper.generateDoerList(expectedList);
-        
+
         helper.addToModel(model, Arrays.asList(incomplete));
 
-        assertCommandBehavior("mark 1", 
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
-                expectedDL, 
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
+                expectedDL,
                 expectedList);
 
         // marking twice should be ok
-        assertCommandBehavior("mark 1", 
-                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete), 
-                expectedDL, 
+        assertCommandBehavior("mark 1",
+                String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
+                expectedDL,
                 expectedList);
     }
     //@@author
 
+    //@@author A0140905M
     @Test
     public void execute_taskdue_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -839,7 +834,6 @@ public class LogicManagerTest {
                 expectedList);
     }
 
-    //@@author A0140905M
     @Test
     public void execute_taskdue_invalidArgsFormat() throws Exception {
         assertCommandBehavior(
@@ -849,7 +843,7 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
-    //@@author
+    //@author
 
     //@@author A0140905M
     @Test
@@ -860,7 +854,6 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "undo 1231023213    ", expectedMessage);
     }
-    //@@author
 
     @Test
     public void execute_undo_redo_add_operation_successful() throws Exception {
@@ -905,7 +898,7 @@ public class LogicManagerTest {
         logic.execute("delete 1");
         // cannot redo after operation
         assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
-        
+
         // execute undo command  and verify
         DoerList expectedDL = new DoerList();
         helper.addToDoerList(expectedDL, Arrays.asList(task1, task2)); // the order does matter
@@ -941,7 +934,7 @@ public class LogicManagerTest {
         logic.execute("edit 2 /c CA2");
         // cannot redo after operation
         assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
-        
+
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
@@ -955,7 +948,8 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    
+    //@@author
+
     //@@author A0147978E
     @Test
     public void execute_undoRedo_withMarkUnmarkOperation_successful() throws Exception {
@@ -982,7 +976,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
         logic.execute("redo");
-        
+
         logic.execute("delete 2");
         logic.execute("undo");
         logic.execute("unmark 2");
@@ -995,13 +989,13 @@ public class LogicManagerTest {
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
                 expectedDL_mark,
                 expectedDL_mark.getTaskList());
-        
+
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_SUCCESS,
                 expectedDL,
                 expectedDL.getTaskList());
     }
-       
+
     //@@author
     @Test
     public void execute_undo_redo_clear_operation_successful() throws Exception {
@@ -1020,7 +1014,7 @@ public class LogicManagerTest {
         logic.execute("clear");
         // cannot redo after operation
         assertEquals(RedoCommand.MESSAGE_REDO_FAILURE, logic.execute("redo").feedbackToUser);
-        
+
         // execute undo command 1 time and verify
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_SUCCESS,
@@ -1063,8 +1057,8 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "undo 1234    ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
     }
-    
-    
+
+
     //@@author A0139168W
     @Test
     public void execute_saveLocation_successful_moreFilePath() throws Exception {
@@ -1074,27 +1068,27 @@ public class LogicManagerTest {
         String tempConfig = saveFolder.getRoot().getPath() + "TempConfig.json";
         //create temp config file
         ConfigUtil.saveConfig(new Config(), tempConfig);
-        
+
         String validSavePath = "data/test2.xml";
-        
+
         //Execute the command
         CommandResult result = logic.execute("saveto " + validSavePath);
 
         //Confirm the ui display elements should contain the right data
-        assertEquals(String.format(SaveCommand.MESSAGE_SUCCESS, validSavePath), 
+        assertEquals(String.format(SaveCommand.MESSAGE_SUCCESS, validSavePath),
                 result.feedbackToUser);
-        
+
         // validate doer list content
         ReadOnlyDoerList retrieve = XmlFileStorage.loadDataFromSaveFile(new File(validSavePath));
         assertEquals(retrieve.getUniqueTaskList(), expectedDL.getUniqueTaskList());
         assertEquals(retrieve.getUniqueCategoryList(), expectedDL.getUniqueCategoryList());
-        
+
         // validate storage path
         Optional<Config> configOptional = ConfigUtil.readConfig(tempConfig);
         assertEquals(configOptional.get().getDoerListFilePath(), validSavePath);
     }
-    
-    
+
+
     //@@author A0139168W
     @Test
     public void execute_saveLocation_invalidArgsFormat() throws Exception {
@@ -1115,7 +1109,7 @@ public class LogicManagerTest {
         //@@author A0147978E
         /**
          * Generate a task with/without attribute
-         * 
+         *
          * @param hasDescription
          * @param hasStartTime
          * @param hasEndTime
@@ -1151,7 +1145,7 @@ public class LogicManagerTest {
 
             return new Task(title, description, startTime, endTime, recurring, categories);
         }
-        
+
 
 
         //@@author A0139401N
@@ -1163,7 +1157,7 @@ public class LogicManagerTest {
          * @param seed used to generate the task data field values
          */
         public Task generateRecurringTask(int seed) throws Exception {
-            LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15", 
+            LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
             return new Task(
                     new Title("Task " + seed),
@@ -1174,7 +1168,7 @@ public class LogicManagerTest {
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
-        
+
         //@@author A0147978E
         /**
          * Generates a valid task using the given seed.
@@ -1195,11 +1189,11 @@ public class LogicManagerTest {
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
-                
+
         //@@author A0147978E
         /**
          * Generate Task with given seed, startTime, endTime and recurring
-         * 
+         *
          * @param seed
          * @param startTime
          * @param endTime
@@ -1239,7 +1233,7 @@ public class LogicManagerTest {
                         new Description("" + Math.abs(seed)),
                         new TodoTime(sampleDate),
                         new TodoTime(sampleDate.plusDays(seed)),
-                        null, 
+                        null,
                         new UniqueCategoryList(Arrays.asList(c))
                 );
             } catch (Exception e) {
@@ -1251,7 +1245,7 @@ public class LogicManagerTest {
         //@@author A0147978E
         /**
          * Generate task with title and description but without recurring tasks
-         * 
+         *
          * @param title
          * @param description
          * @return generated Task
@@ -1268,7 +1262,7 @@ public class LogicManagerTest {
                     null,
                     categories);
         }
-        
+
 
         //@@author A0147978E
         /** Generates the correct add command based on the task given */
@@ -1292,11 +1286,11 @@ public class LogicManagerTest {
                     cmd.append(r.getEndTime() + " ");
                 }
             }
-            
+
             if (r.hasRecurring()){
                 cmd.append("/r ").append(r.getRecurring()).append(" ");
-            }          
-            
+            }
+
             UniqueCategoryList categories = r.getCategories();
             if (!categories.getInternalList().isEmpty()) {
                 for(Category c: categories){
@@ -1370,7 +1364,7 @@ public class LogicManagerTest {
             }
             return tasks;
         }
-        
+
         public List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
