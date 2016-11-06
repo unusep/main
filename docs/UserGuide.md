@@ -324,11 +324,18 @@ Examples:
 
 * `saveto data/newsampledata.xml`
 
+[//]: # (@@author A0139401N)
+### Saving the data 
+The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
+
 [Back To Top](#user-guide)
+
 
 #### Exiting the program : `exit`
 Exits the program.<br>
-Format: `exit`  
+Format: `exit`
+
+[Back To Top](#user-guide)
 [//]: # (@@author)
 
 
@@ -365,3 +372,4 @@ Redo | `redo`
 Task Due | `taskdue END_DATE`
 Save | `saveto NEW_LOCATION`
 Exit | `exit`
+[//]: # (@@author)
