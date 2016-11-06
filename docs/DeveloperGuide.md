@@ -385,8 +385,8 @@ Use case ends.
 
 **MSS**
 
-1. User types the command with `CATEGORY` or `DATE` as parameter. 
-2. System displays all the task under `CATEGORY` or all tasks that fall on `DATE`. <br>
+1. User types the command with `CATEGORY` as parameter. 
+2. System displays all the task under the `CATEGORY`. <br>
 
 Use case ends.
 
@@ -395,11 +395,6 @@ Use case ends.
 1a. User does not supply `CATEGORY`.
 
 > 1a1. System displays all the tasks. <br>
-> Use case ends.
-
-1b. User does not supply `DATE`.
-
-> 1b1. System displays all the tasks. <br>
 > Use case ends.
 
 2a. The category does not exist in the system.
@@ -474,11 +469,6 @@ Use case ends.
 Use case ends.
 
 **Extensions**
-
-2a. There is no recent displayed list.
-
-> 2a1. System indicates the errors to user. <br>
-> Use cases ends.
   
 2b. The index is not valid.
 
@@ -490,14 +480,14 @@ Use case ends.
 
 **MSS**
 
-1. User requests to find keyword.
-2. To-Do List shows the requested keywords in all categories. <br>
+1. User requests to find keywords.
+2. System shows the tasks with requested keywords. <br>
 Use case ends.
 
 **Extensions**
 
-2a. Keyword does not exist in the list.
-
+1a. User doesn't supply keywords
+> 1a1. System indicates the errors to use
 > Use case ends.
 
 [//]: # (@@author A0139168W)
@@ -601,7 +591,7 @@ Use case ends.
 ### Review of [TickTick](https://ticktick.com/):
 #### Strengths:
 - Desktop software is provided, so we can launch it quickly without using a browser.
-- Shortcuts for opening the software is provided, so that the todo lists can be opened quickly to those who prefer using the keyboard.
+- Task are automatically categorised to `Overdue` `Today` `Next 7 days` and `Complete`, users can quickly find what they need to do in a certain day.
 - User can create their own categories for tasks and allocate tasks to different categories.
 - Elegant GUI is provided; the UI is not wordy and icons are quite intuitively.
 
