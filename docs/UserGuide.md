@@ -16,7 +16,7 @@
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
-    * [Save To](#changing-your-save-location)
+    * [Save To](#changing-your-save-location--save-to)
     * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -330,7 +330,8 @@ Examples:
 [//]: # (@@author)
 
 [//]: # (@@author A0140905M)
-#### Changing your save location: `saveto`
+
+#### Changing your save location : `saveto`
 Save the data into a new file and location<br>
 Format: `saveto NEW_LOCATION`
 
