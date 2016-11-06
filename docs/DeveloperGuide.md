@@ -283,7 +283,7 @@ Priority | As a ... | I want to ... | So that I can...
 **MSS**
 
 1. User requests to add a task in.
-2. To-Do List creates task with title, description, start date, end date, recurring interval.
+2. System creates task with title, description, start date, end date, recurring interval.
 3. The task is moved into the categories according to the supplied parameters.
 4. System displays the details of the created task.<br>
 Use case ends.
@@ -535,10 +535,11 @@ Use case ends.
 
 1. User requests to find all tasks due by end date.
 2. System parse the `DATE` to standard form
-2. To-Do List shows all of the tasks due by end date. <br>
+2. System List shows all of the tasks due by end date. <br>
 Use case ends.
 
 **Extensions**
+
 1a. `taskdue` command is followed by the wrong parameters
 > 1a1. System indicates the error<br>
 > Use case ends.
@@ -555,7 +556,7 @@ Use case ends.
 **MSS**
 
 1. User types the command.
-2. To-do List reverses the changes caused by the most recent undo. <br>
+2. System reverses the changes caused by the most recent undo. <br>
 Use case ends.
 
 **Extensions**
@@ -631,7 +632,7 @@ Use case ends.
 
 ##### Done
 
-> The built-in category in the To-Do list which store all the tasks that are marked as `done`.
+> The built-in category in the system which store all the tasks that are marked as `done`.
 
 ## Appendix E : Product Survey
 
