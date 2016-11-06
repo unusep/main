@@ -16,7 +16,7 @@
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
-    * [Save To](#changing-your-save-location--save-to)
+    * [Save To](#changing-your-save-location--saveto)
     * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -197,25 +197,18 @@ Examples:
 [//]: # (@@author A0147978E)
 #### Listing tasks in a certain category : `list`
 Shows a list of all tasks in the Do*er*-list under the specific category.<br>
-Format: `list [CATEGORY]` or `list [DATE]`
+Format: `list [CATEGORY]`
 
 <img src="../docs/images/UI_Guide/list_command.png" width="600">
 > * If the `CATEGORY` or `DATE` parameter is not supplied, then it will list all tasks.
-> * Using `DATE` will display all the tasks that falls under the date, in natural language*.
-<br>
-> * Supported list for natural language*:
->  * next X hours / days / weeks / months
->    * *X* can be any number: 1, 2, 3, ...
->  * today
->  * tomorrow
->  * next week / month
+> * Some default categories: `All` `Today` `Next` `Inbox` and `Complete` can be also listed.
 
 Examples:
 
 * `list`
-* `list Work`
-* `list 2016-10-13`
-* `list Tomorrow`
+* `list Friends`
+* `list today`
+* `list next`
 
 [Back To Top](#user-guide)
 [//]: # (@@author)
