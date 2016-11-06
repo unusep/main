@@ -315,20 +315,20 @@ public class LogicManagerTest {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task[] inputs = {
-                helper.generateRecurringTask(1), // daily
-                helper.generateRecurringTask(2), // weekly
-                helper.generateRecurringTask(3), // monthly
-                helper.generateRecurringTask(4)  // yearly
+                helper.generateRecurringTask(0), // daily
+                helper.generateRecurringTask(1), // weekly
+                helper.generateRecurringTask(2), // monthly
+                helper.generateRecurringTask(3)  // yearly
         };
         for(Task toBeAdded : inputs) {
-            DoerList expectedAB = new DoerList();
-            expectedAB.addTask(toBeAdded);
+            DoerList expectedDL = new DoerList();
+            expectedDL.addTask(toBeAdded);
             // executes the command and verifies the result
             model.resetData(new DoerList());
             assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                     String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                    expectedAB,
-                    expectedAB.getTaskList());
+                    expectedDL,
+                    expectedDL.getTaskList());
         }
     }
     
