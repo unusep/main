@@ -26,7 +26,7 @@ import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.commons.events.ui.JumpToIndexedTaskRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.util.ConfigUtil;
 import seedu.doerList.commons.util.TimeUtil;
@@ -91,7 +91,7 @@ public class LogicManagerTest {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent je) {
+    private void handleJumpToListRequestEvent(JumpToIndexedTaskRequestEvent je) {
         targetedJumpIndex = je.targetIndex;
     }
 
