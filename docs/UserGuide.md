@@ -103,7 +103,7 @@ Format: `help` or `help [COMMAND_NAME]`
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 
 [Back To Top](#user-guide)
-
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 #### Adding a task : `add`
@@ -157,6 +157,7 @@ Examples:
 
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 #### Mark task as done : `mark`
@@ -174,6 +175,7 @@ Examples:
 	* If a recurring task is mark is done, it will automatically update its start and end date.
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 #### Unmark task as done : `unmark`
@@ -190,6 +192,7 @@ Examples:
  	* If a recurring task is mark is unmarked, it will automatically subtract its start and end date by its given recurring interval.
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0147978E)
 #### Listing tasks in a certain category : `list`
@@ -215,6 +218,7 @@ Examples:
 * `list Tomorrow`
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0147978E)
 #### Finding all tasks containing any keyword in their name : `find`
@@ -236,6 +240,7 @@ Examples:
   Returns `Drinks with David `
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0147978E)
 #### View a task : `view`
@@ -255,6 +260,7 @@ Examples:
 * `find David` <br> 
   `view 1`<br>
   Views the 1st task in the results of the `find` command.
+[//]: # (@@author)
 
 [//]: # (@@author A0147978E)
 [Back To Top](#user-guide)
@@ -268,17 +274,18 @@ Format: `delete INDEX`
 > * The index refers to the index number shown in the most recent listing.<br>
   The index **must be a positive integer** 1, 2, 3, ...
 
-Examples: 
+Examples:
 
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task / event in the Do-*er*List. <br>
-  
-* `find David`<br> 
+
+* `find David`<br>
   `delete 1`<br>
   Deletes the 1st task / event in the results displayed by using the `find` command.
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0139168W)
 #### Undo the most recent operation : `undo`
@@ -312,7 +319,7 @@ Format: `taskdue END_DATE`
 >  * today
 >  * tomorrow
 >  * next week / month
-  
+
 Examples:
 
 * `taskdue tomorrow`
@@ -320,6 +327,7 @@ Examples:
 * `taskdue 2016-11-11 21:03`
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0140905M)
 ### Changing your save location: `saveto`
@@ -342,7 +350,7 @@ The Do*er*-list data are saved in the hard disk automatically after any command 
 [Back To Top](#user-guide)
 
 
-#### Exiting the program : `exit`
+### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`
 
@@ -362,7 +370,7 @@ Format: `exit`
 <br>
 
 **Q**: Where is the save button for me to save my schedule in this program? <br>
-**A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#saving-the-data) in the guide. There is no need for you to save it manually.
+**A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#automatic-save) in the guide. There is no need for you to save it manually.
 
 
 ## Command Summary
