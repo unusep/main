@@ -551,6 +551,7 @@ Use case ends.
 > 2b1. System indicates the error
 > Use case ends.
 
+[//]: # (@@author)
 #### Use case: Redo Command
 
 **MSS**
@@ -604,6 +605,33 @@ Use case ends.
 2a. The `INDEX` is invalid.
 > 2a1. System shows an error message.<br>
 > Use case ends.
+
+#### Use case: Save Command
+
+**MSS**
+
+1. User request to change the location of saving file.
+2. System changes the saving location
+3. System indicates the changing is successful. <br>
+Use case ends.
+
+**Extensions**
+
+1a. `saveto` command is followed by the wrong parameters
+> 1a1. System indicates the error<br>
+> Use case ends
+
+2a. The saving path is invalid.
+> 2a1. System shows an error message.<br>
+> Use case ends.
+
+#### Use case: Exit Command
+
+**MSS**
+
+1. User request to exit the programme
+2. System terminated.
+
 
 [//]: # (@@author)
 
