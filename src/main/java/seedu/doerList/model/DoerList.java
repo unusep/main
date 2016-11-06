@@ -32,9 +32,9 @@ public class DoerList implements ReadOnlyDoerList {
         addListenerToCategoryList();
         buildInCategories.addAllBuildInCategories();
     }
-    
+
     //@@author A0147978E
-    /** 
+    /**
      * Add listener to categoryList so that every time the category list get added,
      * the {@code tasks} is added into the category.
      */
@@ -52,7 +52,7 @@ public class DoerList implements ReadOnlyDoerList {
             addedCategory.setFilteredTaskList(getTasks());
         }
     }
-    
+
     //@@author
     public DoerList() {}
 
@@ -77,11 +77,11 @@ public class DoerList implements ReadOnlyDoerList {
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
     }
-    
+
     public ObservableList<Category> getCategories() {
         return categories.getInternalList();
     }
-    
+
     //@@author A0147978E
     public ObservableList<Category> getBuildInCategories() {
         return buildInCategories.getInternalList();
@@ -144,19 +144,19 @@ public class DoerList implements ReadOnlyDoerList {
         }
         task.setCategories(new UniqueCategoryList(commonCategoryReferences));
     }
-    
+
     //@@author A0147978E
     /**
      * Ensure that once the task {@code toRemove} is removed, categories of the task that have
      * no task will be deleted.
-     * 
+     *
      * @param toRemove
      */
     private void syncCategroiesMaterListAfterRemove(ReadOnlyTask toRemove) {
         for(Category c : toRemove.getCategories()) {
             if (c.getTasks().size() == 0) {
                 categories.getInternalList().remove(c);
-            } 
+            }
         }
     }
 
@@ -170,12 +170,13 @@ public class DoerList implements ReadOnlyDoerList {
         }
     }
 
-    
+    //@@author A0140905M
     public void replaceTask(ReadOnlyTask prevTask, Task t) throws DuplicateTaskException, TaskNotFoundException {
         tasks.replace(prevTask, t);
         syncCategoriesWithMasterList(t); // if there is exception, this statement will not be executed
         syncCategroiesMaterListAfterRemove(prevTask);
     }
+    //@@author
 
 
     //@@author A0139168W

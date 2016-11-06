@@ -75,10 +75,10 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return prepareList(arguments);
-            
+
         case UndoCommand.COMMAND_WORD:
             return prepareUndo(arguments);
-            
+
         case RedoCommand.COMMAND_WORD:
             return prepareRedo(arguments);
 
@@ -87,25 +87,26 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand(arguments.trim());
-        
+
         case UnmarkCommand.COMMAND_WORD:
             return prepareUnmark(arguments);
-            
+
         case MarkCommand.COMMAND_WORD:
             return prepareMark(arguments);
 
         case TaskdueCommand.COMMAND_WORD:
             return new TaskdueCommand(arguments.trim());
-            
+
         case SaveCommand.COMMAND_WORD:
             return new SaveCommand(arguments.trim());
-             
+
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
+    //@@author A0140905M
     /**
      * Parses arguments in the context of the add task command.
      *
@@ -128,16 +129,17 @@ public class Parser {
                     titleMatcher.group("title").trim(),
                     descriptionMatcher.find() ? descriptionMatcher.group("description").trim() : null,
                     startTimeMatcher.find() ? startTimeMatcher.group("startTime").trim() : null,
-                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,        
+                    endTimeMatcher.find() ? endTimeMatcher.group("endTime").trim() : null,
                     recurringMatcher.find() ? recurringMatcher.group("recurring").trim() : null,
                     getCategoriesFromArgs(categoriesMatcher)
-                    
+
             );
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
     }
 
+    //@@author A0140905M
     /**
      * Extracts the new task's categories from the add command's tag arguments string.
      * Merges duplicate tag strings.
@@ -151,6 +153,7 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
+    //@@author A0140905M
     /**
      * Parses arguments in the context of the edit task command.
      *
@@ -167,7 +170,7 @@ public class Parser {
             final Matcher endTimeMatcher = TASK_DATA_ENDTIME_FORMAT.matcher(args.trim());
             final Matcher recurringMatcher = TASK_DATA_RECURRING_FORMAT.matcher(args.trim());
             final Matcher categoriesMatcher = TASK_DATA_CATEGORIES_FORMAT.matcher(args.trim());
-            
+
             return new EditCommand(
                     targetIndex,
                     titleMatcher.find() ? titleMatcher.group("title").trim() : null,
@@ -200,6 +203,7 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the delete task command.
      *
@@ -216,7 +220,7 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
-    
+
     //@@author A0147978E
     /**
      * Parses arguments in the context of the category name.
@@ -249,7 +253,7 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
-    //@@author
+    //@@author A0140905M
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      * Returns an {@code Optional.empty()} otherwise.
@@ -287,7 +291,7 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
-    
+
     //@@author A0139168W
     /**
      * Parses arguments in the context of the unmark task command.
@@ -320,8 +324,8 @@ public class Parser {
 
         return new MarkCommand(index.get());
     }
-    //@@author
-    
+
+    //@@author A0140905M
     /**
      * Parses arguments in the context of the undo task command.
      *
@@ -337,6 +341,7 @@ public class Parser {
         return new UndoCommand();
     }
 
+    //@@author A0140905M
     /**
      * Parses arguments in the context of the redo task command.
      *
@@ -351,7 +356,7 @@ public class Parser {
 
         return new RedoCommand();
     }
-    
+
     /**
      * Signals that the user input could not be parsed.
      */

@@ -91,6 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDoerListChanged();
     }
 
+    //@@author A0140905M
     @Override
     public synchronized void replaceTask(ReadOnlyTask prevTask, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException {
         doerList.replaceTask(prevTask, task);
@@ -107,7 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
         undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
-    
+
     //@@author A0139168W
     @Override
     public synchronized void unmarkTask(ReadOnlyTask task) throws TaskNotFoundException {
@@ -123,19 +124,19 @@ public class ModelManager extends ComponentManager implements Model {
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
-    
+
     //@@author A0147978E
     @Override
     public UnmodifiableObservableList<Category> getBuildInCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getBuildInCategories());
     }
-    
+
      //@@author
     @Override
     public UnmodifiableObservableList<Category> getCategoryList() {
         return new UnmodifiableObservableList<>(doerList.getCategories());
     }
-    
+
 
     @Override
     public void updateFilteredListToShowAll() {
@@ -152,7 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
   //=========== Undo redo operation ===============================================================
-    
+
     @Override
     public void undo() throws UndoManager.OperationFailException {
         try {
