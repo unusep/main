@@ -156,10 +156,23 @@ public class LogicManagerTest {
 
 
     //@@author A0139401N
+    /**
+    * Executes the command and confirms that the result help message given is correct.
+    * Also affirms that the program does not accept random or unknown words.
+    */
     @Test
     public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+    	String[] inputs = { 
+    			"uicfhmowqewca",
+    			"Adelete",
+    			"whatIsThis",
+    			"grahhsdauadhiuqwji",
+    			"addh",
+    			"mark12345"
+    	};
+    	for(String unknownCommand : inputs) {
+    		assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+    	}
     }
 
     //@@author A0140905M
