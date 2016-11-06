@@ -88,7 +88,6 @@ public class EditCommand extends Command {
 
 	}
 
-	//@@author A0139401N
 	/**
      * Generate new task based on updated information
      *

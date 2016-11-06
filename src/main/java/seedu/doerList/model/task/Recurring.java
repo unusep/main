@@ -32,7 +32,7 @@ public class Recurring {
         if (unformattedTime == null || unformattedTime.isEmpty()){
             throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
         } else {
-            long[] processedTime = {0, 0, 0};
+            long[] processedTime = {0, 0, 0}; // default 
             final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime.trim());
             if (recurTitleMatcher.find()){
                 String[] parts = unformattedTime.split("-");
