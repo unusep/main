@@ -308,7 +308,30 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
-
+    
+    //@@author A0139401N
+    @Test
+    public void execute_addRecurring_naturalLanguage_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.generateRecurringTask(1), // daily
+                helper.generateRecurringTask(2), // weekly
+                helper.generateRecurringTask(3), // monthly
+                helper.generateRecurringTask(4)  // yearly
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedAB = new DoerList();
+            expectedAB.addTask(toBeAdded);
+            // executes the command and verifies the result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedAB,
+                    expectedAB.getTaskList());
+        }
+    }
+    
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -558,7 +581,8 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-
+    
+    //@@author A0139401N
     @Test
     public void execute_editRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -572,6 +596,7 @@ public class LogicManagerTest {
                 expectedDL.getTaskList());
     }
 
+    //@@author A0139401N
     @Test
     public void execute_editRecurring_successful() throws Exception {
         // setup expectations
@@ -581,7 +606,7 @@ public class LogicManagerTest {
 
         DoerList expectedDL = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedDL.getTaskList().get(2);
-        Task editedTask = helper.generateRecurringTask(4);
+        Task editedTask = helper.generateRecurringTask(1);
         expectedDL.removeTask(taskToEdit);
         expectedDL.addTask(editedTask);
 
@@ -590,6 +615,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
+    //@@author
 
     //@author A0147978E
     @Test
@@ -1174,12 +1200,13 @@ public class LogicManagerTest {
         public Task generateRecurringTask(int seed) throws Exception {
             LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
+            String[] natLanguageRecur = {"daily", "weekly", "monthly", "yearly" };
             return new Task(
                     new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
-                    new Recurring("daily"),
+                    new Recurring(natLanguageRecur[seed]),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }

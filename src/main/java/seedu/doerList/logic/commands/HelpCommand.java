@@ -24,7 +24,7 @@ public class HelpCommand extends Command {
     public HelpCommand(String command) {
         this.command = command;
     }
-  //@@author
+//@@author
 
     @Override
     public CommandResult execute() {
