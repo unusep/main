@@ -54,17 +54,17 @@ public interface ReadOnlyTask {
         if (hasStartTime() && !hasEndTime()) {
             builder
             .append(" Begin At: ")
-            .append(getStartTime().toHumanReadableTime());
+            .append(getStartTime().toReadableTime());
         }
         if (!hasStartTime() && hasEndTime()) {
             builder
             .append(" Due: ")
-            .append(getEndTime().toHumanReadableTime());
+            .append(getEndTime().toReadableTime());
         }
         if (hasStartTime() && hasEndTime()) {
             builder
             .append(" Time: ")
-            .append(getStartTime().toHumanReadableTime() + " -> " + getEndTime().toHumanReadableTime());
+            .append(getStartTime().toReadableTime() + " -> " + getEndTime().toReadableTime());
         }
         return builder.toString();
     }
@@ -112,7 +112,7 @@ public interface ReadOnlyTask {
         }
         builder.append(getTime());
         if (hasRecurring()) {
-            builder.append(" Recurring: " + getRecurring().toHumanReadable());
+            builder.append(" Recurring: " + getRecurring().toReadableText());
         }
         if (!getCategories().getInternalList().isEmpty()) {
             builder.append(" Categories: ");

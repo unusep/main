@@ -103,7 +103,12 @@ public class Recurring {
                 this.getYears() == other.getYears();
     }
     
-    public String toHumanReadable() {
+    /**
+     * Parses the recurring interval to a user readable version
+     *
+     * @return String
+     */
+    public String toReadableText() {
         StringBuilder builder = new StringBuilder(); 
         if (this.getYears() != 0) {
             builder.append(this.getYears() + " year ");
@@ -136,4 +141,5 @@ public class Recurring {
     }
 
 }
+//@@author
 

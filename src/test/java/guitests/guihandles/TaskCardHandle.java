@@ -66,7 +66,7 @@ public class TaskCardHandle extends GuiHandle {
                 && (!task.hasDescription() || task.getDescription().value.equals(this.getDescription()))
                 && (task.isFloatingTask() || task.getTime().equals(this.getTime()))
                 && (task.getCategories().isEmpty() || task.getCategories().toString().equals(this.getCategory()))
-                && (!task.hasRecurring() || task.getRecurring().toHumanReadable().equals(this.getRecurringText()));
+                && (!task.hasRecurring() || task.getRecurring().toReadableText().equals(this.getRecurringText()));
     }
 
     @Override
