@@ -283,7 +283,7 @@ Priority | As a ... | I want to ... | So that I can...
 **MSS**
 
 1. User requests to add a task in.
-2. To-Do List creates task with title, description, start date and end date.
+2. To-Do List creates task with title, description, start date, end date, recurring interval.
 3. The task is moved into the categories according to the supplied parameters.
 4. System displays the details of the created task.<br>
 Use case ends.
@@ -292,35 +292,56 @@ Use case ends.
 
 1a. `add` command followed by the wrong parameters.
 
-> 1a1. System indicates the error and displays the correct format for user.
+> 1a1. System indicates the error and displays the correct format for user.<br>
 > Use case ends.
   
-1b. `TITLE` is empty string.
+2a. `TITLE` is empty string.
 
-> 1b1. System indicates the error that `TASK_NAME` is empty.
+> 2a1. System indicates the error that `TASK_NAME` is empty.<br>
 > Use case ends.
   
-1c. User does not supply `START` or `END` parameters.
+2b. User does not supply `START` or `END` parameters.
 
-> 1c1. Task is created and categorized to `INBOX`.
-> 1c2. System display the created task.
-> Use case resumes from steps 2.
+> 2b1. Task is created and categorized to `INBOX`.<br>
+> 2b2. System display the created task.<br>
+> Use case resumes from step 2.
   
-1d. User does not supply `START` parameter.
+2c. User does not supply `START` parameter.
 
-> 1d1. Task is created with `START` as today.
-> Use case resumes from steps 2.
+> 1c1. Task is created with `START` as today.<br>
+> Use case resumes from step 2.
   
-1e. System is able to parse `START` or `END`, which are not in standard format.
+2d. System is able to parse `START` or `END`, which are not in standard format.
 
-> Use case resumes from steps 2.
+> Use case resumes from step 2.
 
-1f. System is unable to parse `START` or `END`, which are not in standard format.
+2e. System is unable to parse `START` or `END`, which are not in standard format.
 
-> 1f1. System will create the task without `START` and `END` date.
-> 1f2. System indicates the error to user.
-> Use case resumes from steps 2.
-  
+> 2e1. System indicates the error to user.<br>
+> Use case resumes from step 2.
+ 
+2f. `START` time is after `END` time
+
+> 2f1. System indicates the error to user<br>
+> Use case ends
+
+2g. There is not `START` time or `END` time while `reucrring` interval is supplied
+
+> 2g1. System indicates the error to user<br>
+> Use case ends
+
+3a. The category does not exist in the system<br>
+> 3a1. System creates a new category<br>
+> Use case resumes from step 3
+
+3b. The category does not exist in the system<br>
+> 3b1. System creates a new category<br>
+> 3b2. The category name is invalid<br>
+> 3b3. System indicates the error<br>
+> Use case ends
+
+
+
 [//]: # (@@author A0139401N)
 #### Use case: Edit task
 
@@ -328,33 +349,57 @@ Use case ends.
 
 1. User types in the command.
 2. System finds the task at that index.
-3. The task details are changed accordingly
-(E.g. title, description, start time, end time, category).
-4. System displays the details of the newly edited task. <br>
+3. A new task is created based on new attributes and old attributes.
+(E.g. title, description, start time, end time, recurring interval, category).
+4. System replaces the old task with new task.
+5. System displays the details of the newly edited task. <br>
 Use case ends.
 
 **Extensions**
 
 1a. `edit` command followed by the wrong parameters.
 
-> 1a1. System indicates the error and display the correct format for user.
+> 1a1. System indicates the error and display the correct format for user.<br>
 > Use case ends.
   
-1b.`edit` command is followed by the non-existent `INDEX`.
+2a.`edit` command is followed by the non-existent `INDEX`.
 
-> 1.b.1 System indicates the error that the `INDEX` is non-existent
+> 2a1. System indicates the error that the `INDEX` is non-existent<br>
 > Use case ends.
 
-1c. `TITLE` is empty string.
+3a. System is able to parse `START` or `END`, which are not in standard format.
 
-> 1c1. System indicates the error that `TASK_NAME` is empty.
-> Use case ends.
-  
-1d. System is not able to parse `START` or `END` which is not in standard format.
+> Use case resumes from step 2.
 
-> 1d1. System will create the task without `START` and `END` date.
-> 1d2. System indicates the error to user.
-> Use case resumes from steps 2.
+3b. System is unable to parse `START` or `END`, which are not in standard format.
+
+> 3b1. System indicates the error to user.<br>
+> Use case resumes from step 2.
+ 
+3c. `START` time is after `END` time
+
+> 3c1. System indicates the error to user<br>
+> Use case ends
+
+3d. There is not `START` time or `END` time while `reucrring` interval is supplied
+
+> 3d1. System indicates the error to user<br>
+> Use case ends
+
+3e. The category does not exist in the system<br>
+> 3e1. System creates a new category<br>
+> Use case resumes from step 3
+
+3f. The category does not exist in the system<br>
+> 3f1. System creates a new category<br>
+> 3f2. The category name is invalid<br>
+> 3f3. System indicates the error<br>
+> Use case ends
+
+4a. The replacement of task results in duplication in task list
+> 4a1. System indicates the error <br>
+> Use case ends
+
 
 [//]: # (@@author A0139401N)
 #### Use case: Delete task
@@ -363,8 +408,6 @@ Use case ends.
 
 1. User types in the command.
 2. System finds the task at that index.
-3. System confirms with the user if he wants to delete the task.
-4. User confirms.
 5. System deletes the task. <br>
 Use case ends.
 
@@ -372,17 +415,13 @@ Use case ends.
 
 1a. `delete` command is followed by the wrong parameters
 
-> 1a1. System indicates error and display the correct format to user.
+> 1a1. System indicates error and display the correct format to user.<br>
 > Use case ends.
 
 1b. `delete` command is followed by a non-existent `INDEX`
 
-> 1b1. System indicates the error in the `INDEX` is non-existent.
+> 1b1. System indicates the error in the `INDEX` is non-existent.<br>
 > Use case ends.
-
-4a. User rejects the confirmation.
-> 4a1. System indicates that the delete order was not carried out.
-> Use case resumes from step 1.
 
 [//]: # (@@author A0147978E)
 #### Use case: List task by category
@@ -421,7 +460,7 @@ Use case ends.
 
 2a. The last operation which involve the change of the data does not exist
 
-> 2a1. System indicates the error.
+> 2a1. System indicates the error.<br>
 > Use case ends.
 
 #### Use case: Clear Command
@@ -429,17 +468,8 @@ Use case ends.
 **MSS**
 
 1. User types in the command.
-2. System confirms if user wants to clear all of the tasks.
-3. User confirms.
-4. System deletes all of the tasks. <br>
+2. System deletes all of the tasks. <br>
 Use case ends.
-
-**Extensions**
-
-3a. User rejects the confirmation.
-
-> 3a1. System indicates that the clear order was not carried out
-> Use case resumes at step 1.
   
 #### Use case: Help Command
 
@@ -457,9 +487,9 @@ Use case ends.
 > 1a1. System indicates the error and displays the correct format for the user.
 > Use case ends.
 
-1b. `help` command is followed by no parameters.
+1b. `help` command is followed by no parameter.
 
-> 1b1. System displays all the commands available with all the details.
+> 1b1. System open the help windows <br>
 > Use case ends.
 
 [//]: # (@@author A0147978E)
@@ -473,6 +503,10 @@ Use case ends.
 Use case ends.
 
 **Extensions**
+
+1a. `view` command is followed by the wrong parameters
+> 1a1. System indicates the error<br>
+> Use case ends
   
 2b. The index is not valid.
 
@@ -500,13 +534,20 @@ Use case ends.
 **MSS**
 
 1. User requests to find all tasks due by end date.
+2. System parse the `DATE` to standard form
 2. To-Do List shows all of the tasks due by end date. <br>
 Use case ends.
 
 **Extensions**
+1a. `taskdue` command is followed by the wrong parameters
+> 1a1. System indicates the error<br>
+> Use case ends.
 
-2a. No tasks are due by end date.
+2a. System is able to parse the supplied `DUE` date to standard format 
+> 2a1. Use case resumes from step 2
 
+2b. System is not able to parse the supplied `DUE` date to standard format
+> 2b1. System indicates the error
 > Use case ends.
 
 #### Use case: Redo Command
@@ -519,7 +560,7 @@ Use case ends.
 
 **Extensions**
 
-1a. No recent undo is called.
+1a. No recent undo is recorded.
 
 > 1a1. System indicates the error and shows the error message.
 > Use case ends.
@@ -528,45 +569,48 @@ Use case ends.
 
 **MSS**
 
-1. User marks task of `TASK_NUMBER` done.
-2. To-Do List shows if task could be marked as done. <br>
+1. User request to mark task of `INDEX` done
+2. System find the task with `INDEX` number
+3. System marked the task as done. <br>
 Use case ends.
 
 **Extensions**
 
-2a. No such task of `TASK_NUMBER`.
+1a. `mark` command is followed by the wrong parameters
+> 1a1. System indicates the error<br>
+> Use case ends
 
-> 2a1. To-Do List shows an error message.
+2a. System cannot find task with `INDEX` number.
+> 2a1. System shows an error message.<br>
 > Use case ends.
-  
-2b. Task of `TASK_NUMBER` is already marked done.
 
-> Use case ends.
 
 #### Use case: Unmark Command
 
 **MSS**
 
-1. User marks task of `TASK_NUMBER` undone.
-2. To-Do List shows if task could be marked as undone. <br>
+1. User request to mark task of `INDEX` undone.
+2. System find the task with `INDEX` number
+3. System marked the task as undone. <br>
 Use case ends.
 
 **Extensions**
 
-2a. No such task of `TASK_NUMBER`
+1a. `unmark` command is followed by the wrong parameters
+> 1a1. System indicates the error<br>
+> Use case ends
 
-> 2a1. To-Do List shows an error message.
+2a. The `INDEX` is invalid.
+> 2a1. System shows an error message.<br>
 > Use case ends.
 
-2b. Task of `TASK_NUMBER` is already marked undone.
-> Use case ends.
 [//]: # (@@author)
 
 ## Appendix C : Non Functional Requirements
 
 1. The program should work on any mainstream OS as long as it has Java 1.8.0_60 or higher installed.
 2. It should be able to hold up to 1000 tasks.
-3. Automated unit tests and open source code for this program 4. should be readily available.
+3. Automated unit tests and open source code for this program should be readily available.
 4. Every operation executed should be logged to the log file.
 5. The program should favour DOS style commands over Unix-style commands.
 6. The product should not have dependencies on other packages.
