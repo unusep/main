@@ -152,7 +152,11 @@ The `Storage` component,
 [//]: # (@@author)
 ### Common classes
 
-Classes used by multiple components are in the `seedu.doerList.commons` package.
+Classes used by multiple components are in the `seedu.doerList.commons` package. Some of them are below:
+
+- [`EventsCenter.java`](../src/main/java/seedu/doerList/commons/core/EventsCenter.java) : The class is responsible for post events and handling events. When an event has been raised, the `EventsCenter` will check whether there is handler for the event and notify the correct handlers.
+- [`LogsCenter.java`](../src/main/java/seedu/doerList/commons/core/LogsCenter.java): The class is responsible for recording the operation histories  in execution. The records are useful for programmer in debugging.
+- [`BaseEvent.java`](../src/main/java/seedu/doerList/commons/events/BaseEvent.java): The is the super class for every single event raised by the application.
 
 ## Implementation
 
