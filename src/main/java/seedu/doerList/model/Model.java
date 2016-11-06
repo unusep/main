@@ -32,22 +32,21 @@ public interface Model {
     //@@author A0147978E
     /** Returns the build-in category list as an {@code UnmodifiableObservableList<Category>} */
     UnmodifiableObservableList<Category> getBuildInCategoryList();
-    
+
     //@@author
     /** Returns the user-created category list as an {@code UnmodifiableObservableList<Category>} **/
     UnmodifiableObservableList<Category> getCategoryList();
-    
+
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
-    
+
     //@@author A0147978E
     /** Updates the filter of the filtered task list to filter by the given predicate*/
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
-    //@@author
+    //@@author A0140905M
     /** Replace a task with given task*/
     void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
-    
 
     //@@author A0139168W
     /** Marks the given task as undone */
@@ -60,7 +59,7 @@ public interface Model {
     //@@author A0147978E
     /** Undo the recent addition/edition/deletion of task */
     void undo() throws UndoManager.OperationFailException;
-    
+
     //@@author A0147978E
     /** Redo the recent addition/edition/deletion of task */
     void redo() throws UndoManager.OperationFailException;
