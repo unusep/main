@@ -18,7 +18,7 @@ import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.storage.StoragePathChangedEvent;
 import seedu.doerList.commons.events.ui.CategorySelectionChangedEvent;
 import seedu.doerList.commons.events.ui.JumpToCategoryEvent;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.commons.events.ui.JumpToIndexedTaskRequestEvent;
 import seedu.doerList.commons.events.ui.ShowHelpRequestEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelSelectionChangedEvent;
@@ -123,7 +123,7 @@ public class UiManager extends ComponentManager implements Ui {
     
     //@@author A0147978E
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToListRequestEvent(JumpToIndexedTaskRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getTaskListPanel().scrollTo(event.targetIndex + 1); // index is offset by 1
     }
