@@ -16,7 +16,6 @@
 #### Site Map
 * [User Guide](docs/UserGuide.md) 
 * [Developer Guide](docs/DeveloperGuide.md) 
-* [Learning Outcomes](docs/LearningOutcomes.md) 
 * [About Us](docs/AboutUs.md)
 * [Contact Us](docs/ContactUs.md)
 
@@ -28,6 +27,7 @@ Our project is dependent on the packages below:
 * [Jackson](https://github.com/FasterXML/jackson)
 * [Guava](https://github.com/google/guava)
 * [TestFX](https://github.com/TestFX/TestFX)
-* [JodaTime](http://www.joda.org/joda-time/index.html)
+* [NattyTime](http://natty.joestelmach.com/)
+* [PrettyTime](https://github.com/ocpsoft/prettytime)
 
 #### Licence : [MIT](LICENSE)
