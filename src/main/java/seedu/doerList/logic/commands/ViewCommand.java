@@ -4,7 +4,7 @@ package seedu.doerList.logic.commands;
 import seedu.doerList.commons.core.EventsCenter;
 import seedu.doerList.commons.core.Messages;
 import seedu.doerList.commons.core.UnmodifiableObservableList;
-import seedu.doerList.commons.events.ui.JumpToListRequestEvent;
+import seedu.doerList.commons.events.ui.JumpToIndexedTaskRequestEvent;
 import seedu.doerList.model.task.ReadOnlyTask;
 import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.doerList.ui.TaskListPanel;
@@ -35,7 +35,7 @@ public class ViewCommand extends Command {
         
         try {
             ReadOnlyTask target = TaskListPanel.getDisplayedIndexInUI(targetIndex, lastShownList);
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
+            EventsCenter.getInstance().post(new JumpToIndexedTaskRequestEvent(targetIndex - 1));
             return new CommandResult(String.format(MESSAGE_VIEW_TASK_SUCCESS, target));
         } catch (TaskNotFoundException e) {
             indicateAttemptToExecuteIncorrectCommand();
