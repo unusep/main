@@ -330,7 +330,7 @@ Examples:
 [//]: # (@@author)
 
 [//]: # (@@author A0140905M)
-### Changing your save location: `saveto`
+#### Changing your save location: `saveto`
 Save the data into a new file and location<br>
 Format: `saveto NEW_LOCATION`
 
@@ -344,13 +344,12 @@ Examples:
 [//]: # (@@author)
 
 [//]: # (@@author A0139401N)
-### Automatic save
+#### Automatic save
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 
 [Back To Top](#user-guide)
 
-
-### Exiting the program : `exit`
+#### Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`
 
@@ -364,13 +363,17 @@ Format: `exit`
 **Q**: How do I transfer my data to another computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Do-*er* List folder.
 <br>
+<br>
 
 **Q**: Running "doerlist.jar" gives and error or does not seem to work.<br>
 **A**: You will need to install the latest version of Java. Refer to the installation guide [here](https://java.com/en/download/help/download_options.xml).
 <br>
+<br>
 
 **Q**: Where is the save button for me to save my schedule in this program? <br>
 **A**: Your data are saved in the hard disk automatically after any command that changes the data as aforementioned [here](#automatic-save) in the guide. There is no need for you to save it manually.
+<br>
+<br>
 
 
 ## Command Summary
