@@ -266,14 +266,14 @@ public class LogicManagerTest {
                 helper.taskWithAttribute(false, false, false, false, false)
         };
         for(Task toBeAdded : inputs) {
-            DoerList expectedAB = new DoerList();
-            expectedAB.addTask(toBeAdded);
+            DoerList expectedDL = new DoerList();
+            expectedDL.addTask(toBeAdded);
             // execute command and verify result
             model.resetData(new DoerList());
             assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                     String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                    expectedAB,
-                    expectedAB.getTaskList());
+                    expectedDL,
+                    expectedDL.getTaskList());
         }
     }
     //@@author
