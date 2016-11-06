@@ -48,7 +48,7 @@
 The **_Architecture Diagram_** given above explains the high-level design of the App.
 Given below is a quick overview of each component.
 
-`Main` has only one class called [`MainApp`](../src/main/java/seedu/address/MainApp.java). It is responsible for,
+`Main` has only one class called [`MainApp`](../src/main/java/seedu/doerList/MainApp.java). It is responsible for,
 * At application launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
@@ -111,7 +111,7 @@ The `UI` component,
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-**API** : [`Logic.java`](../src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](../src/main/java/seedu/doerList/logic/Logic.java)
 
 1. `Logic` uses the `Parser` class to parse the user command.
 2. This results in a `Command` object which is executed by the `LogicManager`.
@@ -136,20 +136,23 @@ The `Model`,
 * exposes `UnmodifiableObservableList<ReadOnlyTask>`, `UnmodifiableObservableList<Category>` that can be 'observed' (E.g. the UI can be bound to this list) so that the UI automatically updates when the data in the list changes.
 * does not depend on any of the other three components.
 
-[//]: # (@@author)
+[//]: # (@@author A0147978E)
 ### Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
 
-**API** : [`Storage.java`](../src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](../src/main/java/seedu/doerList/storage/Storage.java)
 
 The `Storage` component,
+
+* can save `Config` objects in json format and read it back
 * can save `UserPref` objects in json format and read it back.
 * can save the Do-er List data in xml format and read it back.
 
+[//]: # (@@author)
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.doerList.commons` package.
 
 ## Implementation
 
@@ -198,13 +201,13 @@ We have two types of tests:
   
 2. **Non-GUI Tests** - These are tests that do not involve the GUI. They include:
    1. _Unit tests_ targeting the lowest level methods/classes. <br>
-      e.g. `seedu.address.commons.UrlUtilTest`
+      e.g. `seedu.doerList.commons.UrlUtilTest`
    2. _Integration tests_ that are checking the integration of multiple code units 
      (those code units are assumed to be working).<br>
-      e.g. `seedu.address.storage.StorageManagerTest` 
+      e.g. `seedu.doerList.storage.StorageManagerTest` 
 
    3. Hybrids of unit and integration tests. These tests are checking multiple code units as well as how the are connected together.<br>
-      e.g. `seedu.address.logic.LogicManagerTest`
+      e.g. `seedu.doerList.logic.LogicManagerTest`
   
 **Headless GUI Testing** :
 Thanks to the [TestFX](https://github.com/TestFX/TestFX) library that we are using, our GUI tests can be run in _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on his computer while the tests are running.<br>
@@ -268,7 +271,7 @@ Priority | As a ... | I want to ... | So that I can...
 [//]: # (@@author)
 ## Appendix B : Use Cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `DoerList` and the **Actor** is the `user`, unless specified otherwise)
 
 [//]: # (@@author A0139401N)
 #### Use case: Add task
