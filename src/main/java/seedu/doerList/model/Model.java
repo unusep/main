@@ -44,13 +44,9 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given predicate*/
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
-    //@@author
-
     //@@author A0140905M
     /** Replace a task with given task*/
     void replaceTask(ReadOnlyTask toReplace, Task task) throws UniqueTaskList.DuplicateTaskException, TaskNotFoundException;
-
-    //@@author
 
     //@@author A0139168W
     /** Marks the given task as undone */

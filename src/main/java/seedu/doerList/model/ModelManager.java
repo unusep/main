@@ -99,7 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
         undoManager.resetRedoStack();
         indicateDoerListChanged();
     }
-    //@@author
 
     //@@author A0139168W
     @Override

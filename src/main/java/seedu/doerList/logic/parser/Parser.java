@@ -187,7 +187,6 @@ public class Parser {
         }
     }
 
-    //@@author A0140905M
     /**
      * Find a single index number in Displayed args.
      *
@@ -203,8 +202,8 @@ public class Parser {
         }
         return Integer.parseInt(matcher.group("targetIndex"));
     }
-    //@@author
 
+    //@@author
     /**
      * Parses arguments in the context of the delete task command.
      *
@@ -254,8 +253,6 @@ public class Parser {
         return new ViewCommand(index.get());
     }
 
-    //@@author
-
     //@@author A0140905M
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
@@ -274,7 +271,6 @@ public class Parser {
         return Optional.of(Integer.parseInt(index));
 
     }
-    //@@author
 
     //@@author A0147978E
     /**
@@ -328,7 +324,6 @@ public class Parser {
 
         return new MarkCommand(index.get());
     }
-    //@@author
 
     //@@author A0140905M
     /**
@@ -361,7 +356,6 @@ public class Parser {
 
         return new RedoCommand();
     }
-    //@@author
 
     /**
      * Signals that the user input could not be parsed.

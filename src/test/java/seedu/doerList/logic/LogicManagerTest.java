@@ -843,7 +843,6 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "taskdue hmmm    ", TodoTime.MESSAGE_TODOTIME_CONSTRAINTS);
     }
-    //@author
 
     //@@author A0140905M
     @Test
@@ -948,7 +947,6 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
-    //@@author
 
     //@@author A0147978E
     @Test
