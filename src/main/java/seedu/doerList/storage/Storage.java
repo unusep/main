@@ -38,6 +38,7 @@ public interface Storage extends DoerListStorage, UserPrefsStorage, ConfigStorag
     @Override
     void saveDoerList(ReadOnlyDoerList doerList) throws IOException;
 
+    //@@author A0139168W
     /**
      * Saves the current version of the doerList to the hard disk.
      *   Creates the data file if it is missing.

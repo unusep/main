@@ -95,7 +95,8 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-
+    
+    //@@author A0139168W
     @Override
     @Subscribe
     public void handleStoragePathChangedEvent(StoragePathChangedEvent event) throws DataConversionException {
