@@ -27,8 +27,6 @@ public class MarkCommand extends Command {
         this.targetIndex = targetIndex;
     }
     
-
-    //@@author A0139401N
     public CommandResult execute() {       
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
@@ -51,7 +49,7 @@ public class MarkCommand extends Command {
 
     }
     
-    
+    //@@author A0139401N
     /**
      * Update a new task's start and end time based on their recurring values
      *
