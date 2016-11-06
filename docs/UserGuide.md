@@ -51,7 +51,7 @@ Eager and excited? Then let us proceed!
 
 ## Getting Started
 
-Do-er List makes the process of adding, editing or deleting your tasks a seamless process. Long gone are the days when you have to type in long and complicated commands or endlessly mouse-click to get what you desire.
+Do-er List makes the process of adding, editing or deleting your tasks a seamless process. Long gone are the days when you have to type in long and complicated commands or endlessly click on multiple buttons to get what you desire.
 
 All commands have this standard format:
 
@@ -69,7 +69,7 @@ All commands start with a command words, followed by fields that are replaced by
 4. Double-click the file to start the app. The GUI should appear in a few seconds. <br>
 <img src="../docs/images/UI_Guide/welcome.png" width="600"><br>
 5. Type the command in the command box and press <kbd>Enter</kbd> to execute it.
-   *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
+   *  e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the User Guide in a new window.
 6. Some example commands you can try:
    * **`add`**` /t Do post-lecture quiz /s today 10:00 /e tomorrow 12:00 /c CS2103` :
      adds a task called `Do post-lecture quiz` to the Do-*er*List that starts `today` at `10:00`
@@ -85,9 +85,9 @@ All commands start with a command words, followed by fields that are replaced by
 
 > **Command Format**
 >
-> * Words in `UPPER_CASE` are the parameters.
-> * Items in `SQUARE_BRACKETS` are optional.
-> * Items with `...` after them can have multiple instances.
+> * Words in **`UPPER_CASE`** are the parameters.
+> * Items in **`SQUARE_BRACKETS`** are optional.
+> * Items with **`...`** after them can have multiple instances.
 > * If a command has multiple parameters, the order of parameters doesn't matter.
 
 [//]: # (@@author A0139401N)
@@ -107,18 +107,18 @@ Adds a task to the Do-*er*List<br>
 Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING]...`
 
 <img src="../docs/images/UI_Guide/add_command.png" width="600">
-> * A task can have any number of categories (including 0).
-> * The `START` or `END` parameter can be in natural language.
-> * `RECURRING` intervals can also be added in and can be in natural language.
-> * If the `START` date is missing, the Do*er*-List set it to today by default.
-> * If there is no `START` or `END` parameters, the Do*er*-list will create task without start date and end date and move it to `Inbox` built-in category.
-> * Supported list for natural language for `START` and `END`:
+> * You can choose to have no categories or any number of them in your task.
+> * The **`START`** or **`END`** parameter supports natural language input.
+> * **`RECURRING`** intervals can also be added in and also supports in natural language input.
+> * If the **`START`** date is missing, the Do*er*-List set it to its current timing and date by default.
+> * If there is no **`START`** or **`END`** parameters, the Do*er*-list will create task without start date and end date and move it to **`Inbox`** built-in category.
+> * Supported list for natural language for **`START`** and **`END`**:
 >  * next X hours / days / weeks / months
 >    * *X* can be any number: 1, 2, 3, ...
 >  * today
 >  * tomorrow
 >  * next week / month
-> * Supported list for natural language for `RECURRING`:
+> * Supported list for natural language for **`RECURRING`** :
 >  * daily
 >  * weekly
 >  * monthly
@@ -141,11 +141,11 @@ Edit an existing task in the Do-*er* List<br>
 Format: `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING]...`
 
 <img src="../docs/images/UI_Guide/edit_command.png" width="600">
-> Edit an existing task by calling its index. The task's title, description, start date, end date and category can be edited.
+> Edit an existing task by calling its index. The task's title, description, start date, end date, recurring intervals and categories can be edited.
 
 Examples:
 
-* `edit 2 /t Daily Laundry /c Chores /c Daily`
+* `edit 2 /t Do the Laundry /c Chores /r Daily`
 * `edit 3 /c Do Homework`
 * `edit 3 /s tomorrow 23 00`
 
@@ -162,10 +162,12 @@ Format: `mark TASK_NUMBER`
 <img src="../docs/images/UI_Guide/mark_command.png" width="600">
 > Mark task `TASK_NUMBER` as done. The task must exist in the Do*er*-list.
 
+
 Examples:
 
 * `mark 5`
-  <br>Returns task number `5` as done.
+	* Returns task number `5` as done.
+	* If a recurring task is mark is done, it will automatically update its start and end date.
 
 [Back To Top](#user-guide)
 
@@ -180,7 +182,8 @@ Format: `unmark TASK_NUMBER`
 Examples:
 
 * `unmark 5`
-  <br>Returns task number `5` as undone.
+ 	* Returns task number `5` as undone.
+ 	* If a recurring task is mark is unmarked, it will automatically subtract its start and end date by its given recurring interval.
 
 [Back To Top](#user-guide)
 
