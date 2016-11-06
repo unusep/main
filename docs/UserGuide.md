@@ -322,7 +322,7 @@ Examples:
 [Back To Top](#user-guide)
 
 [//]: # (@@author A0140905M)
-#### Changing your save location: `saveto`
+### Changing your save location: `saveto`
 Save the data into a new file and location<br>
 Format: `saveto NEW_LOCATION`
 
@@ -331,6 +331,8 @@ Format: `saveto NEW_LOCATION`
 Examples:
 
 * `saveto data/newsampledata.xml`
+
+[Back To Top](#user-guide)
 [//]: # (@@author)
 
 [//]: # (@@author A0139401N)
