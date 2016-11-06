@@ -27,6 +27,7 @@ public class MarkCommand extends Command {
         this.targetIndex = targetIndex;
     }
     
+
     public CommandResult execute() {       
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
