@@ -1,3 +1,4 @@
+//@@author A0139168W
 package guitests;
 
 import guitests.guihandles.HelpWindowHandle;
