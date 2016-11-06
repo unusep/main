@@ -16,11 +16,12 @@
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
-    * [Save](#save-the-data-to-a-new-location-saveto)
+    * [Save To](#changing-your-save-location--saveto)
+    * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
-    * [Saving the data](#saving-the-data)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 ## About Us
@@ -33,6 +34,7 @@ This user guide aims to allow any user to seamlessly use the product, as intende
 Eager and excited? Then let us proceed!
 
 [Back To Top](#user-guide)
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 ## Overview
@@ -60,6 +62,7 @@ All commands have this standard format:
 All commands start with a command words, followed by fields that are replaced by your inputs. The fields in the square bracket "[" and "] are optional. You can choose to not include these fields.
 <br>
 *Please take note of the following:*
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
@@ -89,6 +92,7 @@ All commands start with a command words, followed by fields that are replaced by
 > * Items in **`SQUARE_BRACKETS`** are optional.
 > * Items with **`...`** after them can have multiple instances.
 > * If a command has multiple parameters, the order of parameters doesn't matter.
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
 #### Viewing help : `help`
@@ -318,8 +322,8 @@ Examples:
 [Back To Top](#user-guide)
 
 [//]: # (@@author A0140905M)
-#### Save the data to a new location: `saveto`
-Save the data into a new file<br>
+#### Changing your save location: `saveto`
+Save the data into a new file and location<br>
 Format: `saveto NEW_LOCATION`
 
 <img src="../docs/images/UI_Guide/saveto_command.png" width="600">
@@ -327,9 +331,10 @@ Format: `saveto NEW_LOCATION`
 Examples:
 
 * `saveto data/newsampledata.xml`
+[//]: # (@@author)
 
 [//]: # (@@author A0139401N)
-### Saving the data 
+### Automatic save
 The Do*er*-list data are saved in the hard disk automatically after any command that changes the data.<br>
 
 [Back To Top](#user-guide)
