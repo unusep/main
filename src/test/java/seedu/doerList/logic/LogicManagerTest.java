@@ -121,6 +121,7 @@ public class LogicManagerTest {
         assertCommandBehavior(invalidCommand,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
     }
+    //@@author
 
     /**
      * Executes the command and confirms that the result message is correct.
@@ -145,7 +146,7 @@ public class LogicManagerTest {
         //Execute the command
         CommandResult result = logic.execute(inputCommand);
 
-        //Confirm the ui display elements should contain the right data
+        //Confirm the UI display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
@@ -156,10 +157,23 @@ public class LogicManagerTest {
 
 
     //@@author A0139401N
+    /**
+    * Executes the command and confirms that the result help message given is correct.
+    * Also affirms that the program does not accept random or unknown words.
+    */
     @Test
     public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+    	String[] inputs = { 
+    			"uicfhmowqewca",
+    			"Adelete",
+    			"whatIsThis",
+    			"grahhsdauadhiuqwji",
+    			"addh",
+    			"mark12345"
+    	};
+    	for(String unknownCommand : inputs) {
+    		assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+    	}
     }
 
     //@@author A0140905M
@@ -193,6 +207,7 @@ public class LogicManagerTest {
     }
     //@@author
 
+    //@@author A0139401N
     @Test
     public void execute_exit() throws Exception {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
@@ -207,7 +222,7 @@ public class LogicManagerTest {
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new DoerList(), Collections.emptyList());
     }
-
+    //@@author
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -233,7 +248,7 @@ public class LogicManagerTest {
     }
 
 
-    //@@author
+    //@@author A0147978E
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -261,12 +276,14 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
+    //@@author
 
+    //@@author A0139401N
     @Test
     public void execute_addRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toAdded = helper.taskWithAttribute(false, false, false, true, false);
-        assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
+        assertCommandBehavior(helper.generateAddCommand(toAdded), Recurring.MESSAGE_RECURRING_START_END_CONSTRAINTS);
     }
 
     //@@author A0139401N
@@ -291,7 +308,30 @@ public class LogicManagerTest {
                     expectedAB.getTaskList());
         }
     }
-
+    
+    //@@author A0139401N
+    @Test
+    public void execute_addRecurring_naturalLanguage_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task[] inputs = {
+                helper.generateRecurringTask(0), // daily
+                helper.generateRecurringTask(1), // weekly
+                helper.generateRecurringTask(2), // monthly
+                helper.generateRecurringTask(3)  // yearly
+        };
+        for(Task toBeAdded : inputs) {
+            DoerList expectedDL = new DoerList();
+            expectedDL.addTask(toBeAdded);
+            // executes the command and verifies the result
+            model.resetData(new DoerList());
+            assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                    String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                    expectedDL,
+                    expectedDL.getTaskList());
+        }
+    }
+    
     @Test
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
@@ -301,7 +341,7 @@ public class LogicManagerTest {
         expectedAB.addTask(toBeAdded);
 
         // setup starting state
-        model.addTask(toBeAdded); // person already in internal doerList
+        model.addTask(toBeAdded); // Task already in internal doerList
 
         // execute command and verify result
         assertCommandBehavior(
@@ -358,7 +398,7 @@ public class LogicManagerTest {
         // Test Inbox
         assertCategoryListed(Arrays.asList(Inbox1),
                 BuildInCategoryList.INBOX, BuildInCategoryList.INBOX.categoryName);
-        // Test complete
+        // Test Complete
         assertCategoryListed(Arrays.asList(Complete1),
                 BuildInCategoryList.COMPLETE, BuildInCategoryList.COMPLETE.categoryName);
     }
@@ -429,8 +469,8 @@ public class LogicManagerTest {
     //@@author
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
-     * targeting a single person in the shown list, using visible index.
-     * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
+     * targeting a single task in the shown list, using visible index.
+     * @param commandWord to test assuming it targets a single task in the last shown list based on visible index.
      */
     private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage) throws Exception {
         assertCommandBehavior(commandWord , expectedMessage); //index missing
@@ -442,15 +482,15 @@ public class LogicManagerTest {
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given command
-     * targeting a single person in the shown list, using visible index.
-     * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
+     * targeting a single task in the shown list, using visible index.
+     * @param commandWord to test assuming it targets a single task in the last shown list based on visible index.
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord) throws Exception {
         String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
 
-        // set AB state to 2 persons
+        // set AB state to 2 tasks
         model.resetData(new DoerList());
         for (Task p : taskList) {
             model.addTask(p);
@@ -541,7 +581,8 @@ public class LogicManagerTest {
                 expectedAB,
                 expectedAB.getTaskList());
     }
-
+    
+    //@@author A0139401N
     @Test
     public void execute_editRecurring_fail() throws DuplicateTaskException, Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -550,11 +591,12 @@ public class LogicManagerTest {
         DoerList expectedDL = new DoerList();
         expectedDL.addTask(toAdded);
         assertCommandBehavior("edit 1 /r daily",
-                Recurring.MESSAGE_RECURRING_STARTEND_CONSTRAINTS,
+                Recurring.MESSAGE_RECURRING_START_END_CONSTRAINTS,
                 expectedDL,
                 expectedDL.getTaskList());
     }
 
+    //@@author A0139401N
     @Test
     public void execute_editRecurring_successful() throws Exception {
         // setup expectations
@@ -564,7 +606,7 @@ public class LogicManagerTest {
 
         DoerList expectedDL = helper.generateDoerList(threeTasks);
         ReadOnlyTask taskToEdit = expectedDL.getTaskList().get(2);
-        Task editedTask = helper.generateRecurringTask(4);
+        Task editedTask = helper.generateRecurringTask(1);
         expectedDL.removeTask(taskToEdit);
         expectedDL.addTask(editedTask);
 
@@ -573,6 +615,7 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedDL.getTaskList());
     }
+    //@@author
 
     //@author A0147978E
     @Test
@@ -691,10 +734,10 @@ public class LogicManagerTest {
         Task p3 = helper.generateTaskTitleAndDescription("key key", "dummy");
         Task p4 = helper.generateTaskTitleAndDescription("KEy sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
-        List<Task> expectedList = fourPersons;
-        helper.addToModel(model, fourPersons);
+        List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
+        List<Task> expectedList = fourTasks;
+        helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -710,10 +753,10 @@ public class LogicManagerTest {
         Task cTarget3 = helper.generateTaskTitleAndDescription("key key", "dummy");
         Task c1 = helper.generateTaskTitleAndDescription("sduauo", "dummy");
 
-        List<Task> fourPersons = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
-        DoerList expectedAB = helper.generateDoerList(fourPersons);
+        List<Task> fourTasks = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
+        DoerList expectedAB = helper.generateDoerList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
-        helper.addToModel(model, fourPersons);
+        helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find key rAnDoM",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
@@ -1157,12 +1200,13 @@ public class LogicManagerTest {
         public Task generateRecurringTask(int seed) throws Exception {
             LocalDateTime sampleDate = LocalDateTime.parse("2016-10-03 10:15",
                     DateTimeFormatter.ofPattern(TodoTime.TIME_STANDARD_FORMAT));
+            String[] natLanguageRecur = {"daily", "weekly", "monthly", "yearly" };
             return new Task(
                     new Title("Task " + seed),
                     new Description("" + Math.abs(seed)),
                     new TodoTime(sampleDate),
                     new TodoTime(sampleDate.plusDays(seed)),
-                    new Recurring("daily"),
+                    new Recurring(natLanguageRecur[seed]),
                     new UniqueCategoryList(new Category("CS" + Math.abs(seed)), new Category("CS" + Math.abs(seed + 1)))
             );
         }
@@ -1319,8 +1363,8 @@ public class LogicManagerTest {
         }
 
         /**
-         * Adds auto-generated Person objects to the given DoerList
-         * @param doerList The DoerList to which the Persons will be added
+         * Adds auto-generated Task objects to the given DoerList
+         * @param doerList The DoerList to which the Tasks will be added
          */
         public void addToDoerList(DoerList doerList, int numGenerated) throws Exception{
             addToDoerList(doerList, generateTaskList(numGenerated));

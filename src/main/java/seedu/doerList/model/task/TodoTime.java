@@ -56,11 +56,11 @@ public class TodoTime {
 
     //@@author A0147978E
     /**
-     * Parse the time to human readable version
+     * Parses the time to a user readable version
      *
      * @return String
      */
-    public String toHumanReadableTime() {
+    public String toReadableTime() {
         return new TimeFormatter().toHumanReadableTime(value);
     }
     //@@author

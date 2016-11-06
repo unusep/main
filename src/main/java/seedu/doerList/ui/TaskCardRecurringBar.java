@@ -47,7 +47,7 @@ public class TaskCardRecurringBar extends UiPart {
 
     private void displayIconAndLabel() {
         recurringIcon.setImage(getImage(LOOP_ICON_NAME));
-        recurringInterval.setText(this.recurring.toHumanReadable());
+        recurringInterval.setText(this.recurring.toReadableText());
     }
 
     private void addToPlaceholder() {       
