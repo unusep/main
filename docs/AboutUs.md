@@ -19,6 +19,7 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 	- Design UI with [Yong Sheng](https://github.com/JasonScourge)
 	- Set up Gradle, Travis, Coveralls and Codacy
 	- Help other writing UI parts and GUI test cases for the features they implement.
+	- Update Developer Guide to match the project at the end
 
 
 -----

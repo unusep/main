@@ -16,8 +16,8 @@ public class Recurring {
     public final long year;
 
     public static final Pattern RECUR_TITLE_FORMAT = Pattern.compile("\\d+-\\d+-\\d+");
-    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily', 'weekly'";
-    public static final String MESSAGE_RECURRING_STARTEND_CONSTRAINTS = "Start and end time should be specified before adding recurring task";
+    public static final String MESSAGE_RECURRING_CONSTRAINTS = "Time should be in this format 'yy-mm-dd' or natural language such as 'daily' or 'weekly'";
+    public static final String MESSAGE_RECURRING_START_END_CONSTRAINTS = "Start and end time should be specified before adding recurring task";
     public static final String DAILY = "daily";
     public static final String WEEKLY = "weekly";
     public static final String MONTHLY = "monthly";
@@ -32,7 +32,7 @@ public class Recurring {
         if (unformattedTime == null || unformattedTime.isEmpty()){
             throw new IllegalValueException(MESSAGE_RECURRING_CONSTRAINTS);
         } else {
-            long[] processedTime = {0, 0, 0};
+            long[] processedTime = {0, 0, 0}; // default 
             final Matcher recurTitleMatcher = RECUR_TITLE_FORMAT.matcher(unformattedTime.trim());
             if (recurTitleMatcher.find()){
                 String[] parts = unformattedTime.split("-");
@@ -103,7 +103,12 @@ public class Recurring {
                 this.getYears() == other.getYears();
     }
     
-    public String toHumanReadable() {
+    /**
+     * Parses the recurring interval to a user readable version
+     *
+     * @return String
+     */
+    public String toReadableText() {
         StringBuilder builder = new StringBuilder(); 
         if (this.getYears() != 0) {
             builder.append(this.getYears() + " year ");
@@ -129,10 +134,21 @@ public class Recurring {
                         && this.equals(((Recurring) other))); // state check
     }
 
+    /**
+     * Static method to validate that the start and end time must exist before
+     * a recurring interval can be added
+     *
+     * @param selected task for its start and end time to validate
+     * @throws IllegalValueException
+     */
     public static void validateStartEndTime(Task toAdd) throws IllegalValueException {
+    	// checks if the task has a recurring interval yet without a start or end time
         if (toAdd.hasRecurring() && !toAdd.hasStartTime() && !toAdd.hasEndTime()) {
-            throw new IllegalValueException(MESSAGE_RECURRING_STARTEND_CONSTRAINTS);
+        	// Recurring interval cannot exist without a start or end time
+            throw new IllegalValueException(MESSAGE_RECURRING_START_END_CONSTRAINTS);
         }
     }
 
 }
+//@@author
+

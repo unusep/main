@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
+import seedu.doerList.commons.core.Config;
 import seedu.doerList.commons.events.model.DoerListChangedEvent;
 import seedu.doerList.commons.events.storage.DataSavingExceptionEvent;
 import seedu.doerList.commons.events.storage.StoragePathChangedEvent;
@@ -21,7 +22,13 @@ public interface Storage extends DoerListStorage, UserPrefsStorage, ConfigStorag
 
     @Override
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
+    
+    @Override
+    Config readConfig() throws DataConversionException;
 
+    @Override
+    void saveConfig(Config config) throws IOException;
+    
     @Override
     String getDoerListFilePath();
 
