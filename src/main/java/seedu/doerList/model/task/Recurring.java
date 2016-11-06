@@ -134,8 +134,17 @@ public class Recurring {
                         && this.equals(((Recurring) other))); // state check
     }
 
+    /**
+     * Static method to validate that the start and end time must exist before
+     * a recurring interval can be added
+     *
+     * @param selected task for its start and end time to validate
+     * @throws IllegalValueException
+     */
     public static void validateStartEndTime(Task toAdd) throws IllegalValueException {
+    	// checks if the task has a recurring interval yet without a start or end time
         if (toAdd.hasRecurring() && !toAdd.hasStartTime() && !toAdd.hasEndTime()) {
+        	// Recurring interval cannot exist without a start or end time
             throw new IllegalValueException(MESSAGE_RECURRING_START_END_CONSTRAINTS);
         }
     }
