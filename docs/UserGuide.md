@@ -16,7 +16,7 @@
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
-    * [Save](#save-the-data-to-a-new-locatiob--saveto)
+    * [Save](#save-the-data-to-a-new-location-saveto)
     * [Exit](#exiting-the-program--exit)
     * [Saving the data](#saving-the-data)
 * [FAQ](#faq)
@@ -317,6 +317,7 @@ Examples:
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0140905M)
 #### Save the data to a new location: `saveto`
 Save the data into a new file<br>
 Format: `saveto NEW_LOCATION`
