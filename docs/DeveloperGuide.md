@@ -103,7 +103,7 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the application and updates the UI accordingly. For example, the diagram below shows how the `UI` reacts to the [`JumpToIndexedTaskRequestEvent`](../src/main/java/seedu/doerList/commons/events/ui/JumpToIndexedTaskRequestEvent.java) event. 
-<img src="images/Ui_scrollToEvent.png" width="800"><br>
+<img src="images/SDforUIScrollTo.png" width="800"><br>
 
 
 [//]: # (@@author)
