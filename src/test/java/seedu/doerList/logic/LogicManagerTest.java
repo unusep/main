@@ -266,14 +266,14 @@ public class LogicManagerTest {
                 helper.taskWithAttribute(false, false, false, false, false)
         };
         for(Task toBeAdded : inputs) {
-            DoerList expectedAB = new DoerList();
-            expectedAB.addTask(toBeAdded);
+            DoerList expectedDL = new DoerList();
+            expectedDL.addTask(toBeAdded);
             // execute command and verify result
             model.resetData(new DoerList());
             assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                     String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                    expectedAB,
-                    expectedAB.getTaskList());
+                    expectedDL,
+                    expectedDL.getTaskList());
         }
     }
     //@@author
@@ -298,14 +298,14 @@ public class LogicManagerTest {
                 helper.taskWithAttribute(false, true, true, true, true)
         };
         for(Task toBeAdded : inputs) {
-            DoerList expectedAB = new DoerList();
-            expectedAB.addTask(toBeAdded);
+            DoerList expectedDL = new DoerList();
+            expectedDL.addTask(toBeAdded);
             // executes the command and verifies the result
             model.resetData(new DoerList());
             assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                     String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                    expectedAB,
-                    expectedAB.getTaskList());
+                    expectedDL,
+                    expectedDL.getTaskList());
         }
     }
     
@@ -337,8 +337,8 @@ public class LogicManagerTest {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.generateTask(1);
-        DoerList expectedAB = new DoerList();
-        expectedAB.addTask(toBeAdded);
+        DoerList expectedDL = new DoerList();
+        expectedDL.addTask(toBeAdded);
 
         // setup starting state
         model.addTask(toBeAdded); // Task already in internal doerList
@@ -347,8 +347,8 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
                 AddCommand.MESSAGE_DUPLICATE_TASK,
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
 
     }
 
@@ -490,7 +490,7 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
 
-        // set AB state to 2 tasks
+        // set DL state to 2 tasks
         model.resetData(new DoerList());
         for (Task p : taskList) {
             model.addTask(p);
@@ -569,17 +569,17 @@ public class LogicManagerTest {
         threeTasks.get(2).addBuildInCategory(BuildInCategoryList.COMPLETE); // mark the task as complete
         helper.addToModel(model, threeTasks);
 
-        DoerList expectedAB = helper.generateDoerList(threeTasks);
-        ReadOnlyTask taskToEdit = expectedAB.getTaskList().get(2);
+        DoerList expectedDL = helper.generateDoerList(threeTasks);
+        ReadOnlyTask taskToEdit = expectedDL.getTaskList().get(2);
         Task editedTask = helper.generateTask(4);
         editedTask.addBuildInCategory(BuildInCategoryList.COMPLETE);
-        expectedAB.removeTask(taskToEdit);
-        expectedAB.addTask(editedTask);
+        expectedDL.removeTask(taskToEdit);
+        expectedDL.addTask(editedTask);
 
         assertCommandBehavior(helper.generateAddCommand(editedTask).replace("add", "edit 3"),
                 String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, taskToEdit, editedTask),
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
     
     //@@author A0139401N
@@ -626,13 +626,13 @@ public class LogicManagerTest {
         Task task2_after = helper.generateTaskWithCategory(2, new Category("A"));
 
         // prepare test data
-        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2_after));
+        DoerList expectedDL = helper.generateDoerList(Arrays.asList(task1, task2_after));
         helper.addToModel(model, Arrays.asList(task1, task2_before));
 
         assertCommandBehavior("edit 2 /c A",
                 String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, task2_before, task2_after),
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
 
     //@@author
@@ -643,11 +643,11 @@ public class LogicManagerTest {
         Task task2 = helper.generateTaskTitleAndDescription("Task 1", "D 2");
         helper.addToModel(model, Arrays.asList(task1, task2));
 
-        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
+        DoerList expectedDL = helper.generateDoerList(Arrays.asList(task1, task2));
         assertCommandBehavior("edit 1 /d D 2",
                 String.format(EditCommand.MESSAGE_DUPLICATE_TASK),
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
 
     //@@author A0139168W
@@ -670,14 +670,14 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
-        DoerList expectedAB = helper.generateDoerList(threeTasks);
-        expectedAB.removeTask(threeTasks.get(1));
+        DoerList expectedDL = helper.generateDoerList(threeTasks);
+        expectedDL.removeTask(threeTasks.get(1));
         helper.addToModel(model, threeTasks);
 
         assertCommandBehavior("delete 2",
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threeTasks.get(1)),
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
 
     //@@author A0147978E
@@ -688,14 +688,14 @@ public class LogicManagerTest {
         Task task2 = helper.generateTaskWithCategory(2, new Category("A"), new Category("B"));
 
         // prepare test data
-        DoerList expectedAB = helper.generateDoerList(Arrays.asList(task1, task2));
-        expectedAB.removeTask(task2);
+        DoerList expectedDL = helper.generateDoerList(Arrays.asList(task1, task2));
+        expectedDL.removeTask(task2);
         helper.addToModel(model, Arrays.asList(task1, task2));
 
         assertCommandBehavior("delete 2",
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, task2),
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
 
     //@@author
@@ -716,13 +716,13 @@ public class LogicManagerTest {
         Task c2 = helper.generateTaskTitleAndDescription("KEYKEYKEY sduauo", "dummy");
 
         List<Task> fiveTasks = helper.generateTaskList(c1, cTarget1, c2, cTarget2, cTarget3);
-        DoerList expectedAB = helper.generateDoerList(fiveTasks);
+        DoerList expectedDL = helper.generateDoerList(fiveTasks);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
         helper.addToModel(model, fiveTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedDL,
                 expectedList);
     }
 
@@ -735,13 +735,13 @@ public class LogicManagerTest {
         Task p4 = helper.generateTaskTitleAndDescription("KEy sduauo", "dummy");
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
-        DoerList expectedAB = helper.generateDoerList(fourTasks);
+        DoerList expectedDL = helper.generateDoerList(fourTasks);
         List<Task> expectedList = fourTasks;
         helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedDL,
                 expectedList);
     }
 
@@ -754,13 +754,13 @@ public class LogicManagerTest {
         Task c1 = helper.generateTaskTitleAndDescription("sduauo", "dummy");
 
         List<Task> fourTasks = helper.generateTaskList(cTarget1, c1, cTarget2, cTarget3);
-        DoerList expectedAB = helper.generateDoerList(fourTasks);
+        DoerList expectedDL = helper.generateDoerList(fourTasks);
         List<Task> expectedList = helper.generateTaskList(cTarget1, cTarget2, cTarget3);
         helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find key rAnDoM",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedDL,
                 expectedList);
     }
 
@@ -867,13 +867,13 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
         helper.addToModel(model, fourTasks);
-        DoerList expectedAB = helper.generateDoerList(fourTasks);
+        DoerList expectedDL = helper.generateDoerList(fourTasks);
 
         List<Task> expectedList = fourTasks.subList(0, 3);
 
         assertCommandBehavior("taskdue 2016-10-06 23:59",
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
-                expectedAB,
+                expectedDL,
                 expectedList);
     }
 
@@ -1073,18 +1073,18 @@ public class LogicManagerTest {
 
     @Test
     public void execute_EmptyList_undo_redo_unsuccessful_no_undoable_command() throws Exception {
-        DoerList expectedAB = new DoerList();
+        DoerList expectedDL = new DoerList();
         logic.execute("wrong command");
 
         assertCommandBehavior("undo",
                 UndoCommand.MESSAGE_UNDO_FAILURE,
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
 
         assertCommandBehavior("redo",
                 RedoCommand.MESSAGE_REDO_FAILURE,
-                expectedAB,
-                expectedAB.getTaskList());
+                expectedDL,
+                expectedDL.getTaskList());
     }
 
     @Test
