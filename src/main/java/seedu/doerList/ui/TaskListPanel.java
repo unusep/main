@@ -1,14 +1,14 @@
 //@@author A0147978E
 package seedu.doerList.ui;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import java.time.LocalDateTime;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent;
 import seedu.doerList.commons.events.ui.TaskPanelArrowKeyPressEvent.Direction;
 import seedu.doerList.commons.util.FxViewUtil;
@@ -32,6 +33,8 @@ import seedu.doerList.model.task.UniqueTaskList.TaskNotFoundException;
  * Panel containing the list of sections with tasks.
  */
 public class TaskListPanel extends UiPart {
+    private static final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
+    
     /** Define the criteria to categorized the display tasks */
     public static final BuildInCategory[] categorizedBy = {
             BuildInCategoryList.DUE,
@@ -100,6 +103,7 @@ public class TaskListPanel extends UiPart {
     }
 
     public void displayTasks() {
+        logger.info("TaskPanelUIController : Drawing the task panel UI");
         // clear selection first
         TaskCard.clearSelection();
         // categorized task based on `categorizedBy`
