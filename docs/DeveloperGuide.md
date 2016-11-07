@@ -698,6 +698,7 @@ Use case ends.
 
 #### Weaknesses:
 - It cannot link up with other calendar software like Google calendar, which makes it hard to keep track of tasks done.
+- Limited file attachment size, a problem when it comes to uploading large media files like videos or high quality images.
 - The free version is much more limited than the paid version, making certain customisation features difficult to accomplish.
 
 [//]: # (@@author A0139168W)
