@@ -130,9 +130,12 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 **API** : [`Model.java`](../src/main/java/seedu/doerList/model/Model.java)
 
 The `Model`,
+
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Do-er List data.
-* stores a `UndoManager` that records the history operation to Do-er List data
+* stores a `UndoManager` that records the history operations to Do-er List data. 
+> For example, when `Model` requests to add a task to Doer List, `UndoManager` will records the opposites operations (delete a task in this case) in its undo stack. Next time, when the `undo` method of the `Model` is called, `Model` will pull the first operation in the `UndoManager` and executes it. Meanwhile, `UndoManager` will push the operation to its redo stack. Therefore, next time when `redo` method is called, the `Model` could pull the first operation in `UndoManager`'s redo stack and executes it.
+ 
 * exposes `UnmodifiableObservableList<ReadOnlyTask>`, `UnmodifiableObservableList<Category>` that can be 'observed' (E.g. the UI can be bound to this list) so that the UI automatically updates when the data in the list changes.
 * does not depend on any of the other three components.
 
