@@ -1,3 +1,23 @@
+#Table of Contents
+
+- [Load sample data](#load-sample-data)
+- [Test cases and brief overview](#test-cases-and-brief-overview)
+- [Test Scripts](#test-scripts)
+  - [Invalid / Unknown command](#invalid--unknown-command)
+  - [help](#help)
+  - [add](#add)
+  - [edit](#edit)
+  - [mark/unmark](#markunmark)
+  - [list](#list)
+  - [find](#find)
+  - [view](#view)
+  - [taskdue](#taskdue)
+  - [delete](#delete)
+  - [undo/redo](#undoredo)
+  - [saveto](#saveto)
+  - [clear](#clear)
+  - [exit](#exit)
+
 ## Load sample data
 1. Run “doerList.jar”. 
 > For Windows users, if your computer is unable to run as a Java application, right-click the `.jar` file and change the Opens with: from "some program" to “Java™ Platform SE Binary”.
