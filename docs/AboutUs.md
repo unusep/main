@@ -36,7 +36,7 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 - Other major contributions
 	- Design UI with [Xiao Pu](https://github.com/xpdavid)
 	- Help to design and improve the program inteface and guides to be more user-friendly
-	- Also refactor and spot for errors in code and comments
+	- Refactors and spot for errors in code comments
 
 -----
 
