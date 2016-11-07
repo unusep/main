@@ -20,7 +20,7 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the Do-erlist. "
-            + "Parameters: /t TASK [/d DESCRIPTION] [/s START] [/e END] [/r PERIOD] [/c CATEGORY] ... \n"
+            + "Parameters: /t TASK [/d DESCRIPTION] [/s START] [/e END] [/r RECURRING] [/c CATEGORY] ... \n"
             + "Example: " + COMMAND_WORD
             + " /t Take lecture /s 2016-11-25 10:00 /e 2016-11-26 12:00 /c CS2102 /r daily";
 
