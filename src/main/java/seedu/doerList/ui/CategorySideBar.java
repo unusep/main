@@ -1,15 +1,20 @@
 //@@author A0147978E
 package seedu.doerList.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import seedu.doerList.commons.core.LogsCenter;
 import seedu.doerList.model.category.Category;
 
 public class CategorySideBar extends UiPart {
+    private static final Logger logger = LogsCenter.getLogger(CategorySideBar.class);
+    
     private static final String FXML = "CategorySideBar.fxml";
     private AnchorPane placeHolderPane;
     private VBox root;
@@ -97,6 +102,7 @@ public class CategorySideBar extends UiPart {
      * This is used when the ObservableList has been updated.
      */
     public void refreshCategories() {
+        logger.info("CategorySideBarController : Refreshing the categories UI");
         categoryList.redrawListView();
         buildInCategoryList.redrawListView();
     }
