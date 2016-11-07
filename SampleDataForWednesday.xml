@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doerList>
+    <tasks>
+        <title>Submit Assignment 5</title>
+        <description>Ray-tracing, start early</description>
+        <startTime>
+            <value>2016-10-27 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-16 23:59</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+    </tasks>
+    <tasks>
+        <title>Project Meeting</title>
+        <description>Update the guides</description>
+        <endTime>
+            <value>2016-11-07 23:59</value>
+        </endTime>
+        <categorized>CS2101</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals</description>
+        <startTime>
+            <value>2016-11-26 13:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-26 15:00</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals - 2-in-1 day #sadlife</description>
+        <startTime>
+            <value>2016-11-28 09:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-28 11:00</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals - 2-in-1 day #sadlife</description>
+        <startTime>
+            <value>2016-11-28 17:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-28 19:00</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Exam</title>
+        <description>Finals</description>
+        <startTime>
+            <value>2016-11-30 13:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-30 15:00</value>
+        </endTime>
+        <categorized>CS2105</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy Shampoo</title>
+        <categorized>PGP</categorized>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy Laptop Stickers</title>
+        <endTime>
+            <value>2016-11-09 19:35</value>
+        </endTime>
+        <categorized>Reminders</categorized>
+    </tasks>
+    <tasks>
+        <title>Settle insurance</title>
+        <description>Ms. Lee</description>
+        <startTime>
+            <value>2016-11-05 19:28</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Reminders</categorized>
+    </tasks>
+    <tasks>
+        <title>Plan for NOC</title>
+        <description>Modules</description>
+        <startTime>
+            <value>2016-10-15 19:28</value>
+        </startTime>
+        <recurring>
+            <day>7</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Reminders</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy present for her</title>
+        <description>Don't forget hor</description>
+        <startTime>
+            <value>2016-12-25 19:28</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Print</title>
+        <description>All of the required</description>
+        <startTime>
+            <value>2016-09-10 19:28</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Return money</title>
+        <description>to Albert - $5</description>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Get money</title>
+        <description>from HuiQi - $2</description>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Bring extra towel</title>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Clean your room</title>
+        <startTime>
+            <value>2016-11-05 19:30</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>PGP</categorized>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Go out with friends 1</title>
+        <description>Sec school friends</description>
+        <startTime>
+            <value>2016-11-12 17:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-12 23:59</value>
+        </endTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Dinner with her</title>
+        <description>Poulet Chicken</description>
+        <startTime>
+            <value>2016-11-16 19:00</value>
+        </startTime>
+        <categorized>Special</categorized>
+    </tasks>
+    <tasks>
+        <title>Do laundry</title>
+        <description>don't forget your towel</description>
+        <startTime>
+            <value>2016-11-05 19:30</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>PGP</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy lunch for sis</title>
+        <description>Lazy</description>
+        <endTime>
+            <value>2016-11-09 12:00</value>
+        </endTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Walking tracker</title>
+        <description>stay healthy and clock 10,000 steps</description>
+        <startTime>
+            <value>2016-10-14 19:31</value>
+        </startTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+        <categorized>Reminders</categorized>
+    </tasks>
+    <tasks>
+        <title>Reflection</title>
+        <description>in-class assignment</description>
+        <startTime>
+            <value>2016-11-07 10:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-07 12:00</value>
+        </endTime>
+        <categorized>CS2101</categorized>
+    </tasks>
+    <tasks>
+        <title>Software Demo</title>
+        <description>in-class</description>
+        <startTime>
+            <value>2016-11-09 09:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-09 10:00</value>
+        </endTime>
+        <categorized>CS2103T</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy Christmas present</title>
+        <description>for gift exchange</description>
+        <startTime>
+            <value>2016-12-22 19:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-12-22 23:00</value>
+        </endTime>
+        <categorized>#SoC</categorized>
+    </tasks>
+    <tasks>
+        <title>Pet Project</title>
+        <description>Habpet</description>
+        <startTime>
+            <value>2016-12-01 19:46</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Buy book</title>
+        <description>Metro 2035 - English release</description>
+        <startTime>
+            <value>2016-12-15 07:00</value>
+        </startTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>Set up linux server</title>
+        <description>Old dell laptop (screen broken)</description>
+        <startTime>
+            <value>2016-12-04 19:58</value>
+        </startTime>
+        <categorized>Home</categorized>
+    </tasks>
+    <tasks>
+        <title>USS</title>
+        <description>Sec school</description>
+        <startTime>
+            <value>2016-12-16 09:00</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>Plan overseas trip</title>
+        <description>Japan with friends</description>
+        <startTime>
+            <value>2016-12-01 09:00</value>
+        </startTime>
+        <categorized>Friends</categorized>
+    </tasks>
+    <tasks>
+        <title>task_name</title>
+    </tasks>
+    <tasks>
+        <title>Learn Japanese</title>
+    </tasks>
+    <tasks>
+        <title>Revise Notes</title>
+        <description>lecture note 10</description>
+        <startTime>
+            <value>2016-11-07 22:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-08 22:00</value>
+        </endTime>
+        <categorized>CS3241</categorized>
+    </tasks>
+    <tasks>
+        <title>Visiting grandma</title>
+        <description>important event</description>
+        <startTime>
+            <value>2016-11-07 19:29</value>
+        </startTime>
+    </tasks>
+    <tasks>
+        <title>Christmas</title>
+        <startTime>
+            <value>2016-12-25 00:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-12-25 23:59</value>
+        </endTime>
+        <recurring>
+            <day>0</day>
+            <month>0</month>
+            <year>1</year>
+        </recurring>
+    </tasks>
+    <tasks>
+        <title>Improve yourself</title>
+        <description>Positive attitude</description>
+    </tasks>
+    <tasks>
+        <title>Improve yourself : to add a floating task with</title>
+        <description>Positive attitude</description>
+    </tasks>
+    <tasks>
+        <title>Running</title>
+        <startTime>
+            <value>2016-11-08 06:00</value>
+        </startTime>
+        <endTime>
+            <value>2016-11-08 19:00</value>
+        </endTime>
+        <recurring>
+            <day>1</day>
+            <month>0</month>
+            <year>0</year>
+        </recurring>
+    </tasks>
+    <categories>
+        <categoryName>CS3241</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2105</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Home</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2103T</categoryName>
+    </categories>
+    <categories>
+        <categoryName>CS2101</categoryName>
+    </categories>
+    <categories>
+        <categoryName>PGP</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Reminders</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Special</categoryName>
+    </categories>
+    <categories>
+        <categoryName>#SoC</categoryName>
+    </categories>
+    <categories>
+        <categoryName>Friends</categoryName>
+    </categories>
+</doerList>
