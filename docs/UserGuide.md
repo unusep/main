@@ -298,6 +298,7 @@ Format: `redo`
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0140905M)
 #### Find all tasks due : `taskdue`
 Finds all tasks due on and before the date specified in the Do*er*-list.<br>
 Format: `taskdue END_DATE`
