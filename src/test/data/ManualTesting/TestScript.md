@@ -61,7 +61,7 @@ Add a floating task by `add /t task_name`
 
 When a task is created successfully, the console panel shows the message: `New task added: task_name`
 
-- `add /t Learn Japanese` : A task titled "learn Japanese is added in the Do-er List at the last section in the task panel. <br> Floating task can be seen by clicking the `Inbox` build-in panel on the left.
+- `add /t Learn Japanese` : A task titled "Learn Japanese" is added in the Do-er List at the last section in the task panel. <br> Floating task can be seen by clicking the `Inbox` build-in panel on the left.
 
 You can also specify more fields such as `description` by `/d`, `start_time` by `/s`, `end_time` by `/e`, `category` by `/c`
 
