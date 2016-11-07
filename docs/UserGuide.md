@@ -375,8 +375,8 @@ Format: `exit`
 Command | Format
 -------- | :--------
 Help | `help [COMMAND]`
-Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
-Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
+Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING] ...`
+Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING] ...`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
 List | `list [CATEGORY]`
