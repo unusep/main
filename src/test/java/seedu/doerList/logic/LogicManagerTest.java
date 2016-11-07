@@ -660,7 +660,7 @@ public class LogicManagerTest {
 
     //@@author A0139168W
     @Test
-    public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
+    public void execute_deleteWithoutIndex_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
@@ -788,11 +788,14 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedList);
     }
-
+    /*
+     * This test unmarks the same task twice to ensure that it will not cause any error
+     * in the event the user tries to unmark it twice. It should display the same message.
+     */
     @Test
     public void execute_unmark_unmarkTaskAsUndone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task incomplete = helper.generateTask(5); // not complete
+        Task incomplete = helper.generateTask(5);
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(incomplete);
@@ -805,7 +808,6 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedList);
 
-        // marking twice should be ok
         assertCommandBehavior("unmark 1",
                 String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, incomplete),
                 expectedDL,
@@ -837,10 +839,14 @@ public class LogicManagerTest {
                 expectedList);
     }
 
+    /*
+     * This test marks the same task twice to ensure that it will not cause any error
+     * in the event the user tries to mark it twice. It should display the same message.
+     */
     @Test
     public void execute_mark_markTaskAsDone_successful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task incomplete = helper.generateTask(5); // not complete
+        Task incomplete = helper.generateTask(5);
         Task complete = helper.generateTask(5);
         complete.addBuildInCategory(BuildInCategoryList.COMPLETE);
         List<Task> expectedList = helper.generateTaskList(complete);
@@ -853,7 +859,6 @@ public class LogicManagerTest {
                 expectedDL,
                 expectedList);
 
-        // marking twice should be ok
         assertCommandBehavior("mark 1",
                 String.format(MarkCommand.MESSAGE_MARK_TASK_SUCCESS, complete),
                 expectedDL,
