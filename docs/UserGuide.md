@@ -396,5 +396,6 @@ Undo | `undo`
 Redo | `redo`
 Task Due | `taskdue END_DATE`
 Save | `saveto NEW_LOCATION`
+Clear | `clear`
 Exit | `exit`
 [//]: # (@@author)
