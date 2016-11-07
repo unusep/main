@@ -17,6 +17,7 @@
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
     * [Save To](#changing-your-save-location--saveto)
+    * [Clear] (#clearing-the-task-list--`clear`)
     * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -333,6 +334,14 @@ Format: `saveto NEW_LOCATION`
 Examples:
 
 * `saveto data/newsampledata.xml`
+
+[Back To Top](#user-guide)
+
+#### Clearing the task list : `clear`
+Clearing the task list's data<br>
+Format: `clear`
+
+<img src="../docs/images/UI_Guide/clear_command.png" width="600">
 
 [Back To Top](#user-guide)
 [//]: # (@@author)
