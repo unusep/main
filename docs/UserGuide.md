@@ -237,7 +237,7 @@ Examples:
 
 [//]: # (@@author A0147978E)
 #### View a task : `view`
-Views the task identified by the index number used in the last task listing.<br>
+Views the task identified by the index number used in the task panel.<br>
 Format: `view INDEX`
 
 <img src="../docs/images/UI_Guide/view_command.png" width="600">
