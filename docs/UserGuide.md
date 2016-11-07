@@ -17,7 +17,7 @@
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
     * [Save To](#changing-your-save-location--saveto)
-    * [Clear] (#clearing-the-task-list--`clear`)
+    * [Clear](#clearing-all-the-tasks--clear)
     * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -238,7 +238,7 @@ Examples:
 
 [//]: # (@@author A0147978E)
 #### View a task : `view`
-Views the task identified by the index number used in the last task listing.<br>
+Views the task identified by the index number in the current task panel.<br>
 Format: `view INDEX`
 
 <img src="../docs/images/UI_Guide/view_command.png" width="600">
@@ -337,8 +337,8 @@ Examples:
 
 [Back To Top](#user-guide)
 
-#### Clearing the task list : `clear`
-Clearing the task list's data<br>
+#### Clearing all the tasks : `clear`
+Clearing all the tasks<br>
 Format: `clear`
 
 <img src="../docs/images/UI_Guide/clear_command.png" width="600">
