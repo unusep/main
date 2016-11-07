@@ -65,6 +65,7 @@ Role: Developer <br>
 - Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0140905M.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0140905M.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0140905M.md)]
 - Other major contributions
 	- Do the original refractoring.
+	- Make app logo
 
 
 -----
