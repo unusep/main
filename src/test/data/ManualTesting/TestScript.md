@@ -208,7 +208,9 @@ To delete a task, type `delete` and supply the task's index. Let's type
 - `delete 100` : will show an error that the index is invalid as 100 is greater than our list's size
 
 ### undo/redo
-Undo the last operation with `undo` and redo it with `redo`. Let's try out these sequence of commands:
+Undo the last operation with `undo` and redo it with `redo`. The `UndoManager` will record every operation involving change of data to `Model`. Therefore, we can undo/redo the following commands : `add` `edit` `delete` `mark` `unmark` `clear`
+
+Let's try out these sequence of commands:
 
 - `add /t Swimming` : will add the floating task `Swimming`. It is the last task shown in `Inbox` default panel.
 
@@ -261,6 +263,8 @@ saveto change the file location that is saved. Type
 ### clear
 
 - `clear` : clear every task in the Do-er List
+
+- `undo` : everything back in the Do-er List 
 
 ### exit
 
