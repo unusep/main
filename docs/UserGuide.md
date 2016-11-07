@@ -1,21 +1,21 @@
 # User Guide
 [//]: # (@@author A0139401N)
 * [About Us](#about-us)
-* [Overiew](#overview)
+* [Overview](#overview)
 * [Getting Started](#getting-started)
 * [Features](#features)
     * [Help](#viewing-help--help)
     * [Add task](#adding-a-task--add)
     * [Edit task](#editing-a-task--edit)
     * [Mark task](#mark-task-as-done--mark)
-    * [Ummark task](#unmark-task-as-done--unmark)
+    * [Unmark task](#unmark-task-as-done--unmark)
     * [List task](#listing-tasks-in-a-certain-category--list)
     * [Find task](#finding-all-tasks-containing-any-keyword-in-their-name--find)
     * [View task](#view-a-task--view)
     * [Delete task](#deleting-a-task--delete)
     * [Undo](#undo-the-most-recent-operation--undo)
     * [Redo](#redo-the-most-recent-operation--redo)
-    * [Taskdue](#find-all-tasks-due--taskdue)
+    * [Task Due](#find-all-tasks-due--taskdue)
     * [Save To](#changing-your-save-location--saveto)
     * [Clear](#clearing-all-the-tasks--clear)
     * [Automatic Save](#automatic-save)
@@ -26,7 +26,7 @@
 
 [//]: # (@@author A0139401N)
 ## About Us
-Living in the modern and fast-paced world nowadays, we are constantly overwhelemed with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
+Living in the modern and fast-paced world nowadays, we are constantly overwhelmed with tasks to do. Many people face the problem of time management as the traditional methods prove to be little effective. That is what Do-er List aims to solve.
 
 Do-er List is a task manager that is designed for students and office workers. It is a beginner-friendly desktop program that aids you in the planning and completion of your daily tasks.  It does not matter if you are planning a big birthday surprise event or recurring task of handling the laundry every now and then, Do-er List is here to resolve your problems.
 
@@ -47,7 +47,7 @@ Eager and excited? Then let us proceed!
 |1 | Type your commands in the **Command Console** to execute the desired commands. |
 |2 | **Feedback Console** shows if your command is executed properly or not. |
 |3 | View your default categories in the **Default Panel**. |
-|4 | **Tasks Panel** will display all the taks you listed in a panel. |
+|4 | **Tasks Panel** will display all the tasks you listed in a panel. |
 |5 | **Category Panel** shows all the custom categories that you have created. |
 |6 | View your last update and file storage in **Update Status**.|
 
@@ -123,7 +123,7 @@ Format: `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r REC
 >  * today
 >  * tomorrow
 >  * next week / month
-> * Supported list for natural language for **`RECURRING`** :
+> * Supported list for natural language for **`RECURRING`** tasks:
 >  * daily
 >  * weekly
 >  * monthly
@@ -238,7 +238,8 @@ Examples:
 
 [//]: # (@@author A0147978E)
 #### View a task : `view`
-Views the task identified by the index number in the current task panel.<br>
+
+Views the task identified by the index number used in the task panel.<br>
 Format: `view INDEX`
 
 <img src="../docs/images/UI_Guide/view_command.png" width="600">
@@ -260,7 +261,7 @@ Examples:
 [Back To Top](#user-guide)
 
 #### Deleting a task : `delete`
-Deletes the specified task / event from the Do-*er*List. Irreversible.<br>
+Deletes the specified task / event from the Do-*er*List.<br>
 Format: `delete INDEX`
 
 <img src="../docs/images/UI_Guide/delete_command.png" width="600">
@@ -299,6 +300,7 @@ Format: `redo`
 
 [Back To Top](#user-guide)
 
+[//]: # (@@author A0140905M)
 #### Find all tasks due : `taskdue`
 Finds all tasks due on and before the date specified in the Do*er*-list.<br>
 Format: `taskdue END_DATE`
@@ -384,8 +386,8 @@ Format: `exit`
 Command | Format
 -------- | :--------
 Help | `help [COMMAND]`
-Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
-Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/c RECURRING] ...`
+Add | `add /t TITLE [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING] ...`
+Edit | `edit INDEX [/t TITLE] [/d DESCRIPTION] [/s START] [/e END] [/c CATEGORY] [/r RECURRING] ...`
 Mark Done | `mark TASK_NUMBER`
 Mark Undone | `unmark TASK_NUMBER`
 List | `list [CATEGORY]`
