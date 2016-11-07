@@ -17,6 +17,7 @@
     * [Redo](#redo-the-most-recent-operation--redo)
     * [Taskdue](#find-all-tasks-due--taskdue)
     * [Save To](#changing-your-save-location--saveto)
+    * [Clear](#clearing-all-the-tasks--clear)
     * [Automatic Save](#automatic-save)
     * [Exit](#exiting-the-program--exit)
 * [FAQ](#faq)
@@ -237,7 +238,7 @@ Examples:
 
 [//]: # (@@author A0147978E)
 #### View a task : `view`
-Views the task identified by the index number used in the last task listing.<br>
+Views the task identified by the index number in the current task panel.<br>
 Format: `view INDEX`
 
 <img src="../docs/images/UI_Guide/view_command.png" width="600">
@@ -335,6 +336,14 @@ Examples:
 * `saveto data/newsampledata.xml`
 
 [Back To Top](#user-guide)
+
+#### Clearing all the tasks : `clear`
+Clearing all the tasks<br>
+Format: `clear`
+
+<img src="../docs/images/UI_Guide/clear_command.png" width="600">
+
+[Back To Top](#user-guide)
 [//]: # (@@author)
 
 [//]: # (@@author A0139401N)
@@ -387,5 +396,6 @@ Undo | `undo`
 Redo | `redo`
 Task Due | `taskdue END_DATE`
 Save | `saveto NEW_LOCATION`
+Clear | `clear`
 Exit | `exit`
 [//]: # (@@author)
