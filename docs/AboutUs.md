@@ -36,7 +36,7 @@ We are [CS2103/T](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) team (**Wednesda
 - Other major contributions
 	- Design UI with [Xiao Pu](https://github.com/xpdavid)
 	- Help to design and improve the program inteface and guides to be more user-friendly
-	- Also refactor and spot for errors in code and comments
+	- Refactors and spot for errors in code comments
 
 -----
 
@@ -66,6 +66,7 @@ Role: Developer <br>
 - Code written: [[functional code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/main/A0140905M.md)][[test code](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/test/A0140905M.md)][[docs](https://github.com/CS2103AUG2016-W09-C4/main/blob/master/collated/docs/A0140905M.md)]
 - Other major contributions
 	- Do the original refractoring.
+	- Make app logo
 
 
 -----
